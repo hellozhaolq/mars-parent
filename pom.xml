@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.zhaolq</groupId>
+    <artifactId>mars</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+
+    <name>${project.artifactId}</name>
+    <url>http://maven.apache.org</url>
+    <description>地球计划</description>
+
+    <!--<modules>
+        <module>earth-commons</module>
+        <module>earth-core</module>
+        <module>earth-demo</module>
+        <module>earth-services</module>
+        <module>earth-tools</module>
+    </modules>-->
+
+    <!-- 有待验证：
+        pom中定义的变量可以在resources文件夹下的 properties、yml、xml 文件中获取
+        properties中定义的变量可以在java代码中通过 java.util.Properties 获取
+    -->
+    <profiles>
+        <profile>
+            <id>dev</id> <!-- 开发环境 -->
+            <activation>
+                <activeByDefault>true</activeByDefault> <!-- 默认激活该profile -->
+            </activation>
+            <properties>
+                <db.driver>com.mysql.jdbc.Driver</db.driver>
+                <db.url>jdbc:mysql//localhost:3306/test</db.url>
+                <db.user>dev</db.user>
+                <db.pw>dev-pwd</db.pw>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>test</id> <!-- 测试环境 -->
+            <properties>
+                <db.driver>com.mysql.jdbc.Driver</db.driver>
+                <db.url>jdbc:mysql//localhost:3306/test</db.url>
+                <db.user>test</db.user>
+                <db.pw>test-pwd</db.pw>
+            </properties>
+        </profile>
+    </profiles>
+
+    <properties>
+        <!-- 文件拷贝时的编码 -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!-- 编译时的编码，也可在maven-compiler-plugin插件中配置 -->
+        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+
+        <java.version>1.8</java.version>
+
+        <spring-boot.version>2.2.10.RELEASE</spring-boot.version>
+        <spring-cloud.version>Hoxton.SR8</spring-cloud.version>
+
+        <spring-boot-maven-plugin.version>2.2.10.RELEASE</spring-boot-maven-plugin.version>
+        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
+        <maven-jar-plugin.version>3.1.2</maven-jar-plugin.version>
+        <maven-dependency-plugin.version>3.1.2</maven-dependency-plugin.version>
+        <maven-javadoc-plugin.version>3.1.1</maven-javadoc-plugin.version>
+        <maven-source-plugin.version>3.1.0</maven-source-plugin.version>
+        <maven-war-plugin.version>3.2.3</maven-war-plugin.version>
+
+        <ojdbc.version>19.3.0.0</ojdbc.version>
+
+        <hutool-all.version>5.3.9</hutool-all.version>
+        <swagger.version>2.9.2</swagger.version>
+
+        <mybatis-spring-boot-starter.version>2.1.3</mybatis-spring-boot-starter.version>
+        <mybatis-generator-maven-plugin.version>1.4.0</mybatis-generator-maven-plugin.version>
+        <mybatis-generator-core.version>1.4.0</mybatis-generator-core.version>
+
+        <mybatis-plus-boot-starter.version>3.4.0</mybatis-plus-boot-starter.version>
+        <mybatis-plus-generator.version>3.4.0</mybatis-plus-generator.version>
+
+        <auto-service.version>1.0-rc7</auto-service.version>
+        <javapoet.version>1.9.0</javapoet.version>
+
+        <log4j-web.version>2.12.1</log4j-web.version>
+        <disruptor.version>3.4.2</disruptor.version>
+
+    </properties>
+
+    <dependencies>
+        <!-- 为了避免循环依赖，请不要依赖子模块 -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- 覆盖Spring Boot提供的ojdbc -->
+            <dependency>
+                <groupId>com.oracle.ojdbc</groupId>
+                <artifactId>ojdbc8</artifactId>
+                <version>${ojdbc.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.oracle.ojdbc</groupId>
+                <artifactId>orai18n</artifactId>
+                <version>${ojdbc.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+
+            <!-- 覆盖应写在上面 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <!-- 打包输出的根目录 -->
+        <!--<directory>target/${project.version}</directory>-->
+        <finalName>${project.name}</finalName>
+        <!-- 此元素描述了所有 classpath 路径下资源，例如：.java文件、与项目关联的属性文件等。这些资源通常包含在最终软件包中。
+        用以规定哪些文件可以编译到target/classes。打包插件默认把target/classes目录下的所有内容打进jar包或者war包。修改配置后请确认target/classes目录内容。 -->
+        <resources>
+            <resource>
+                <!-- 设定主资源目录  -->
+                <directory>${project.basedir}/src/main/java</directory>
+                <!-- maven default生命周期，process-resources阶段执行maven-resources-plugin插件的resources目标处理主资源目录下的资源文件时，只处理如下配置中包含的资源类型 -->
+                <includes>
+                    <include>**/*.xml</include>
+                    <include>**/*.properties</include>
+                </includes>
+                <!-- maven default生命周期，process-resources阶段执行maven-resources-plugin插件的resources目标处理主资源目录下的资源文件时，不处理如下配置中包含的资源类型（剔除下如下配置中包含的资源类型）-->
+                <excludes>
+                    <exclude>**/*.yaml</exclude>
+                </excludes>
+                <!-- maven default生命周期，process-resources阶段执行maven-resources-plugin插件的resources目标处理主资源目下的资源文件时，是否对主资源目录开启资源过滤 -->
+                <filtering>true</filtering>
+                <!-- maven default生命周期，process-resources阶段执行maven-resources-plugin插件的resources目标处理主资源目下的资源文件时，指定处理后的资源文件输出目录，默认是${project.build.outputDirectory}指定的目录-->
+                <targetPath>${project.build.outputDirectory}</targetPath>
+            </resource>
+            <resource>
+                <directory>${project.basedir}/src/main/resources</directory>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+                <filtering>true</filtering>
+                <targetPath>${project.build.outputDirectory}</targetPath>
+            </resource>
+        </resources>
+        <plugins>
+            <!--
+                为了使项目结构更为清晰，Maven区别对待Java代码文件和资源文件：
+                    maven-compiler-plugin用来编译Java代码
+                    maven-resources-plugin用来处理资源文件，默认的主资源文件目录是src/main/resources，想要添加额外的资源文件目录，就需要通过配置maven-resources-plugin来实现。
+                    参考链接：https://blog.csdn.net/u011781521/article/details/79052725
+            -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>UTF-8</encoding>
+                    <fork>true</fork>
+                    <!-- 跳过编译的文件 -->
+                    <excludes>
+                        <exclude>**/ExcludeClassesName.java</exclude> <!-- 排除应用程序编译类 -->
+                    </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${maven-javadoc-plugin.version}</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <encoding>UTF-8</encoding>
+                    <doclint>none</doclint>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id> <!-- 唯一标识，运行maven时会在控制台输出 -->
+                        <!-- 绑定到声明周期阶段deploy，默认是package。避免在package时执行此插件目标 -->
+                        <phase>deploy</phase>
+                        <goals>
+                            <!-- 绑定到此插件的jar目标。jar和javadoc-no-fork区别：
+                                    jar目标默认绑定到生命周期阶段package，会生成JavaDoc文档并捆绑到jar文件中。
+                                    javadoc-no-fork目标需要在站点生成之前生成源，例如，通过调用mvn clean deploy site。生成的JavaDoc文档在target/site下，不会捆绑到jar文件中。 -->
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- 打源码包 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>${maven-source-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <!-- 绑定到声明周期阶段deploy，默认是package。避免在package时执行此插件目标 -->
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <!-- 官方配置文档：https://docs.spring.io/spring-boot/docs/current/maven-plugin/reference/html/ -->
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot-maven-plugin.version}</version>
+                    <configuration>
+                        <!-- 跳过执行：设置true时，打成普通jar包，不可执行，和使用maven-jar-plugin打的jar包相同。 -->
+                        <skip>false</skip>
+                        <fork>true</fork>
+                        <finalName>${project.build.finalName}</finalName>
+                        <classifier>start</classifier>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <repositories>
+        <!-- 按顺序搜索jar包，最后找默认的中央仓库。若将id=central的仓库放在最前就直接去中央仓库搜索 -->
+        <!-- maven把id=central的仓库做为中央仓库 -->
+        <repository>
+            <id>central</id>
+            <name>central</name>
+            <url>https://repo.maven.apache.org/maven2/</url>
+            <layout>default</layout>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+
+        <repository>
+            <id>aliyun</id> <!-- 仓库声明的唯一id，中央仓库占用id:central。配置仓库镜像时用到。 -->
+            <name>aliyun</name> <!-- 仓库的名称，为了方便人阅读，无其他作用 -->
+            <url>https://maven.aliyun.com/repository/public</url> <!-- 仓库的地址 -->
+            <layout>default</layout> <!-- 仓库的布局是Maven2及Maven3的默认布局 -->
+            <releases> <!-- 控制Maven对于发布版构件的下载 -->
+                <enabled>true</enabled> <!-- 开启nexus-releases仓库的发布版本下载支持 -->
+                <updatePolicy>daily</updatePolicy> <!-- 检查更新的频率，默认值是daily，表示Maven每天检查一次 -->
+                <checksumPolicy>warn</checksumPolicy> <!-- 配置Maven检查校验和文件的策略 -->
+            </releases>
+            <snapshots> <!-- 控制Maven对于快照版构件的下载 -->
+                <enabled>false</enabled> <!-- 关闭nexus-releases仓库的快照版本下载支持 -->
+                <updatePolicy>daily</updatePolicy>
+                <checksumPolicy>warn</checksumPolicy>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>aliyun-plugin</id>
+            <name>aliyun-plugin</name>
+            <url>https://maven.aliyun.com/repository/public</url>
+            <layout>default</layout>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+
+        <pluginRepository>
+            <id>central-plugin</id>
+            <name>central-plugin</name>
+            <url>https://repo.maven.apache.org/maven2/</url>
+            <layout>default</layout>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <!-- 部署构件至远程仓库 -->
+    <distributionManagement>
+        <repository>
+            <id>nexus-releases</id>
+            <name>Demo Release Repository</name>
+            <url>http://192.168.3.206:8081/nexus/content/repositories/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus-snapshots</id>
+            <name>Demo Snapshot Repository</name>
+            <url>http://192.168.3.206:8081/nexus/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+</project>

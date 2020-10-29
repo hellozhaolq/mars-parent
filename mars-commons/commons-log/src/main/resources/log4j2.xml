@@ -1,0 +1,211 @@
+<?xml  version = "1.0"  encoding = "UTF-8" ?>
+
+<!--
+    log4j2开启全异步输出步骤(与关闭相反)：
+        1、引入依赖disruptor
+        2、在resources下创建log4j2.component.properties文件，设置系统属性 log4j2.contextSelector=org.apache.logging.log4j.core.async.AsyncLoggerContextSelector
+        3、(非必须)修改log4j2.xml：immediateFlush="false"(同步输出时必须为true，否则日志打印不全)、includeLocation="false"
+
+    log4j2的8个日志级别从高到低: OFF > FATAL > ERROR > WARN > INFO > DEBUG > TRACE > ALL，定义于org.apache.logging.log4j.Level类中。
+
+    控制台高亮需为每个project设置 VM options:-Dlog4j.skipJansi=false
+
+    根节点：
+        <configuration></configuration>
+    属性：
+        status：用于设置log4j2自身内部的信息输出，当设置成trace时，你会看到log4j2内部各种详细输出。
+        monitorInterval：Log4j能够自动检测修改配置文件和重新配置本身，设置间隔秒数
+ -->
+<Configuration status="info" monitorInterval="60">
+    <Properties>
+        <property name="LOG_PATH" value="/logs/"/>
+        <property name="ROLLING_STRATEGY_MAX_FILE_SIZE" value="100MB"/>
+
+        <Property name="ROLLOVER_STRATEGY_MAX_SERIAL_NUMBER" value="100"/>
+        <Property name="SCAN_MAX_DEPTH" value="2"/>
+        <Property name="LAST_MODIFIED_AGE" value="30d"/>
+        <Property name="ACCUMULATED_FILE_SIZE" value="10GB"/>
+        <Property name="ACCUMULATED_FILE_COUNT" value="100"/>
+
+        <Property name="LEVEL_COLOR"
+                  value="{FATAL=Bright red, ERROR=Bright red, WARN=Yellow, INFO=Green, DEBUG=Cyan, TRACE=Bright White}"/>
+        <Property name="CONSOLE_LOG_PATTERN_1"
+                  value="%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight{%5level}${LEVEL_COLOR} %magenta{%5pid} --- [%15.15threadName %5threadId %2threadPriority] %blue{%-45.45logger{1.} %5line} : %msg %n"/>
+        <Property name="CONSOLE_LOG_PATTERN_2"
+                  value="%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight{%5level}${LEVEL_COLOR} %magenta{%5pid} --- [%15.15threadName %5threadId %2threadPriority] %blue{%-45.45l} : %msg %n"/>
+        <!-- 不记录位置信息 -->
+        <Property name="CONSOLE_LOG_PATTERN_3"
+                  value="%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight{%5level}${LEVEL_COLOR} %magenta{%5pid} --- [%15.15threadName %5threadId %2threadPriority] %blue{%-40.40logger{1.}} : %msg %n"/>
+        <Property name="FILE_LOG_PATTERN_1"
+                  value="%d{yyyy-MM-dd HH:mm:ss.SSS} %5level %5pid --- [%15.15threadName %5threadId %2threadPriority] %-45.45logger{1.} %5line : %msg %n"/>
+        <Property name="FILE_LOG_PATTERN_2"
+                  value="%d{yyyy-MM-dd HH:mm:ss.SSS} %5level %5pid --- [%15.15threadName %5threadId %2threadPriority] %-45.45l : %msg %n"/>
+        <!-- 不记录位置信息 -->
+        <Property name="FILE_LOG_PATTERN_3"
+                  value="%d{yyyy-MM-dd HH:mm:ss.SSS} %5level %5pid --- [%15.15threadName %5threadId %2threadPriority] %-40.40logger{1.} : %msg %n"/>
+    </Properties>
+
+    <!-- 全部输出源。查看官网了解各种Appender属性含义 -->
+    <Appenders>
+        <!--输出到控制台-->
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout charset="UTF-8" pattern="${CONSOLE_LOG_PATTERN_3}"/>
+            <Filters>
+                <!-- ThresholdFilter：临界值过滤器，过滤掉低于指定临界值的日志。 -->
+                <ThresholdFilter level="all" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+        </Console>
+
+        <!--文件会打印出所有等级信息-->
+        <!--<File name="allLogs" fileName="${LOG_PATH}/all.log" append="true">
+            <PatternLayout pattern="${FILE_LOG_PATTERN_3}"/>
+        </File>-->
+
+        <!-- RollingFile和RollingRandomAccessFile：缓冲区大小和实现类不同，好像异步记录时性能上有区别 -->
+        <RollingRandomAccessFile name="errorFileRolling" fileName="${LOG_PATH}/error/fresh_error.log"
+                                 filePattern="${LOG_PATH}/error/$${date:yyyy-MM}/error-%d{yyyy-MM-dd}-%i.log"
+                                 immediateFlush="true" append="true">
+            <PatternLayout charset="UTF-8" pattern="${FILE_LOG_PATTERN_3}"/>
+            <Filters>
+                <!-- 级别范围过滤器： -->
+                <LevelRangeFilter minLevel="error" maxLevel="error" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <Policies>
+                <!-- 每隔多久触发该滚动策略，interval默认值是1，具体单位需要看filePattern的日期精度。例如 %d{yyyy-MM-dd HH-mm-ss} 精度是秒。 -->
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="${ROLLING_STRATEGY_MAX_FILE_SIZE}"/>
+            </Policies>
+            <!-- DefaultRolloverStrategy：封存文件的序号的最大值，默认值7。即指定最大翻滚次数(影响%i参数值)，超过次数之后会按照相应的规则删除旧日志。 -->
+            <DefaultRolloverStrategy max="${ROLLOVER_STRATEGY_MAX_SERIAL_NUMBER}">
+                <!-- Delete:删除匹配到的过期备份文件 -->
+                <!-- basePath:扫描日志文件根路径，必须配置 -->
+                <!-- maxDepth:扫描深度 -->
+                <Delete basePath="${LOG_PATH}/error/" maxDepth="${SCAN_MAX_DEPTH}">
+                    <!-- IfFileName:删除的条件之一，匹配文件名称 -->
+                    <!-- glob:匹配2级目录深度下的备份文件 -->
+                    <IfFileName glob="*/error-*.log">
+                        <!-- IfLastModified:删除的条件之一，匹配文件最后修改时间 -->
+                        <!-- age:文件过期时长，单位D、H、M、S分别表示天、小时、分钟、秒(不区分大小写) -->
+                        <IfLastModified age="${LAST_MODIFIED_AGE}">
+                            <!-- 要保留的文件 -->
+                            <IfAny>
+                                <!-- 满足删除条件的文件，按文件大小，保留最近文件大小总和不超过指定大小的文件 -->
+                                <!--<IfAccumulatedFileSize exceeds="${ACCUMULATED_FILE_SIZE}"/>-->
+                                <!-- 满足删除条件的文件，按文件数量，保留最近指定数量的文件 -->
+                                <!--<IfAccumulatedFileCount exceeds="${ACCUMULATED_FILE_COUNT}"/>-->
+                            </IfAny>
+                        </IfLastModified>
+                    </IfFileName>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingRandomAccessFile>
+
+        <RollingRandomAccessFile name="warnFileRolling" fileName="${LOG_PATH}/warn/fresh_warn.log"
+                                 filePattern="${LOG_PATH}/warn/$${date:yyyy-MM}/warn-%d{yyyy-MM-dd}-%i.log"
+                                 immediateFlush="true" append="true">
+            <PatternLayout charset="UTF-8" pattern="${FILE_LOG_PATTERN_3}"/>
+            <Filters>
+                <LevelRangeFilter minLevel="warn" maxLevel="warn" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="${ROLLING_STRATEGY_MAX_FILE_SIZE}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="${ROLLOVER_STRATEGY_MAX_SERIAL_NUMBER}">
+                <Delete basePath="${LOG_PATH}/warn/" maxDepth="${SCAN_MAX_DEPTH}">
+                    <IfFileName glob="*/warn-*.log">
+                        <IfLastModified age="${LAST_MODIFIED_AGE}"></IfLastModified>
+                    </IfFileName>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingRandomAccessFile>
+
+        <RollingRandomAccessFile name="infoFileRolling" fileName="${LOG_PATH}/info/fresh_info.log"
+                                 filePattern="${LOG_PATH}/info/$${date:yyyy-MM}/info-%d{yyyy-MM-dd}-%i.log"
+                                 immediateFlush="true" append="true">
+            <PatternLayout charset="UTF-8" pattern="${FILE_LOG_PATTERN_3}"/>
+            <Filters>
+                <LevelRangeFilter minLevel="info" maxLevel="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="${ROLLING_STRATEGY_MAX_FILE_SIZE}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="${ROLLOVER_STRATEGY_MAX_SERIAL_NUMBER}">
+                <Delete basePath="${LOG_PATH}/info/" maxDepth="${SCAN_MAX_DEPTH}">
+                    <IfFileName glob="*/info-*.log">
+                        <IfLastModified age="${LAST_MODIFIED_AGE}"></IfLastModified>
+                    </IfFileName>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingRandomAccessFile>
+
+        <RollingRandomAccessFile name="debugFileRolling" fileName="${LOG_PATH}/debug/fresh_debug.log"
+                                 filePattern="${LOG_PATH}/debug/$${date:yyyy-MM}/debug-%d{yyyy-MM-dd}-%i.log"
+                                 immediateFlush="true" append="true">
+            <PatternLayout charset="UTF-8" pattern="${FILE_LOG_PATTERN_3}"/>
+            <Filters>
+                <LevelRangeFilter minLevel="debug" maxLevel="debug" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="${ROLLING_STRATEGY_MAX_FILE_SIZE}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="${ROLLOVER_STRATEGY_MAX_SERIAL_NUMBER}">
+                <Delete basePath="${LOG_PATH}/debug/" maxDepth="${SCAN_MAX_DEPTH}">
+                    <IfFileName glob="*/debug-*.log">
+                        <IfLastModified age="${LAST_MODIFIED_AGE}"></IfLastModified>
+                    </IfFileName>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingRandomAccessFile>
+
+        <RollingRandomAccessFile name="traceFileRolling" fileName="${LOG_PATH}/trace/fresh_trace.log"
+                                 filePattern="${LOG_PATH}/trace/$${date:yyyy-MM}/trace-%d{yyyy-MM-dd}-%i.log"
+                                 immediateFlush="true" append="true">
+            <PatternLayout charset="UTF-8" pattern="${FILE_LOG_PATTERN_3}"/>
+            <Filters>
+                <LevelRangeFilter minLevel="trace" maxLevel="trace" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="${ROLLING_STRATEGY_MAX_FILE_SIZE}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="${ROLLOVER_STRATEGY_MAX_SERIAL_NUMBER}">
+                <Delete basePath="${LOG_PATH}/trace/" maxDepth="${SCAN_MAX_DEPTH}">
+                    <IfFileName glob="*/trace-*.log">
+                        <IfLastModified age="${LAST_MODIFIED_AGE}"></IfLastModified>
+                    </IfFileName>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingRandomAccessFile>
+
+    </Appenders>
+
+    <Loggers>
+        <!--
+             为了提升性能，默认情况下，异步记录器不会将位置传递给I/O线程。
+             如果需要位置信息，需在所有相关记录器（包括根记录器）中设置 includeLocation = true，你会付出昂贵的代价。仅设置true但没有输出位置信息，并不会有影响。
+        -->
+
+        <Logger name="com.zhaolq" level="all" additivity="false" includeLocation="false">
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="errorFileRolling"/>
+            <AppenderRef ref="warnFileRolling"/>
+            <AppenderRef ref="infoFileRolling"/>
+            <AppenderRef ref="debugFileRolling"/>
+            <AppenderRef ref="traceFileRolling"/>
+        </Logger>
+
+        <Root level="info" includeLocation="false">
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="errorFileRolling"/>
+            <AppenderRef ref="warnFileRolling"/>
+            <AppenderRef ref="infoFileRolling"/>
+            <AppenderRef ref="debugFileRolling"/>
+            <AppenderRef ref="traceFileRolling"/>
+        </Root>
+    </Loggers>
+
+
+</Configuration>

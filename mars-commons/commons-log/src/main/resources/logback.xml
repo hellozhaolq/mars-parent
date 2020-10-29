@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+    8个日志级别从高到低依次为：OFF > FATAL > ERROR > WARN > INFO > DEBUG > TRACE > ALL
+    logback的7个日志级别从高到低：OFF > ERROR > WARN > INFO > DEBUG > TRACE > ALL，定义于ch.qos.logback.classic.Level类中。
+
+    根节点：
+        <configuration></configuration>
+    属性：
+        debug：默认为false ，设置为true时，将打印出logback内部日志信息，实时查看logback运行状态。
+        scan：配置文件如果发生改变，将会重新加载，默认值为true；
+        scanPeriod：检测配置文件是否有修改的时间间隔。如果没有给出时间单位，默认单位时毫秒。当scan为true时，这个属性生效，默认时间间隔为1min。
+    子节点：
+        1：<appender>输出源</appender>    允许数量>=0
+        2：<logger>记录器</logger>        允许数量>=0
+        3：<root>根记录器</root>          允许数量<=1
+-->
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+    <!-- 继承spring boot提供的logback配置，Spring Boot中默认配置ERROR、WARN和INFO级别的日志输出到控制台 -->
+    <!--<include resource="org/springframework/boot/logging/logback/base.xml" />-->
+
+    <property name="LOG_PATH" value="/logs/"/>
+    <property name="ROLLING_STRATEGY_MAX_FILE_SIZE" value="100MB"/>
+
+    <property name="ROLLING_STRATEGY_MAX_HISTORY" value="30"/>
+    <property name="TOTAL_SIZE_CAP" value="10GB"/>
+
+    <property name="CONSOLE_LOG_PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight(%5level) %magenta(%5(${PID:- })) --- [%15.15thread] %cyan(%-40.40logger{39}) %5line : %msg %n"/>
+    <property name="FILE_LOG_PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} %5level %5(${PID:- }) --- [%15.15thread] %-40.40logger{39} %5line : %msg %n"/>
+
+    <!-- 输出源输出到控制台 -->
+    <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- ThresholdFilter：临界值过滤器，过滤掉低于指定临界值的日志。 -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>all</level>
+        </filter>
+        <!-- 默认是 PatternLayoutEncoder 类，既有layout将一个事件转化为字符串，又有将字符创写入到文件中的作用。他是encoder标签的默认类实例 -->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+            <!-- 在文件的开头打印出日志的格式信息 -->
+            <outputPatternAsHeader>false</outputPatternAsHeader>
+        </encoder>
+    </appender>
+
+    <!-- 输出源输出到文件 -->
+    <appender name="errorFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 存放新鲜日志的文件名，历史日志文件名由滚动策略配置 -->
+        <file>${LOG_PATH}/error/fresh_error.log</file>
+        <!-- LevelFilter：级别过滤器，输出指定级别的日志，非该级别日志被过滤掉。 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <!-- 设置滚动策略 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 发生滚动后的历史日志命名模式。注意：%i不可缺少;遵循文件命名规则，不可有冒号，例如：error-%d{yyyy-MM-dd HH:mm:ss}-%i.log; -->
+            <fileNamePattern>${LOG_PATH}/error/%d{yyyy-MM}/error-%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+            <!-- 超过设定值，触发滚动策略 -->
+            <maxFileSize>${ROLLING_STRATEGY_MAX_FILE_SIZE}</maxFileSize>
+            <!-- 文件过期(日志保留)时长，单位：天 -->
+            <maxHistory>${ROLLING_STRATEGY_MAX_HISTORY}</maxHistory>
+            <!-- 总尺寸上限，不生效的原因：https://www.elietio.xyz/posts/f6b1711c.html -->
+            <totalSizeCap>${TOTAL_SIZE_CAP}</totalSizeCap>
+        </rollingPolicy>
+        <!-- 默认是 PatternLayoutEncoder 类，既有layout将一个事件转化为字符串，又有将字符创写入到文件中的作用。他是encoder标签的默认类实例 -->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="warnFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/warn/fresh_warn.log</file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/warn/%d{yyyy-MM}/warn-%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+            <maxFileSize>${ROLLING_STRATEGY_MAX_FILE_SIZE}</maxFileSize>
+            <maxHistory>${ROLLING_STRATEGY_MAX_HISTORY}</maxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="infoFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/info/fresh_info.log</file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/info/%d{yyyy-MM}/info-%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+            <maxFileSize>${ROLLING_STRATEGY_MAX_FILE_SIZE}</maxFileSize>
+            <maxHistory>${ROLLING_STRATEGY_MAX_HISTORY}</maxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="debugFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/debug/fresh_debug.log</file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/debug/%d{yyyy-MM}/debug-%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+            <maxFileSize>${ROLLING_STRATEGY_MAX_FILE_SIZE}</maxFileSize>
+            <maxHistory>${ROLLING_STRATEGY_MAX_HISTORY}</maxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="traceFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/trace/fresh_trace.log</file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>TRACE</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/trace/%d{yyyy-MM}/trace-%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+            <maxFileSize>${ROLLING_STRATEGY_MAX_FILE_SIZE}</maxFileSize>
+            <maxHistory>${ROLLING_STRATEGY_MAX_HISTORY}</maxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!-- 异步输出 -->
+    <appender name="AsyncConsoleAppender" class="ch.qos.logback.classic.AsyncAppender">
+        <!-- 默认情况下，当BlockingQueue的80%已满，则会丢弃TRACE、DEBUG和INFO级别的events。为了保留所有events，设置该值为0。 -->
+        <discardingThreshold>0</discardingThreshold>
+        <!-- 默认队列深度DEFAULT_QUEUE_SIZE=256，该值会影响性能。 -->
+        <queueSize>256</queueSize>
+        <!--
+             提取调用者数据的代价是相当昂贵的。为了提升性能，默认情况下，当event被加入到queue时，event关联的调用者数据不会被提取。默认只有"cheap"的数据，如线程名。
+             输出"文件名"以及"行号"需要 stacktrace 获取 caller data，因为性能原因，AsyncAppender默认不记录该信息。
+             如果要记录"文件名"和"行号"，您可以使用Java API来获取堆栈跟踪，但此操作在运行时非常昂贵，因此会降低程序速度。
+        -->
+        <includeCallerData>false</includeCallerData>
+        <!-- 添加附加的appender，最多只能添加一个 -->
+        <appender-ref ref="consoleAppender"/>
+    </appender>
+    <appender name="AsyncErrorFileAppender" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>256</queueSize>
+        <appender-ref ref="errorFileAppender"/>
+    </appender>
+    <appender name="AsyncWarnFileAppender" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>256</queueSize>
+        <appender-ref ref="warnFileAppender"/>
+    </appender>
+    <appender name="AsyncInfoFileAppender" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>256</queueSize>
+        <appender-ref ref="infoFileAppender"/>
+    </appender>
+    <appender name="AsyncDebugFileAppender" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>256</queueSize>
+        <appender-ref ref="debugFileAppender"/>
+    </appender>
+    <appender name="AsyncTraceFileAppender" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>256</queueSize>
+        <appender-ref ref="traceFileAppender"/>
+    </appender>
+
+    <!-- 设置某一个包或某一个具体类的日志打印级别。additivity="false" -->
+    <!--
+        additivity：表示此记录器(logger)是否继承根记录器(root)的appender输出源。
+        默认是true，两个记录器都会输出。这也是导致日志重复输出的原因，改为false即可。
+    -->
+    <logger name="com.zhaolq" level="all" additivity="false">
+        <appender-ref ref="AsyncConsoleAppender"/>
+        <appender-ref ref="AsyncErrorFileAppender"/>
+        <appender-ref ref="AsyncWarnFileAppender"/>
+        <appender-ref ref="AsyncInfoFileAppender"/>
+        <appender-ref ref="AsyncDebugFileAppender"/>
+        <appender-ref ref="AsyncTraceFileAppender"/>
+
+        <!--<appender-ref ref="consoleAppender"/>
+        <appender-ref ref="errorFileAppender"/>
+        <appender-ref ref="warnFileAppender"/>
+        <appender-ref ref="infoFileAppender"/>
+        <appender-ref ref="debugFileAppender"/>
+        <appender-ref ref="traceFileAppender"/>-->
+    </logger>
+
+    <!-- root：也是<logger>元素，但是它是根logger。指定最基础的日志输出级别，只有一个level属性。
+        level：默认是DEBUG级别，即打印大于等于该级别的日志，与大小写无关。
+    -->
+    <root level="info">
+        <appender-ref ref="AsyncConsoleAppender"/>
+        <appender-ref ref="AsyncErrorFileAppender"/>
+        <appender-ref ref="AsyncWarnFileAppender"/>
+        <appender-ref ref="AsyncInfoFileAppender"/>
+        <appender-ref ref="AsyncDebugFileAppender"/>
+        <appender-ref ref="AsyncTraceFileAppender"/>
+
+        <!--<appender-ref ref="consoleAppender"/>
+        <appender-ref ref="errorFileAppender"/>
+        <appender-ref ref="warnFileAppender"/>
+        <appender-ref ref="infoFileAppender"/>
+        <appender-ref ref="debugFileAppender"/>
+        <appender-ref ref="traceFileAppender"/>-->
+    </root>
+
+</configuration>

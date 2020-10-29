@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<!--
+    官网：https://mybatis.org/generator/index.html
+    官方配置参考：https://mybatis.org/generator/configreference/xmlconfig.html
+-->
+
+<generatorConfiguration>
+    <!-- 最多一个。用于指定全局配置文件，后面可以通过占位符的形式读取<properties>指定文件中的值。 -->
+    <properties resource="datasource.properties"/>
+
+    <!-- 允许多个。只有一个location属性，用于指定数据源驱动包的绝对路径， -->
+    <!--<classPathEntry location="E:\apache-maven-repository\oracle\ojdbc8-19.3.0.0.jar"/>-->
+
+
+    <!-- 允许多个。用于运行时的解析模式和具体的代码生成行为。 targetRuntime属性：https://mybatis.org/generator/generatedobjects/results.html -->
+    <context id="first" targetRuntime="MyBatis3">
+        <!-- 文件的编码 -->
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <!-- 类名和文件格式化器 -->
+        <property name="javaFormatter" value="org.mybatis.generator.api.dom.DefaultJavaFormatter"/>
+        <!-- 是否JDK8和启动其特性 -->
+        <property name="targetJava8" value="true"/>
+        <!-- XML文件格式化器 -->
+        <property name="xmlFormatter" value="org.mybatis.generator.api.dom.DefaultXmlFormatter"/>
+
+        <!-- 控制生成实体的注释内容 -->
+        <commentGenerator>
+            <!-- 是否生成注释 -->
+            <property name="suppressAllComments" value="false"/>
+            <!-- 是否在注释中添加生成的时间戳 -->
+            <property name="suppressDate" value="false"/>
+            <!-- 配合suppressDate使用，指定输出时间戳的格式 -->
+            <property name="dateFormat" value="yyyy/MM/dd HH:mm"/>
+            <!-- 是否输出表和列的Comment信息 -->
+            <property name="addRemarkComments" value="true"/>
+        </commentGenerator>
+
+        <!-- 指定数据源的连接信息 -->
+        <jdbcConnection driverClass="${db.driverClassName}"
+                        connectionURL="${db.url}"
+                        userId="${db.username}"
+                        password="${db.password}">
+            <property name="useInformationSchema" value="true"/>
+        </jdbcConnection>
+
+        <!-- 控制实体类的代码生成行为 -->
+        <javaModelGenerator targetPackage="${targetEntityPackage}" targetProject="${targetJavaProject}">
+            <!-- 是否允许通过Schema生成子包 -->
+            <property name="enableSubPackages" value="false"/>
+            <!-- Setter方法是否对字符串类型进行一次trim操作 -->
+            <property name="trimStrings" value="false"/>
+            <!-- 为生成的实体类添加父类 -->
+            <property name="rootClass" value="java.lang.Object"/>
+        </javaModelGenerator>
+
+        <!-- 配置要生成代码的数据库表格，定制一些代码生成行为等等 -->
+        <sqlMapGenerator targetPackage="${targetMapperXMLPackage}" targetProject="${targetResourcesProject}">
+            <!-- 是否允许通过Schema生成子包 -->
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
+        <!-- 控制Mapper接口的代码生成行为。
+             当 targetRuntime="MyBatis3DynamicSql" 时，type属性是可选的，将被忽略：
+                https://mybatis.org/generator/configreference/javaClientGenerator.html -->
+        <javaClientGenerator targetPackage="${targetMapperPackage}" targetProject="${targetJavaProject}"
+                             type="XMLMAPPER">
+            <!-- 是否允许通过Schema生成子包 -->
+            <property name="enableSubPackages" value="false"/>
+            <!-- 为生成的Mapper接口添加父接口 -->
+            <!--<property name="rootInterface" value=""/>-->
+        </javaClientGenerator>
+
+        <!-- 控制XML映射文件的代码生成行为 -->
+        <table schema="EARTH" tableName="TAB_EARTH_USER" domainObjectName="UserEntity" mapperName="userMapper">
+            <!-- 是否使用列名作为实体类的属性名，例如 列BUSINESS_NAME的实体类属性名也是BUSINESS_NAME -->
+            <property name="useActualColumnNames" value="false"/>
+            <!-- XML映射文件中生成的ResultMap使用列索引定义而不是列名称 -->
+            <property name="useColumnIndexes" value="true"/>
+
+            <!-- 0或1个。指定主键生成的规则 会生成<selectKey>标签 -->
+            <!-- column：指定主键列 -->
+            <!-- sqlStatement：查询主键的SQL语句 -->
+            <!-- type：可选值为pre或者post，pre指定selectKey标签的order为BEFORE，post指定selectKey标签的order为AFTER -->
+            <!-- identity：true的时候，指定selectKey标签的order为AFTER -->
+            <generatedKey column="ID" sqlStatement="Oracle" identity="true"/>
+
+            <!-- 0或1个。searchString中正则命中的实体类名部分会替换为replaceString -->
+            <!-- 例如 SysUser会变成User，SysUserMapper会变成UserMapper -->
+            <domainObjectRenamingRule searchString="^Sys" replaceString=""/>
+
+            <!-- 0或1个。searchString中正则命中的列名部分会替换为replaceString -->
+            <!-- 例如 CUST_BUSINESS_NAME会变成BUSINESS_NAME（useActualColumnNames=true） -->
+            <!-- 例如 CUST_BUSINESS_NAME会变成businessName（useActualColumnNames=false） -->
+            <columnRenamingRule searchString="^CUST_" replaceString=""/>
+            <!-- 0或N个。用于指定忽略生成的列-->
+            <ignoreColumn column="ignore_column" delimitedColumnName="false"/>
+
+            <columnOverride column="column_original" property="columnOverride"/>
+        </table>
+    </context>
+</generatorConfiguration>

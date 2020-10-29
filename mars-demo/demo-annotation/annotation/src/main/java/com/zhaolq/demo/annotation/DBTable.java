@@ -1,0 +1,18 @@
+package com.zhaolq.demo.annotation;
+
+import java.lang.annotation.*;
+
+/**
+ * 类注解
+ *
+ * @author zhaolq
+ * @date 2020/7/10 11:48
+ */
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
+public @interface DBTable {
+
+    // 表名
+    String name() default "";
+}

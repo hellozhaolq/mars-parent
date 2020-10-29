@@ -13,13 +13,13 @@
     <url>http://maven.apache.org</url>
     <description>地球计划</description>
 
-    <!--<modules>
-        <module>earth-commons</module>
-        <module>earth-core</module>
-        <module>earth-demo</module>
-        <module>earth-services</module>
-        <module>earth-tools</module>
-    </modules>-->
+    <modules>
+        <module>mars-commons</module>
+        <module>mars-core</module>
+        <module>mars-demo</module>
+        <module>mars-services</module>
+        <module>mars-tools</module>
+    </modules>
 
     <!-- 有待验证：
         pom中定义的变量可以在resources文件夹下的 properties、yml、xml 文件中获取

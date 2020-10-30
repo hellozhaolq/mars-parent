@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhaolq.services.sys.mapper.RoleMapper">
+
+    <!-- 开启二级缓存 -->
+    <!--<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>-->
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.zhaolq.services.sys.entity.RoleEntity">
+        <id column="ID" property="id"/>
+        <result column="NAME" property="name"/>
+        <result column="CODE" property="code"/>
+        <result column="REMARK" property="remark"/>
+        <result column="CREATE_BY" property="createBy"/>
+        <result column="CREATE_TIME" property="createTime"/>
+        <result column="LAST_UPDATE_BY" property="lastUpdateBy"/>
+        <result column="LAST_UPDATE_TIME" property="lastUpdateTime"/>
+        <result column="STATUS" property="status"/>
+        <result column="DEL_FLAG" property="delFlag"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ID, NAME, CODE, REMARK, CREATE_BY, CREATE_TIME, LAST_UPDATE_BY, LAST_UPDATE_TIME, STATUS, DEL_FLAG
+    </sql>
+
+    <!-- 通用查询结果列，加表别名 -->
+    <sql id="Base_Column_List_Alias">
+        r.ID, r.NAME, r.CODE, r.REMARK, r.CREATE_BY, r.CREATE_TIME, r.LAST_UPDATE_BY, r.LAST_UPDATE_TIME, r.STATUS, r.DEL_FLAG
+    </sql>
+
+    <!-- 通用查询结果列，加表别名、列别名 -->
+    <sql id="Base_Column_List_Alias_Nested">
+        r.ID r#ID, r.NAME r#NAME, r.CODE r#CODE, r.REMARK r#REMARK, r.CREATE_BY r#CREATE_BY, r.CREATE_TIME r#CREATE_TIME,
+        r.LAST_UPDATE_BY r#LAST_UPDATE_BY, r.LAST_UPDATE_TIME r#LAST_UPDATE_TIME, r.STATUS r#STATUS, r.DEL_FLAG r#DEL_FLAG
+    </sql>
+
+    <!-- 基本查询条件 -->
+    <sql id="Base_Where">
+        <if test="r != null">
+            <if test="r.id != null">
+                and r.ID = #{r.id,jdbcType=NUMERIC}
+            </if>
+            <if test="r.name != null">
+                and r.NAME = #{r.name,jdbcType=NVARCHAR}
+            </if>
+            <if test="r.code != null">
+                and r.CODE = #{r.code,jdbcType=NVARCHAR}
+            </if>
+            <if test="r.remark != null">
+                and r.REMARK = #{r.remark,jdbcType=NVARCHAR}
+            </if>
+            <if test="r.createBy != null">
+                and r.CREATE_BY = #{r.createBy,jdbcType=NVARCHAR}
+            </if>
+            <if test="r.createTime != null">
+                and r.CREATE_TIME = #{r.createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="r.lastUpdateBy != null">
+                and r.LAST_UPDATE_BY = #{r.lastUpdateBy,jdbcType=NVARCHAR}
+            </if>
+            <if test="r.lastUpdateTime != null">
+                and r.LAST_UPDATE_TIME = #{r.lastUpdateTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="r.status != null">
+                and r.STATUS = #{r.status,jdbcType=NUMERIC}
+            </if>
+            <if test="r.delFlag != null">
+                and r.DEL_FLAG = #{r.delFlag,jdbcType=NUMERIC}
+            </if>
+        </if>
+    </sql>
+
+</mapper>

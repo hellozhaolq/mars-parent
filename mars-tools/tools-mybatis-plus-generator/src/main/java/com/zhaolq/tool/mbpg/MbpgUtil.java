@@ -92,7 +92,7 @@ public class MbpgUtil {
         globalConfig.setActiveRecord(true);
         globalConfig.setBaseResultMap(true);
         // 时间类型对应策略
-        globalConfig.setDateType(DateType.ONLY_DATE);
+        globalConfig.setDateType(DateType.TIME_PACK);
         globalConfig.setBaseColumnList(true);
 
         // 各层文件名称方式

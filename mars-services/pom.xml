@@ -18,6 +18,7 @@
 
     <modules>
         <module>services-demo</module>
+        <module>services-sys</module>
     </modules>
 
     <dependencies>

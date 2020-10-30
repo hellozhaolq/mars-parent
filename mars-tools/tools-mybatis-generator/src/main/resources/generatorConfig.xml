@@ -74,8 +74,8 @@
             <!--<property name="rootInterface" value=""/>-->
         </javaClientGenerator>
 
-        <!-- 控制XML映射文件的代码生成行为 -->
-        <table schema="EARTH" tableName="TAB_EARTH_USER" domainObjectName="UserEntity" mapperName="userMapper">
+        <!-- 控制XML映射文件的代码生成行为，schema大写 -->
+        <table schema="" tableName="MARS_SYS_USER" domainObjectName="UserEntity" mapperName="userMapper">
             <!-- 是否使用列名作为实体类的属性名，例如 列BUSINESS_NAME的实体类属性名也是BUSINESS_NAME -->
             <property name="useActualColumnNames" value="false"/>
             <!-- XML映射文件中生成的ResultMap使用列索引定义而不是列名称 -->

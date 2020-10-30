@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhaolq.services.sys.mapper.MenuMapper">
+
+    <!-- 开启二级缓存 -->
+    <!--<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>-->
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.zhaolq.services.sys.entity.MenuEntity">
+        <id column="ID" property="id" />
+        <result column="NAME" property="name" />
+        <result column="CODE" property="code" />
+        <result column="REMARK" property="remark" />
+        <result column="PERMS" property="perms" />
+        <result column="TYPE" property="type" />
+        <result column="URL_TYPE" property="urlType" />
+        <result column="URL" property="url" />
+        <result column="SCHEME" property="scheme" />
+        <result column="PATH" property="path" />
+        <result column="TARGET" property="target" />
+        <result column="PARENT_ID" property="parentId" />
+        <result column="ORDER_NUM" property="orderNum" />
+        <result column="ICON" property="icon" />
+        <result column="CREATE_BY" property="createBy" />
+        <result column="CREATE_TIME" property="createTime" />
+        <result column="LAST_UPDATE_BY" property="lastUpdateBy" />
+        <result column="LAST_UPDATE_TIME" property="lastUpdateTime" />
+        <result column="STATUS" property="status" />
+        <result column="DEL_FLAG" property="delFlag" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ID, NAME, CODE, REMARK, PERMS, TYPE, URL_TYPE, URL, SCHEME, PATH, TARGET, PARENT_ID, ORDER_NUM, ICON, CREATE_BY, CREATE_TIME, LAST_UPDATE_BY, LAST_UPDATE_TIME, STATUS, DEL_FLAG
+    </sql>
+
+</mapper>

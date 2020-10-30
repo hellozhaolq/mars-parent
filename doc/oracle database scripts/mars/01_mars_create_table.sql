@@ -1,5 +1,5 @@
 prompt PL/SQL Developer Export User Objects for user MARS@192.168.0.3:1521/ORCL.ZHAOLQ.COM
-prompt Created by Administrator on 2020Äê10ÔÂ26ÈÕ
+prompt Created by Administrator on 2020å¹´10æœˆ26æ—¥
 set define off
 spool bbb.log
 
@@ -15,13 +15,13 @@ create table MARS_STD_COUNTRY
 )
 ;
 comment on table MARS_STD_COUNTRY
-  is '¹ú¼Ò ISO 3166-1';
+  is 'å›½å®¶ ISO 3166-1';
 comment on column MARS_STD_COUNTRY.code
-  is '´úÂë';
+  is 'ä»£ç ';
 comment on column MARS_STD_COUNTRY.name
-  is 'Ãû³Æ';
+  is 'åç§°';
 comment on column MARS_STD_COUNTRY.name_en
-  is 'Ó¢ÎÄÃû³Æ';
+  is 'è‹±æ–‡åç§°';
 alter table MARS_STD_COUNTRY
   add constraint PK_STD_COUNTRY_CODE primary key (CODE);
 
@@ -36,11 +36,11 @@ create table MARS_STD_NATION
 )
 ;
 comment on table MARS_STD_NATION
-  is 'Ãñ×å GB 3304-91';
+  is 'æ°‘æ— GB 3304-91';
 comment on column MARS_STD_NATION.code
-  is '´úÂë';
+  is 'ä»£ç ';
 comment on column MARS_STD_NATION.name
-  is 'Ãû³Æ';
+  is 'åç§°';
 alter table MARS_STD_NATION
   add constraint PK_STD_NATION_CODE primary key (CODE);
 
@@ -56,13 +56,13 @@ create table MARS_STD_POLITICAL_STATUS
 )
 ;
 comment on table MARS_STD_POLITICAL_STATUS
-  is 'ÕşÖÎÃæÃ²';
+  is 'æ”¿æ²»é¢è²Œ';
 comment on column MARS_STD_POLITICAL_STATUS.code
-  is '´úÂë';
+  is 'ä»£ç ';
 comment on column MARS_STD_POLITICAL_STATUS.name
-  is 'Ãû³Æ';
+  is 'åç§°';
 comment on column MARS_STD_POLITICAL_STATUS.name_short
-  is '¼ò³Æ';
+  is 'ç®€ç§°';
 alter table MARS_STD_POLITICAL_STATUS
   add constraint PK_STD_POLITICAL_STATUS_CODE primary key (CODE);
 
@@ -89,35 +89,35 @@ create table MARS_SYS_DEPT
 )
 ;
 comment on table MARS_SYS_DEPT
-  is '»ú¹¹¹ÜÀí';
+  is 'æœºæ„ç®¡ç†';
 comment on column MARS_SYS_DEPT.id
-  is '±àºÅ';
+  is 'ç¼–å·';
 comment on column MARS_SYS_DEPT.name
-  is '»ú¹¹Ãû³Æ';
+  is 'æœºæ„åç§°';
 comment on column MARS_SYS_DEPT.code
-  is '»ú¹¹´úÂë';
+  is 'æœºæ„ä»£ç ';
 comment on column MARS_SYS_DEPT.remark
-  is '±¸×¢';
+  is 'å¤‡æ³¨';
 comment on column MARS_SYS_DEPT.type
-  is 'ÀàĞÍ¡¾1£º¼¯ÍÅ£»2£ºÑ§Ğ£ ¡¿';
+  is 'ç±»å‹ã€1ï¼šé›†å›¢ï¼›2ï¼šå­¦æ ¡ ã€‘';
 comment on column MARS_SYS_DEPT.subtype
-  is '×ÓÀàĞÍ';
+  is 'å­ç±»å‹';
 comment on column MARS_SYS_DEPT.parent_id
-  is 'ÉÏ¼¶»ú¹¹ID£¬Ò»¼¶»ú¹¹Îª0';
+  is 'ä¸Šçº§æœºæ„IDï¼Œä¸€çº§æœºæ„ä¸º0';
 comment on column MARS_SYS_DEPT.order_num
-  is 'ÅÅĞò';
+  is 'æ’åº';
 comment on column MARS_SYS_DEPT.create_by
-  is '´´½¨ÈË';
+  is 'åˆ›å»ºäºº';
 comment on column MARS_SYS_DEPT.create_time
-  is '´´½¨Ê±¼ä';
+  is 'åˆ›å»ºæ—¶é—´';
 comment on column MARS_SYS_DEPT.last_update_by
-  is '¸üĞÂÈË';
+  is 'æ›´æ–°äºº';
 comment on column MARS_SYS_DEPT.last_update_time
-  is '¸üĞÂÊ±¼ä';
+  is 'æ›´æ–°æ—¶é—´';
 comment on column MARS_SYS_DEPT.status
-  is '×´Ì¬  0£º½ûÓÃ   1£ºÕı³£';
+  is 'çŠ¶æ€  0ï¼šç¦ç”¨   1ï¼šæ­£å¸¸';
 comment on column MARS_SYS_DEPT.del_flag
-  is 'ÊÇ·ñÉ¾³ı  -1£ºÒÑÉ¾³ı  0£ºÕı³£';
+  is 'æ˜¯å¦åˆ é™¤  -1ï¼šå·²åˆ é™¤  0ï¼šæ­£å¸¸';
 alter table MARS_SYS_DEPT
   add constraint PK_SYS_DEPT_ID primary key (ID);
 
@@ -141,29 +141,29 @@ create table MARS_SYS_MEDIA_FILE
 )
 ;
 comment on table MARS_SYS_MEDIA_FILE
-  is 'Í¼Æ¬¡¢ÎÄ¼ş¡¢ÒôÀÖµÈÃ½ÌåÎÄ¼ş';
+  is 'å›¾ç‰‡ã€æ–‡ä»¶ã€éŸ³ä¹ç­‰åª’ä½“æ–‡ä»¶';
 comment on column MARS_SYS_MEDIA_FILE.id
-  is '±àºÅ';
+  is 'ç¼–å·';
 comment on column MARS_SYS_MEDIA_FILE.resource_type
-  is '×ÊÔ´ÀàĞÍ(±íÃû)£ºuser-ÓÃ»§£»';
+  is 'èµ„æºç±»å‹(è¡¨å)ï¼šuser-ç”¨æˆ·ï¼›';
 comment on column MARS_SYS_MEDIA_FILE.resource_id
-  is '×ÊÔ´±àºÅ';
+  is 'èµ„æºç¼–å·';
 comment on column MARS_SYS_MEDIA_FILE.file_type
-  is 'ÎÄ¼şÀàĞÍ(×Ö¶Î)£ºavatar-Í·Ïñ£»';
+  is 'æ–‡ä»¶ç±»å‹(å­—æ®µ)ï¼šavatar-å¤´åƒï¼›';
 comment on column MARS_SYS_MEDIA_FILE.file_content
-  is 'ÎÄ¼şÄÚÈİ';
+  is 'æ–‡ä»¶å†…å®¹';
 comment on column MARS_SYS_MEDIA_FILE.create_by
-  is '´´½¨ÈË';
+  is 'åˆ›å»ºäºº';
 comment on column MARS_SYS_MEDIA_FILE.create_time
-  is '´´½¨Ê±¼ä';
+  is 'åˆ›å»ºæ—¶é—´';
 comment on column MARS_SYS_MEDIA_FILE.last_update_by
-  is '¸üĞÂÈË';
+  is 'æ›´æ–°äºº';
 comment on column MARS_SYS_MEDIA_FILE.last_update_time
-  is '¸üĞÂÊ±¼ä';
+  is 'æ›´æ–°æ—¶é—´';
 comment on column MARS_SYS_MEDIA_FILE.status
-  is '×´Ì¬  0£º½ûÓÃ   1£ºÕı³£';
+  is 'çŠ¶æ€  0ï¼šç¦ç”¨   1ï¼šæ­£å¸¸';
 comment on column MARS_SYS_MEDIA_FILE.del_flag
-  is 'ÊÇ·ñÉ¾³ı  -1£ºÒÑÉ¾³ı  0£ºÕı³£';
+  is 'æ˜¯å¦åˆ é™¤  -1ï¼šå·²åˆ é™¤  0ï¼šæ­£å¸¸';
 alter table MARS_SYS_MEDIA_FILE
   add constraint PK_SYS_MEDIA_FILE_ID primary key (ID);
 
@@ -196,47 +196,47 @@ create table MARS_SYS_MENU
 )
 ;
 comment on table MARS_SYS_MENU
-  is '²Ëµ¥¹ÜÀí';
+  is 'èœå•ç®¡ç†';
 comment on column MARS_SYS_MENU.id
-  is '±àºÅ';
+  is 'ç¼–å·';
 comment on column MARS_SYS_MENU.name
-  is '²Ëµ¥Ãû³Æ';
+  is 'èœå•åç§°';
 comment on column MARS_SYS_MENU.code
-  is '²Ëµ¥´úÂë';
+  is 'èœå•ä»£ç ';
 comment on column MARS_SYS_MENU.remark
-  is '±¸×¢';
+  is 'å¤‡æ³¨';
 comment on column MARS_SYS_MENU.perms
-  is 'ÊÚÈ¨(¶à¸öÓÃ¶ººÅ·Ö¸ô£¬Èç£ºsys:user:add,sys:user:edit)';
+  is 'æˆæƒ(å¤šä¸ªç”¨é€—å·åˆ†éš”ï¼Œå¦‚ï¼šsys:user:add,sys:user:edit)';
 comment on column MARS_SYS_MENU.type
-  is 'ÀàĞÍ   0£ºÄ¿Â¼   1£º²Ëµ¥   2£º°´Å¥';
+  is 'ç±»å‹   0ï¼šç›®å½•   1ï¼šèœå•   2ï¼šæŒ‰é’®';
 comment on column MARS_SYS_MENU.url_type
-  is 'urlÀàĞÍ£º1.ÆÕÍ¨Ò³Ãæ 2.Ç¶Ì×·şÎñÆ÷Ò³Ãæ 3.Ç¶Ì×ÍêÕûÍâ²¿Ò³Ãæ';
+  is 'urlç±»å‹ï¼š1.æ™®é€šé¡µé¢ 2.åµŒå¥—æœåŠ¡å™¨é¡µé¢ 3.åµŒå¥—å®Œæ•´å¤–éƒ¨é¡µé¢';
 comment on column MARS_SYS_MENU.url
-  is '²Ëµ¥URL,ÀàĞÍ£º1.ÆÕÍ¨Ò³Ãæ£¨ÈçÓÃ»§¹ÜÀí£¬ /sys/user£© 2.Ç¶Ì×ÍêÕûÍâ²¿Ò³Ãæ£¬ÒÔhttp(s)¿ªÍ·µÄÁ´½Ó 3.Ç¶Ì×·şÎñÆ÷Ò³Ãæ£¬Ê¹ÓÃiframe:Ç°×º+Ä¿±êURL(ÈçSQL¼à¿Ø£¬ iframe:/druid/login.html, iframe:Ç°×º»áÌæ»»³É·şÎñÆ÷µØÖ·)';
+  is 'èœå•URL,ç±»å‹ï¼š1.æ™®é€šé¡µé¢ï¼ˆå¦‚ç”¨æˆ·ç®¡ç†ï¼Œ /sys/userï¼‰ 2.åµŒå¥—å®Œæ•´å¤–éƒ¨é¡µé¢ï¼Œä»¥http(s)å¼€å¤´çš„é“¾æ¥ 3.åµŒå¥—æœåŠ¡å™¨é¡µé¢ï¼Œä½¿ç”¨iframe:å‰ç¼€+ç›®æ ‡URL(å¦‚SQLç›‘æ§ï¼Œ iframe:/druid/login.html, iframe:å‰ç¼€ä¼šæ›¿æ¢æˆæœåŠ¡å™¨åœ°å€)';
 comment on column MARS_SYS_MENU.scheme
-  is 'Â·¾¶Ç°×º';
+  is 'è·¯å¾„å‰ç¼€';
 comment on column MARS_SYS_MENU.path
-  is 'ÇëÇóÂ·¾¶';
+  is 'è¯·æ±‚è·¯å¾„';
 comment on column MARS_SYS_MENU.target
-  is '´ò¿ª·½Ê½:_self´°¿ÚÄÚ,_blankĞÂ´°¿Ú';
+  is 'æ‰“å¼€æ–¹å¼:_selfçª—å£å†…,_blankæ–°çª—å£';
 comment on column MARS_SYS_MENU.parent_id
-  is '¸¸²Ëµ¥ID£¬Ò»¼¶²Ëµ¥Îª0';
+  is 'çˆ¶èœå•IDï¼Œä¸€çº§èœå•ä¸º0';
 comment on column MARS_SYS_MENU.order_num
-  is 'ÅÅĞò';
+  is 'æ’åº';
 comment on column MARS_SYS_MENU.icon
-  is '²Ëµ¥Í¼±ê';
+  is 'èœå•å›¾æ ‡';
 comment on column MARS_SYS_MENU.create_by
-  is '´´½¨ÈË';
+  is 'åˆ›å»ºäºº';
 comment on column MARS_SYS_MENU.create_time
-  is '´´½¨Ê±¼ä';
+  is 'åˆ›å»ºæ—¶é—´';
 comment on column MARS_SYS_MENU.last_update_by
-  is '¸üĞÂÈË';
+  is 'æ›´æ–°äºº';
 comment on column MARS_SYS_MENU.last_update_time
-  is '¸üĞÂÊ±¼ä';
+  is 'æ›´æ–°æ—¶é—´';
 comment on column MARS_SYS_MENU.status
-  is '×´Ì¬  0£º½ûÓÃ   1£ºÕı³£';
+  is 'çŠ¶æ€  0ï¼šç¦ç”¨   1ï¼šæ­£å¸¸';
 comment on column MARS_SYS_MENU.del_flag
-  is 'ÊÇ·ñÉ¾³ı  -1£ºÒÑÉ¾³ı  0£ºÕı³£';
+  is 'æ˜¯å¦åˆ é™¤  -1ï¼šå·²åˆ é™¤  0ï¼šæ­£å¸¸';
 alter table MARS_SYS_MENU
   add constraint PK_SYS_MENU_ID primary key (ID);
 
@@ -259,27 +259,27 @@ create table MARS_SYS_ROLE
 )
 ;
 comment on table MARS_SYS_ROLE
-  is '½ÇÉ«¹ÜÀí';
+  is 'è§’è‰²ç®¡ç†';
 comment on column MARS_SYS_ROLE.id
-  is '±àºÅ';
+  is 'ç¼–å·';
 comment on column MARS_SYS_ROLE.name
-  is '½ÇÉ«Ãû³Æ';
+  is 'è§’è‰²åç§°';
 comment on column MARS_SYS_ROLE.code
-  is '½ÇÉ«´úÂë';
+  is 'è§’è‰²ä»£ç ';
 comment on column MARS_SYS_ROLE.remark
-  is '±¸×¢';
+  is 'å¤‡æ³¨';
 comment on column MARS_SYS_ROLE.create_by
-  is '´´½¨ÈË';
+  is 'åˆ›å»ºäºº';
 comment on column MARS_SYS_ROLE.create_time
-  is '´´½¨Ê±¼ä';
+  is 'åˆ›å»ºæ—¶é—´';
 comment on column MARS_SYS_ROLE.last_update_by
-  is '¸üĞÂÈË';
+  is 'æ›´æ–°äºº';
 comment on column MARS_SYS_ROLE.last_update_time
-  is '¸üĞÂÊ±¼ä';
+  is 'æ›´æ–°æ—¶é—´';
 comment on column MARS_SYS_ROLE.status
-  is '×´Ì¬  0£º½ûÓÃ   1£ºÕı³£';
+  is 'çŠ¶æ€  0ï¼šç¦ç”¨   1ï¼šæ­£å¸¸';
 comment on column MARS_SYS_ROLE.del_flag
-  is 'ÊÇ·ñÉ¾³ı  -1£ºÒÑÉ¾³ı  0£ºÕı³£';
+  is 'æ˜¯å¦åˆ é™¤  -1ï¼šå·²åˆ é™¤  0ï¼šæ­£å¸¸';
 alter table MARS_SYS_ROLE
   add constraint PK_SYS_ROLE_ID primary key (ID);
 
@@ -299,21 +299,21 @@ create table MARS_SYS_ROLE_DEPT
 )
 ;
 comment on table MARS_SYS_ROLE_DEPT
-  is '½ÇÉ«»ú¹¹';
+  is 'è§’è‰²æœºæ„';
 comment on column MARS_SYS_ROLE_DEPT.id
-  is '±àºÅ';
+  is 'ç¼–å·';
 comment on column MARS_SYS_ROLE_DEPT.role_id
-  is '½ÇÉ«ID';
+  is 'è§’è‰²ID';
 comment on column MARS_SYS_ROLE_DEPT.dept_id
-  is '»ú¹¹ID';
+  is 'æœºæ„ID';
 comment on column MARS_SYS_ROLE_DEPT.create_by
-  is '´´½¨ÈË';
+  is 'åˆ›å»ºäºº';
 comment on column MARS_SYS_ROLE_DEPT.create_time
-  is '´´½¨Ê±¼ä';
+  is 'åˆ›å»ºæ—¶é—´';
 comment on column MARS_SYS_ROLE_DEPT.last_update_by
-  is '¸üĞÂÈË';
+  is 'æ›´æ–°äºº';
 comment on column MARS_SYS_ROLE_DEPT.last_update_time
-  is '¸üĞÂÊ±¼ä';
+  is 'æ›´æ–°æ—¶é—´';
 alter table MARS_SYS_ROLE_DEPT
   add constraint PK_SYS_ROLE_DEPT_ID primary key (ID);
 
@@ -333,21 +333,21 @@ create table MARS_SYS_ROLE_MENU
 )
 ;
 comment on table MARS_SYS_ROLE_MENU
-  is '½ÇÉ«²Ëµ¥';
+  is 'è§’è‰²èœå•';
 comment on column MARS_SYS_ROLE_MENU.id
-  is '±àºÅ';
+  is 'ç¼–å·';
 comment on column MARS_SYS_ROLE_MENU.role_id
-  is '½ÇÉ«ID';
+  is 'è§’è‰²ID';
 comment on column MARS_SYS_ROLE_MENU.menu_id
-  is '²Ëµ¥ID';
+  is 'èœå•ID';
 comment on column MARS_SYS_ROLE_MENU.create_by
-  is '´´½¨ÈË';
+  is 'åˆ›å»ºäºº';
 comment on column MARS_SYS_ROLE_MENU.create_time
-  is '´´½¨Ê±¼ä';
+  is 'åˆ›å»ºæ—¶é—´';
 comment on column MARS_SYS_ROLE_MENU.last_update_by
-  is '¸üĞÂÈË';
+  is 'æ›´æ–°äºº';
 comment on column MARS_SYS_ROLE_MENU.last_update_time
-  is '¸üĞÂÊ±¼ä';
+  is 'æ›´æ–°æ—¶é—´';
 alter table MARS_SYS_ROLE_MENU
   add constraint PK_SYS_ROLE_MENU_ID primary key (ID);
 
@@ -365,7 +365,7 @@ create table MARS_SYS_USER
   salt                  VARCHAR2(50),
   sex                   NUMBER(1),
   birthday              DATE,
-  age                   NUMBER(3),
+  age                   NUMBER(5),
   id_number             VARCHAR2(50),
   address               NVARCHAR2(50),
   email                 VARCHAR2(50),
@@ -388,63 +388,63 @@ create table MARS_SYS_USER
 )
 ;
 comment on table MARS_SYS_USER
-  is 'ÓÃ»§¹ÜÀí';
+  is 'ç”¨æˆ·ç®¡ç†';
 comment on column MARS_SYS_USER.id
-  is '±àºÅ';
+  is 'ç¼–å·';
 comment on column MARS_SYS_USER.account
-  is 'ÕËºÅ';
+  is 'è´¦å·';
 comment on column MARS_SYS_USER.password
-  is 'ÃÜÂë';
+  is 'å¯†ç ';
 comment on column MARS_SYS_USER.name
-  is 'ÓÃ»§Ãû';
+  is 'ç”¨æˆ·å';
 comment on column MARS_SYS_USER.nick_name
-  is 'êÇ³Æ';
+  is 'æ˜µç§°';
 comment on column MARS_SYS_USER.salt
-  is '¼ÓÃÜÑÎ';
+  is 'åŠ å¯†ç›';
 comment on column MARS_SYS_USER.sex
-  is 'ĞÔ±ğ  1£ºÄĞ   2£ºÅ®';
+  is 'æ€§åˆ«  1ï¼šç”·   2ï¼šå¥³';
 comment on column MARS_SYS_USER.birthday
-  is '³öÉúÈÕÆÚ';
+  is 'å‡ºç”Ÿæ—¥æœŸ';
 comment on column MARS_SYS_USER.age
-  is 'ÄêÁä';
+  is 'å¹´é¾„';
 comment on column MARS_SYS_USER.id_number
-  is 'Éí·İÖ¤ºÅ';
+  is 'èº«ä»½è¯å·';
 comment on column MARS_SYS_USER.address
-  is 'µØÖ·';
+  is 'åœ°å€';
 comment on column MARS_SYS_USER.email
-  is 'ÓÊÏä';
+  is 'é‚®ç®±';
 comment on column MARS_SYS_USER.mobile
-  is 'ÊÖ»úºÅ';
+  is 'æ‰‹æœºå·';
 comment on column MARS_SYS_USER.entry_time
-  is 'ÈëÖ°Ê±¼ä';
+  is 'å…¥èŒæ—¶é—´';
 comment on column MARS_SYS_USER.departure_time
-  is 'ÀëÖ°Ê±¼ä';
+  is 'ç¦»èŒæ—¶é—´';
 comment on column MARS_SYS_USER.country_code
-  is '¹ú¼Ò´úÂë';
+  is 'å›½å®¶ä»£ç ';
 comment on column MARS_SYS_USER.nation_code
-  is 'Ãñ×å´úÂë';
+  is 'æ°‘æ—ä»£ç ';
 comment on column MARS_SYS_USER.political_status_code
-  is 'ÕşÖÎÃæÃ²´úÂë';
+  is 'æ”¿æ²»é¢è²Œä»£ç ';
 comment on column MARS_SYS_USER.user_type
-  is 'ÓÃ»§ÀàĞÍ';
+  is 'ç”¨æˆ·ç±»å‹';
 comment on column MARS_SYS_USER.identity_code
-  is 'Éí·İ´úÂë';
+  is 'èº«ä»½ä»£ç ';
 comment on column MARS_SYS_USER.dept_id
-  is '»ú¹¹ID';
+  is 'æœºæ„ID';
 comment on column MARS_SYS_USER.create_by
-  is '´´½¨ÈË';
+  is 'åˆ›å»ºäºº';
 comment on column MARS_SYS_USER.create_time
-  is '´´½¨Ê±¼ä';
+  is 'åˆ›å»ºæ—¶é—´';
 comment on column MARS_SYS_USER.last_update_by
-  is '¸üĞÂÈË';
+  is 'æ›´æ–°äºº';
 comment on column MARS_SYS_USER.last_update_time
-  is '¸üĞÂÊ±¼ä';
+  is 'æ›´æ–°æ—¶é—´';
 comment on column MARS_SYS_USER.status
-  is '×´Ì¬  0£º½ûÓÃ   1£ºÕı³£';
+  is 'çŠ¶æ€  0ï¼šç¦ç”¨   1ï¼šæ­£å¸¸';
 comment on column MARS_SYS_USER.del_flag
-  is 'ÊÇ·ñÉ¾³ı  -1£ºÒÑÉ¾³ı  0£ºÕı³£';
+  is 'æ˜¯å¦åˆ é™¤  -1ï¼šå·²åˆ é™¤  0ï¼šæ­£å¸¸';
 comment on column MARS_SYS_USER.flag
-  is '¡¾0¡¿ÊÇ·ñ:1ÊÇ0·ñ';
+  is 'ã€0ã€‘æ˜¯å¦:1æ˜¯0å¦';
 alter table MARS_SYS_USER
   add constraint PK_SYS_USER_ID primary key (ID);
 
@@ -464,21 +464,21 @@ create table MARS_SYS_USER_ROLE
 )
 ;
 comment on table MARS_SYS_USER_ROLE
-  is 'ÓÃ»§½ÇÉ«';
+  is 'ç”¨æˆ·è§’è‰²';
 comment on column MARS_SYS_USER_ROLE.id
-  is '±àºÅ';
+  is 'ç¼–å·';
 comment on column MARS_SYS_USER_ROLE.user_id
-  is 'ÓÃ»§ID';
+  is 'ç”¨æˆ·ID';
 comment on column MARS_SYS_USER_ROLE.role_id
-  is '½ÇÉ«ID';
+  is 'è§’è‰²ID';
 comment on column MARS_SYS_USER_ROLE.create_by
-  is '´´½¨ÈË';
+  is 'åˆ›å»ºäºº';
 comment on column MARS_SYS_USER_ROLE.create_time
-  is '´´½¨Ê±¼ä';
+  is 'åˆ›å»ºæ—¶é—´';
 comment on column MARS_SYS_USER_ROLE.last_update_by
-  is '¸üĞÂÈË';
+  is 'æ›´æ–°äºº';
 comment on column MARS_SYS_USER_ROLE.last_update_time
-  is '¸üĞÂÊ±¼ä';
+  is 'æ›´æ–°æ—¶é—´';
 alter table MARS_SYS_USER_ROLE
   add constraint PK_SYS_USER_ROLE_ID primary key (ID);
 

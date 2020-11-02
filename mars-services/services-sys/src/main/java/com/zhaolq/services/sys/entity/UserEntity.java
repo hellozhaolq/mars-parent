@@ -39,7 +39,7 @@ public class UserEntity extends Model<UserEntity> {
 
     private static final long serialVersionUID = 1L;
 
-    @JsonProperty("ID")
+    @JsonProperty("id")
     @NotNull(groups = {Edit.class, Remove.class}, message = "id缺失")
     @ApiModelProperty(value = "编号")
     @TableId(value = "ID", type = IdType.ASSIGN_ID)

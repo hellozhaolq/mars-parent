@@ -5,10 +5,10 @@ import org.springframework.lang.Nullable;
 /**
  * 接口结果代码枚举
  *
- * 参考
- * {@code org.springframework.http.HttpStatus}
- * {@code javax.servlet.http.HttpServletResponse}
- * {@code cn.hutool.http.HttpStatus}
+ * 参考：
+ *      {@code org.springframework.http.HttpStatus}
+ *      {@code javax.servlet.http.HttpServletResponse}
+ *      {@code cn.hutool.http.HttpStatus}
  * @author zhaolq
  * @date 2020/10/16 10:34
  */
@@ -151,7 +151,6 @@ public enum HttpStatus {
         return null;
     }
 
-
     /**
      * 返回此状态代码的HTTP状态系列。
      * @see HttpStatus.Series
@@ -274,6 +273,5 @@ public enum HttpStatus {
             return null;
         }
     }
-
 
 }

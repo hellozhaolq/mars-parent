@@ -1,9 +1,9 @@
-package com.zhaolq.core.http;
+package com.zhaolq.core.result;
 
 import org.springframework.lang.Nullable;
 
 /**
- * 接口结果代码枚举
+ * HTTP状态码枚举
  *
  * 参考：
  *      {@code org.springframework.http.HttpStatus}
@@ -12,7 +12,7 @@ import org.springframework.lang.Nullable;
  * @author zhaolq
  * @date 2020/10/16 10:34
  */
-public enum HttpStatus {
+public enum HttpStatus implements IResultCode {
 
     // 1xx Informational
 
@@ -44,7 +44,7 @@ public enum HttpStatus {
     TEMPORARY_REDIRECT(307, "Temporary Redirect", ""),
     PERMANENT_REDIRECT(308, "Permanent Redirect", ""),
 
-    // --- 4xx Client Error ---
+    // 4xx Client Error
 
     BAD_REQUEST(400, "Bad Request", "客户端错误"),
     UNAUTHORIZED(401, "Unauthorized", "未经授权"),
@@ -75,9 +75,9 @@ public enum HttpStatus {
     REQUEST_HEADER_FIELDS_TOO_LARGE(431, "Request Header Fields Too Large", ""),
     UNAVAILABLE_FOR_LEGAL_REASONS(451, "Unavailable For Legal Reasons", ""),
 
-    // --- 5xx Server Error ---
+    // 5xx Server Error
 
-    INTERNAL_SERVER_ERROR(500, "Internal Server Error", "服务器错误，请联系管理员"),
+    INTERNAL_SERVER_ERROR(500, "Internal Server Error", "内部服务器错误"),
     NOT_IMPLEMENTED(501, "Not Implemented", ""),
     BAD_GATEWAY(502, "Bad Gateway", ""),
     SERVICE_UNAVAILABLE(503, "Service Unavailable", ""),
@@ -88,7 +88,9 @@ public enum HttpStatus {
     LOOP_DETECTED(508, "Loop Detected", ""),
     BANDWIDTH_LIMIT_EXCEEDED(509, "Bandwidth Limit Exceeded", ""),
     NOT_EXTENDED(510, "Not Extended", ""),
-    NETWORK_AUTHENTICATION_REQUIRED(511, "Network Authentication Required", "");
+    NETWORK_AUTHENTICATION_REQUIRED(511, "Network Authentication Required", ""),
+
+    ;
 
     /**
      * 状态码
@@ -110,16 +112,24 @@ public enum HttpStatus {
         this.descCh = descCh;
     }
 
+    @Override
     public int getCode() {
         return code;
     }
 
+    @Override
     public String getDescEn() {
         return descEn;
     }
 
+    @Override
     public String getDescCh() {
         return descCh;
+    }
+
+    @Override
+    public Boolean isSuccess() {
+        return this.code == HttpStatus.OK.getCode();
     }
 
     /**

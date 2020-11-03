@@ -4,7 +4,7 @@ package com.zhaolq.services.sys.controller;
 import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.zhaolq.common.valid.group.Add;
-import com.zhaolq.core.http.HttpResult;
+import com.zhaolq.core.result.R;
 import com.zhaolq.services.sys.entity.UserEntity;
 import com.zhaolq.services.sys.service.IUserService;
 import lombok.AllArgsConstructor;
@@ -85,11 +85,11 @@ public class UserController {
      * @throws
      */
     @GetMapping("/user")
-    public HttpResult<UserEntity> getUser(UserEntity userEntity) {
+    public R<UserEntity> getUser(UserEntity userEntity) {
         Assert.notNull(userEntity, "条件不足！");
         QueryWrapper<UserEntity> wrapper = new QueryWrapper<>(userEntity);
         userEntity = userService.getOne(wrapper);
-        return HttpResult.data(userEntity);
+        return R.success(userEntity);
     }
 
     @GetMapping("/userList")

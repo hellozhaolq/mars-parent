@@ -8,35 +8,20 @@
         <groupId>com.zhaolq</groupId>
         <artifactId>mars</artifactId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath> <!-- 指定父父pom位置，默认值为../pom.xml。详细查找规则见源码 -->
-        <!--<relativePath/>--> <!-- lookup parent from repository -->
     </parent>
 
     <artifactId>mars-core</artifactId>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
     <name>${project.artifactId}</name>
-    <description>核心包。包括集合、字符串、BeanUtils等工具</description>
+    <description>核心</description>
 
-    <dependencies>
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
-            <version>${hutool-all.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-        </dependency>
-
-
-        <!-- 以下依赖不传递 -->
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>${swagger.version}</version>
-            <optional>true</optional>
-        </dependency>
-    </dependencies>
+    <modules>
+        <module>core-base</module>
+		<module>core-annotation</module>
+        <module>core-boot</module>
+        <module>core-cloud</module>
+        <module>core-web</module>
+    </modules>
 
 </project>

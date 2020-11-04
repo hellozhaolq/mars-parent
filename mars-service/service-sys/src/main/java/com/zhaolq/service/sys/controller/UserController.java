@@ -2,8 +2,8 @@ package com.zhaolq.service.sys.controller;
 
 
 import cn.hutool.core.lang.Assert;
-import com.zhaolq.common.valid.group.Add;
 import com.zhaolq.core.result.R;
+import com.zhaolq.common.valid.group.Add;
 import com.zhaolq.service.sys.entity.UserEntity;
 import com.zhaolq.service.sys.service.IUserService;
 import lombok.AllArgsConstructor;
@@ -87,6 +87,14 @@ public class UserController {
     public R<UserEntity> getUser(UserEntity userEntity) {
         Assert.notNull(userEntity, "条件不足！");
         System.out.println(userEntity);
+        System.out.println("啊阿斯顿来看看啊slop参加但是领导阿斯蒂芬asdfasdfa");
+        System.out.println("啊阿斯顿来看看啊slop参加但是领导阿斯蒂芬asdfasdfa");
+        System.out.println("啊阿斯顿来看看啊slop参加但是领导阿斯蒂芬asdfasdfa");
+        log.info("啊阿斯顿来看看啊slop参加但是领导阿斯蒂芬asdfasdfa");
+        log.info("啊阿斯顿来看看啊slop参加但是领导阿斯蒂芬asdfasdfa");
+        log.info("啊阿斯顿来看看啊slop参加但是领导阿斯蒂芬asdfasdfa");
+        log.info("啊阿斯顿来看看啊slop参加但是领导阿斯蒂芬asdfasdfa");
+
         // QueryWrapper<UserEntity> wrapper = new QueryWrapper<>(userEntity);
         // userEntity = userService.getOne(wrapper);
         return R.success(null);

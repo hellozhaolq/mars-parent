@@ -6,21 +6,14 @@
 
     <parent>
         <groupId>com.zhaolq</groupId>
-        <artifactId>mars</artifactId>
+        <artifactId>mars-core</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>mars-common</artifactId>
-    <packaging>pom</packaging>
+    <artifactId>core-web</artifactId>
+    <packaging>jar</packaging>
 
     <name>${project.artifactId}</name>
-    <description>通用组件</description>
-
-    <modules>
-        <module>common-log</module>
-        <module>common-mybatis</module>
-        <module>common-swagger</module>
-        <module>common-valid</module>
-    </modules>
+    <description>核心web</description>
 
 </project>

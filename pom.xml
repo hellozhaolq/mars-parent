@@ -14,8 +14,8 @@
     <description>地球计划</description>
 
     <modules>
-        <module>mars-common</module>
         <module>mars-core</module>
+        <module>mars-common</module>
         <module>mars-demo</module>
         <module>mars-service</module>
         <module>mars-tool</module>

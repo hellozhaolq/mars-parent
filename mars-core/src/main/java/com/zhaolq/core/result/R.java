@@ -66,15 +66,15 @@ public class R<T> implements Serializable {
     }
 
     public static <T> R<T> failure(String msgEn, String msgCh) {
-        return new R<>(ResultCode.CUSTOM_ERROR_DESCRIPTION, msgEn, msgCh);
+        return new R<>(ResultCode.CUSTOM_ERROR, msgEn, msgCh);
     }
 
     public static <T> R<T> failureEn(String msgEn) {
-        return new R<>(ResultCode.CUSTOM_ERROR_DESCRIPTION, msgEn, null);
+        return new R<>(ResultCode.CUSTOM_ERROR, msgEn, null);
     }
 
     public static <T> R<T> failureCh(String msgCh) {
-        return new R<>(ResultCode.CUSTOM_ERROR_DESCRIPTION, null, msgCh);
+        return new R<>(ResultCode.CUSTOM_ERROR, null, msgCh);
     }
 
     /** boo */

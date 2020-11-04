@@ -6,32 +6,28 @@
 
     <parent>
         <groupId>com.zhaolq</groupId>
-        <artifactId>mars</artifactId>
+        <artifactId>mars-common</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>mars-demo</artifactId>
-    <packaging>pom</packaging>
+    <artifactId>common-swagger</artifactId>
+    <packaging>jar</packaging>
 
     <name>${project.artifactId}</name>
-    <description>Java Project Demo</description>
-
-    <modules>
-        <module>demo-annotation</module>
-        <module>demo-a</module>
-    </modules>
+    <description>Swagger组件</description>
 
     <dependencies>
+        <!-- swagger2 -->
         <dependency>
-            <groupId>com.zhaolq</groupId>
-            <artifactId>mars-core</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${swagger.version}</version>
         </dependency>
+        <!-- swagger2 ui -->
         <dependency>
-            <groupId>com.zhaolq</groupId>
-            <artifactId>common-log</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${swagger.version}</version>
         </dependency>
     </dependencies>
-
 </project>

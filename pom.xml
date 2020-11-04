@@ -14,11 +14,11 @@
     <description>地球计划</description>
 
     <modules>
-        <module>mars-commons</module>
+        <module>mars-common</module>
         <module>mars-core</module>
         <module>mars-demo</module>
-        <module>mars-services</module>
-        <module>mars-tools</module>
+        <module>mars-service</module>
+        <module>mars-tool</module>
     </modules>
 
     <!-- 有待验证：

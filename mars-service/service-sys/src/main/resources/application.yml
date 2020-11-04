@@ -1,0 +1,28 @@
+server:
+  port: 60001
+
+# DataSource Config
+#spring:
+#  datasource:
+#    driver-class-name: oracle.jdbc.driver.OracleDriver
+#    url: jdbc:oracle:thin:@192.168.0.3:1521:orcl
+#    username: mars
+#    password: 123456
+spring:
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@192.168.3.206:1521:orcl
+    username: oracle_sys
+    password: earth
+
+mybatis-plus:
+  # mapper-locations，用以扫描mapper.xml；@MapperScan 注解用以扫描 mapper 接口(也可以在每一个 mapper 接口上添加 @Mapper 注解)
+  # classpath:只能加载第一个匹配到的资源目录；classpath*:能加载所有匹配到的资源目录；
+  mapper-locations: classpath*:/mapper/**/*.xml
+  #  如果不配置type-aliases-package，那么resultMap的type 和 parameterType 就得写全名 resultType="com.zhaolq.entity"
+  type-aliases-package: com.zhaolq.**.entity
+  configuration:
+    # StdOutImpl：打印所有级别日志到控制台（不记录日志）。
+    # Slf4jImpl、Log4j2Impl：打印指定级别的日志，打印位置由日志模块配置决定。
+    # NoLoggingImpl：不打印日志。
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

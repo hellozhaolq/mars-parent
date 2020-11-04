@@ -10,28 +10,18 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>mars-demo</artifactId>
+    <artifactId>mars-common</artifactId>
     <packaging>pom</packaging>
 
     <name>${project.artifactId}</name>
-    <description>Java Project Demo</description>
+    <description>通用组件</description>
 
     <modules>
-        <module>demo-annotation</module>
-        <module>demo-a</module>
+        <module>common-swagger</module>
+        <module>common-log</module>
+        <module>common-mybatis</module>
+        <module>common-valid</module>
+        <module>common-core</module>
     </modules>
-
-    <dependencies>
-        <dependency>
-            <groupId>com.zhaolq</groupId>
-            <artifactId>mars-core</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.zhaolq</groupId>
-            <artifactId>common-log</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
 
 </project>

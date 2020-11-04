@@ -238,7 +238,7 @@
                     <artifactId>spring-boot-maven-plugin</artifactId>
                     <version>${spring-boot-maven-plugin.version}</version>
                     <configuration>
-                        <!-- 跳过执行：设置true时，打成普通jar包，不可执行，和使用maven-jar-plugin打的jar包相同。 -->
+                        <!-- 跳过执行：设置true时，打成普通jar包(不可执行)，和使用maven-jar-plugin打的jar包相同。 -->
                         <skip>false</skip>
                         <fork>true</fork>
                         <finalName>${project.build.finalName}</finalName>

@@ -1,8 +1,15 @@
 server:
   port: 60001
+  tomcat:
+    uri-encoding: UTF-8 # 默认UTF-8
 
 # DataSource Config
 spring:
+  http:
+    encoding:
+      charset: UTF-8 # 默认UTF-8
+      force: true
+      enabled: true
   datasource:
     driver-class-name: oracle.jdbc.driver.OracleDriver
     url: jdbc:oracle:thin:@192.168.0.3:1521:orcl

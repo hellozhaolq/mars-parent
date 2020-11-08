@@ -2,8 +2,8 @@ package com.zhaolq.service.sys.controller;
 
 
 import cn.hutool.core.lang.Assert;
-import com.zhaolq.core.result.R;
 import com.zhaolq.common.valid.group.Add;
+import com.zhaolq.core.result.R;
 import com.zhaolq.service.sys.entity.UserEntity;
 import com.zhaolq.service.sys.service.IUserService;
 import lombok.AllArgsConstructor;
@@ -12,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
+import java.nio.charset.Charset;
 import java.util.List;
 
 /**
@@ -87,10 +88,16 @@ public class UserController {
     public R<UserEntity> getUser(UserEntity userEntity) {
         Assert.notNull(userEntity, "条件不足！");
         System.out.println(userEntity);
+
+        System.out.println("当前JRE版本：" + System.getProperty("java.version"));
+        System.out.println("当前JVM的默认字符集：" + Charset.defaultCharset());
+        // 查看JVM运行时所使用的编码。Windows默认file.encoding=”GBK”；Linux默认file.encoding=”UTF-8”。
+        System.out.println(System.getProperty("file.encoding"));
+        System.out.println(System.getProperty("file.encoding"));
+        System.out.println(System.getProperty("file.encoding"));
         System.out.println("啊阿斯顿来看看啊slop参加但是领导阿斯蒂芬asdfasdfa");
         System.out.println("啊阿斯顿来看看啊slop参加但是领导阿斯蒂芬asdfasdfa");
         System.out.println("啊阿斯顿来看看啊slop参加但是领导阿斯蒂芬asdfasdfa");
-        log.info("啊阿斯顿来看看啊slop参加但是领导阿斯蒂芬asdfasdfa");
         log.info("啊阿斯顿来看看啊slop参加但是领导阿斯蒂芬asdfasdfa");
         log.info("啊阿斯顿来看看啊slop参加但是领导阿斯蒂芬asdfasdfa");
         log.info("啊阿斯顿来看看啊slop参加但是领导阿斯蒂芬asdfasdfa");

@@ -23,8 +23,17 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
+        &lt;!&ndash; 桥接：告诉Slf4j使用Log4j2 &ndash;&gt;
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+        </dependency>
+        &lt;!&ndash; 桥接：告诉commons logging使用Log4j2 &ndash;&gt;
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-jcl</artifactId>
+        </dependency>
         -->
-
 
         <!-- log4j2实现slf4j；使用log4j2时，web项目需要log4j-web模块，版本与log4j-core保持一致 -->
         <dependency>

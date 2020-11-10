@@ -56,6 +56,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <!-- 编译时的编码，也可在maven-compiler-plugin插件中配置 -->
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+        <suiteXmlFile>testing.xml</suiteXmlFile>
 
         <java.version>1.8</java.version>
 
@@ -70,6 +71,7 @@
         <maven-javadoc-plugin.version>3.1.1</maven-javadoc-plugin.version>
         <maven-source-plugin.version>3.1.0</maven-source-plugin.version>
         <maven-war-plugin.version>3.2.3</maven-war-plugin.version>
+        <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
 
         <ojdbc.version>19.3.0.0</ojdbc.version>
 
@@ -228,6 +230,30 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <!-- default声明周期的test阶段默认绑定了maven-surefire-plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+                <configuration>
+                    <skipTests>true</skipTests>
+                    <argLine>-Dfile.encoding=UTF-8</argLine>
+                    <parallel>all</parallel>
+                    <threadCount>10</threadCount> <!-- 与parallel参数结合使用 -->
+                    <!-- 设置为错误/失败计数以跳过其余测试 -->
+                    <skipAfterFailureCount>1</skipAfterFailureCount> <!-- 当有一个测试用例发生错误或失败时，跳过后续其他测试 -->
+                    <!-- 测试失败后的重试次数。当测试含有远程服务时，在某些情况下可能由于环境问题(比如网络)导致测试用例执行失败，但这并不是程序问题。换句话说,当一个测试用例执行N次,有一次执行成功就认为成功. -->
+                    <rerunFailingTestsCount>2</rerunFailingTestsCount> <!-- 两次重试机会 -->
+                    <includes>
+                        <include>*</include>
+                    </includes>
+                    <excludes>
+                        <exclude>**/mapper/*</exclude>
+                        <exclude>**/controller/*</exclude>
+                        <exclude>**/service/*</exclude>
+                    </excludes>
+                </configuration>
             </plugin>
         </plugins>
         <pluginManagement>

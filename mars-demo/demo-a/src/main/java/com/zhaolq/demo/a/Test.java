@@ -10,8 +10,15 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class Test {
-    public static void main(String[] args) throws Exception {
-
+    public static void main(String[] args) {
+        // 跑满cpu
+        while (true) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                }
+            }).start();
+        }
     }
 
 }

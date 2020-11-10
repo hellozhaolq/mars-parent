@@ -11,7 +11,7 @@ public enum ResultCode implements IResultCode {
     /* 成功 */
     SUCCESS(1, "success", "请求成功"),
     /* 自定义错误 */
-    CUSTOM_ERROR(9999998, "custom error", "自定义错误"),
+    CUSTOM_ERROR_DESC(9999998, "custom error desc", "自定义错误描述"),
     /* 未知错误 */
     UNKNOWN_ERROR(9999999, "unknown error, please contact administrator!", "未知错误，请联系管理员！"),
 

@@ -18,7 +18,7 @@ import java.util.List;
  * @date 2020/10/21 22:25
  */
 @Configuration
-// @MapperScan({"com.zhaolq.**.mapper"}) /* 这里扫描与在springboot启动类扫描有和区别 */
+// @MapperScan({"com.zhaolq.**.mapper"}) /* 这里扫描与在springboot启动类扫描有何区别 */
 public class MyBatisPlusConfig {
 
     /**

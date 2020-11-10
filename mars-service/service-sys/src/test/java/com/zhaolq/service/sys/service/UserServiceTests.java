@@ -1,7 +1,6 @@
 package com.zhaolq.service.sys.service;
 
 import com.zhaolq.service.sys.entity.UserEntity;
-import com.zhaolq.service.sys.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;

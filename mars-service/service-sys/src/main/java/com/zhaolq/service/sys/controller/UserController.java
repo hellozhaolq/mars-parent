@@ -2,8 +2,10 @@ package com.zhaolq.service.sys.controller;
 
 import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zhaolq.common.valid.group.Add;
 import com.zhaolq.core.result.R;
+import com.zhaolq.core.utils.FileUtils;
 import com.zhaolq.service.sys.entity.UserEntity;
 import com.zhaolq.service.sys.service.IUserService;
 import lombok.AllArgsConstructor;
@@ -11,7 +13,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
+import java.io.File;
 import java.util.List;
 
 /**
@@ -105,6 +109,28 @@ public class UserController {
     public R<List<UserEntity>> getListDetail(UserEntity userEntity) {
         return null;
     }
+
+    @GetMapping("/page")
+    public R<List<UserEntity>> getPage() {
+        return null;
+    }
+
+    @GetMapping("/pageDetail")
+    public R<List<UserEntity>> getPageDetail() {
+        return null;
+    }
+
+    @PostMapping("exportExcel")
+    public void exportExcel(@RequestBody Page<UserEntity> page, HttpServletResponse response) {
+        File file = userService.createExcelFile(page);
+        FileUtils.downloadFile(response, file, file.getName());
+    }
+
+    @PostMapping("importExcel")
+    public R<Boolean> importExcel() {
+        return R.boo(true);
+    }
+
 
 }
 

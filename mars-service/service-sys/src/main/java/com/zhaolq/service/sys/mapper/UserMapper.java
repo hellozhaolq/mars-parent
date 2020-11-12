@@ -28,16 +28,16 @@ public interface UserMapper extends BaseMapper<UserEntity> {
      *
      * @param wrapper
      * @return java.util.List<com.zhaolq.service.sys.entity.UserEntity>
-     * @throws
      */
     // @Select("select * from tab_earth_user ${ew.customSqlSegment}")
     List<UserEntity> customSelectAllByWrapper(@Param(Constants.WRAPPER) Wrapper<UserEntity> wrapper);
 
     /**
      * 使用 Wrapper 自定义分页
+     *
      * @param page
      * @param wrapper
-     * @return
+     * @return com.baomidou.mybatisplus.core.metadata.IPage<com.zhaolq.service.sys.entity.UserEntity>
      */
     IPage<UserEntity> customSelectUserPageByWrapper(Page<UserEntity> page, @Param(Constants.WRAPPER) Wrapper<UserEntity> wrapper);
 
@@ -48,7 +48,6 @@ public interface UserMapper extends BaseMapper<UserEntity> {
      * @param userEntity
      * @param roleEntity
      * @return com.baomidou.mybatisplus.core.metadata.IPage<com.zhaolq.service.sys.entity.UserEntity>
-     * @throws
      */
     IPage<UserEntity> customSelectUserAndRolePage(Page<UserEntity> page, @Param("u") UserEntity userEntity, @Param("r") RoleEntity roleEntity);
 

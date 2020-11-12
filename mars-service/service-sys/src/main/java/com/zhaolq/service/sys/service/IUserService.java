@@ -1,7 +1,10 @@
 package com.zhaolq.service.sys.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhaolq.service.sys.entity.UserEntity;
+
+import java.io.File;
 
 /**
  * <p>
@@ -13,4 +16,11 @@ import com.zhaolq.service.sys.entity.UserEntity;
  */
 public interface IUserService extends IService<UserEntity> {
 
+    /**
+     * 生成用户信息excel文件
+     *
+     * @param page
+     * @return java.io.File
+     */
+    File createExcelFile(Page<UserEntity> page);
 }

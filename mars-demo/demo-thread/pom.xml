@@ -7,13 +7,16 @@
     <parent>
         <groupId>com.zhaolq</groupId>
         <artifactId>mars-demo</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0.0</version>
     </parent>
 
+    <groupId>com.zhaolq</groupId>
     <artifactId>demo-thread</artifactId>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
 
     <name>${project.artifactId}</name>
+    <url>https://blog.zhaolq.com</url>
     <description>线程Demo</description>
 
 </project>

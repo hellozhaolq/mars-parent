@@ -5,15 +5,18 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>mars-tool</artifactId>
         <groupId>com.zhaolq</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <artifactId>mars-tool</artifactId>
+        <version>1.0.0</version>
     </parent>
 
+    <groupId>com.zhaolq</groupId>
     <artifactId>tool-mybatis-generator</artifactId>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
 
     <name>${project.artifactId}</name>
+    <url>https://blog.zhaolq.com</url>
     <description>MyBatis Generator</description>
 
     <properties>

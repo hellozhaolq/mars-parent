@@ -7,10 +7,10 @@
     <groupId>com.zhaolq</groupId>
     <artifactId>mars</artifactId>
     <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <name>${project.artifactId}</name>
-    <url>http://maven.apache.org</url>
+    <url>https://blog.zhaolq.com</url>
     <description>地球计划</description>
 
     <modules>

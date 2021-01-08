@@ -7,13 +7,16 @@
     <parent>
         <groupId>com.zhaolq</groupId>
         <artifactId>mars-common</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0.0</version>
     </parent>
 
+    <groupId>com.zhaolq</groupId>
     <artifactId>common-log</artifactId>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
 
     <name>${project.artifactId}</name>
+    <url>https://blog.zhaolq.com</url>
     <description>Log组件</description>
 
     <dependencies>

@@ -7,20 +7,23 @@
     <parent>
         <groupId>com.zhaolq</groupId>
         <artifactId>demo-annotation</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0.0</version>
     </parent>
 
+    <groupId>com.zhaolq</groupId>
     <artifactId>annotation-sample</artifactId>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
 
     <name>${project.artifactId}</name>
+    <url>https://blog.zhaolq.com</url>
     <description>Java注解样本</description>
 
     <dependencies>
         <dependency>
             <groupId>com.zhaolq</groupId>
             <artifactId>processor</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
 

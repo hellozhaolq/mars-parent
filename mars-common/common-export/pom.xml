@@ -11,26 +11,25 @@
     </parent>
 
     <groupId>com.zhaolq</groupId>
-    <artifactId>common-swagger</artifactId>
+    <artifactId>common-export</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
     <name>${project.artifactId}</name>
     <url>https://blog.zhaolq.com</url>
-    <description>Swagger组件</description>
+    <description>导出组件，包括word、excel、ppt、pdf等</description>
 
     <dependencies>
-        <!-- swagger2 -->
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>${swagger.version}</version>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>${poi.version}</version>
         </dependency>
-        <!-- swagger2 ui -->
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>${swagger.version}</version>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>${poi.version}</version>
         </dependency>
+
     </dependencies>
 </project>

@@ -1,10 +1,10 @@
-package com.zhaolq.service.sys.mapper;
+package com.zhaolq.mars.service.sys.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.zhaolq.service.sys.entity.UserEntity;
-import com.zhaolq.service.sys.entity.RoleEntity;
+import com.zhaolq.mars.service.sys.entity.UserEntity;
+import com.zhaolq.mars.service.sys.entity.RoleEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;

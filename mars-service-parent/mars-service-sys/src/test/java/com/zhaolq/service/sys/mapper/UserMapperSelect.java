@@ -1,7 +1,7 @@
-package com.zhaolq.service.sys.mapper;
+package com.zhaolq.mars.service.sys.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.zhaolq.service.sys.entity.UserEntity;
+import com.zhaolq.mars.service.sys.entity.UserEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;

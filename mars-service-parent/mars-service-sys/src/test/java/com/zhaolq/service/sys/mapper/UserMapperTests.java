@@ -1,4 +1,4 @@
-package com.zhaolq.service.sys.mapper;
+package com.zhaolq.mars.service.sys.mapper;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.runner.RunWith;

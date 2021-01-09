@@ -14,10 +14,10 @@
     <description>地球计划</description>
 
     <modules>
-        <module>mars-core</module>
         <module>mars-common-parent</module>
-        <module>mars-demo</module>
-        <module>mars-service</module>
+        <module>mars-demo-parent</module>
+        <module>mars-service-parent</module>
+        <module>mars-tool-parent</module>
         <module>mars-zoo-parent</module>
     </modules>
 

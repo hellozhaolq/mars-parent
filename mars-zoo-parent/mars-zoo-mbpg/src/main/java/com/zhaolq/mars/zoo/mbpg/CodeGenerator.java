@@ -13,12 +13,12 @@ public class CodeGenerator {
 
     public static void main(String[] args) {
         AutoGenerator generator = new AutoGenerator();
-        generator.setGlobalConfig(com.zhaolq.tool.mbpg.MbpgUtil.getGlobalConfig());
-        generator.setDataSource(com.zhaolq.tool.mbpg.MbpgUtil.getDataSourceConfig());
-        generator.setPackageInfo(com.zhaolq.tool.mbpg.MbpgUtil.getPackageConfig());
-        generator.setCfg(com.zhaolq.tool.mbpg.MbpgUtil.getInjectionConfig());
-        generator.setTemplate(com.zhaolq.tool.mbpg.MbpgUtil.getTemplateConfig());
-        generator.setStrategy(com.zhaolq.tool.mbpg.MbpgUtil.getStrategyConfig());
+        generator.setGlobalConfig(MbpgUtil.getGlobalConfig());
+        generator.setDataSource(MbpgUtil.getDataSourceConfig());
+        generator.setPackageInfo(MbpgUtil.getPackageConfig());
+        generator.setCfg(MbpgUtil.getInjectionConfig());
+        generator.setTemplate(MbpgUtil.getTemplateConfig());
+        generator.setStrategy(MbpgUtil.getStrategyConfig());
         generator.setTemplateEngine(new VelocityTemplateEngine());
         generator.execute();
     }

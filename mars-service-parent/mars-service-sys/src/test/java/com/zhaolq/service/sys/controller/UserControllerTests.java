@@ -1,4 +1,4 @@
-package com.zhaolq.service.sys.controller;
+package com.zhaolq.mars.service.sys.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.runner.RunWith;

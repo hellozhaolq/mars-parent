@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.zhaolq.mars</groupId>
+        <artifactId>mars-parent</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <groupId>com.zhaolq.mars.demo</groupId>
+    <artifactId>mars-demo-parent</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+
+    <name>${project.artifactId}</name>
+    <url>https://blog.zhaolq.com</url>
+    <description>Java Project Demo</description>
+
+    <modules>
+        <module>mars-demo-a</module>
+        <module>mars-demo-thread</module>
+        <module>mars-demo-annotation</module>
+    </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.zhaolq.mars.tool</groupId>
+            <artifactId>mars-tool-core</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.zhaolq.mars.common</groupId>
+            <artifactId>mars-common-log</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+    </dependencies>
+
+</project>

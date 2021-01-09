@@ -5,30 +5,30 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.zhaolq.mars.demo</groupId>
-        <artifactId>mars-demo-parent</artifactId>
+        <groupId>com.zhaolq.mars.tool</groupId>
+        <artifactId>mars-tool-parent</artifactId>
         <version>1.0.0</version>
     </parent>
 
-    <groupId>com.zhaolq.mars.demo</groupId>
-    <artifactId>mars-demo-annotation</artifactId>
+    <groupId>com.zhaolq.mars.tool</groupId>
+    <artifactId>mars-tool-all</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
     <name>${project.artifactId}</name>
     <url>https://blog.zhaolq.com</url>
-    <description>Java注解Demo</description>
+    <description>通过引入mars-tool-all方式引入所有tool组件</description>
 
     <dependencies>
         <dependency>
-            <groupId>com.squareup</groupId>
-            <artifactId>javapoet</artifactId>
-            <version>${javapoet.version}</version>
+            <groupId>com.zhaolq.mars.tool</groupId>
+            <artifactId>mars-tool-annotation</artifactId>
+            <version>1.0.0</version>
         </dependency>
         <dependency>
-            <groupId>com.google.auto.service</groupId>
-            <artifactId>auto-service</artifactId>
-            <version>${auto-service.version}</version>
+            <groupId>com.zhaolq.mars.tool</groupId>
+            <artifactId>mars-tool-core</artifactId>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
 

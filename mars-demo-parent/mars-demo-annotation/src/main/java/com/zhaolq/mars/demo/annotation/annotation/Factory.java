@@ -1,4 +1,4 @@
-package com.zhaolq.demo.annotation;
+package com.zhaolq.mars.demo.annotation.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

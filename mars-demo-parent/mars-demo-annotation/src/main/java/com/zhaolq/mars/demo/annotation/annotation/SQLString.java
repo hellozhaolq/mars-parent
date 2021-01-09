@@ -1,4 +1,4 @@
-package com.zhaolq.demo.annotation;
+package com.zhaolq.mars.demo.annotation.annotation;
 
 import java.lang.annotation.*;
 
@@ -11,12 +11,15 @@ import java.lang.annotation.*;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-public @interface SQLInteger {
+public @interface SQLString {
 
     // 字段名
     String name() default "";
 
+    // 字段默认值
+    int value() default 0;
+
     // 约束条件
-    Constraints constaint() default @Constraints;
+    Constraints constraint() default @Constraints;
 
 }

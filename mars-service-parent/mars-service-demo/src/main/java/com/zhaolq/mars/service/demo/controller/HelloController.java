@@ -1,4 +1,4 @@
-package com.zhaolq.service.demo.controller;
+package com.zhaolq.mars.service.demo.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;

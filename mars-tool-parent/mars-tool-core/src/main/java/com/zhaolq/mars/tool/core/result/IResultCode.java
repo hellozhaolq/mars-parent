@@ -1,4 +1,4 @@
-package com.zhaolq.core.result;
+package com.zhaolq.mars.tool.core.result;
 
 /**
  * 状态码枚举抽象

@@ -1,4 +1,4 @@
-package com.zhaolq.core.exception;
+package com.zhaolq.mars.tool.core.exception;
 
 /**
  * 自定义异常

@@ -1,4 +1,6 @@
-package com.zhaolq.core.result;
+package com.zhaolq.mars.tool.core.result;
+
+import com.zhaolq.mars.tool.core.result.IResultCode;
 
 /**
  * API状态码枚举
@@ -13,7 +15,7 @@ public enum ResultCode implements IResultCode {
     /* 自定义错误 */
     CUSTOM_ERROR_DESC(9999998, "custom error desc", "自定义错误描述"),
     /* 未知错误 */
-    UNKNOWN_ERROR(9999999, "unknown error, please contact administrator!", "未知错误，请联系管理员！"),
+    UNKNOWN_ERROR(9999999, "unknown error", "未知错误"),
 
 
     /* 参数错误：10000-19999 */

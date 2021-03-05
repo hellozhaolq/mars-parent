@@ -1,5 +1,6 @@
-package com.zhaolq.core.result;
+package com.zhaolq.mars.tool.core.result;
 
+import com.zhaolq.mars.tool.core.result.IResultCode;
 import org.springframework.lang.Nullable;
 
 /**
@@ -224,10 +225,25 @@ public enum HttpStatus implements IResultCode {
      */
     public enum Series {
 
+        /**
+         * 信息，服务器收到请求，需要请求者继续执行操作
+         */
         INFORMATIONAL(1),
+        /**
+         * 成功，操作被成功接收并处理
+         */
         SUCCESSFUL(2),
+        /**
+         * 重定向，需要进一步的操作以完成请求
+         */
         REDIRECTION(3),
+        /**
+         * 客户端错误，请求包含语法错误或无法完成请求
+         */
         CLIENT_ERROR(4),
+        /**
+         * 服务器错误，服务器在处理请求的过程中发生了错误
+         */
         SERVER_ERROR(5);
 
         private final int code;

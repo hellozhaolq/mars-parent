@@ -4,9 +4,9 @@ import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.zhaolq.common.valid.group.Add;
-import com.zhaolq.common.valid.group.Edit;
-import com.zhaolq.common.valid.group.Remove;
+import com.zhaolq.mars.common.valid.group.Add;
+import com.zhaolq.mars.common.valid.group.Edit;
+import com.zhaolq.mars.common.valid.group.Remove;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -42,7 +42,7 @@ public class UserEntity extends Model<UserEntity> {
     @JsonProperty("id")
     @NotNull(groups = {Edit.class, Remove.class}, message = "id缺失")
     @ApiModelProperty(value = "编号")
-    @TableId(value = "ID", type = IdType.ASSIGN_ID)
+    @TableId(value = "ID", type = IdType.INPUT)
     private BigDecimal id;
 
     @NotNull(groups = {Add.class}, message = "账号缺失")
@@ -187,7 +187,7 @@ public class UserEntity extends Model<UserEntity> {
     private RoleEntity role;
 
 
-    /*********** 使用mp的通用curd会在实体类属性和表字段间自动做映射，不参与映射的三种解决方案(排除非表字段) ***********/
+    /*********** 使用mbp的通用curd会在实体类属性和表字段间自动做映射，不参与映射的三种解决方案(排除非表字段) ***********/
     /**
      * 1、不被序列化：transient
      */

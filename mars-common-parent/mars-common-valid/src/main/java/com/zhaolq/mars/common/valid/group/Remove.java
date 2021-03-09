@@ -1,4 +1,4 @@
-package com.zhaolq.common.valid.group;
+package com.zhaolq.mars.common.valid.group;
 
 /**
  * 删除操作的参数校验群组

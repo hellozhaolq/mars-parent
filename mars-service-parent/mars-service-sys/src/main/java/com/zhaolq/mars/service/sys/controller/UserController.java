@@ -2,12 +2,14 @@ package com.zhaolq.mars.service.sys.controller;
 
 import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.zhaolq.common.valid.group.Add;
 import com.zhaolq.core.utils.FileUtils;
+import com.zhaolq.mars.common.valid.group.Add;
 import com.zhaolq.mars.service.sys.entity.UserEntity;
 import com.zhaolq.mars.service.sys.service.IUserService;
 import com.zhaolq.mars.tool.core.result.R;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
@@ -43,6 +45,7 @@ public class UserController {
      * @throws
      */
     @PostMapping
+    @ApiOperation(value = "添加", notes = "添加")
     public R<Boolean> post(@Validated({Add.class}) @RequestBody(required = false) UserEntity userEntity) {
         Assert.notNull(userEntity, "条件不足！");
         userEntity.setStatus(1);
@@ -60,6 +63,7 @@ public class UserController {
      * @throws
      */
     @DeleteMapping("/{id}")
+    @ApiOperation(value = "删除", notes = "删除")
     public R<Boolean> delete(@PathVariable("id") @NotNull(message = "缺少id") Long id) {
         Assert.notNull(id, "条件不足！");
         boolean boo = userService.removeById(id);
@@ -74,6 +78,7 @@ public class UserController {
      * @throws
      */
     @PutMapping
+    @ApiOperation(value = "编辑修改", notes = "编辑修改")
     public R<Boolean> put(@RequestBody UserEntity userEntity) {
         Assert.notNull(userEntity, "条件不足！");
         boolean boo = userService.updateById(userEntity);
@@ -88,6 +93,7 @@ public class UserController {
      * @throws
      */
     @GetMapping
+    @ApiOperation(value = "查询", notes = "查询")
     public R<UserEntity> get(UserEntity userEntity) {
         Assert.notNull(userEntity, "条件不足！");
         QueryWrapper<UserEntity> wrapper = new QueryWrapper<>(userEntity);
@@ -101,8 +107,10 @@ public class UserController {
     }
 
     @GetMapping("/list")
+    @ApiOperation(value = "列表查询", notes = "列表查询")
     public R<List<UserEntity>> getList(UserEntity userEntity) {
-        return null;
+        QueryWrapper<UserEntity> wrapper = new QueryWrapper<>(userEntity);
+        return R.success(userService.list(wrapper));
     }
 
     @GetMapping("/listDetail")
@@ -111,12 +119,24 @@ public class UserController {
     }
 
     @GetMapping("/page")
-    public R<List<UserEntity>> getPage() {
+    public R<IPage> getPage(Page<UserEntity> page, UserEntity userEntity) {
+        QueryWrapper<UserEntity> wrapper = new QueryWrapper<>(userEntity);
+        IPage<UserEntity> iPage = userService.page(page, wrapper);
+        return R.success(iPage);
+    }
+
+    @PostMapping("/page")
+    public R<IPage> getPage2(Page<UserEntity> page, UserEntity userEntity) {
         return null;
     }
 
     @GetMapping("/pageDetail")
-    public R<List<UserEntity>> getPageDetail() {
+    public R<IPage> getPageDetail() {
+        return null;
+    }
+
+    @PostMapping("/pageDetail")
+    public R<IPage> getPageDetail2() {
         return null;
     }
 

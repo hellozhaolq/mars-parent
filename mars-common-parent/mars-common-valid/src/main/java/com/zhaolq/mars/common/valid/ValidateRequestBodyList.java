@@ -1,7 +1,7 @@
 /**
  * Copyright ©2020 Synjones. All rights reserved.
  */
-package com.zhaolq.common.valid;
+package com.zhaolq.mars.common.valid;
 
 import javax.validation.Valid;
 import java.util.List;

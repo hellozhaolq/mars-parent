@@ -12,7 +12,6 @@
         <!--<relativePath/>--> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>com.zhaolq.mars.tool</groupId>
     <artifactId>mars-tool-core</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>

@@ -10,7 +10,6 @@
         <version>1.0.0</version>
     </parent>
 
-    <groupId>com.zhaolq.mars.tool</groupId>
     <artifactId>mars-tool-annotation</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>

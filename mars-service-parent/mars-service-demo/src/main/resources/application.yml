@@ -8,3 +8,8 @@ spring:
     url: jdbc:oracle:thin:@192.168.3.206:1521:orcl
     username: base
     password: base
+  rabbitmq:
+    host: 192.168.3.233
+    port: 5672
+    username: admin
+    password: 123456

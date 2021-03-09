@@ -26,6 +26,7 @@
         <module>mars-common-valid</module>
         <module>mars-common-swagger</module>
         <module>mars-common-all</module>
+        <module>mars-common-mq</module>
     </modules>
 
 </project>

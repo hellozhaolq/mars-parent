@@ -5,29 +5,23 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.zhaolq.mars.tool</groupId>
-        <artifactId>mars-tool-parent</artifactId>
+        <groupId>com.zhaolq.mars.common</groupId>
+        <artifactId>mars-common-parent</artifactId>
         <version>1.0.0</version>
     </parent>
 
-    <artifactId>mars-tool-all</artifactId>
+    <artifactId>mars-common-mq</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
     <name>${project.artifactId}</name>
     <url>https://blog.zhaolq.com</url>
-    <description>通过引入mars-tool-all方式引入所有tool组件</description>
+    <description>mq组件</description>
 
     <dependencies>
         <dependency>
-            <groupId>com.zhaolq.mars.tool</groupId>
-            <artifactId>mars-tool-annotation</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.zhaolq.mars.tool</groupId>
-            <artifactId>mars-tool-core</artifactId>
-            <version>1.0.0</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
     </dependencies>
 

@@ -10,7 +10,6 @@
         <version>1.0.0</version>
     </parent>
 
-    <groupId>com.zhaolq.mars.common</groupId>
     <artifactId>mars-common-log</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>

@@ -10,7 +10,6 @@
         <version>1.0.0</version>
     </parent>
 
-    <groupId>com.zhaolq.mars.demo</groupId>
     <artifactId>mars-demo-a</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>

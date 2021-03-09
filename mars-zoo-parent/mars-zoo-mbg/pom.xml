@@ -10,7 +10,6 @@
         <version>1.0.0</version>
     </parent>
 
-    <groupId>com.zhaolq.mars.zoo</groupId>
     <artifactId>mars-zoo-mbg</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>

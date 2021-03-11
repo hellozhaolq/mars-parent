@@ -36,7 +36,7 @@ public class UserMapperPage_Custom {
         QueryWrapper<UserEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper.ge("AGE", "28");
         // 同样可以不进行 count 查询
-        Page<UserEntity> page = new Page<>(1, 3);
+        IPage<UserEntity> page = new Page<>(1, 3);
         IPage<UserEntity> iPage = userMapper.customSelectUserPageByWrapper(page, queryWrapper);
 
         System.out.println("总记录数：" + iPage.getTotal());
@@ -58,7 +58,7 @@ public class UserMapperPage_Custom {
         roleEntity.setName("mng");
 
         // 同样可以不进行 count 查询
-        Page<UserEntity> page = new Page<>(1, 3);
+        IPage<UserEntity> page = new Page<>(1, 3);
         IPage<UserEntity> iPage = userMapper.customSelectUserAndRolePage(page, userEntity, roleEntity);
 
         System.out.println("总记录数：" + iPage.getTotal());

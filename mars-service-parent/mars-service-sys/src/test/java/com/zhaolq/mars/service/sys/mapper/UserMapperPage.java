@@ -41,7 +41,7 @@ public class UserMapperPage {
     public void selectPage() {
         QueryWrapper<UserEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper.ge("AGE", "26");
-        Page<UserEntity> page = new Page<>(1, 2);
+        IPage<UserEntity> page = new Page<>(1, 2);
         IPage<UserEntity> iPage = userMapper.selectPage(page, queryWrapper);
 
         System.out.println("总记录数：" + iPage.getTotal());
@@ -59,7 +59,7 @@ public class UserMapperPage {
     public void selectMapsPage() {
         QueryWrapper<UserEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper.ge("AGE", "26");
-        Page<Map<String, Object>> page = new Page<>(1, 2);
+        IPage<Map<String, Object>> page = new Page<>(1, 2);
         IPage<Map<String, Object>> iPage = userMapper.selectMapsPage(page, queryWrapper);
 
         System.out.println("总记录数：" + iPage.getTotal());
@@ -78,7 +78,7 @@ public class UserMapperPage {
     public void selectIgnoreTotal() {
         QueryWrapper<UserEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper.ge("AGE", "26");
-        Page<Map<String, Object>> page = new Page<>(1, 2, false);
+        IPage<Map<String, Object>> page = new Page<>(1, 2, false);
         IPage<Map<String, Object>> iPage = userMapper.selectMapsPage(page, queryWrapper);
 
         System.out.println("总记录数：" + iPage.getTotal());

@@ -1,5 +1,5 @@
 server:
-  port: 60001
+  port: 60002
   servlet:
     context-path: /
   tomcat:
@@ -22,6 +22,12 @@ spring:
     url: jdbc:oracle:thin:@192.168.3.206:1521:orcl
     username: oracle_sys
     password: earth
+  rabbitmq:
+    addresses: 192.168.3.233
+    port: 5672
+    username: admin
+    password: 123456
+    connection-timeout: 15000
 
 mybatis-plus:
   # mapper-locations，用以扫描mapper.xml；@MapperScan 注解用以扫描 mapper 接口(也可以在每一个 mapper 接口上添加 @Mapper 注解)

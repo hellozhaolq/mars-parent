@@ -119,10 +119,10 @@ public class UserController {
     }
 
     @GetMapping("/page")
-    public R<IPage> getPage(Page<UserEntity> page, UserEntity userEntity) {
+    public R<IPage> getPage(IPage<UserEntity> page, UserEntity userEntity) {
         QueryWrapper<UserEntity> wrapper = new QueryWrapper<>(userEntity);
-        IPage<UserEntity> iPage = userService.page(page, wrapper);
-        return R.success(iPage);
+        page = userService.page(page, wrapper);
+        return R.success(page);
     }
 
     @PostMapping("/page")

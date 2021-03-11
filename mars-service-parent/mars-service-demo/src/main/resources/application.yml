@@ -9,6 +9,7 @@ spring:
     username: base
     password: base
   rabbitmq:
+    #addresses: 192.168.3.233:5672,192.168.3.235:5672 # 集群
     host: 192.168.3.233
     port: 5672
     username: admin

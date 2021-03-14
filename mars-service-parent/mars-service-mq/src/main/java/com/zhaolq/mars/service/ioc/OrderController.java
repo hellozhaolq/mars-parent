@@ -18,7 +18,9 @@ public class OrderController {
     private OrderService orderService;
 
     @GetMapping("/order")
-    public void order() {
-        orderService.getOrder();
+    public String order() {
+        System.out.println(orderService.getOrder().toString());
+        System.out.println(orderService.getName());
+        return orderService.getOrder().toString();
     }
 }

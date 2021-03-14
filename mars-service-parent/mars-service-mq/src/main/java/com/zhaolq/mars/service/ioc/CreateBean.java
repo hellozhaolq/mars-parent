@@ -16,15 +16,29 @@ public class CreateBean {
     @Bean
     public OrderEntity order() {
         OrderEntity order = new OrderEntity();
-        order.setId("100");
-        order.setMessageId("100");
-        order.setName("测试");
+        order.setId("order");
+        order.setMessageId("order");
+        order.setName("测试order");
+        return order;
+    }
+
+    @Bean
+    public OrderEntity order2() {
+        OrderEntity order = new OrderEntity();
+        order.setId("order2");
+        order.setMessageId("order2");
+        order.setName("测试order2");
         return new OrderEntity();
     }
 
     @Bean
-    public String str() {
-        return "字符串bean";
+    public String name() {
+        return "方法名称name";
+    }
+
+    @Bean
+    public String name2() {
+        return "方法名称name2";
     }
 
 }

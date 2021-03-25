@@ -66,11 +66,11 @@ public class RoleEntity extends Model<RoleEntity> {
 
     @ApiModelProperty(value = "状态  0：禁用   1：正常")
     @TableField("STATUS")
-    private Integer status;
+    private Byte status;
 
     @ApiModelProperty(value = "是否删除  -1：已删除  0：正常")
     @TableField("DEL_FLAG")
-    private Integer delFlag;
+    private Byte delFlag;
 
 
     @Override

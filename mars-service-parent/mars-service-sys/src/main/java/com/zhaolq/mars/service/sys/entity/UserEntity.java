@@ -33,7 +33,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("MARS_SYS_USER")
-@KeySequence("SEQ_SYS_USER_ID")
+// @KeySequence("SEQ_SYS_USER_ID")
 @ApiModel(value = "UserEntity对象", description = "用户管理")
 public class UserEntity extends Model<UserEntity> {
 
@@ -42,7 +42,7 @@ public class UserEntity extends Model<UserEntity> {
     @JsonProperty("id")
     @NotNull(groups = {Edit.class, Remove.class}, message = "id缺失")
     @ApiModelProperty(value = "编号")
-    @TableId(value = "ID", type = IdType.INPUT)
+    @TableId(value = "ID", type = IdType.ASSIGN_ID)
     private BigDecimal id;
 
     @NotNull(groups = {Add.class}, message = "账号缺失")
@@ -71,7 +71,7 @@ public class UserEntity extends Model<UserEntity> {
     @NotNull(groups = {Add.class}, message = "性别缺失")
     @ApiModelProperty(value = "性别  1：男   2：女")
     @TableField("SEX")
-    private Integer sex;
+    private Byte sex;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
@@ -165,12 +165,12 @@ public class UserEntity extends Model<UserEntity> {
     @NotNull(groups = {Add.class}, message = "状态缺失")
     @ApiModelProperty(value = "状态  0：禁用   1：正常")
     @TableField("STATUS")
-    private Integer status;
+    private Byte status;
 
     @NotNull(groups = {Add.class}, message = "是否删除缺失")
     @ApiModelProperty(value = "是否删除  -1：已删除  0：正常")
     @TableField("DEL_FLAG")
-    private Integer delFlag;
+    private Byte delFlag;
 
     @ApiModelProperty(value = "【0】是否:1是0否")
     @TableField("FLAG")

@@ -27,14 +27,13 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("MARS_MQ_MESSAGE")
-@KeySequence("SEQ_MQ_MESSAGE_ID")
 @ApiModel(value = "MessageLogEntity对象", description = "消息日志")
 public class MessageEntity extends Model<MessageEntity> {
 
     @JsonProperty("id")
     @NotNull(groups = {Edit.class, Remove.class}, message = "id缺失")
     @ApiModelProperty(value = "编号")
-    @TableId(value = "ID", type = IdType.INPUT)
+    @TableId(value = "ID", type = IdType.ASSIGN_ID)
     private String id;
 
     private String message;

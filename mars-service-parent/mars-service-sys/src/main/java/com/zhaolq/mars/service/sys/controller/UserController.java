@@ -35,7 +35,7 @@ import java.util.List;
 @AllArgsConstructor
 public class UserController {
 
-    IUserService userService;
+    private IUserService userService;
 
     /**
      * 单个新增
@@ -48,9 +48,9 @@ public class UserController {
     @ApiOperation(value = "添加", notes = "添加")
     public R<Boolean> post(@Validated({Add.class}) @RequestBody(required = false) UserEntity userEntity) {
         Assert.notNull(userEntity, "条件不足！");
-        userEntity.setStatus(1);
+        userEntity.setStatus(Byte.valueOf("1"));
         userEntity.setCreateBy("admin");
-        userEntity.setDelFlag(0);
+        userEntity.setDelFlag(Byte.valueOf("0"));
         boolean boo = userService.save(userEntity);
         return R.boo(boo);
     }

@@ -35,7 +35,7 @@ public class UserServiceTests {
         userEntity.setName("testInsert");
         userEntity.setNickName("测试inset");
         userEntity.setSalt("YzcmCZNvbXocrsz9dm8e");
-        userEntity.setSex(1);
+        userEntity.setSex(Byte.valueOf("1"));
         userEntity.setEmail("test@qq.com");
         userEntity.setMobile("13889700023");
         userEntity.setCountryCode("156");
@@ -44,8 +44,8 @@ public class UserServiceTests {
         userEntity.setDeptId(BigDecimal.valueOf(1L));
         userEntity.setCreateBy("JUnit");
         userEntity.setCreateTime(LocalDateTime.now());
-        userEntity.setStatus(1);
-        userEntity.setDelFlag(0);
+        userEntity.setStatus(Byte.valueOf("1"));
+        userEntity.setDelFlag(Byte.valueOf("0"));
 
         boolean boo = userService.save(userEntity);
         log.info(String.valueOf(boo));

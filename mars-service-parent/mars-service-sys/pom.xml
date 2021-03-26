@@ -18,6 +18,15 @@
     <url>https://blog.zhaolq.com</url>
     <description>Sys project for Spring Boot</description>
 
+    <dependencies>
+        <!-- 使用注释处理器生成元数据，这样在yml和properties文件中输入会给出提示 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>

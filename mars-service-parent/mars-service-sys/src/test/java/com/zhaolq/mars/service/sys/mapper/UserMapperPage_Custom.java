@@ -53,7 +53,7 @@ public class UserMapperPage_Custom {
     @Test
     public void customSelectUserAndRolePage() {
         UserEntity userEntity = new UserEntity();
-        userEntity.setSex(1);
+        userEntity.setSex(Byte.valueOf("1"));
         RoleEntity roleEntity = new RoleEntity();
         roleEntity.setName("mng");
 

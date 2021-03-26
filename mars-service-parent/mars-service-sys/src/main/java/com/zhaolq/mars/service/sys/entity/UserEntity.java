@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Email;
@@ -30,6 +31,7 @@ import java.time.LocalDateTime;
  * @since 2020-10-29
  */
 @Data
+@Configuration
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("MARS_SYS_USER")

@@ -20,6 +20,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.zhaolq.mars.common</groupId>
+            <artifactId>mars-common-log</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>

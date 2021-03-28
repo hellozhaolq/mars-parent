@@ -21,9 +21,9 @@
         <module>mars-zoo-parent</module>
     </modules>
 
-    <!-- 有待验证：
-        pom中定义的变量可以在resources文件夹下的 properties、yml、xml 文件中获取
-        properties中定义的变量可以在java代码中通过 java.util.Properties 获取
+    <!--
+        .pom文件中定义的变量可以在resources文件夹下的 properties、yml、xml 文件中获取，有待验证
+        .properties文件中定义的变量可以在java代码中通过 java.util.Properties 获取
     -->
     <profiles>
         <profile>
@@ -33,7 +33,7 @@
             </activation>
             <properties>
                 <db.driver>com.mysql.jdbc.Driver</db.driver>
-                <db.url>jdbc:mysql//localhost:3306/test</db.url>
+                <db.url>jdbc:mysql//localhost:3306/dev</db.url>
                 <db.user>dev</db.user>
                 <db.pw>dev-pwd</db.pw>
             </properties>
@@ -102,6 +102,26 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
         </dependency>
     </dependencies>
 

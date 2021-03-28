@@ -16,7 +16,7 @@ spring:
 #    driver-class-name: oracle.jdbc.driver.OracleDriver
 #    url: jdbc:oracle:thin:@192.168.0.3:1521:orcl
 #    username: mars
-#    password: 123456
+#    password: mars
   datasource:
     driver-class-name: oracle.jdbc.driver.OracleDriver
     url: jdbc:oracle:thin:@192.168.3.206:1521:orcl

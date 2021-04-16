@@ -1,6 +1,7 @@
 package com.zhaolq.mars.common.mq.config;
 
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -53,6 +54,7 @@ public class MqConfigInfo {
     /**
      * 支持@Value("#{${custom.mq.map}}")
      */
+    @Value("#{${custom.mq.map}}")
     private Map<String, String> map;
 
     /**
@@ -79,8 +81,8 @@ public class MqConfigInfo {
         /**
          * 有缺省值
          */
-        private String ip = "127.0.0.1";
-        private int port = 8848;
+        private String ip = "0.0.0.0";
+        private int port = 0;
 
     }
 

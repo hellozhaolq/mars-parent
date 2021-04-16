@@ -25,7 +25,7 @@ public class MqConfigInfoTest {
     private MqConfigInfo mqConfigInfo;
 
     /**
-     * 获取自定义Server配置信息
+     * 获取自定义消息队列配置信息
      */
     @Test
     public void getMqConfigInfo() {
@@ -39,7 +39,7 @@ public class MqConfigInfoTest {
         System.out.println("    list:\t" + mqConfigInfo.getList());
         System.out.println("   list2:\t" + mqConfigInfo.getList2());
 
-        System.out.println("custom.server.username:\t" + System.getProperty("custom.server.username"));
+        System.out.println("custom.mq.username:\t" + System.getProperty("custom.mq.username"));
         System.out.println("JAVA_HOME:\t" + System.getenv("JAVA_HOME"));
     }
 

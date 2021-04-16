@@ -45,7 +45,7 @@ public class UserEntity extends Model<UserEntity> {
     @NotNull(groups = {Edit.class, Remove.class}, message = "id缺失")
     @ApiModelProperty(value = "编号")
     @TableId(value = "ID", type = IdType.ASSIGN_ID)
-    private BigDecimal id;
+    private String id;
 
     @NotNull(groups = {Add.class}, message = "账号缺失")
     @ApiModelProperty(value = "账号")

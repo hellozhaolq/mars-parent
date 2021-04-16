@@ -34,7 +34,7 @@ public class MenuEntity extends Model<MenuEntity> {
 
     @ApiModelProperty(value = "编号")
     @TableId(value = "ID", type = IdType.ASSIGN_ID)
-    private BigDecimal id;
+    private String id;
 
     @ApiModelProperty(value = "菜单名称")
     @TableField("NAME")

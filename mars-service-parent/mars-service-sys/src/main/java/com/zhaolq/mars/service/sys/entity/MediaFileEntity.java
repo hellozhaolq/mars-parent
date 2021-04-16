@@ -34,7 +34,7 @@ public class MediaFileEntity extends Model<MediaFileEntity> {
 
     @ApiModelProperty(value = "编号")
     @TableId(value = "ID", type = IdType.ASSIGN_ID)
-    private BigDecimal id;
+    private String id;
 
     @ApiModelProperty(value = "资源类型(表名)：user-用户；")
     @TableField("RESOURCE_TYPE")

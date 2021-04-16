@@ -1,6 +1,7 @@
 package com.zhaolq.mars.service.sys.controller;
 
 import cn.hutool.core.lang.Assert;
+import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -9,6 +10,7 @@ import com.zhaolq.mars.common.valid.group.Add;
 import com.zhaolq.mars.service.sys.entity.UserEntity;
 import com.zhaolq.mars.service.sys.service.IUserService;
 import com.zhaolq.mars.tool.core.result.R;
+import com.zhaolq.mars.tool.core.result.ResultCode;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -45,12 +47,15 @@ public class UserController {
      * @throws
      */
     @PostMapping
-    @ApiOperation(value = "添加", notes = "添加")
-    public R<Boolean> post(@Validated({Add.class}) @RequestBody(required = false) UserEntity userEntity) {
-        Assert.notNull(userEntity, "条件不足！");
-        userEntity.setStatus(Byte.valueOf("1"));
-        userEntity.setCreateBy("admin");
-        userEntity.setDelFlag(Byte.valueOf("0"));
+    @ApiOperation(value = "单个新增", notes = "单个新增")
+    public R<Boolean> post(@Validated({Add.class}) @RequestBody(required = true) UserEntity userEntity) {
+        // 检查用户是否存在
+        QueryWrapper<UserEntity> wrapper = new QueryWrapper<>(new UserEntity().setAccount(userEntity.getAccount()));
+        UserEntity result = userService.getOne(wrapper);
+        if (ObjectUtil.isNotNull(result)) {
+            return R.failure(ResultCode.USER_HAS_EXISTED);
+        }
+        // 不存在，则新增
         boolean boo = userService.save(userEntity);
         return R.boo(boo);
     }
@@ -63,9 +68,8 @@ public class UserController {
      * @throws
      */
     @DeleteMapping("/{id}")
-    @ApiOperation(value = "删除", notes = "删除")
+    @ApiOperation(value = "个删除", notes = "个删除")
     public R<Boolean> delete(@PathVariable("id") @NotNull(message = "缺少id") Long id) {
-        Assert.notNull(id, "条件不足！");
         boolean boo = userService.removeById(id);
         return R.boo(boo);
     }
@@ -78,9 +82,8 @@ public class UserController {
      * @throws
      */
     @PutMapping
-    @ApiOperation(value = "编辑修改", notes = "编辑修改")
+    @ApiOperation(value = "单个修改", notes = "单个修改")
     public R<Boolean> put(@RequestBody UserEntity userEntity) {
-        Assert.notNull(userEntity, "条件不足！");
         boolean boo = userService.updateById(userEntity);
         return R.boo(boo);
     }
@@ -93,9 +96,9 @@ public class UserController {
      * @throws
      */
     @GetMapping
-    @ApiOperation(value = "查询", notes = "查询")
+    @ApiOperation(value = "单个查询", notes = "单个查询")
     public R<UserEntity> get(UserEntity userEntity) {
-        Assert.notNull(userEntity, "条件不足！");
+        Assert.notNull(userEntity, "缺少条件！");
         QueryWrapper<UserEntity> wrapper = new QueryWrapper<>(userEntity);
         userEntity = userService.getOne(wrapper);
         return R.success(userEntity);

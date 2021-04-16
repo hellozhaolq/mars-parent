@@ -12,16 +12,12 @@ spring:
       charset: UTF-8 # 默认UTF-8
       force: true
       enabled: true
-#  datasource:
-#    driver-class-name: oracle.jdbc.driver.OracleDriver
-#    url: jdbc:oracle:thin:@192.168.0.3:1521:orcl
-#    username: mars
-#    password: mars
   datasource:
     driver-class-name: oracle.jdbc.driver.OracleDriver
+#    url: jdbc:oracle:thin:@192.168.0.3:1521:orcl
     url: jdbc:oracle:thin:@192.168.3.206:1521:orcl
-    username: oracle_sys
-    password: mars123456
+    username: mars
+    password: 123456
 
 mybatis-plus:
   # mapper-locations，用以扫描mapper.xml；@MapperScan 注解用以扫描 mapper 接口(也可以在每一个 mapper 接口上添加 @Mapper 注解)

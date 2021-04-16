@@ -71,7 +71,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
             }
             columnIndex = 0;
             row.getCell(columnIndex).setCellValue(i + 1);
-            row.getCell(++columnIndex).setCellValue((RichTextString) user.getId());
+            row.getCell(++columnIndex).setCellValue(user.getId());
             row.getCell(++columnIndex).setCellValue(user.getName());
             row.getCell(++columnIndex).setCellValue(user.getNickName());
             row.getCell(++columnIndex).setCellValue(user.getEmail());

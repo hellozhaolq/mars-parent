@@ -34,7 +34,7 @@ public class DeptEntity extends Model<DeptEntity> {
 
     @ApiModelProperty(value = "编号")
     @TableId(value = "ID", type = IdType.ASSIGN_ID)
-    private BigDecimal id;
+    private String id;
 
     @ApiModelProperty(value = "机构名称")
     @TableField("NAME")

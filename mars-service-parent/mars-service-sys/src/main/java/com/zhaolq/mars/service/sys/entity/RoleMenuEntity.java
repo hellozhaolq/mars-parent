@@ -34,7 +34,7 @@ public class RoleMenuEntity extends Model<RoleMenuEntity> {
 
     @ApiModelProperty(value = "编号")
     @TableId(value = "ID", type = IdType.ASSIGN_ID)
-    private BigDecimal id;
+    private String id;
 
     @ApiModelProperty(value = "角色ID")
     @TableField("ROLE_ID")

@@ -3,11 +3,9 @@ package com.zhaolq.mars.service.sys.mapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.zhaolq.mars.service.sys.entity.UserEntity;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
@@ -22,7 +20,6 @@ import java.util.Map;
  * @date 2020/10/21 21:58
  */
 @Slf4j
-@RunWith(SpringRunner.class)
 @SpringBootTest
 public class UserMapperSelect {
 
@@ -34,8 +31,8 @@ public class UserMapperSelect {
         UserEntity userEntity = userMapper.selectById(1);
         System.out.println(userEntity);
         // 断言
-        Assert.assertEquals(1, userEntity.getId().intValue());
-        assert userEntity.getId().intValue() == 1;
+        Assertions.assertEquals(1, userEntity.getId());
+        assert Integer.valueOf(userEntity.getId()) == 1;
     }
 
     @Test

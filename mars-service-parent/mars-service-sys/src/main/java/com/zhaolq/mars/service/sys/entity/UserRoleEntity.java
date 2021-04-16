@@ -34,7 +34,7 @@ public class UserRoleEntity extends Model<UserRoleEntity> {
 
     @ApiModelProperty(value = "编号")
     @TableId(value = "ID", type = IdType.ASSIGN_ID)
-    private BigDecimal id;
+    private String id;
 
     @ApiModelProperty(value = "用户ID")
     @TableField("USER_ID")

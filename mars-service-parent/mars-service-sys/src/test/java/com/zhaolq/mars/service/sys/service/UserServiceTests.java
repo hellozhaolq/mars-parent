@@ -2,8 +2,7 @@ package com.zhaolq.mars.service.sys.service;
 
 import com.zhaolq.mars.service.sys.entity.UserEntity;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -18,7 +17,6 @@ import java.time.LocalDateTime;
  * @date 2020/10/19 20:14
  */
 @Slf4j
-@RunWith(SpringRunner.class)
 @SpringBootTest
 public class UserServiceTests {
 
@@ -29,11 +27,10 @@ public class UserServiceTests {
     public void insert() {
         UserEntity userEntity = new UserEntity();
 
-        userEntity.setId(BigDecimal.valueOf(100L));
-        userEntity.setAccount("testInsert");
+        userEntity.setAccount("test");
         userEntity.setPassword("21218CCA77804D2BA1922C33E0151105");
-        userEntity.setName("testInsert");
-        userEntity.setNickName("测试inset");
+        userEntity.setName("test");
+        userEntity.setNickName("测试");
         userEntity.setSalt("YzcmCZNvbXocrsz9dm8e");
         userEntity.setSex(Byte.valueOf("1"));
         userEntity.setEmail("test@qq.com");
@@ -48,7 +45,7 @@ public class UserServiceTests {
         userEntity.setDelFlag(Byte.valueOf("0"));
 
         boolean boo = userService.save(userEntity);
-        log.info(String.valueOf(boo));
+        log.debug(String.valueOf(boo));
         System.out.println(boo);
     }
 

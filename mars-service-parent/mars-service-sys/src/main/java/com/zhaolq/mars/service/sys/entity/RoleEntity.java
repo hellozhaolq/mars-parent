@@ -34,7 +34,7 @@ public class RoleEntity extends Model<RoleEntity> {
 
     @ApiModelProperty(value = "编号")
     @TableId(value = "ID", type = IdType.ASSIGN_ID)
-    private BigDecimal id;
+    private String id;
 
     @ApiModelProperty(value = "角色名称")
     @TableField("NAME")

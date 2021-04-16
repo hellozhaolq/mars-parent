@@ -4,10 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.zhaolq.mars.service.sys.entity.UserEntity;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -19,7 +17,6 @@ import java.util.List;
  * @date 2020/10/21 22:01
  */
 @Slf4j
-@RunWith(SpringRunner.class)
 @SpringBootTest
 public class UserMapperSelectByWrapper_Custom {
 

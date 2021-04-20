@@ -21,6 +21,7 @@ import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * <p>
@@ -79,7 +80,7 @@ public class UserEntity extends Model<UserEntity> {
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     @ApiModelProperty(value = "出生日期")
     @TableField("BIRTHDAY")
-    private LocalDateTime birthday;
+    private Date birthday;
 
     @ApiModelProperty(value = "年龄")
     @TableField("AGE")
@@ -109,13 +110,13 @@ public class UserEntity extends Model<UserEntity> {
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     @ApiModelProperty(value = "入职时间")
     @TableField("ENTRY_TIME")
-    private LocalDateTime entryTime;
+    private Date entryTime;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     @ApiModelProperty(value = "离职时间")
     @TableField("DEPARTURE_TIME")
-    private LocalDateTime departureTime;
+    private Date departureTime;
 
     @NotNull(groups = {Add.class}, message = "国家代码缺失")
     @ApiModelProperty(value = "国家代码")

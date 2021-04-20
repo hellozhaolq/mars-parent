@@ -1,6 +1,7 @@
 package com.zhaolq.mars.service.sys.controller;
 
 import cn.hutool.json.JSONUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zhaolq.mars.service.sys.entity.UserEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
@@ -18,6 +19,8 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -61,6 +64,7 @@ public class UserControllerTests {
         userEntity.setNickName("昵称");
         userEntity.setSalt("YzcmCZNvbXocrsz9dm8e");
         userEntity.setSex(Byte.valueOf("1"));
+        userEntity.setBirthday(new Date());
         userEntity.setEmail("test@qq.com");
         userEntity.setMobile("13566667777");
         userEntity.setCountryCode("156");
@@ -68,18 +72,31 @@ public class UserControllerTests {
         userEntity.setPoliticalStatusCode("01");
         userEntity.setDeptId(BigDecimal.valueOf(1L));
         userEntity.setCreateBy("JUnit");
-        // userEntity.setCreateTime(LocalDateTime.now());
+        userEntity.setCreateTime(LocalDateTime.now());
         userEntity.setStatus(Byte.valueOf("1"));
         userEntity.setDelFlag(Byte.valueOf("0"));
 
+        System.out.println(JSONUtil.toJsonStr(userEntity));
+        ObjectMapper objectMapper = new ObjectMapper();
+        System.out.println(objectMapper.writeValueAsString(userEntity));
+        String json = "{\"account\":\"test\",\"password\":\"21218CCA77804D2BA1922C33E0151105\",\"name\":\"测试\",\"nickName\":\"昵称\"," +
+                "\"salt\":\"YzcmCZNvbXocrsz9dm8e\",\"sex\":1,\"birthday\":\"2021-04-20 13:49:37\",\"age\":null,\"idNumber\":null,\"address\":null," +
+                "\"email\":\"test@qq.com\",\"mobile\":\"13566667777\",\"entryTime\":null,\"departureTime\":null,\"countryCode\":\"156\"," +
+                "\"nationCode\":\"01\",\"politicalStatusCode\":\"01\",\"userType\":null,\"identityCode\":null,\"deptId\":1,\"createBy\":\"JUnit\"," +
+                "\"createTime\":\"2021-04-20 13:49:37\"," +
+                "\"lastUpdateBy\":null,\"lastUpdateTime\":null,\"status\":1,\"delFlag\":0,\"flag\":null,\"role\":null,\"remarkTest\":null," +
+                "\"remarkTest3\":null,\"id\":null}";
+        System.out.println(json);
+
+
+        /*
         // 构造请求
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/user")
                 .header("user-agent", "Chrome")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .session(new MockHttpSession())
-                // 这里无法序列化LocalDateTime
-                .content(JSONUtil.toJsonStr(userEntity));
+                .content(json);
         // 执行一个请求并返回一个类型，该类型允许对结果链接进一步的操作，例如：打印MvcResult详细信息、断言期望。
         ResultActions resultActions = mockMvc.perform(request);
         MvcResult mvcResult = resultActions
@@ -90,10 +107,11 @@ public class UserControllerTests {
                 .andExpect(content().json("{\"code\":1,\"data\":null,\"msgEn\":\"success\",\"msgCh\":\"请求成功\",\"success\":true}"))
                 .andReturn();
         log.debug("HTTP响应状态码" + mvcResult.getResponse().getStatus());
+        */
 
-        get(userEntity);
+        // get(userEntity);
 
-        update(userEntity);
+        // update(userEntity);
 
         // delete();
     }
@@ -120,7 +138,6 @@ public class UserControllerTests {
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .session(new MockHttpSession())
-                // 这里无法序列化LocalDateTime
                 .content(JSONUtil.toJsonStr(userEntity))
                 .param("account", userEntity.getAccount());
         ResultActions resultActions = mockMvc.perform(request);

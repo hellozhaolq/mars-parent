@@ -37,7 +37,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Slf4j
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
-public class UserControllerTests {
+public class UserControllerTest {
 
     @LocalServerPort
     private int port;
@@ -89,7 +89,6 @@ public class UserControllerTests {
         System.out.println(json);
 
 
-        /*
         // 构造请求
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/user")
                 .header("user-agent", "Chrome")
@@ -107,7 +106,6 @@ public class UserControllerTests {
                 .andExpect(content().json("{\"code\":1,\"data\":null,\"msgEn\":\"success\",\"msgCh\":\"请求成功\",\"success\":true}"))
                 .andReturn();
         log.debug("HTTP响应状态码" + mvcResult.getResponse().getStatus());
-        */
 
         // get(userEntity);
 

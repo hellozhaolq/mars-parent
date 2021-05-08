@@ -28,8 +28,6 @@ import java.io.Serializable;
 @ApiModel(value="NationEntity对象", description="民族 GB 3304-91")
 public class NationEntity extends Model<NationEntity> {
 
-    private static final long serialVersionUID = 1L;
-
     @ApiModelProperty(value = "代码")
     @TableId(value = "CODE", type = IdType.ASSIGN_ID)
     private String code;

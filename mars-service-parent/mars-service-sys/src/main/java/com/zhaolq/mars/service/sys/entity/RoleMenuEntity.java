@@ -30,19 +30,17 @@ import java.time.LocalDateTime;
 @ApiModel(value="RoleMenuEntity对象", description="角色菜单")
 public class RoleMenuEntity extends Model<RoleMenuEntity> {
 
-    private static final long serialVersionUID = 1L;
-
     @ApiModelProperty(value = "编号")
     @TableId(value = "ID", type = IdType.ASSIGN_ID)
     private String id;
 
     @ApiModelProperty(value = "角色ID")
     @TableField("ROLE_ID")
-    private BigDecimal roleId;
+    private String roleId;
 
     @ApiModelProperty(value = "菜单ID")
     @TableField("MENU_ID")
-    private BigDecimal menuId;
+    private String menuId;
 
     @ApiModelProperty(value = "创建人")
     @TableField("CREATE_BY")

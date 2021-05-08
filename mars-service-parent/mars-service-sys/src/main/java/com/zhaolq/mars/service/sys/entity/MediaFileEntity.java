@@ -12,7 +12,6 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
@@ -30,8 +29,6 @@ import java.time.LocalDateTime;
 @ApiModel(value="MediaFileEntity对象", description="图片、文件、音乐等媒体文件")
 public class MediaFileEntity extends Model<MediaFileEntity> {
 
-    private static final long serialVersionUID = 1L;
-
     @ApiModelProperty(value = "编号")
     @TableId(value = "ID", type = IdType.ASSIGN_ID)
     private String id;
@@ -42,7 +39,7 @@ public class MediaFileEntity extends Model<MediaFileEntity> {
 
     @ApiModelProperty(value = "资源编号")
     @TableField("RESOURCE_ID")
-    private BigDecimal resourceId;
+    private String resourceId;
 
     @ApiModelProperty(value = "文件类型(字段)：avatar-头像；")
     @TableField("FILE_TYPE")

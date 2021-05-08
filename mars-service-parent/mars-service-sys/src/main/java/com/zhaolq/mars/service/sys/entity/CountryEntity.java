@@ -28,8 +28,6 @@ import java.io.Serializable;
 @ApiModel(value="CountryEntity对象", description="国家 ISO 3166-1")
 public class CountryEntity extends Model<CountryEntity> {
 
-    private static final long serialVersionUID = 1L;
-
     @ApiModelProperty(value = "代码")
     @TableId(value = "CODE", type = IdType.ASSIGN_ID)
     private String code;

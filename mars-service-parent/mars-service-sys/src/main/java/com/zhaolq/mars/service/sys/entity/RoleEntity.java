@@ -30,8 +30,6 @@ import java.time.LocalDateTime;
 @ApiModel(value="RoleEntity对象", description="角色管理")
 public class RoleEntity extends Model<RoleEntity> {
 
-    private static final long serialVersionUID = 1L;
-
     @ApiModelProperty(value = "编号")
     @TableId(value = "ID", type = IdType.ASSIGN_ID)
     private String id;

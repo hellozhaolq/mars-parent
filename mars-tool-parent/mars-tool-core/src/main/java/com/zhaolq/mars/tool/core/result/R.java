@@ -58,7 +58,7 @@ public class R<T> implements Serializable {
     /** failure */
 
     public static <T> R<T> failure() {
-        return new R<>(ResultCode.UNKNOWN_ERROR);
+        return new R<>(ResultCode.FAILURE);
     }
 
     public static <T> R<T> failure(IResultCode resultCode) {

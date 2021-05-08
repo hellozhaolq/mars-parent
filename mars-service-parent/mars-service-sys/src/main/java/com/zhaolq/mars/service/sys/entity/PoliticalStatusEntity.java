@@ -28,8 +28,6 @@ import java.io.Serializable;
 @ApiModel(value="PoliticalStatusEntity对象", description="政治面貌")
 public class PoliticalStatusEntity extends Model<PoliticalStatusEntity> {
 
-    private static final long serialVersionUID = 1L;
-
     @ApiModelProperty(value = "代码")
     @TableId(value = "CODE", type = IdType.ASSIGN_ID)
     private String code;

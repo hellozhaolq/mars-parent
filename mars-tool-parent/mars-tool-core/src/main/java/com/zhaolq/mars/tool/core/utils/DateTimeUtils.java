@@ -1,4 +1,4 @@
-package com.zhaolq.core.utils;
+package com.zhaolq.mars.tool.core.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

@@ -1,10 +1,16 @@
 package com.zhaolq.mars.tool.core.jackson;
 
+import cn.hutool.core.date.LocalDateTimeUtil;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.Data;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.util.StopWatch;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -17,10 +23,12 @@ import static com.zhaolq.mars.tool.core.jackson.JacksonUtil.*;
  * @author zhaolq
  * @date 2021/4/23 13:36
  */
-
 public class JacksonUtilTest {
 
     private User user;
+
+    private Role role;
+    private List<Role> roleList;
 
     private String json;
     private Map<String, Object> map;
@@ -33,13 +41,29 @@ public class JacksonUtilTest {
 
     @BeforeEach
     public void before() {
+
+        roleList = new ArrayList<>();
+        Role roleTemp;
+        for (int i = 1; i <= 5; i++) {
+            roleTemp = new JacksonUtilTest.Role();
+            roleTemp.setId(String.valueOf(i));
+            roleTemp.setName("角色" + i);
+            roleList.add(roleTemp);
+        }
+
+        role = new JacksonUtilTest.Role();
+        role.setId("10000");
+        role.setName("角色10000");
+
         user = new JacksonUtilTest.User();
         user.setId("9");
         user.setName("周润发");
         user.setSex(Byte.valueOf("1"));
         user.setBirthday(new Date());
         user.setAge(Integer.valueOf(18));
-        // user.setCreateTime(LocalDateTime.now());
+        user.setCreateTime(LocalDateTime.now());
+        user.setRole(role);
+        user.setRoleList(roleList);
 
         userMap = new HashMap<>();
         userMap.put(user.getId(), user);
@@ -54,7 +78,11 @@ public class JacksonUtilTest {
     }
 
     @Test
-    public void objectTo() {
+    public void conversion() {
+
+        StopWatch stopWatch = new StopWatch("测试");
+        stopWatch.start("1");
+
         System.out.println("----------------- json和object互转 ----------------------------");
 
         json = objectToJson(user);
@@ -100,12 +128,6 @@ public class JacksonUtilTest {
         System.out.println("2、json转list<User>: \t\t\t\t\t" + userList);
 
         System.out.println();
-        System.out.println();
-        System.out.println();
-        System.out.println();
-        System.out.println();
-        System.out.println();
-        System.out.println();
         System.out.println("----------------- map<String, Object>和object互转 ----------------------------");
 
         map = objectToObject(user, Map.class);
@@ -114,17 +136,16 @@ public class JacksonUtilTest {
         User obj = objectToObject(map, User.class);
         System.out.println("map<String, Object>转object: \t\t" + obj);
 
+        System.out.println();
+        System.out.println("*****************************************************************************");
 
-        // map<String, Object>转json
+        stopWatch.stop();
 
+        stopWatch.start("2");
+        stopWatch.stop();
 
-        // list转json
-        // List<User> list = new ArrayList<>();
-        // list.add(user);
-        // JacksonUtil.objectToObject(list, String.class);
-
-        // list转map
-
+        System.out.println(stopWatch.getTotalTimeSeconds());
+        System.out.println(stopWatch.prettyPrint());
     }
 
     @Data
@@ -134,12 +155,17 @@ public class JacksonUtilTest {
         private String password;
         private String name;
         private Byte sex;
-        @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") // json转object日期格式化
-        @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss") // object序列化json日期格式化
-        private Date birthday;
         private Integer age;
+        private Date birthday;
         private LocalDateTime createTime;
-        private LocalDateTime lastUpdateTime;
+        private Role role;
+        private List<Role> roleList;
+    }
+
+    @Data
+    static class Role {
+        private String id;
+        private String name;
     }
 
 }

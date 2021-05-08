@@ -1,55 +1,68 @@
 package com.zhaolq.mars.tool.core.jackson;
 
+import cn.hutool.core.date.DatePattern;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 /**
  * Jackson工具类
  *
  * json     to
  *              object
- *              list
  *              map
+ *              list
  * object   to
  *              json
- *              list    无法转换
  *              map     object转object
- * list     to
- *              json    object转json
- *              object  无法转换
- *              map     object转object
+ *              list    在一定前提下可以转换
  * map      to
  *              json    object转json
  *              object  object转object
- *              list    object转object
+ *              list    在一定前提下可以转换
+ * list     to
+ *              json    object转json
+ *              object  无法转换
+ *              map     在一定前提下可以转换
  *
  * @author zhaolq
  * @date 2021/4/20 14:54
  */
 public class JacksonUtil {
 
-    /**
-     * 定义jackson对象
-     */
     private static final ObjectMapper objectMapper;
-    private static final ObjectMapper objectMapperIgnoreNull;
 
     private JacksonUtil() {
     }
 
     static {
-        // 初始化
-        objectMapperIgnoreNull = new ObjectMapper();
-        // 忽略空值
-        objectMapperIgnoreNull.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        objectMapper = new ObjectMapper();
+        // 设置时间转换所使用的默认时区
+        objectMapper.setTimeZone(TimeZone.getDefault());
+        // 忽略空值，null不生成到json字符串中
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
-        objectMapper = objectMapperIgnoreNull;
+        // 在Date类型变量上使用注解 @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")，序列化时将转换成指定的格式。注解优先。
+        objectMapper.setDateFormat(new SimpleDateFormat(DatePattern.NORM_DATETIME_PATTERN));
+
+        JavaTimeModule javaTimeModule = new JavaTimeModule();
+        javaTimeModule.addSerializer(LocalDateTime.class,
+                new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(DatePattern.NORM_DATETIME_MS_PATTERN)))
+                .addDeserializer(LocalDateTime.class,
+                        new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern(DatePattern.NORM_DATETIME_MS_PATTERN)));
+        objectMapper.registerModule(javaTimeModule);
     }
 
     /**
@@ -62,17 +75,7 @@ public class JacksonUtil {
         return objectMapper;
     }
 
-    /**
-     * 获取ObjectMapper单例，忽略空值
-     *
-     * @param
-     * @return com.fasterxml.jackson.databind.ObjectMapper
-     */
-    public static ObjectMapper getInstanceIgnoreNull() {
-        return objectMapperIgnoreNull;
-    }
-
-    /********************************** json to object/list/map **********************************/
+    /********************************** json to object/map/list **********************************/
 
     /**
      * json转object

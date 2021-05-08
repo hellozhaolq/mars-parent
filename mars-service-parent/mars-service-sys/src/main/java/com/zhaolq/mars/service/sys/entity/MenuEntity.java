@@ -30,8 +30,6 @@ import java.time.LocalDateTime;
 @ApiModel(value="MenuEntity对象", description="菜单管理")
 public class MenuEntity extends Model<MenuEntity> {
 
-    private static final long serialVersionUID = 1L;
-
     @ApiModelProperty(value = "编号")
     @TableId(value = "ID", type = IdType.ASSIGN_ID)
     private String id;
@@ -78,7 +76,7 @@ public class MenuEntity extends Model<MenuEntity> {
 
     @ApiModelProperty(value = "父菜单ID，一级菜单为0")
     @TableField("PARENT_ID")
-    private BigDecimal parentId;
+    private String parentId;
 
     @ApiModelProperty(value = "排序")
     @TableField("ORDER_NUM")

@@ -28,69 +28,15 @@ public class UserMapperSelectByWrapper {
     @Resource
     private UserMapper userMapper;
 
-    /**
-     * 昵称中包含超，并且年龄小于30
-     *  where nick_name like '%超%' and age < 30
-     */
-    @Test
-    public void selectByWrapper1() {
-        QueryWrapper<UserEntity> query = Wrappers.<UserEntity>query();
-        QueryWrapper<UserEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.like("NICK_NAME", "超").lt("AGE", 30);
-        List<UserEntity> userList = userMapper.selectList(queryWrapper);
-        userList.forEach(System.out::println);
-    }
 
-    /**
-     * 昵称中包含超，并且年龄大于等于20且小于等于30，并且邮箱不为空
-     *  where nick_name like '%超%' and age between 20 and 30 and email is not null
-     */
-    @Test
-    public void selectByWrapper2() {
-        QueryWrapper<UserEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.like("NICK_NAME", "超").between("AGE", 20, 30).isNotNull("EMAIL");
-        List<UserEntity> userList = userMapper.selectList(queryWrapper);
-        userList.forEach(System.out::println);
-    }
 
-    /**
-     * 名字为赵姓或者年龄大于等于40，按照年龄降序排序，年龄相同按照id升序
-     *  where name like '赵%' or age >= 40 order by age desc, id asc
-     */
-    @Test
-    public void selectByWrapper3() {
-        QueryWrapper<UserEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.likeRight("NAME", "赵").or().ge("AGE", "40").orderByDesc("AGE").orderByAsc("ID");
-        List<UserEntity> userList = userMapper.selectList(queryWrapper);
-        userList.forEach(System.out::println);
-    }
 
-    /**
-     * 创建日期为2020年1月1日并且机构名称为蜀开头
-     *  where to_char(create_time, 'yyyy-mm-dd hh24:mi:ss') = '2020-01-01 10:00:00'
-     *    and dept_id in (select id from tab_earth_dept where name like '蜀%')
-     */
-    @Test
-    public void selectByWrapper4() {
-        QueryWrapper<UserEntity> queryWrapper = new QueryWrapper<>();
-        // 存在sql注入的风险，例如：日期参数为 "'2020-01-01 10:00:00' or 1=1"，sql语句中并没有使用占位符。
-        // queryWrapper.apply("to_char(create_time, 'yyyy-mm-dd hh24:mi:ss') = " + "'2020-01-01 10:00:00' or 1=1").inSql("DEPT_ID", "select id from tab_earth_dept where name like '蜀%'");
-        queryWrapper.apply("to_char(create_time, 'yyyy-mm-dd hh24:mi:ss') = {0}", "2020-01-01 10:00:00").inSql("DEPT_ID", "select id from mars_sys_dept where name like '蜀%'");
-        List<UserEntity> userList = userMapper.selectList(queryWrapper);
-        userList.forEach(System.out::println);
-    }
 
-    /**
-     * 名字为赵姓并且 (年龄小于40或邮箱不为空)
-     *  where name like '赵%' and (age < 40 or email is not null)
-     */
-    @Test
-    public void selectByWrapper5() {
-        QueryWrapper<UserEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.likeRight("NAME", "赵").and(qw -> qw.lt("AGE", "40").or().isNotNull("EMAIL"));
-        List<UserEntity> userList = userMapper.selectList(queryWrapper);
-        userList.forEach(System.out::println);
-    }
+
+
+
+
+
 
     /**
      * 名字为赵姓或者 (年龄小于40并且年龄大于20并且邮箱不为空)
@@ -186,7 +132,7 @@ public class UserMapperSelectByWrapper {
     public void selectByWrapperEntity() {
         UserEntity userEntity = new UserEntity();
         userEntity.setName("赵");
-        userEntity.setDeptId(BigDecimal.valueOf(13));
+        userEntity.setDeptId("13");
 
         QueryWrapper<UserEntity> queryWrapper = new QueryWrapper<>(userEntity);
         // queryWrapper.like("NAME", "赵").lt("AGE", "30");

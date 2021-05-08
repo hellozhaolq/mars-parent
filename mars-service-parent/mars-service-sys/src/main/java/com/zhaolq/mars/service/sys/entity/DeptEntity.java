@@ -30,8 +30,6 @@ import java.time.LocalDateTime;
 @ApiModel(value="DeptEntity对象", description="机构管理")
 public class DeptEntity extends Model<DeptEntity> {
 
-    private static final long serialVersionUID = 1L;
-
     @ApiModelProperty(value = "编号")
     @TableId(value = "ID", type = IdType.ASSIGN_ID)
     private String id;
@@ -58,7 +56,7 @@ public class DeptEntity extends Model<DeptEntity> {
 
     @ApiModelProperty(value = "上级机构ID，一级机构为0")
     @TableField("PARENT_ID")
-    private BigDecimal parentId;
+    private String parentId;
 
     @ApiModelProperty(value = "排序")
     @TableField("ORDER_NUM")

@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zhaolq.core.utils.FileUtils;
 import com.zhaolq.mars.common.valid.group.Add;
+import com.zhaolq.mars.common.valid.group.Edit;
 import com.zhaolq.mars.service.sys.entity.UserEntity;
 import com.zhaolq.mars.service.sys.service.IUserService;
 import com.zhaolq.mars.tool.core.result.R;
@@ -68,8 +69,12 @@ public class UserController {
      * @throws
      */
     @DeleteMapping("/{id}")
-    @ApiOperation(value = "个删除", notes = "个删除")
-    public R<Boolean> delete(@PathVariable("id") @NotNull(message = "缺少id") Long id) {
+    @ApiOperation(value = "单个删除", notes = "单个删除")
+    public R<Boolean> delete(@PathVariable("id") @NotNull(message = "缺少id") String id) {
+        UserEntity userEntity = userService.getById(id);
+        if (userEntity == null) {
+            return R.failure(ResultCode.USER_NOT_EXISTED);
+        }
         boolean boo = userService.removeById(id);
         return R.boo(boo);
     }
@@ -83,7 +88,11 @@ public class UserController {
      */
     @PutMapping
     @ApiOperation(value = "单个修改", notes = "单个修改")
-    public R<Boolean> put(@RequestBody UserEntity userEntity) {
+    public R<Boolean> put(@Validated({Edit.class}) @RequestBody UserEntity userEntity) {
+        UserEntity userEntityTemp = userService.getById(userEntity.getId());
+        if (userEntityTemp == null) {
+            return R.failure(ResultCode.USER_NOT_EXISTED);
+        }
         boolean boo = userService.updateById(userEntity);
         return R.boo(boo);
     }
@@ -101,6 +110,9 @@ public class UserController {
         Assert.notNull(userEntity, "缺少条件！");
         QueryWrapper<UserEntity> wrapper = new QueryWrapper<>(userEntity);
         userEntity = userService.getOne(wrapper);
+        if (userEntity == null) {
+            return R.failure(ResultCode.USER_NOT_EXISTED);
+        }
         return R.success(userEntity);
     }
 
@@ -122,24 +134,24 @@ public class UserController {
     }
 
     @GetMapping("/page")
-    public R<IPage> getPage(IPage<UserEntity> page, UserEntity userEntity) {
+    public R<IPage<UserEntity>> getPage(IPage<UserEntity> page, UserEntity userEntity) {
         QueryWrapper<UserEntity> wrapper = new QueryWrapper<>(userEntity);
         page = userService.page(page, wrapper);
         return R.success(page);
     }
 
     @PostMapping("/page")
-    public R<IPage> getPage2(Page<UserEntity> page, UserEntity userEntity) {
+    public R<IPage<UserEntity>> getPage2(Page<UserEntity> page, UserEntity userEntity) {
         return null;
     }
 
     @GetMapping("/pageDetail")
-    public R<IPage> getPageDetail() {
+    public R<IPage<UserEntity>> getPageDetail() {
         return null;
     }
 
     @PostMapping("/pageDetail")
-    public R<IPage> getPageDetail2() {
+    public R<IPage<UserEntity>> getPageDetail2() {
         return null;
     }
 

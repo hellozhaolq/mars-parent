@@ -11,7 +11,9 @@ import com.zhaolq.mars.tool.core.result.IResultCode;
 public enum ResultCode implements IResultCode {
 
     /* 成功 */
-    SUCCESS(1, "success", "请求成功"),
+    SUCCESS(1, "success", "操作成功"),
+    /* 失败 */
+    FAILURE(2, "failure", "操作失败"),
     /* 自定义错误 */
     CUSTOM_ERROR_DESC(9999998, "custom error desc", "自定义错误描述"),
     /* 未知错误 */

@@ -30,19 +30,17 @@ import java.time.LocalDateTime;
 @ApiModel(value="UserRoleEntity对象", description="用户角色")
 public class UserRoleEntity extends Model<UserRoleEntity> {
 
-    private static final long serialVersionUID = 1L;
-
     @ApiModelProperty(value = "编号")
     @TableId(value = "ID", type = IdType.ASSIGN_ID)
     private String id;
 
     @ApiModelProperty(value = "用户ID")
     @TableField("USER_ID")
-    private BigDecimal userId;
+    private String userId;
 
     @ApiModelProperty(value = "角色ID")
     @TableField("ROLE_ID")
-    private BigDecimal roleId;
+    private String roleId;
 
     @ApiModelProperty(value = "创建人")
     @TableField("CREATE_BY")

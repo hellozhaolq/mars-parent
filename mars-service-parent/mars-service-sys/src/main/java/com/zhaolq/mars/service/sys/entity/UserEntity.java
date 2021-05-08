@@ -19,7 +19,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -39,8 +38,6 @@ import java.util.Date;
 // @KeySequence("SEQ_SYS_USER_ID")
 @ApiModel(value = "UserEntity对象", description = "用户管理")
 public class UserEntity extends Model<UserEntity> {
-
-    private static final long serialVersionUID = 1L;
 
     @JsonProperty("id")
     @NotNull(groups = {Edit.class, Remove.class}, message = "id缺失")
@@ -77,7 +74,7 @@ public class UserEntity extends Model<UserEntity> {
     private Byte sex;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss") // 序列化时转换成指定的格式
     @ApiModelProperty(value = "出生日期")
     @TableField("BIRTHDAY")
     private Date birthday;
@@ -143,7 +140,7 @@ public class UserEntity extends Model<UserEntity> {
     @NotNull(groups = {Add.class}, message = "机构缺失")
     @ApiModelProperty(value = "机构ID")
     @TableField("DEPT_ID")
-    private BigDecimal deptId;
+    private String deptId;
 
     @ApiModelProperty(value = "创建人")
     @TableField("CREATE_BY")

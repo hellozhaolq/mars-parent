@@ -38,29 +38,9 @@ public class UserMapperSelectByWrapper {
 
 
 
-    /**
-     * 名字为赵姓或者 (年龄小于40并且年龄大于20并且邮箱不为空)
-     *   where name like '赵%' or (age < 30 and age > 25 and email is not null)
-     */
-    @Test
-    public void selectByWrapper6() {
-        QueryWrapper<UserEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.likeRight("NAME", "赵").or(qw -> qw.lt("AGE", "30").gt("AGE", "25").isNotNull("EMAIL"));
-        List<UserEntity> userList = userMapper.selectList(queryWrapper);
-        userList.forEach(System.out::println);
-    }
 
-    /**
-     * (年龄小于40或邮箱不为空) 并且名字为孙姓
-     *  where (age < 40 or email is not null) and name like '孙%'
-     */
-    @Test
-    public void selectByWrapper7() {
-        QueryWrapper<UserEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.nested(qw -> qw.lt("AGE", "40").or().isNotNull("EMAIL")).likeRight("NAME", "孙");
-        List<UserEntity> userList = userMapper.selectList(queryWrapper);
-        userList.forEach(System.out::println);
-    }
+
+
 
     /**
      * 年龄为30、31、34、35

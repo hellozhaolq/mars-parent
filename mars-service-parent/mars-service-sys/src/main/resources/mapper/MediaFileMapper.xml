@@ -21,7 +21,7 @@
     </resultMap>
 
     <!-- 通用查询结果列 -->
-    <sql id="Base_Column_List">
+    <sql id="Base_Column">
         ID, RESOURCE_TYPE, RESOURCE_ID, FILE_TYPE, FILE_CONTENT, CREATE_BY, CREATE_TIME, LAST_UPDATE_BY, LAST_UPDATE_TIME, STATUS, DEL_FLAG
     </sql>
 

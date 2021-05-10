@@ -37,27 +37,34 @@
         <result column="FLAG" property="flag"/>
     </resultMap>
 
-    <resultMap id="ExtendResultMap" type="com.zhaolq.mars.service.sys.entity.UserEntity" extends="BaseResultMap">
+    <!-- 一对一 -->
+    <resultMap id="ExtendResultMap_OneToOne" type="com.zhaolq.mars.service.sys.entity.UserEntity" extends="BaseResultMap">
+        <association property="role" columnPrefix="r#"
+                     resultMap="com.zhaolq.mars.service.sys.mapper.RoleMapper.BaseResultMap"/>
+    </resultMap>
+
+    <!-- 一对多 -->
+    <resultMap id="ExtendResultMap_OneToMany" type="com.zhaolq.mars.service.sys.entity.UserEntity" extends="BaseResultMap">
         <collection property="role" columnPrefix="r#"
                     resultMap="com.zhaolq.mars.service.sys.mapper.RoleMapper.BaseResultMap"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
-    <sql id="Base_Column_List">
+    <sql id="Base_Column">
         ID, ACCOUNT, PASSWORD, NAME, NICK_NAME, SALT, SEX, BIRTHDAY, AGE, ID_NUMBER, ADDRESS, EMAIL, MOBILE, ENTRY_TIME,
         DEPARTURE_TIME, COUNTRY_CODE, NATION_CODE, POLITICAL_STATUS_CODE, USER_TYPE, IDENTITY_CODE, DEPT_ID, CREATE_BY,
         CREATE_TIME, LAST_UPDATE_BY, LAST_UPDATE_TIME, STATUS, DEL_FLAG, FLAG
     </sql>
 
     <!-- 通用查询结果列，加表别名 -->
-    <sql id="Base_Column_List_Alias">
+    <sql id="Base_Column_Alias">
         u.ID, u.ACCOUNT, u.PASSWORD, u.NAME, u.NICK_NAME, u.SALT, u.SEX, u.BIRTHDAY, u.AGE, u.ID_NUMBER, u.ADDRESS, u.EMAIL,
         u.MOBILE, u.ENTRY_TIME, u.DEPARTURE_TIME, u.COUNTRY_CODE, u.NATION_CODE, u.POLITICAL_STATUS_CODE, u.USER_TYPE,
         u.IDENTITY_CODE, u.DEPT_ID, u.CREATE_BY, u.CREATE_TIME, u.LAST_UPDATE_BY, u.LAST_UPDATE_TIME, u.STATUS, u.DEL_FLAG, u.FLAG
     </sql>
 
     <!-- 通用查询结果列，加表别名，实体被嵌套时的列别名 -->
-    <sql id="Base_Column_List_Alias_Nested">
+    <sql id="Base_Column_Alias_Nested">
         u.ID u#ID, u.ACCOUNT u#ACCOUNT, u.PASSWORD u#PASSWORD, u.NAME u#NAME, u.NICK_NAME u#NICK_NAME, u.SALT u#SALT,
         u.SEX u#SEX, u.BIRTHDAY u#BIRTHDAY, u.AGE u#AGE, u.ID_NUMBER u#ID_NUMBER, u.ADDRESS u#ADDRESS, u.EMAIL u#EMAIL,
         u.MOBILE u#MOBILE, u.ENTRY_TIME u#ENTRY_TIME, u.DEPARTURE_TIME u#DEPARTURE_TIME, u.COUNTRY_CODE u#COUNTRY_CODE,
@@ -156,24 +163,40 @@
         </if>
     </sql>
 
-    <select id="customSelectAllByWrapper" resultType="com.zhaolq.mars.service.sys.entity.UserEntity">
+    <select id="selectByWrapperCustom" resultType="com.zhaolq.mars.service.sys.entity.UserEntity">
         <!-- 注意：这里没有加where -->
         select * from mars_sys_user ${ew.customSqlSegment}
     </select>
 
-    <select id="customSelectUserPageByWrapper" resultType="com.zhaolq.mars.service.sys.entity.UserEntity">
+    <select id="selectPageByWrapperCustom" resultType="com.zhaolq.mars.service.sys.entity.UserEntity">
         <!-- 注意：这里没有加where -->
         select * from mars_sys_user ${ew.customSqlSegment}
     </select>
 
-    <select id="customSelectUserAndRolePage" resultMap="ExtendResultMap">
+    <select id="selectDetailCustom" resultMap="ExtendResultMap_OneToOne">
         select
-        <include refid="Base_Column_List_Alias"></include>,
-        <include refid="com.zhaolq.mars.service.sys.mapper.RoleMapper.Base_Column_List_Alias_Nested"></include>
+        rownum ID, <!-- 指定一个不会重复的列充当唯一标识 -->
+        <include refid="Base_Column_Alias"></include>,
+        <include refid="com.zhaolq.mars.service.sys.mapper.RoleMapper.Base_Column_Alias_Nested"></include>
         from mars_sys_user u
         inner join mars_sys_user_role ur
         on u.id = ur.user_id
-        inner join tab_earth_role r
+        inner join mars_sys_role r
+        on ur.role_id = r.id
+        <where>
+            <include refid="Base_Where"></include>
+            <include refid="com.zhaolq.mars.service.sys.mapper.RoleMapper.Base_Where"></include>
+        </where>
+    </select>
+
+    <select id="selectDetailPageCustom" resultMap="ExtendResultMap_OneToMany">
+        select
+        <include refid="Base_Column_Alias"></include>,
+        <include refid="com.zhaolq.mars.service.sys.mapper.RoleMapper.Base_Column_Alias_Nested"></include>
+        from mars_sys_user u
+        inner join mars_sys_user_role ur
+        on u.id = ur.user_id
+        inner join mars_sys_role r
         on ur.role_id = r.id
         <where>
             <include refid="Base_Where"></include>

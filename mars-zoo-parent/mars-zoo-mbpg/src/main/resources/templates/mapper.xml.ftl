@@ -28,7 +28,7 @@
 </#if>
 <#if baseColumnList>
     <!-- 通用查询结果列 -->
-    <sql id="Base_Column_List">
+    <sql id="Base_Column">
 <#list table.commonFields as field>
         ${field.columnName},
 </#list>

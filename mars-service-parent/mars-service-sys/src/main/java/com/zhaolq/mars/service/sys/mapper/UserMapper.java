@@ -29,7 +29,7 @@ public interface UserMapper extends BaseMapper<UserEntity> {
      * @return java.util.List<com.zhaolq.mars.service.sys.entity.UserEntity>
      */
     // @Select("select * from tab_earth_user ${ew.customSqlSegment}")
-    List<UserEntity> customSelectAllByWrapper(@Param(Constants.WRAPPER) Wrapper<UserEntity> wrapper);
+    List<UserEntity> selectByWrapperCustom(@Param(Constants.WRAPPER) Wrapper<UserEntity> wrapper);
 
     /**
      * 使用 Wrapper 自定义分页
@@ -38,16 +38,26 @@ public interface UserMapper extends BaseMapper<UserEntity> {
      * @param wrapper
      * @return com.baomidou.mybatisplus.core.metadata.IPage<com.zhaolq.mars.service.sys.entity.UserEntity>
      */
-    IPage<UserEntity> customSelectUserPageByWrapper(IPage<UserEntity> page, @Param(Constants.WRAPPER) Wrapper<UserEntity> wrapper);
+    IPage<UserEntity> selectPageByWrapperCustom(IPage<UserEntity> page, @Param(Constants.WRAPPER) Wrapper<UserEntity> wrapper);
+
 
     /**
-     * 自定义分页，连表查询，多个参数
+     * 查询详情，扩展角色
+     *
+     * @param userEntity
+     * @param roleEntity
+     * @return java.util.List<com.zhaolq.mars.service.sys.entity.UserEntity>
+     */
+    List<UserEntity> selectDetailCustom(@Param("u") UserEntity userEntity, @Param("r") RoleEntity roleEntity);
+
+    /**
+     * 查询详情，自定义分页，连表查询，多个参数
      *
      * @param page
      * @param userEntity
      * @param roleEntity
      * @return com.baomidou.mybatisplus.core.metadata.IPage<com.zhaolq.mars.service.sys.entity.UserEntity>
      */
-    IPage<UserEntity> customSelectUserAndRolePage(IPage<UserEntity> page, @Param("u") UserEntity userEntity, @Param("r") RoleEntity roleEntity);
+    IPage<UserEntity> selectDetailPageCustom(IPage<UserEntity> page, @Param("u") UserEntity userEntity, @Param("r") RoleEntity roleEntity);
 
 }

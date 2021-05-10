@@ -21,6 +21,7 @@ import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -186,6 +187,8 @@ public class UserEntity extends Model<UserEntity> {
     @TableField(exist = false)
     private RoleEntity role;
 
+    @TableField(exist = false)
+    private List<RoleEntity> roleList;
 
     /*********** 使用mbp的通用curd会在实体类属性和表字段间自动做映射，不参与映射的三种解决方案(排除非表字段) ***********/
     /**

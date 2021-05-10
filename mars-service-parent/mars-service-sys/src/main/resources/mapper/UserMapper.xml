@@ -45,7 +45,7 @@
 
     <!-- 一对多 -->
     <resultMap id="ExtendResultMap_OneToMany" type="com.zhaolq.mars.service.sys.entity.UserEntity" extends="BaseResultMap">
-        <collection property="role" columnPrefix="r#"
+        <collection property="roleList" columnPrefix="r#"
                     resultMap="com.zhaolq.mars.service.sys.mapper.RoleMapper.BaseResultMap"/>
     </resultMap>
 

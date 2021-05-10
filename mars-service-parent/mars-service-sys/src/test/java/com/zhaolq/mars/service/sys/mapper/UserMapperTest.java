@@ -446,7 +446,8 @@ public class UserMapperTest {
         roleEntity.setStatus(Byte.valueOf("1"));
 
         List<UserEntity> userList = userMapper.selectDetailCustom(userEntity, roleEntity);
-        System.out.println("list.size(): " + userList.size());
+
+        System.out.println("userList.size(): " + userList.size());
         userList.forEach(System.out::println);
         userList.forEach(user -> System.out.println(user.getRole()));
     }
@@ -470,9 +471,10 @@ public class UserMapperTest {
         System.out.println("当前页：" + iPage.getCurrent());
         System.out.println("每页大小：" + iPage.getSize());
         List<UserEntity> userList = iPage.getRecords();
-        System.out.println("list.size(): " + userList.size());
+
+        System.out.println("userList.size(): " + userList.size());
         userList.forEach(System.out::println);
-        userList.forEach(user -> System.out.println(user.getRole()));
+        userList.forEach(user -> user.getRoleList().forEach(System.out::println));
     }
 
 

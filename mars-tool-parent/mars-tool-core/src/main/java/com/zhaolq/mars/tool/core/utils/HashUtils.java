@@ -1,4 +1,6 @@
-package com.zhaolq.core.utils;
+package com.zhaolq.mars.tool.core.utils;
+
+import cn.hutool.core.util.HashUtil;
 
 import java.nio.charset.Charset;
 import java.security.MessageDigest;
@@ -11,7 +13,7 @@ import java.util.UUID;
  * @author zhaolq
  * @date 2020/11/12 16:16
  */
-public class HashUtils {
+public class HashUtils extends HashUtil {
 
     public static final String[] hexDigits = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"};
     public static final String DEFAULT_CHARSET = "UTF8";

@@ -1,4 +1,4 @@
-prompt Add foreign key constraint for table MARS_SYS_USER 添加外键约束...
+prompt Add foreign key constraint for table MARS_SYS_USER 添加约束...
 prompt
 alter table MARS_SYS_USER
   add constraint FK_SYS_USER_DEPT_ID foreign key (DEPT_ID)
@@ -12,3 +12,8 @@ alter table MARS_SYS_USER
 alter table MARS_SYS_USER
   add constraint FK_SYS_USER_POLITICAL_STATUS foreign key (POLITICAL_STATUS_CODE)
   references MARS_STD_POLITICAL_STATUS (CODE);
+
+alter table MARS_SYS_USER
+  add constraint UK_SYS_USER_ACCOUNT unique (ACCOUNT);
+alter table MARS_SYS_USER
+  add constraint UK_SYS_USER_ID_NUMBER unique (ID_NUMBER);

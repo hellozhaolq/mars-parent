@@ -41,5 +41,9 @@ insert into MARS_SYS_USER_ROLE (id, user_id, role_id, create_by, create_time, la
 values (20, 20, 4, null, null, null, null);
 insert into MARS_SYS_USER_ROLE (id, user_id, role_id, create_by, create_time, last_update_by, last_update_time)
 values (21, 21, 5, null, null, null, null);
+insert into MARS_SYS_USER_ROLE (id, user_id, role_id, create_by, create_time, last_update_by, last_update_time)
+values (22, 1, 2, null, null, null, null);
+insert into MARS_SYS_USER_ROLE (id, user_id, role_id, create_by, create_time, last_update_by, last_update_time)
+values (23, 1, 101, null, null, null, null);
 commit;
-prompt 21 records loaded
+prompt 23 records loaded

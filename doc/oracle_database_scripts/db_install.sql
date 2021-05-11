@@ -41,7 +41,7 @@ PROMPT
 @mars\table_data\11_MARS_SYS_USER_ROLE.sql
 
 PROMPT
-PROMPT Add foreign key constraints 添加外键约束
+PROMPT Add foreign key constraints 添加约束
 PROMPT
 @mars\constraint\01_MARS_STD_COUNTRY.sql
 @mars\constraint\02_MARS_STD_NATION.sql

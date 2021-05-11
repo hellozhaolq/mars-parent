@@ -3,22 +3,21 @@ package com.zhaolq.mars.service.sys.mapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zhaolq.mars.service.sys.entity.RoleEntity;
 import com.zhaolq.mars.service.sys.entity.UserEntity;
+import com.zhaolq.mars.tool.core.utils.ObjectUtils;
+import com.zhaolq.mars.tool.core.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -450,6 +449,42 @@ public class UserMapperTest {
         System.out.println("userList.size(): " + userList.size());
         userList.forEach(System.out::println);
         userList.forEach(user -> System.out.println(user.getRole()));
+
+        log.debug("检索嵌套域对象: ");
+
+        Map<String, UserEntity> map = new HashMap<>();
+        UserEntity user;
+        if (ObjectUtils.isNotEmpty(userList)) {
+            for (UserEntity userTemp : userList) {
+                String account = userTemp.getAccount();
+                // map中没有此user，则以userId为键，user对象为值放入HashMap/TreeMap
+                user = map.get(account);
+                if (user == null) {
+                    user = userTemp;
+                    map.put(account, user);
+                }
+
+                // 如果此user有所属角色，则将角色添加到user对象的roleList中
+                RoleEntity role = userTemp.getRole();
+                if (role != null) {
+                    List<RoleEntity> roleList = user.getRoleList();
+                    if (roleList == null) {
+                        roleList = new ArrayList<>();
+                        user.setRoleList(roleList);
+                    }
+                    roleList.add(role);
+                }
+            }
+        }
+        ArrayList<UserEntity> list = new ArrayList<>(map.values());
+        // roleId转integer排序
+        for (UserEntity u : list) {
+            Collections.sort(u.getRoleList(), (r1, r2) -> Integer.valueOf(r1.getId()).compareTo(Integer.valueOf(r2.getId())));
+        }
+        System.out.println("list.size(): " + list.size());
+        list.forEach(System.out::println);
+        list.forEach(u -> u.getRoleList().forEach(System.out::println));
+
     }
 
     /**
@@ -471,6 +506,11 @@ public class UserMapperTest {
         System.out.println("当前页：" + iPage.getCurrent());
         System.out.println("每页大小：" + iPage.getSize());
         List<UserEntity> userList = iPage.getRecords();
+
+        // roleId转integer排序
+        for (UserEntity u : userList) {
+            Collections.sort(u.getRoleList(), (r1, r2) -> Integer.valueOf(r1.getId()).compareTo(Integer.valueOf(r2.getId())));
+        }
 
         System.out.println("userList.size(): " + userList.size());
         userList.forEach(System.out::println);

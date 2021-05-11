@@ -175,7 +175,7 @@
 
     <select id="selectDetailCustom" resultMap="ExtendResultMap_OneToOne">
         select
-        rownum ID, <!-- 指定一个不会重复的列充当唯一标识 -->
+        rownum id, <!-- 指定一个不会重复的列充当唯一标识，此时不该使用userEntity的id属性 -->
         <include refid="Base_Column_Alias"></include>,
         <include refid="com.zhaolq.mars.service.sys.mapper.RoleMapper.Base_Column_Alias_Nested"></include>
         from mars_sys_user u

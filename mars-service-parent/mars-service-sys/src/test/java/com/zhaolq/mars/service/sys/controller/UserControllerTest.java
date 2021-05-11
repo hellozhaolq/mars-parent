@@ -1,7 +1,7 @@
 package com.zhaolq.mars.service.sys.controller;
 
 import com.zhaolq.mars.service.sys.entity.UserEntity;
-import com.zhaolq.mars.tool.core.jackson.JacksonUtil;
+import com.zhaolq.mars.tool.core.utils.JacksonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,7 +98,7 @@ public class UserControllerTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .session(session)
                 .cookie(cookie)
-                .content(JacksonUtil.objectToJson(userEntity));
+                .content(JacksonUtils.objectToJson(userEntity));
         // 执行一个请求并返回一个类型，该类型允许对结果链接进一步的操作，例如：打印MvcResult详细信息、断言期望。
         ResultActions resultActions = mockMvc.perform(request);
         MvcResult mvcResult = resultActions
@@ -146,7 +146,7 @@ public class UserControllerTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .session(session)
                 .cookie(cookie)
-                .content(JacksonUtil.objectToJson(userEntity))
+                .content(JacksonUtils.objectToJson(userEntity))
                 .param("account", userTemp.getAccount());
         ResultActions resultActions = mockMvc.perform(request);
 

@@ -1,4 +1,4 @@
-package com.zhaolq.mars.tool.core.jackson;
+package com.zhaolq.mars.tool.core.utils;
 
 import cn.hutool.core.date.DatePattern;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -40,11 +40,11 @@ import java.util.TimeZone;
  * @author zhaolq
  * @date 2021/4/20 14:54
  */
-public class JacksonUtil {
+public class JacksonUtils {
 
     private static final ObjectMapper objectMapper;
 
-    private JacksonUtil() {
+    private JacksonUtils() {
     }
 
     static {

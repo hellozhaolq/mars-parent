@@ -1,21 +1,14 @@
-package com.zhaolq.mars.tool.core.jackson;
+package com.zhaolq.mars.tool.core.utils;
 
-import cn.hutool.core.date.LocalDateTimeUtil;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.Data;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.util.StopWatch;
 
 import java.time.LocalDateTime;
 import java.util.*;
 
-import static com.zhaolq.mars.tool.core.jackson.JacksonUtil.*;
+import static com.zhaolq.mars.tool.core.utils.JacksonUtils.*;
 
 /**
  *
@@ -23,7 +16,7 @@ import static com.zhaolq.mars.tool.core.jackson.JacksonUtil.*;
  * @author zhaolq
  * @date 2021/4/23 13:36
  */
-public class JacksonUtilTest {
+public class JacksonUtilsTest {
 
     private User user;
 
@@ -45,17 +38,17 @@ public class JacksonUtilTest {
         roleList = new ArrayList<>();
         Role roleTemp;
         for (int i = 1; i <= 5; i++) {
-            roleTemp = new JacksonUtilTest.Role();
+            roleTemp = new Role();
             roleTemp.setId(String.valueOf(i));
             roleTemp.setName("角色" + i);
             roleList.add(roleTemp);
         }
 
-        role = new JacksonUtilTest.Role();
+        role = new Role();
         role.setId("10000");
         role.setName("角色10000");
 
-        user = new JacksonUtilTest.User();
+        user = new User();
         user.setId("9");
         user.setName("周润发");
         user.setSex(Byte.valueOf("1"));

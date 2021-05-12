@@ -1,6 +1,7 @@
-package com.zhaolq.mars.tool.core.utils;
+package com.zhaolq.mars.tool.core.crypto;
 
 import cn.hutool.core.util.HashUtil;
+import com.zhaolq.mars.tool.core.utils.StringUtils;
 
 import java.nio.charset.Charset;
 import java.security.MessageDigest;
@@ -124,7 +125,7 @@ public class HashUtils extends HashUtil {
     }
 
     /**
-     * 字节数组转16进制字符串
+     * 字节数组转16进制字符串，和byteArrayToHex功能相同。
      *
      * @param byArr 字节数组
      * @return java.lang.String 16进制字串

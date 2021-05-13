@@ -150,7 +150,7 @@ public class UserEntity extends Model<UserEntity> {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     @ApiModelProperty(value = "创建时间")
-    @TableField("CREATE_TIME")
+    @TableField(value = "CREATE_TIME", fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
     @ApiModelProperty(value = "更新人")
@@ -160,7 +160,7 @@ public class UserEntity extends Model<UserEntity> {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     @ApiModelProperty(value = "更新时间")
-    @TableField("LAST_UPDATE_TIME")
+    @TableField(value = "LAST_UPDATE_TIME", fill = FieldFill.UPDATE)
     private LocalDateTime lastUpdateTime;
 
     @NotNull(groups = {Add.class}, message = "状态缺失")

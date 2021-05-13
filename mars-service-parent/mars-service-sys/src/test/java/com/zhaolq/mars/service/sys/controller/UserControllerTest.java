@@ -71,7 +71,6 @@ public class UserControllerTest {
         userEntity.setPoliticalStatusCode("01");
         userEntity.setDeptId("1");
         userEntity.setCreateBy("JUnit");
-        userEntity.setCreateTime(LocalDateTime.now());
         userEntity.setStatus(Byte.valueOf("1"));
         userEntity.setDelFlag(Byte.valueOf("0"));
 

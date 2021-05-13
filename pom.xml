@@ -51,28 +51,33 @@
     </profiles>
 
     <properties>
-        <!-- 文件拷贝时的编码 -->
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <!-- 编译时的编码，也可在maven-compiler-plugin插件中配置 -->
-        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
-        <suiteXmlFile>testing.xml</suiteXmlFile>
+        <!-- 升级JDK11需要合适的Maven版本用于构建 -->
+        <java.version>11</java.version>
 
-        <java.version>1.8</java.version>
+        <!-- 优先级低于maven-compiler-plugin插件中的配置 -->
+        <maven.compiler.release>11</maven.compiler.release>
+        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+
+        <!-- maven-resources-plugin将自动使用此编码 -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- 配置所有Maven插件输出的报告编码 -->
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <spring-boot.version>2.3.10.RELEASE</spring-boot.version>
+        <spring-boot-maven-plugin.version>2.3.10.RELEASE</spring-boot-maven-plugin.version>
         <spring-cloud.version>Hoxton.SR11</spring-cloud.version>
 
-        <spring-boot-maven-plugin.version>2.2.10.RELEASE</spring-boot-maven-plugin.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
-        <maven-jar-plugin.version>3.1.2</maven-jar-plugin.version>
+        <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
         <maven-dependency-plugin.version>3.1.2</maven-dependency-plugin.version>
-        <maven-javadoc-plugin.version>3.1.1</maven-javadoc-plugin.version>
-        <maven-source-plugin.version>3.1.0</maven-source-plugin.version>
+        <maven-javadoc-plugin.version>3.2.0</maven-javadoc-plugin.version>
+        <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
         <maven-war-plugin.version>3.2.3</maven-war-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
         <maven-shade-plugin.version>3.2.4</maven-shade-plugin.version>
+
+        <suiteXmlFile>testing.xml</suiteXmlFile>
 
         <ojdbc.version>19.3.0.0</ojdbc.version>
 
@@ -203,7 +208,7 @@
             <!--
                 为了使项目结构更为清晰，Maven区别对待Java代码文件和资源文件：
                     maven-compiler-plugin用来编译Java代码
-                    maven-resources-plugin用来处理资源文件，默认的主资源文件目录是src/main/resources，想要添加额外的资源文件目录，就需要通过配置maven-resources-plugin来实现。
+                    maven-resources-plugin资源插件处理项目资源到输出目录的复制。有两种不同的资源：主资源和测试资源。区别在于，主要资源是与主要源代码关联的资源，而测试资源是与测试源代码关联的资源。
                     参考链接：https://blog.csdn.net/u011781521/article/details/79052725
             -->
             <plugin>
@@ -211,9 +216,9 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler-plugin.version}</version>
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                    <encoding>UTF-8</encoding>
+                    <!-- 新的release选项替换了三个标志：-source，-target和-bootclasspath -->
+                    <release>${maven.compiler.release}</release>
+                    <encoding>${maven.compiler.encoding}</encoding>
                     <fork>true</fork>
                     <!-- 跳过编译的文件 -->
                     <excludes>
@@ -226,7 +231,7 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>${maven-javadoc-plugin.version}</version>
                 <configuration>
-                    <source>${java.version}</source>
+                    <release>${java.version}</release>
                     <encoding>UTF-8</encoding>
                     <doclint>none</doclint>
                 </configuration>

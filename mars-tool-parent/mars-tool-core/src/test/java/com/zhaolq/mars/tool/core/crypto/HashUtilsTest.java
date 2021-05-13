@@ -1,6 +1,5 @@
 package com.zhaolq.mars.tool.core.crypto;
 
-import com.zhaolq.mars.tool.core.crypto.HashUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

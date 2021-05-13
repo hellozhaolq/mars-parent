@@ -1,4 +1,4 @@
-package com.zhaolq.mars.tool.core.utils;
+package com.zhaolq.mars.tool.core.date;
 
 import cn.hutool.core.date.DateUtil;
 

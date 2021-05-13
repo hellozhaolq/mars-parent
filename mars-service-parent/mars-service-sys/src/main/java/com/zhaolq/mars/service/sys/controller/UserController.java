@@ -11,7 +11,7 @@ import com.zhaolq.mars.service.sys.entity.UserEntity;
 import com.zhaolq.mars.service.sys.service.IUserService;
 import com.zhaolq.mars.tool.core.result.R;
 import com.zhaolq.mars.tool.core.result.ResultCode;
-import com.zhaolq.mars.tool.core.utils.FileUtils;
+import com.zhaolq.mars.tool.core.io.FileUtils;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

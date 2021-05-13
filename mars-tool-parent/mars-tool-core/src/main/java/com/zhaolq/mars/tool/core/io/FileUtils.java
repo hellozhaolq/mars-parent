@@ -1,4 +1,4 @@
-package com.zhaolq.mars.tool.core.utils;
+package com.zhaolq.mars.tool.core.io;
 
 import cn.hutool.core.io.FileUtil;
 

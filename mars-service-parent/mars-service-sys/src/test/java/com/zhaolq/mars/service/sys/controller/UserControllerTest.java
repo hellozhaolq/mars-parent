@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockCookie;
 import org.springframework.mock.web.MockHttpSession;
@@ -44,6 +45,8 @@ public class UserControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    HttpHeaders httpHeaders;
+
     MockHttpSession session;
 
     MockCookie cookie;
@@ -74,6 +77,11 @@ public class UserControllerTest {
 
         session = new MockHttpSession();
         cookie = new MockCookie("session_id", session.getId());
+
+        httpHeaders = new HttpHeaders();
+        httpHeaders.add("user-agent", "Chrome");
+        httpHeaders.add("Content-Type", "application/json;charset=UTF-8");
+        httpHeaders.add("Accept", "application/json;charset=UTF-8");
     }
 
     /**
@@ -93,9 +101,7 @@ public class UserControllerTest {
     public void post() throws Exception {
         // 构造请求
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/user")
-                .header("user-agent", "Chrome")
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
+                .headers(httpHeaders)
                 .session(session)
                 .cookie(cookie)
                 .content(JacksonUtils.objectToJson(userEntity));
@@ -118,9 +124,7 @@ public class UserControllerTest {
     @DisplayName("get()")
     public void get() throws Exception {
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders.get("/user")
-                .header("user-agent", "Chrome")
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
+                .headers(httpHeaders)
                 .session(session)
                 .cookie(cookie)
                 .param("account", userEntity.getAccount());
@@ -131,6 +135,8 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.code").value(1))
                 .andReturn();
         log.debug("HTTP响应状态码" + mvcResult.getResponse().getStatus());
+        System.out.println(mvcResult.getResponse().getContentAsString());
+        log.debug(mvcResult.getResponse().getContentAsString());
     }
 
     @Order(3)
@@ -141,9 +147,7 @@ public class UserControllerTest {
         userTemp.setAccount("testUpdate");
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders.put("/user")
-                .header("user-agent", "Chrome")
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
+                .headers(httpHeaders)
                 .session(session)
                 .cookie(cookie)
                 .content(JacksonUtils.objectToJson(userEntity))
@@ -165,9 +169,7 @@ public class UserControllerTest {
         String userId = userEntity.getId();
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders.delete("/user/" + userId)
-                .header("user-agent", "Chrome")
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
+                .headers(httpHeaders)
                 .session(session)
                 .cookie(cookie);
         ResultActions resultActions = mockMvc.perform(request);

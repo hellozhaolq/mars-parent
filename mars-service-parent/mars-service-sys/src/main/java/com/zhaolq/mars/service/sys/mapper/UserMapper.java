@@ -40,24 +40,30 @@ public interface UserMapper extends BaseMapper<UserEntity> {
      */
     IPage<UserEntity> selectPageByWrapperCustom(IPage<UserEntity> page, @Param(Constants.WRAPPER) Wrapper<UserEntity> wrapper);
 
-
     /**
-     * 查询详情，扩展角色
+     * 单个查询，携带角色列表
      *
      * @param userEntity
-     * @param roleEntity
-     * @return java.util.List<com.zhaolq.mars.service.sys.entity.UserEntity>
+     * @return com.zhaolq.mars.service.sys.entity.UserEntity
      */
-    List<UserEntity> selectDetailCustom(@Param("u") UserEntity userEntity, @Param("r") RoleEntity roleEntity);
+    UserEntity getWithRole(@Param("u") UserEntity userEntity, @Param("r") RoleEntity roleEntity);
 
     /**
-     * 查询详情，自定义分页，连表查询，多个参数
+     * 列表查询，携带角色列表
+     *
+     * @param userEntity
+     * @return java.util.List<com.zhaolq.mars.service.sys.entity.UserEntity>
+     */
+    List<UserEntity> getWithRoleList(@Param("u") UserEntity userEntity, @Param("r") RoleEntity roleEntity);
+
+    /**
+     * 分页查询，携带角色列表，连表查询，多个参数
      *
      * @param page
      * @param userEntity
      * @param roleEntity
      * @return com.baomidou.mybatisplus.core.metadata.IPage<com.zhaolq.mars.service.sys.entity.UserEntity>
      */
-    IPage<UserEntity> selectDetailPageCustom(IPage<UserEntity> page, @Param("u") UserEntity userEntity, @Param("r") RoleEntity roleEntity);
+    IPage<UserEntity> getWithRolePage(IPage<UserEntity> page, @Param("u") UserEntity userEntity, @Param("r") RoleEntity roleEntity);
 
 }

@@ -434,16 +434,16 @@ public class UserMapperTest {
     }
 
     /**
-     * 查询详情，扩展角色
+     * 列表查询，携带角色列表
      */
     @Test
-    public void selectDetailCustom() {
+    public void selectWithRoleCustom() {
         UserEntity userEntity = new UserEntity();
         userEntity.setAccount("admin");
         RoleEntity roleEntity = new RoleEntity();
         roleEntity.setStatus(Byte.valueOf("1"));
 
-        List<UserEntity> userList = userMapper.selectDetailCustom(userEntity, roleEntity);
+        List<UserEntity> userList = userMapper.getWithRoleList(userEntity, roleEntity);
 
         System.out.println("userList.size(): " + userList.size());
         userList.forEach(System.out::println);
@@ -487,10 +487,10 @@ public class UserMapperTest {
     }
 
     /**
-     * 查询详情，自定义分页，连表查询，多个参数
+     * 自定义分页，携带角色列表，连表查询，多个参数
      */
     @Test
-    public void selectDetailPageCustom() {
+    public void selectWithRolePageCustom() {
         UserEntity userEntity = new UserEntity();
         userEntity.setAccount("admin");
         RoleEntity roleEntity = new RoleEntity();
@@ -498,7 +498,7 @@ public class UserMapperTest {
 
         // 同样可以不进行 count 查询
         IPage<UserEntity> page = new Page<>(1, 3);
-        IPage<UserEntity> iPage = userMapper.selectDetailPageCustom(page, userEntity, roleEntity);
+        IPage<UserEntity> iPage = userMapper.getWithRolePage(page, userEntity, roleEntity);
 
         System.out.println("总记录数：" + iPage.getTotal());
         System.out.println("总页数：" + iPage.getPages());

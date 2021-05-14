@@ -37,7 +37,9 @@
         <result column="FLAG" property="flag"/>
     </resultMap>
 
-    <!-- 一对一 -->
+    <!-- 一对一
+        一对多关联查询多条数据只显示一条的问题：指定一个不会重复的列充当唯一标识，如：rownum id；
+    -->
     <resultMap id="ExtendResultMap_OneToOne" type="com.zhaolq.mars.service.sys.entity.UserEntity" extends="BaseResultMap">
         <association property="role" columnPrefix="r#"
                      resultMap="com.zhaolq.mars.service.sys.mapper.RoleMapper.BaseResultMap"/>
@@ -173,9 +175,8 @@
         select * from mars_sys_user ${ew.customSqlSegment}
     </select>
 
-    <select id="selectDetailCustom" resultMap="ExtendResultMap_OneToOne">
+    <select id="getWithRole" resultMap="ExtendResultMap_OneToMany">
         select
-        rownum id, <!-- 指定一个不会重复的列充当唯一标识，此时不该使用userEntity的id属性 -->
         <include refid="Base_Column_Alias"></include>,
         <include refid="com.zhaolq.mars.service.sys.mapper.RoleMapper.Base_Column_Alias_Nested"></include>
         from mars_sys_user u
@@ -189,7 +190,7 @@
         </where>
     </select>
 
-    <select id="selectDetailPageCustom" resultMap="ExtendResultMap_OneToMany">
+    <select id="getWithRoleList" resultMap="ExtendResultMap_OneToMany">
         select
         <include refid="Base_Column_Alias"></include>,
         <include refid="com.zhaolq.mars.service.sys.mapper.RoleMapper.Base_Column_Alias_Nested"></include>
@@ -202,7 +203,21 @@
             <include refid="Base_Where"></include>
             <include refid="com.zhaolq.mars.service.sys.mapper.RoleMapper.Base_Where"></include>
         </where>
+    </select>
 
+    <select id="getWithRolePage" resultMap="ExtendResultMap_OneToMany">
+        select
+        <include refid="Base_Column_Alias"></include>,
+        <include refid="com.zhaolq.mars.service.sys.mapper.RoleMapper.Base_Column_Alias_Nested"></include>
+        from mars_sys_user u
+        inner join mars_sys_user_role ur
+        on u.id = ur.user_id
+        inner join mars_sys_role r
+        on ur.role_id = r.id
+        <where>
+            <include refid="Base_Where"></include>
+            <include refid="com.zhaolq.mars.service.sys.mapper.RoleMapper.Base_Where"></include>
+        </where>
     </select>
 
 </mapper>

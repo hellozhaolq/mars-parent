@@ -2,7 +2,9 @@ package com.zhaolq.mars.common.mybatis.configuration;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.InnerInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.pagination.dialects.OracleDialect;
 import org.springframework.context.annotation.Bean;
@@ -43,6 +45,17 @@ public class MyBatisPlusConfig {
         interceptors.add(paginationInnerInterceptor);
 
         interceptor.setInterceptors(interceptors);
+
+        // 乐观锁配置
+        interceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
+
+        // 防止全表更新与删除
+        // 针对 update 和 delete 语句
+        interceptor.addInnerInterceptor(new BlockAttackInnerInterceptor());
+
+        // 动态表名
+
+
         return interceptor;
     }
 

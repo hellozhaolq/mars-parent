@@ -184,9 +184,15 @@ public class UserEntity extends Model<UserEntity> {
 
     /************* 以上对应数据库字段 *************/
 
+    /**
+     * 一对一
+     */
     @TableField(exist = false)
     private RoleEntity role;
 
+    /**
+     * 一对多
+     */
     @TableField(exist = false)
     private List<RoleEntity> roleList;
 

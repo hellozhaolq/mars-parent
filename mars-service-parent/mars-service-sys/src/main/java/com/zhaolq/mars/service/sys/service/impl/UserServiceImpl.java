@@ -4,11 +4,11 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhaolq.mars.common.export.PoiUtils;
+import com.zhaolq.mars.service.sys.entity.RoleEntity;
 import com.zhaolq.mars.service.sys.entity.UserEntity;
 import com.zhaolq.mars.service.sys.mapper.UserMapper;
 import com.zhaolq.mars.service.sys.service.IUserService;
 import lombok.AllArgsConstructor;
-import org.apache.poi.ss.usermodel.RichTextString;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -39,6 +39,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     public File createExcelFile(Page<UserEntity> page) {
         IPage<UserEntity> iPage = userMapper.selectPage(page, null);
         return createExcelFile(iPage.getRecords());
+    }
+
+    @Override
+    public UserEntity getWithRole(UserEntity userEntity, RoleEntity roleEntity) {
+        return userMapper.getWithRole(userEntity, roleEntity);
+    }
+
+    @Override
+    public List<UserEntity> getWithRoleList(UserEntity userEntity, RoleEntity roleEntity) {
+        return userMapper.getWithRoleList(userEntity, roleEntity);
+    }
+
+    @Override
+    public IPage<UserEntity> getWithRolePage(IPage<UserEntity> page, UserEntity userEntity, RoleEntity roleEntity) {
+        return userMapper.getWithRolePage(page, userEntity, roleEntity);
     }
 
     public static File createExcelFile(List<?> records) {

@@ -36,7 +36,7 @@ public class MyBatisPlusConfig {
         // 溢出总页数后是否进行处理(默认不处理,参见 插件#continuePage 方法)
         paginationInnerInterceptor.setOverflow(true);
         // 单页分页条数限制(默认无限制,参见 插件#handlerLimit 方法)
-        paginationInnerInterceptor.setMaxLimit(10000L);
+        paginationInnerInterceptor.setMaxLimit(100L);
         // 数据库类型(根据类型获取应使用的分页方言,参见 插件#findIDialect 方法)
         paginationInnerInterceptor.setDbType(DbType.ORACLE);
         // 方言实现类(参见 插件#findIDialect 方法)

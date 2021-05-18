@@ -1,7 +1,10 @@
 package com.zhaolq.mars.service.sys.controller;
 
+import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.poi.excel.ExcelUtil;
+import cn.hutool.poi.excel.ExcelWriter;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -20,9 +23,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
 import java.io.File;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
@@ -213,9 +218,31 @@ public class UserController {
     }
 
     @GetMapping("exportExcel")
-    public void exportExcel(Page<UserEntity> page, HttpServletResponse response) {
-        File file = userService.createExcelFile(page);
-        FileUtils.downloadFile(response, file, file.getName());
+    public void exportExcel(UserEntity userEntity, HttpServletResponse response) {
+        QueryWrapper<UserEntity> wrapper = new QueryWrapper<>(userEntity);
+        List<UserEntity> list = userService.list(wrapper);
+
+        // 通过工具类创建writer，默认创建xls格式
+        ExcelWriter writer = ExcelUtil.getWriter(true);
+        // 一次性写出内容，使用默认样式，强制输出标题
+        writer.write(list, true);
+
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");
+        response.setHeader("Content-Disposition", "attachment;filename=" + "test.xlsx");
+
+        ServletOutputStream out = null;
+        try {
+            out = response.getOutputStream();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        writer.flush(out, true);
+
+        // 关闭writer，释放内存
+        writer.close();
+        //此处记得关闭输出Servlet流
+        IoUtil.close(out);
     }
 
     @PostMapping("importExcel")

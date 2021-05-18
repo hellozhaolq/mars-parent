@@ -45,11 +45,4 @@ public interface IUserService extends IService<UserEntity> {
      */
     IPage<UserEntity> getWithRolePage(IPage<UserEntity> page, UserEntity userEntity, RoleEntity roleEntity);
 
-    /**
-     * 生成用户信息excel文件
-     *
-     * @param page
-     * @return java.io.File
-     */
-    File createExcelFile(Page<UserEntity> page);
 }

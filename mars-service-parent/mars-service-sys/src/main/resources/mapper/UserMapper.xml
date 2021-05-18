@@ -38,7 +38,7 @@
     </resultMap>
 
     <!-- 一对一
-        一对多关联查询多条数据只显示一条的问题：指定一个不会重复的列充当唯一标识，如：rownum id；
+        使用一对一映射一对多结果时，关联查询的多条数据只显示一条的问题：指定一个不会重复的列充当唯一标识，如：rownum id；
     -->
     <resultMap id="ExtendResultMap_OneToOne" type="com.zhaolq.mars.service.sys.entity.UserEntity" extends="BaseResultMap">
         <association property="role" columnPrefix="r#"

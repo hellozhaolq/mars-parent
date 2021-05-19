@@ -222,11 +222,6 @@ public class UserController {
         QueryWrapper<UserEntity> wrapper = new QueryWrapper<>(userEntity);
         List<UserEntity> list = userService.list(wrapper);
 
-        // 通过工具类创建writer，默认创建xls格式
-        ExcelWriter writer = ExcelUtil.getWriter(true);
-        // 一次性写出内容，使用默认样式，强制输出标题
-        writer.write(list, true);
-
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");
         response.setHeader("Content-Disposition", "attachment;filename=" + "test.xlsx");
 
@@ -237,6 +232,10 @@ public class UserController {
             e.printStackTrace();
         }
 
+        // 通过工具类创建writer，默认创建xls格式
+        ExcelWriter writer = ExcelUtil.getWriter(true);
+        // 一次性写出内容，使用默认样式，强制输出标题
+        writer.write(list, true);
         writer.flush(out, true);
 
         // 关闭writer，释放内存

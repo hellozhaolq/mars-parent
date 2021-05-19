@@ -1,0 +1,16 @@
+
+# 配置说明见官网 https://mp.baomidou.com/config/
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  global-config:
+    db-config:
+      id-type: ASSIGN_ID # 全局主键策略
+      insert-strategy: default
+      update-strategy: default
+      select-strategy: default
+  configuration:
+    # StdOutImpl：打印所有级别日志到控制台（不记录日志）。
+    # Slf4jImpl、Log4j2Impl：打印指定级别的日志，打印位置由日志模块配置决定。
+    # NoLoggingImpl：不打印日志。
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

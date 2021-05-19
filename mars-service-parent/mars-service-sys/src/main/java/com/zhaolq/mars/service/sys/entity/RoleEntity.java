@@ -62,7 +62,7 @@ public class RoleEntity extends Model<RoleEntity> {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     @ApiModelProperty(value = "更新时间")
-    @TableField(value = "LAST_UPDATE_TIME", fill = FieldFill.UPDATE)
+    @TableField(value = "LAST_UPDATE_TIME", fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime lastUpdateTime;
 
     @ApiModelProperty(value = "状态  0：禁用   1：正常")

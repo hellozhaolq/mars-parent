@@ -43,7 +43,7 @@ public class UserEntity extends Model<UserEntity> {
     @JsonProperty("id")
     @NotNull(groups = {Edit.class, Remove.class}, message = "id缺失")
     @ApiModelProperty(value = "编号")
-    @TableId(value = "ID", type = IdType.ASSIGN_ID)
+    @TableId(value = "ID", type = IdType.ASSIGN_ID) // 局部主键策略
     private String id;
 
     @NotNull(groups = {Add.class}, message = "账号缺失")
@@ -160,7 +160,7 @@ public class UserEntity extends Model<UserEntity> {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     @ApiModelProperty(value = "更新时间")
-    @TableField(value = "LAST_UPDATE_TIME", fill = FieldFill.UPDATE)
+    @TableField(value = "LAST_UPDATE_TIME", fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime lastUpdateTime;
 
     @NotNull(groups = {Add.class}, message = "状态缺失")

@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Properties;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -34,9 +35,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @date 2020/10/20 21:13
  */
 @Slf4j
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @AutoConfigureMockMvc
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class UserControllerTest {
 
     @LocalServerPort
@@ -63,7 +64,6 @@ public class UserControllerTest {
         userEntity.setNickName("昵称");
         userEntity.setSalt("YzcmCZNvbXocrsz9dm8e");
         userEntity.setSex(Byte.valueOf("1"));
-        userEntity.setBirthday(new Date());
         userEntity.setEmail("test@qq.com");
         userEntity.setMobile("13566667777");
         userEntity.setCountryCode("156");
@@ -84,14 +84,17 @@ public class UserControllerTest {
     }
 
     /**
-     * 无法启动应用程序上下文，该测试将失败
+     * 启动contextLoads(应用程序上下文)，检测该单元测试是否可用
      */
-
     @Order(0)
     @Test
     @DisplayName("contextLoads()")
     public void contextLoads() {
         log.debug("测试使用的随机端口：" + port);
+        Properties properties = System.getProperties();
+        for (String key : properties.stringPropertyNames()) {
+            System.out.println(key + "=" + properties.getProperty(key));
+        }
     }
 
     @Order(1)

@@ -1,5 +1,6 @@
 package com.zhaolq.mars.common.mybatis.handler;
 
+import cn.hutool.core.date.LocalDateTimeUtil;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
@@ -21,7 +22,9 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
     public void insertFill(MetaObject metaObject) {
         Object createTime = this.getFieldValByName("createTime", metaObject);
         if (createTime == null) {
-            this.setFieldValByName("createTime", LocalDateTime.now(), metaObject);
+            LocalDateTime localDateTime = LocalDateTimeUtil.now();
+            this.setFieldValByName("createTime", localDateTime, metaObject);
+            this.setFieldValByName("lastUpdateTime", localDateTime, metaObject);
         }
     }
 

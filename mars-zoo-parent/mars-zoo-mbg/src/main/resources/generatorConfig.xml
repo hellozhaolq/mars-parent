@@ -10,7 +10,7 @@
 
 <generatorConfiguration>
     <!-- 最多一个。用于指定全局配置文件，后面可以通过占位符的形式读取<properties>指定文件中的值。 -->
-    <properties resource="datasource.properties"/>
+    <properties resource="db.properties"/>
 
     <!-- 允许多个。只有一个location属性，用于指定数据源驱动包的绝对路径， -->
     <!--<classPathEntry location="E:\apache-maven-repository\oracle\ojdbc8-19.3.0.0.jar"/>-->

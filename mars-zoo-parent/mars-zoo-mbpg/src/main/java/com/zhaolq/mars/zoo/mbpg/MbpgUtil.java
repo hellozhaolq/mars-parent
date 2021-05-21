@@ -49,7 +49,7 @@ public class MbpgUtil {
     static {
         properties = new Properties();
         try {
-            properties.load(ClassLoader.getSystemResourceAsStream("datasource.properties"));
+            properties.load(ClassLoader.getSystemResourceAsStream("db.properties"));
 
             tableNames = properties.getProperty("tableNames");
 
@@ -67,7 +67,7 @@ public class MbpgUtil {
             deleteFieldPrefix = (deleteFieldPrefix = properties.getProperty("deleteFieldPrefix")) == null ? "" : deleteFieldPrefix;
 
         } catch (Exception e) {
-            System.out.println("未发现数据库配置文件datasource.properties");
+            System.out.println("未发现数据库配置文件db.properties");
             System.exit(0);
         }
     }

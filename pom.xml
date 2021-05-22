@@ -11,7 +11,7 @@
 
     <name>${project.artifactId}</name>
     <url>https://blog.zhaolq.com</url>
-    <description>地球计划</description>
+    <description>火星计划</description>
 
     <modules>
         <module>mars-common-parent</module>
@@ -321,7 +321,7 @@
         <!-- maven把id=central的仓库做为中央仓库 -->
         <repository>
             <id>central</id>
-            <name>central</name>
+            <name>Central Repository</name>
             <url>https://repo.maven.apache.org/maven2/</url>
             <layout>default</layout>
             <releases>
@@ -334,7 +334,7 @@
 
         <repository>
             <id>aliyun</id> <!-- 仓库声明的唯一id，中央仓库占用id:central。配置仓库镜像时用到。 -->
-            <name>aliyun</name> <!-- 仓库的名称，为了方便人阅读，无其他作用 -->
+            <name>aliyun Repository</name> <!-- 仓库的名称，为了方便人阅读，无其他作用 -->
             <url>https://maven.aliyun.com/repository/public</url> <!-- 仓库的地址 -->
             <layout>default</layout> <!-- 仓库的布局是Maven2及Maven3的默认布局 -->
             <releases> <!-- 控制Maven对于发布版构件的下载 -->
@@ -351,10 +351,10 @@
     </repositories>
 
     <pluginRepositories>
-        <pluginRepository>
-            <id>aliyun-plugin</id>
-            <name>aliyun-plugin</name>
-            <url>https://maven.aliyun.com/repository/public</url>
+	    <pluginRepository>
+            <id>central</id>
+            <name>Central Plugin</name>
+            <url>https://repo.maven.apache.org/maven2/</url>
             <layout>default</layout>
             <releases>
                 <enabled>true</enabled>
@@ -363,11 +363,11 @@
                 <enabled>false</enabled>
             </snapshots>
         </pluginRepository>
-
+		
         <pluginRepository>
-            <id>central-plugin</id>
-            <name>central-plugin</name>
-            <url>https://repo.maven.apache.org/maven2/</url>
+            <id>aliyun</id>
+            <name>aliyun Plugin</name>
+            <url>https://maven.aliyun.com/repository/public</url>
             <layout>default</layout>
             <releases>
                 <enabled>true</enabled>

@@ -8,7 +8,9 @@ regarding copyright ownership.  The ASF licenses this file
 to you under the Apache License, Version 2.0 (the
 "License"); you may not use this file except in compliance
 with the License.  You may obtain a copy of the License at
+
     http://www.apache.org/licenses/LICENSE-2.0
+
 Unless required by applicable law or agreed to in writing,
 software distributed under the License is distributed on an
 "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -41,9 +43,9 @@ under the License.
  | values (values used when the setting is not specified) are provided.
  |
  |-->
-<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+<settings xmlns="http://maven.apache.org/SETTINGS/1.2.0"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.2.0 http://maven.apache.org/xsd/settings-1.2.0.xsd">
   <!-- localRepository
    | The path to the local repository maven will use to store artifacts.
    |
@@ -51,6 +53,7 @@ under the License.
   <localRepository>/path/to/local/repo</localRepository>
   -->
   <localRepository>E:\apache-maven-repository\repository</localRepository>
+
   <!-- interactiveMode
    | This will determine whether maven prompts you when it needs input. If set to false,
    | maven will use a sensible default value, perhaps based on some other setting, for
@@ -102,12 +105,12 @@ under the License.
     -->
 
 	<proxy>
-      <id>local_proxy</id>
-      <active>true</active>
-      <protocol>http</protocol>
-      <host>127.0.0.1</host>
-      <port>1080</port>
-    </proxy>
+      <id>local-proxy</id> <!-- 声明一个id为local-proxy的代理 -->
+      <active>true</active> <!-- 激活该代理 -->
+      <protocol>http</protocol> <!-- 代理协议 -->
+      <host>127.0.0.1</host> <!-- 主机名 -->
+      <port>1080</port> <!-- 端口 -->
+	</proxy>
 
   </proxies>
 
@@ -137,7 +140,6 @@ under the License.
       <passphrase>optional; leave empty if not used.</passphrase>
     </server>
     -->
-
   </servers>
 
   <!-- mirrors
@@ -164,9 +166,15 @@ under the License.
       <url>http://my.repository.com/repo/path</url>
     </mirror>
      -->
+    <mirror>
+      <id>maven-default-http-blocker</id>
+      <mirrorOf>external:http:*</mirrorOf>
+      <name>Pseudo repository to mirror external repositories initially using HTTP.</name>
+      <url>http://0.0.0.0/</url>
+      <blocked>true</blocked>
+    </mirror>
 
-
-<!-- 
+<!--
     mirror就是镜像，主要提供一个方便地切换远程仓库的途径。它相当于一个拦截器，它会拦截maven对远程仓库的相关请求，把请求里的远程仓库地址，重定向到mirror配置的地址。
     
     <mirrorOf>repo1,repo2</mirrorOf>   匹配id为repo1和repo2的仓库请求，用逗号分隔多个远程仓库
@@ -176,19 +184,19 @@ under the License.
 	mirrorOf为*最后加载。
 	只配置mirrorOf为central的时候可以不用配置repository。
  -->
-    
+
 	<mirror>
       <id>central</id> <!-- 仓库的唯一标识符，无其他作用 -->
-      <name>central</name>
+      <name>Central Repository</name>
       <url>https://repo.maven.apache.org/maven2/</url>
 	  <mirrorOf>central</mirrorOf> <!-- 配置为 repositoryId=central 的仓库镜像，任何对id为central的仓库请求都会转至该镜像 -->
     </mirror>
 
 	<mirror>
-        <id>aliyun</id>
-        <name>aliyun</name>
-        <url>https://maven.aliyun.com/repository/public</url>
-        <mirrorOf>aliyun</mirrorOf>
+      <id>aliyun</id>
+      <name>aliyun Repository</name>
+      <url>https://maven.aliyun.com/repository/public</url>
+      <mirrorOf>aliyun</mirrorOf>
 	</mirror>
 
   </mirrors>
@@ -228,9 +236,11 @@ under the License.
      | This profile example uses the JDK version to trigger activation, and provides a JDK-specific repo.
     <profile>
       <id>jdk-1.4</id>
+
       <activation>
         <jdk>1.4</jdk>
       </activation>
+
       <repositories>
         <repository>
           <id>jdk14</id>
@@ -264,34 +274,20 @@ under the License.
      |
     <profile>
       <id>env-dev</id>
+
       <activation>
         <property>
           <name>target-env</name>
           <value>dev</value>
         </property>
       </activation>
+
       <properties>
         <tomcatPath>/path/to/tomcat/instance</tomcatPath>
       </properties>
     </profile>
     -->
-
-	<!-- 使用 profile 可以改变整个项目定义好的(即每个模块中的)项目对象模型（POM），但优先使用 POM 文件中的配置。 -->
-	<profile>
-      <id>jdk-1.8</id>
-      <activation>
-	    <activeByDefault>true</activeByDefault> <!-- 配置默认使用此 profile -->
-        <jdk>1.8</jdk>
-      </activation>
-	  <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <maven.compiler.compilerVersion>1.8</maven.compiler.compilerVersion>
-      </properties>
-    </profile>
-
-
-  </profiles> 
+  </profiles>
 
   <!-- activeProfiles
    | List of profiles that are active for all builds.

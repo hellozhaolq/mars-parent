@@ -188,12 +188,14 @@ public class UserEntity extends Model<UserEntity> {
      * 一对一
      */
     @TableField(exist = false)
+    @EqualsAndHashCode.Exclude
     private RoleEntity role;
 
     /**
      * 一对多
      */
     @TableField(exist = false)
+    @EqualsAndHashCode.Exclude
     private List<RoleEntity> roleList;
 
     /*********** 使用mbp的通用curd会在实体类属性和表字段间自动做映射，不参与映射的三种解决方案(排除非表字段) ***********/
@@ -210,6 +212,7 @@ public class UserEntity extends Model<UserEntity> {
      * 3、正确的方法：@TableField(exist = false)
      */
     @TableField(exist = false)
+    @EqualsAndHashCode.Exclude
     private String remarkTest3;
 
     public static String getRemarkTest2() {

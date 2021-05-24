@@ -11,9 +11,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.awt.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -27,7 +30,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("MARS_SYS_MENU")
-@ApiModel(value="MenuEntity对象", description="菜单管理")
+@ApiModel(value = "MenuEntity对象", description = "菜单管理")
 public class MenuEntity extends Model<MenuEntity> {
 
     @ApiModelProperty(value = "编号")
@@ -58,7 +61,8 @@ public class MenuEntity extends Model<MenuEntity> {
     @TableField("URL_TYPE")
     private Integer urlType;
 
-    @ApiModelProperty(value = "菜单URL,类型：1.普通页面（如用户管理， /sys/user） 2.嵌套完整外部页面，以http(s)开头的链接 3.嵌套服务器页面，使用iframe:前缀+目标URL(如SQL监控， iframe:/druid/login.html, iframe:前缀会替换成服务器地址)")
+    @ApiModelProperty(value = "菜单URL,类型：1.普通页面（如用户管理， /sys/user） 2.嵌套完整外部页面，以http(s)开头的链接 3.嵌套服务器页面，使用iframe:前缀+目标URL(如SQL监控， iframe:/druid/login" +
+            ".html, iframe:前缀会替换成服务器地址)")
     @TableField("URL")
     private String url;
 
@@ -110,6 +114,9 @@ public class MenuEntity extends Model<MenuEntity> {
     @TableField("DEL_FLAG")
     private Integer delFlag;
 
+    @TableField(exist = false)
+    @EqualsAndHashCode.Exclude
+    private List<MenuEntity> children = new ArrayList<MenuEntity>();
 
     @Override
     protected Serializable pkVal() {

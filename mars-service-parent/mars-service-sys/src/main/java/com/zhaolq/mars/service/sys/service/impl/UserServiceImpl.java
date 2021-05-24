@@ -3,6 +3,7 @@ package com.zhaolq.mars.service.sys.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.zhaolq.mars.service.sys.entity.MenuEntity;
 import com.zhaolq.mars.service.sys.entity.RoleEntity;
 import com.zhaolq.mars.service.sys.entity.UserEntity;
 import com.zhaolq.mars.service.sys.mapper.UserMapper;
@@ -18,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * <p>
@@ -47,6 +49,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     @Override
     public IPage<UserEntity> getWithRolePage(IPage<UserEntity> page, UserEntity userEntity, RoleEntity roleEntity) {
         return userMapper.getWithRolePage(page, userEntity, roleEntity);
+    }
+
+    @Override
+    public Set<MenuEntity> getAuthorityMenu(UserEntity userEntity) {
+        return userMapper.getAuthorityMenu(userEntity);
     }
 
 }

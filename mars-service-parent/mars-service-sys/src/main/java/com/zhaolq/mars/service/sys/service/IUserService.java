@@ -3,11 +3,13 @@ package com.zhaolq.mars.service.sys.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.zhaolq.mars.service.sys.entity.MenuEntity;
 import com.zhaolq.mars.service.sys.entity.RoleEntity;
 import com.zhaolq.mars.service.sys.entity.UserEntity;
 
 import java.io.File;
 import java.util.List;
+import java.util.Set;
 
 /**
  * <p>
@@ -44,5 +46,13 @@ public interface IUserService extends IService<UserEntity> {
      * @return com.baomidou.mybatisplus.core.metadata.IPage<com.zhaolq.mars.service.sys.entity.UserEntity>
      */
     IPage<UserEntity> getWithRolePage(IPage<UserEntity> page, UserEntity userEntity, RoleEntity roleEntity);
+
+    /**
+     * 获取权限下菜单
+     *
+     * @param userEntity
+     * @return java.util.Set<com.zhaolq.mars.service.sys.entity.MenuEntity>
+     */
+    Set<MenuEntity> getAuthorityMenu(UserEntity userEntity);
 
 }

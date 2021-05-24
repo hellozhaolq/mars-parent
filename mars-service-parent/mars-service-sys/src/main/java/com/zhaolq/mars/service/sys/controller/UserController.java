@@ -1,7 +1,11 @@
 package com.zhaolq.mars.service.sys.controller;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.lang.Assert;
+import cn.hutool.core.lang.tree.Tree;
+import cn.hutool.core.lang.tree.TreeNode;
+import cn.hutool.core.lang.tree.TreeUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
@@ -10,8 +14,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zhaolq.mars.common.valid.group.Add;
 import com.zhaolq.mars.common.valid.group.Edit;
+import com.zhaolq.mars.service.sys.entity.MenuEntity;
 import com.zhaolq.mars.service.sys.entity.RoleEntity;
 import com.zhaolq.mars.service.sys.entity.UserEntity;
+import com.zhaolq.mars.service.sys.service.IMenuService;
 import com.zhaolq.mars.service.sys.service.IUserService;
 import com.zhaolq.mars.tool.core.result.R;
 import com.zhaolq.mars.tool.core.result.ResultCode;
@@ -28,8 +34,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 /**
  * <p>
@@ -47,6 +55,8 @@ import java.util.List;
 public class UserController {
 
     private IUserService userService;
+
+    private IMenuService menuService;
 
     /**
      * 单个新增
@@ -142,6 +152,7 @@ public class UserController {
      * @return com.zhaolq.mars.tool.core.result.R<com.zhaolq.mars.service.sys.entity.UserEntity>
      */
     @GetMapping("/withRole")
+    @ApiOperation(value = "单个查询，携带角色列表", notes = "单个查询，携带角色列表")
     public R<UserEntity> getWithRole(UserEntity userEntity) {
         Assert.notNull(userEntity, ResultCode.PARAM_NOT_COMPLETE.getDescCh());
         boolean condition = userEntity == null || (StringUtils.isEmpty(userEntity.getId()) && StringUtils.isEmpty(userEntity.getAccount()));
@@ -164,6 +175,7 @@ public class UserController {
      * @return com.zhaolq.mars.tool.core.result.R<java.util.List < com.zhaolq.mars.service.sys.entity.UserEntity>>
      */
     @GetMapping("/withRoleList")
+    @ApiOperation(value = "列表查询，携带角色列表", notes = "列表查询，携带角色列表")
     public R<List<UserEntity>> getWithRoleList(UserEntity userEntity) {
         List<UserEntity> list = userService.getWithRoleList(userEntity, null);
         if (list != null) {
@@ -181,9 +193,10 @@ public class UserController {
      *
      * @param page
      * @param userEntity
-     * @return com.zhaolq.mars.tool.core.result.R<com.baomidou.mybatisplus.core.metadata.IPage<com.zhaolq.mars.service.sys.entity.UserEntity>>
+     * @return com.zhaolq.mars.tool.core.result.R<com.baomidou.mybatisplus.core.metadata.IPage < com.zhaolq.mars.service.sys.entity.UserEntity>>
      */
     @GetMapping("/page")
+    @ApiOperation(value = "分页查询", notes = "分页查询")
     public R<IPage<UserEntity>> getPage(Page<UserEntity> page, UserEntity userEntity) {
         QueryWrapper<UserEntity> wrapper = new QueryWrapper<>(userEntity);
         page = userService.page(page, wrapper);
@@ -196,9 +209,10 @@ public class UserController {
      *
      * @param page
      * @param userEntity
-     * @return com.zhaolq.mars.tool.core.result.R<com.baomidou.mybatisplus.core.metadata.IPage<com.zhaolq.mars.service.sys.entity.UserEntity>>
+     * @return com.zhaolq.mars.tool.core.result.R<com.baomidou.mybatisplus.core.metadata.IPage < com.zhaolq.mars.service.sys.entity.UserEntity>>
      */
     @PostMapping("/page")
+    @ApiOperation(value = "分页查询post请求", notes = "分页查询post请求")
     public R<IPage<UserEntity>> getPage2(Page<UserEntity> page, @RequestBody(required = false) UserEntity userEntity) {
         QueryWrapper<UserEntity> wrapper = new QueryWrapper<>(userEntity);
         page = userService.page(page, wrapper);
@@ -210,14 +224,23 @@ public class UserController {
      * 问题：1、暂不支持排序；2、一对多分页的total值等于多的一方
      *
      * @param
-     * @return com.zhaolq.mars.tool.core.result.R<com.baomidou.mybatisplus.core.metadata.IPage<com.zhaolq.mars.service.sys.entity.UserEntity>>
+     * @return com.zhaolq.mars.tool.core.result.R<com.baomidou.mybatisplus.core.metadata.IPage < com.zhaolq.mars.service.sys.entity.UserEntity>>
      */
     @GetMapping("/withRolePage")
+    @ApiOperation(value = "分页查询，携带角色列表", notes = "分页查询，携带角色列表")
     public R<IPage<UserEntity>> getWithRolePage(Page<UserEntity> page, UserEntity userEntity) {
         return R.success(userService.getWithRolePage(page, userEntity, null));
     }
 
-    @GetMapping("exportExcel")
+    /**
+     * 导出
+     *
+     * @param userEntity
+     * @param response
+     * @return void
+     */
+    @GetMapping("/exportExcel")
+    @ApiOperation(value = "导出", notes = "导出")
     public void exportExcel(UserEntity userEntity, HttpServletResponse response) {
         QueryWrapper<UserEntity> wrapper = new QueryWrapper<>(userEntity);
         List<UserEntity> list = userService.list(wrapper);
@@ -244,9 +267,20 @@ public class UserController {
         IoUtil.close(out);
     }
 
-    @PostMapping("importExcel")
+    @PostMapping("/importExcel")
+    @ApiOperation(value = "导入", notes = "导入")
     public R<Boolean> importExcel() {
         return R.boo(true);
+    }
+
+    @GetMapping("/getAuthorityMenuTree")
+    @ApiOperation(value = "获取权限下菜单tree", notes = "获取权限下菜单tree")
+    public R<Set<MenuEntity>> getAuthorityMenuTree(UserEntity userEntity) {
+        Set<MenuEntity> set = userService.getAuthorityMenu(userEntity);
+        List<MenuEntity> list = new ArrayList<>(set);
+        List<MenuEntity> list2 = CollUtil.newArrayList(set);
+
+        return R.success(set);
     }
 
 

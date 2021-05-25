@@ -1,12 +1,15 @@
 package com.zhaolq.mars.service.sys.controller;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.lang.tree.Tree;
 import cn.hutool.core.lang.tree.TreeNode;
 import cn.hutool.core.lang.tree.TreeUtil;
+import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -34,10 +37,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * <p>
@@ -273,16 +273,18 @@ public class UserController {
         return R.boo(true);
     }
 
+    /**
+     * 获取权限下菜单树
+     *
+     * @param userEntity
+     * @return com.zhaolq.mars.tool.core.result.R<java.util.List < com.zhaolq.mars.service.sys.entity.MenuEntity>>
+     */
     @GetMapping("/getAuthorityMenuTree")
-    @ApiOperation(value = "获取权限下菜单tree", notes = "获取权限下菜单tree")
-    public R<Set<MenuEntity>> getAuthorityMenuTree(UserEntity userEntity) {
-        Set<MenuEntity> set = userService.getAuthorityMenu(userEntity);
-        List<MenuEntity> list = new ArrayList<>(set);
-        List<MenuEntity> list2 = CollUtil.newArrayList(set);
-
-        return R.success(set);
+    @ApiOperation(value = "获取权限下菜单树", notes = "获取权限下菜单树")
+    public R<List<MenuEntity>> getAuthorityMenuTree(UserEntity userEntity) {
+        List<MenuEntity> menuTreeList = userService.getAuthorityMenuTree(userEntity);
+        return R.success(menuTreeList);
     }
-
 
 }
 

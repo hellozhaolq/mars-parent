@@ -48,11 +48,11 @@ public interface IUserService extends IService<UserEntity> {
     IPage<UserEntity> getWithRolePage(IPage<UserEntity> page, UserEntity userEntity, RoleEntity roleEntity);
 
     /**
-     * 获取权限下菜单
+     * 获取权限下菜单树
      *
      * @param userEntity
      * @return java.util.Set<com.zhaolq.mars.service.sys.entity.MenuEntity>
      */
-    Set<MenuEntity> getAuthorityMenu(UserEntity userEntity);
+    List<MenuEntity> getAuthorityMenuTree(UserEntity userEntity);
 
 }

@@ -74,6 +74,6 @@ public interface UserMapper extends BaseMapper<UserEntity> {
      * @param userEntity
      * @return java.util.Set<com.zhaolq.mars.service.sys.entity.MenuEntity>
      */
-    Set<MenuEntity> getAuthorityMenu(@Param("u") UserEntity userEntity);
+    List<MenuEntity> getAuthorityMenu(@Param("u") UserEntity userEntity);
 
 }

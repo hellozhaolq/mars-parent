@@ -42,13 +42,15 @@ public interface UserMapper extends BaseMapper<UserEntity> {
      */
     IPage<UserEntity> selectPageByWrapperCustom(IPage<UserEntity> page, @Param(Constants.WRAPPER) Wrapper<UserEntity> wrapper);
 
+    UserEntity selectUser(@Param("u") UserEntity userEntity);
+
     /**
      * 单个查询，携带角色列表
      *
      * @param userEntity
      * @return com.zhaolq.mars.service.sys.entity.UserEntity
      */
-    UserEntity getWithRole(@Param("u") UserEntity userEntity, @Param("r") RoleEntity roleEntity);
+    UserEntity selectWithRole(@Param("u") UserEntity userEntity, @Param("r") RoleEntity roleEntity);
 
     /**
      * 列表查询，携带角色列表
@@ -56,7 +58,7 @@ public interface UserMapper extends BaseMapper<UserEntity> {
      * @param userEntity
      * @return java.util.List<com.zhaolq.mars.service.sys.entity.UserEntity>
      */
-    List<UserEntity> getWithRoleList(@Param("u") UserEntity userEntity, @Param("r") RoleEntity roleEntity);
+    List<UserEntity> selectListWithRole(@Param("u") UserEntity userEntity, @Param("r") RoleEntity roleEntity);
 
     /**
      * 分页查询，携带角色列表，连表查询，多个参数
@@ -66,7 +68,7 @@ public interface UserMapper extends BaseMapper<UserEntity> {
      * @param roleEntity
      * @return com.baomidou.mybatisplus.core.metadata.IPage<com.zhaolq.mars.service.sys.entity.UserEntity>
      */
-    IPage<UserEntity> getWithRolePage(IPage<UserEntity> page, @Param("u") UserEntity userEntity, @Param("r") RoleEntity roleEntity);
+    IPage<UserEntity> selectPageWithRole(IPage<UserEntity> page, @Param("u") UserEntity userEntity, @Param("r") RoleEntity roleEntity);
 
     /**
      * 获取权限下菜单
@@ -74,6 +76,6 @@ public interface UserMapper extends BaseMapper<UserEntity> {
      * @param userEntity
      * @return java.util.Set<com.zhaolq.mars.service.sys.entity.MenuEntity>
      */
-    List<MenuEntity> getAuthorityMenu(@Param("u") UserEntity userEntity);
+    List<MenuEntity> selectAuthorityMenu(@Param("u") UserEntity userEntity);
 
 }

@@ -42,22 +42,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
 
     @Override
     public UserEntity getWithRole(UserEntity userEntity, RoleEntity roleEntity) {
-        return userMapper.getWithRole(userEntity, roleEntity);
+        return userMapper.selectWithRole(userEntity, roleEntity);
     }
 
     @Override
-    public List<UserEntity> getWithRoleList(UserEntity userEntity, RoleEntity roleEntity) {
-        return userMapper.getWithRoleList(userEntity, roleEntity);
+    public List<UserEntity> listWithRole(UserEntity userEntity, RoleEntity roleEntity) {
+        return userMapper.selectListWithRole(userEntity, roleEntity);
     }
 
     @Override
-    public IPage<UserEntity> getWithRolePage(IPage<UserEntity> page, UserEntity userEntity, RoleEntity roleEntity) {
-        return userMapper.getWithRolePage(page, userEntity, roleEntity);
+    public IPage<UserEntity> pageWithRole(IPage<UserEntity> page, UserEntity userEntity, RoleEntity roleEntity) {
+        return userMapper.selectPageWithRole(page, userEntity, roleEntity);
     }
 
     @Override
     public List<MenuEntity> getAuthorityMenuTree(UserEntity userEntity) {
-        List<MenuEntity> list = userMapper.getAuthorityMenu(userEntity);
+        List<MenuEntity> list = userMapper.selectAuthorityMenu(userEntity);
         // 对list去重并排序
         TreeSet treeSet = CollUtil.toTreeSet(list, new Comparator<MenuEntity>() {
             @Override

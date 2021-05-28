@@ -35,7 +35,7 @@ public interface IUserService extends IService<UserEntity> {
      * @param userEntity
      * @return java.util.List<com.zhaolq.mars.service.sys.entity.UserEntity>
      */
-    List<UserEntity> getWithRoleList(UserEntity userEntity, RoleEntity roleEntity);
+    List<UserEntity> listWithRole(UserEntity userEntity, RoleEntity roleEntity);
 
     /**
      * 分页查询，携带角色列表，连表查询，多个参数
@@ -45,7 +45,7 @@ public interface IUserService extends IService<UserEntity> {
      * @param roleEntity
      * @return com.baomidou.mybatisplus.core.metadata.IPage<com.zhaolq.mars.service.sys.entity.UserEntity>
      */
-    IPage<UserEntity> getWithRolePage(IPage<UserEntity> page, UserEntity userEntity, RoleEntity roleEntity);
+    IPage<UserEntity> pageWithRole(IPage<UserEntity> page, UserEntity userEntity, RoleEntity roleEntity);
 
     /**
      * 获取权限下菜单树

@@ -177,7 +177,7 @@ public class UserController {
     @GetMapping("/withRoleList")
     @ApiOperation(value = "列表查询，携带角色列表", notes = "列表查询，携带角色列表")
     public R<List<UserEntity>> getWithRoleList(UserEntity userEntity) {
-        List<UserEntity> list = userService.getWithRoleList(userEntity, null);
+        List<UserEntity> list = userService.listWithRole(userEntity, null);
         if (list != null) {
             for (UserEntity u : list) {
                 // 角色根据ID排序(roleId转integer排序)
@@ -229,7 +229,7 @@ public class UserController {
     @GetMapping("/withRolePage")
     @ApiOperation(value = "分页查询，携带角色列表", notes = "分页查询，携带角色列表")
     public R<IPage<UserEntity>> getWithRolePage(Page<UserEntity> page, UserEntity userEntity) {
-        return R.success(userService.getWithRolePage(page, userEntity, null));
+        return R.success(userService.pageWithRole(page, userEntity, null));
     }
 
     /**

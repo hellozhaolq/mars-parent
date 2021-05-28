@@ -443,7 +443,7 @@ public class UserMapperTest {
         RoleEntity roleEntity = new RoleEntity();
         roleEntity.setStatus(Byte.valueOf("1"));
 
-        List<UserEntity> userList = userMapper.getWithRoleList(userEntity, roleEntity);
+        List<UserEntity> userList = userMapper.selectListWithRole(userEntity, roleEntity);
 
         System.out.println("userList.size(): " + userList.size());
         userList.forEach(System.out::println);
@@ -498,7 +498,7 @@ public class UserMapperTest {
 
         // 同样可以不进行 count 查询
         IPage<UserEntity> page = new Page<>(1, 3);
-        IPage<UserEntity> iPage = userMapper.getWithRolePage(page, userEntity, roleEntity);
+        IPage<UserEntity> iPage = userMapper.selectPageWithRole(page, userEntity, roleEntity);
 
         System.out.println("总记录数：" + iPage.getTotal());
         System.out.println("总页数：" + iPage.getPages());

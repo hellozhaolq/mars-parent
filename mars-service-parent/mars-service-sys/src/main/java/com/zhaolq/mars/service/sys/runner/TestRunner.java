@@ -1,36 +1,19 @@
 package com.zhaolq.mars.service.sys.runner;
 
-import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.db.Db;
 import cn.hutool.db.DbUtil;
 import cn.hutool.db.Entity;
 import cn.hutool.json.JSONObject;
-import cn.hutool.setting.Setting;
-import cn.hutool.setting.dialect.Props;
-import cn.hutool.setting.dialect.PropsUtil;
-import com.zhaolq.mars.tool.core.io.FileUtils;
-import com.zhaolq.mars.tool.core.io.IoUtils;
-import com.zhaolq.mars.tool.core.io.ResourceUtils;
-import com.zhaolq.mars.tool.core.setting.PropsUtils;
 import com.zhaolq.mars.tool.core.setting.YamlUtils;
-import com.zhaolq.mars.tool.core.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.checkerframework.checker.units.qual.K;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import org.yaml.snakeyaml.Yaml;
 
 import javax.sql.DataSource;
-import java.io.InputStream;
-import java.nio.charset.Charset;
 import java.sql.*;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * 推荐：https://bbs.huaweicloud.com/blogs/184825

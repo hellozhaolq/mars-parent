@@ -56,7 +56,7 @@ public class UserController {
      * @return com.zhaolq.mars.service.sys.entity.UserEntity
      * @throws
      */
-    @PostMapping
+    @PostMapping("/post")
     @ApiOperation(value = "单个新增", notes = "单个新增")
     public R<Boolean> post(@Validated({Add.class}) @RequestBody(required = true) UserEntity userEntity) {
         // 检查用户是否存在
@@ -77,7 +77,7 @@ public class UserController {
      * @return com.zhaolq.mars.service.sys.entity.UserEntity
      * @throws
      */
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     @ApiOperation(value = "单个删除", notes = "单个删除")
     public R<Boolean> delete(@PathVariable("id") @NotNull(message = "缺少id") String id) {
         UserEntity userEntity = userService.getById(id);
@@ -95,7 +95,7 @@ public class UserController {
      * @return com.zhaolq.mars.service.sys.entity.UserEntity
      * @throws
      */
-    @PutMapping
+    @PutMapping("/put")
     @ApiOperation(value = "单个修改", notes = "单个修改")
     public R<Boolean> put(@Validated({Edit.class}) @RequestBody UserEntity userEntity) {
         UserEntity userEntityTemp = userService.getById(userEntity.getId());
@@ -113,7 +113,7 @@ public class UserController {
      * @return com.zhaolq.mars.service.sys.entity.UserEntity
      * @throws
      */
-    @GetMapping
+    @GetMapping("/get")
     @ApiOperation(value = "单个查询", notes = "单个查询")
     public R<UserEntity> get(UserEntity userEntity) {
         Assert.notNull(userEntity, ResultCode.PARAM_NOT_COMPLETE.getDescCh());
@@ -129,7 +129,7 @@ public class UserController {
         return R.success(userEntity);
     }
 
-    @GetMapping("/list")
+    @GetMapping("/getList")
     @ApiOperation(value = "列表查询", notes = "列表查询")
     public R<List<UserEntity>> getList(UserEntity userEntity) {
         QueryWrapper<UserEntity> wrapper = new QueryWrapper<>(userEntity);
@@ -142,7 +142,7 @@ public class UserController {
      * @param userEntity
      * @return com.zhaolq.mars.tool.core.result.R<com.zhaolq.mars.service.sys.entity.UserEntity>
      */
-    @GetMapping("/withRole")
+    @GetMapping("/getWithRole")
     @ApiOperation(value = "单个查询，携带角色列表", notes = "单个查询，携带角色列表")
     public R<UserEntity> getWithRole(UserEntity userEntity) {
         Assert.notNull(userEntity, ResultCode.PARAM_NOT_COMPLETE.getDescCh());
@@ -160,14 +160,26 @@ public class UserController {
     }
 
     /**
+     * 列表查询，携带角色列表，关联的嵌套Select查询(N+1查询问题)
+     *
+     * @param userEntity
+     * @return com.zhaolq.mars.tool.core.result.R<com.zhaolq.mars.service.sys.entity.UserEntity>
+     */
+    @GetMapping("/getWithRoleNestedSelectTest")
+    @ApiOperation(value = "列表查询，携带角色列表", notes = "列表查询，携带角色列表")
+    public R<UserEntity> getWithRoleNestedSelectTest(UserEntity userEntity) {
+        return R.success(userService.getWithRoleNestedSelectTest(userEntity));
+    }
+
+    /**
      * 列表查询，携带角色列表
      *
      * @param userEntity
      * @return com.zhaolq.mars.tool.core.result.R<java.util.List < com.zhaolq.mars.service.sys.entity.UserEntity>>
      */
-    @GetMapping("/withRoleList")
+    @GetMapping("/getListWithRole")
     @ApiOperation(value = "列表查询，携带角色列表", notes = "列表查询，携带角色列表")
-    public R<List<UserEntity>> getWithRoleList(UserEntity userEntity) {
+    public R<List<UserEntity>> getListWithRole(UserEntity userEntity) {
         List<UserEntity> list = userService.listWithRole(userEntity, null);
         if (list != null) {
             for (UserEntity u : list) {
@@ -186,7 +198,7 @@ public class UserController {
      * @param userEntity
      * @return com.zhaolq.mars.tool.core.result.R<com.baomidou.mybatisplus.core.metadata.IPage < com.zhaolq.mars.service.sys.entity.UserEntity>>
      */
-    @GetMapping("/page")
+    @GetMapping("/getPage")
     @ApiOperation(value = "分页查询", notes = "分页查询")
     public R<IPage<UserEntity>> getPage(Page<UserEntity> page, UserEntity userEntity) {
         QueryWrapper<UserEntity> wrapper = new QueryWrapper<>(userEntity);
@@ -202,7 +214,7 @@ public class UserController {
      * @param userEntity
      * @return com.zhaolq.mars.tool.core.result.R<com.baomidou.mybatisplus.core.metadata.IPage < com.zhaolq.mars.service.sys.entity.UserEntity>>
      */
-    @PostMapping("/page")
+    @PostMapping("/getPage2")
     @ApiOperation(value = "分页查询post请求", notes = "分页查询post请求")
     public R<IPage<UserEntity>> getPage2(Page<UserEntity> page, @RequestBody(required = false) UserEntity userEntity) {
         QueryWrapper<UserEntity> wrapper = new QueryWrapper<>(userEntity);
@@ -217,9 +229,9 @@ public class UserController {
      * @param
      * @return com.zhaolq.mars.tool.core.result.R<com.baomidou.mybatisplus.core.metadata.IPage < com.zhaolq.mars.service.sys.entity.UserEntity>>
      */
-    @GetMapping("/withRolePage")
+    @GetMapping("/getPageWithRole")
     @ApiOperation(value = "分页查询，携带角色列表", notes = "分页查询，携带角色列表")
-    public R<IPage<UserEntity>> getWithRolePage(Page<UserEntity> page, UserEntity userEntity) {
+    public R<IPage<UserEntity>> getPageWithRole(Page<UserEntity> page, UserEntity userEntity) {
         return R.success(userService.pageWithRole(page, userEntity, null));
     }
 
@@ -230,9 +242,9 @@ public class UserController {
      * @param response
      * @return void
      */
-    @GetMapping("/exportExcel")
+    @GetMapping("/getExportExcel")
     @ApiOperation(value = "导出", notes = "导出")
-    public void exportExcel(UserEntity userEntity, HttpServletResponse response) {
+    public void getExportExcel(UserEntity userEntity, HttpServletResponse response) {
         QueryWrapper<UserEntity> wrapper = new QueryWrapper<>(userEntity);
         List<UserEntity> list = userService.list(wrapper);
 
@@ -258,9 +270,9 @@ public class UserController {
         IoUtil.close(out);
     }
 
-    @PostMapping("/importExcel")
+    @PostMapping("/postImportExcel")
     @ApiOperation(value = "导入", notes = "导入")
-    public R<Boolean> importExcel() {
+    public R<Boolean> postImportExcel() {
         return R.boo(true);
     }
 

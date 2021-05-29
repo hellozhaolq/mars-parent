@@ -1,29 +1,24 @@
 package com.zhaolq.mars.service.sys.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.math.MathUtil;
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhaolq.mars.service.sys.entity.MenuEntity;
 import com.zhaolq.mars.service.sys.entity.RoleEntity;
 import com.zhaolq.mars.service.sys.entity.UserEntity;
 import com.zhaolq.mars.service.sys.mapper.UserMapper;
 import com.zhaolq.mars.service.sys.service.IUserService;
-import com.zhaolq.mars.tool.core.result.R;
 import com.zhaolq.mars.tool.core.utils.StringUtils;
 import lombok.AllArgsConstructor;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.TreeSet;
 
 /**
  * <p>
@@ -43,6 +38,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     @Override
     public UserEntity getWithRole(UserEntity userEntity, RoleEntity roleEntity) {
         return userMapper.selectWithRole(userEntity, roleEntity);
+    }
+
+    @Override
+    public UserEntity getWithRoleNestedSelectTest(UserEntity userEntity) {
+        return userMapper.selectWithRoleNestedSelectTest(userEntity);
     }
 
     @Override

@@ -11,7 +11,6 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * <p>
@@ -42,8 +41,6 @@ public interface UserMapper extends BaseMapper<UserEntity> {
      */
     IPage<UserEntity> selectPageByWrapperCustom(IPage<UserEntity> page, @Param(Constants.WRAPPER) Wrapper<UserEntity> wrapper);
 
-    UserEntity selectUser(@Param("u") UserEntity userEntity);
-
     /**
      * 单个查询，携带角色列表
      *
@@ -51,6 +48,14 @@ public interface UserMapper extends BaseMapper<UserEntity> {
      * @return com.zhaolq.mars.service.sys.entity.UserEntity
      */
     UserEntity selectWithRole(@Param("u") UserEntity userEntity, @Param("r") RoleEntity roleEntity);
+
+    /**
+     * 列表查询，携带角色列表，关联的嵌套Select查询(N+1查询问题)
+     *
+     * @param userEntity
+     * @return com.zhaolq.mars.service.sys.entity.UserEntity
+     */
+    UserEntity selectWithRoleNestedSelectTest(@Param("u") UserEntity userEntity);
 
     /**
      * 列表查询，携带角色列表

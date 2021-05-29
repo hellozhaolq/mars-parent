@@ -58,7 +58,7 @@ public class UserEntity extends Model<UserEntity> {
 
     @NotNull(groups = {Add.class}, message = "用户名缺失")
     @ApiModelProperty(value = "用户名")
-    @TableField("NAME")
+    @TableField(value = "NAME", condition = SqlCondition.LIKE)
     private String name;
 
     @ApiModelProperty(value = "昵称")

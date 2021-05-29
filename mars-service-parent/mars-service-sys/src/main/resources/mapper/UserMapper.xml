@@ -40,7 +40,7 @@
     <!-- 官方结果映射文档：https://mybatis.org/mybatis-3/zh/sqlmap-xml.html#Result_Maps -->
 
     <!-- ******************************** 关联的嵌套结果映射 ******************************** -->
-    <!-- hasOne，一对一关联。不建议使用，因为user和role实际是多对多关系，应该使用一对多关联，否则关联查询的多条数据只会显示一条，解决办法：指定一个不会重复的列充当唯一标识，如：rownum id； -->
+    <!-- hasOne，一对一关联。因为user和role实际是多对多关系，应该使用一对多关联，否则关联查询的多条数据只会显示一条，解决办法：指定一个不会重复的列充当唯一标识，如：rownum id； -->
     <resultMap id="NestedResultMap_OneToOne" type="com.zhaolq.mars.service.sys.entity.UserEntity" extends="BaseResultMap">
         <association property="role" resultMap="com.zhaolq.mars.service.sys.mapper.RoleMapper.BaseResultMap"
                      columnPrefix="r#" notNullColumn="id,code">
@@ -54,22 +54,33 @@
     </resultMap>
     <!-- ******************************** 关联的嵌套结果映射 ******************************** -->
 
-    <!-- ******************************** 关联的嵌套 Select 查询 (N+1 查询问题) ******************************** -->
-    <!-- hasMany，一对多关联 -->
+    <!-- ******************************** 关联的嵌套Select查询(N+1查询问题) ******************************** -->
+    <!-- hasMany，只适用于一对一关联。因为user和role实际是多对多关系，所以报错。 -->
     <resultMap id="NestedSelect_OneToMany" type="com.zhaolq.mars.service.sys.entity.UserEntity" extends="BaseResultMap">
         <association property="role" column="{prop1=id,prop2=id}" select="selectRole">
         </association>
     </resultMap>
-
-    <select id="selectUser" resultMap="NestedSelect_OneToMany">
+    <select id="selectWithRoleNestedSelectTest" resultMap="NestedSelect_OneToMany">
         select
-            <include refid="Base_Column_Alias"></include>
+        <include refid="Base_Column_Alias"></include>
         from mars_sys_user u
-        <include refid="Base_Where"></include>
+        inner join mars_sys_user_role ur
+        on u.id = ur.user_id
+        inner join mars_sys_role r
+        on ur.role_id = r.id
+        <where>
+            <include refid="Base_Where"></include>
+        </where>
+    </select>
+    <select id="selectRole" resultMap="com.zhaolq.mars.service.sys.mapper.RoleMapper.BaseResultMap">
+        select
+        <include refid="com.zhaolq.mars.service.sys.mapper.RoleMapper.Base_Column_Alias"></include>
+        from mars_sys_user_role ur
+        inner join mars_sys_role r
+        on ur.role_id = r.id
+        where ur.user_id = #{prop1} and ur.user_id = #{prop2}
     </select>
     <!-- ******************************** 关联的嵌套 Select 查询 (N+1 查询问题) ******************************** -->
-
-
 
 
 

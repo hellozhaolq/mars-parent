@@ -1,15 +1,12 @@
 package com.zhaolq.mars.service.sys.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhaolq.mars.service.sys.entity.MenuEntity;
 import com.zhaolq.mars.service.sys.entity.RoleEntity;
 import com.zhaolq.mars.service.sys.entity.UserEntity;
 
-import java.io.File;
 import java.util.List;
-import java.util.Set;
 
 /**
  * <p>
@@ -28,6 +25,14 @@ public interface IUserService extends IService<UserEntity> {
      * @return com.zhaolq.mars.service.sys.entity.UserEntity
      */
     UserEntity getWithRole(UserEntity userEntity, RoleEntity roleEntity);
+
+    /**
+     * 列表查询，携带角色列表，关联的嵌套Select查询(N+1查询问题)
+     *
+     * @param userEntity
+     * @return com.zhaolq.mars.service.sys.entity.UserEntity
+     */
+    UserEntity getWithRoleNestedSelectTest(UserEntity userEntity);
 
     /**
      * 列表查询，携带角色列表

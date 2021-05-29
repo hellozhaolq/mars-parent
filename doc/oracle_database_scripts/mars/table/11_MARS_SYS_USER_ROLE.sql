@@ -31,3 +31,9 @@ comment on column MARS_SYS_USER_ROLE.last_update_time
   is '更新时间';
 alter table MARS_SYS_USER_ROLE
   add constraint PK_SYS_USER_ROLE_ID primary key (ID);
+alter table MARS_SYS_USER_ROLE
+  add constraint FK_SYS_USER_ROLE_ROLE_ID foreign key (ROLE_ID)
+  references MARS_SYS_ROLE (ID);
+alter table MARS_SYS_USER_ROLE
+  add constraint FK_SYS_USER_ROLE_USER_ID foreign key (USER_ID)
+  references MARS_SYS_USER (ID);

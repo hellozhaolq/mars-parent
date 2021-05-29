@@ -31,3 +31,9 @@ comment on column MARS_SYS_ROLE_DEPT.last_update_time
   is '更新时间';
 alter table MARS_SYS_ROLE_DEPT
   add constraint PK_SYS_ROLE_DEPT_ID primary key (ID);
+alter table MARS_SYS_ROLE_DEPT
+  add constraint FK_SYS_ROLE_DEPT_DEPT_ID foreign key (DEPT_ID)
+  references MARS_SYS_DEPT (ID);
+alter table MARS_SYS_ROLE_DEPT
+  add constraint FK_SYS_ROLE_DEPT_ROLE_ID foreign key (ROLE_ID)
+  references MARS_SYS_ROLE (ID);

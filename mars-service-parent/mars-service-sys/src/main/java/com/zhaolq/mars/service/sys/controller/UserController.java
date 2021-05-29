@@ -1,15 +1,8 @@
 package com.zhaolq.mars.service.sys.controller;
 
-import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.lang.Assert;
-import cn.hutool.core.lang.tree.Tree;
-import cn.hutool.core.lang.tree.TreeNode;
-import cn.hutool.core.lang.tree.TreeUtil;
-import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.ObjectUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -18,13 +11,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zhaolq.mars.common.valid.group.Add;
 import com.zhaolq.mars.common.valid.group.Edit;
 import com.zhaolq.mars.service.sys.entity.MenuEntity;
-import com.zhaolq.mars.service.sys.entity.RoleEntity;
 import com.zhaolq.mars.service.sys.entity.UserEntity;
 import com.zhaolq.mars.service.sys.service.IMenuService;
 import com.zhaolq.mars.service.sys.service.IUserService;
 import com.zhaolq.mars.tool.core.result.R;
 import com.zhaolq.mars.tool.core.result.ResultCode;
-import com.zhaolq.mars.tool.core.io.FileUtils;
 import com.zhaolq.mars.tool.core.utils.StringUtils;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -35,9 +26,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
-import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * <p>

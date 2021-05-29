@@ -1,3 +1,4 @@
+set heading off
 set feedback off
 set define off
 spool db_install.log
@@ -41,19 +42,8 @@ PROMPT
 @mars\table_data\11_MARS_SYS_USER_ROLE.sql
 
 PROMPT
-PROMPT Add foreign key constraints 添加约束
+PROMPT Add foreign key constraint 添加约束 -- 此过程移到表创建中，对表创建的顺序有要求。
 PROMPT
-@mars\constraint\01_MARS_STD_COUNTRY.sql
-@mars\constraint\02_MARS_STD_NATION.sql
-@mars\constraint\03_MARS_STD_POLITICAL_STATUS.sql
-@mars\constraint\04_MARS_SYS_DEPT.sql
-@mars\constraint\05_MARS_SYS_MEDIA_FILE.sql
-@mars\constraint\06_MARS_SYS_MENU.sql
-@mars\constraint\07_MARS_SYS_ROLE.sql
-@mars\constraint\08_MARS_SYS_ROLE_DEPT.sql
-@mars\constraint\09_MARS_SYS_ROLE_MENU.sql
-@mars\constraint\10_MARS_SYS_USER.sql
-@mars\constraint\11_MARS_SYS_USER_ROLE.sql
 
 PROMPT
 PROMPT Create function 创建函数

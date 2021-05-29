@@ -31,3 +31,9 @@ comment on column MARS_SYS_ROLE_MENU.last_update_time
   is '更新时间';
 alter table MARS_SYS_ROLE_MENU
   add constraint PK_SYS_ROLE_MENU_ID primary key (ID);
+alter table MARS_SYS_ROLE_MENU
+  add constraint FK_SYS_ROLE_MENU_MENU_ID foreign key (MENU_ID)
+  references MARS_SYS_MENU (ID);
+alter table MARS_SYS_ROLE_MENU
+  add constraint FK_SYS_ROLE_MENU_ROLE_ID foreign key (ROLE_ID)
+  references MARS_SYS_ROLE (ID);

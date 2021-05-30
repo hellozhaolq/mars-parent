@@ -116,6 +116,7 @@ public class UserController {
     @GetMapping("/get")
     @ApiOperation(value = "单个查询", notes = "单个查询")
     public R<UserEntity> get(UserEntity userEntity) {
+        // 这里永远断言成功，即使请求没有参数userEntity也不是null。
         Assert.notNull(userEntity, ResultCode.PARAM_NOT_COMPLETE.getDescCh());
         boolean condition = userEntity == null || (StringUtils.isEmpty(userEntity.getId()) && StringUtils.isEmpty(userEntity.getAccount()));
         if (condition) {
@@ -129,11 +130,49 @@ public class UserController {
         return R.success(userEntity);
     }
 
+    /**
+     * 列表查询
+     *
+     * @param userEntity
+     * @return com.zhaolq.mars.tool.core.result.R<java.util.List<com.zhaolq.mars.service.sys.entity.UserEntity>>
+     */
     @GetMapping("/getList")
     @ApiOperation(value = "列表查询", notes = "列表查询")
     public R<List<UserEntity>> getList(UserEntity userEntity) {
         QueryWrapper<UserEntity> wrapper = new QueryWrapper<>(userEntity);
         return R.success(userService.list(wrapper));
+    }
+
+    /**
+     * get分页查询
+     * 问题：暂不支持排序
+     *
+     * @param page
+     * @param userEntity
+     * @return com.zhaolq.mars.tool.core.result.R<com.baomidou.mybatisplus.core.metadata.IPage < com.zhaolq.mars.service.sys.entity.UserEntity>>
+     */
+    @GetMapping("/getPage")
+    @ApiOperation(value = "分页查询", notes = "分页查询")
+    public R<IPage<UserEntity>> getPage(Page<UserEntity> page, UserEntity userEntity) {
+        QueryWrapper<UserEntity> wrapper = new QueryWrapper<>(userEntity);
+        page = userService.page(page, wrapper);
+        return R.success(page);
+    }
+
+    /**
+     * post分页查询。post请求接受两个参数，只能有一个参数从RequestBody中获取。
+     * 问题：暂不支持排序
+     *
+     * @param page
+     * @param userEntity
+     * @return com.zhaolq.mars.tool.core.result.R<com.baomidou.mybatisplus.core.metadata.IPage < com.zhaolq.mars.service.sys.entity.UserEntity>>
+     */
+    @PostMapping("/getPage2")
+    @ApiOperation(value = "分页查询post请求", notes = "分页查询post请求")
+    public R<IPage<UserEntity>> getPage2(Page<UserEntity> page, @RequestBody(required = false) UserEntity userEntity) {
+        QueryWrapper<UserEntity> wrapper = new QueryWrapper<>(userEntity);
+        page = userService.page(page, wrapper);
+        return R.success(page);
     }
 
     /**
@@ -145,7 +184,6 @@ public class UserController {
     @GetMapping("/getWithRole")
     @ApiOperation(value = "单个查询，携带角色列表", notes = "单个查询，携带角色列表")
     public R<UserEntity> getWithRole(UserEntity userEntity) {
-        Assert.notNull(userEntity, ResultCode.PARAM_NOT_COMPLETE.getDescCh());
         boolean condition = userEntity == null || (StringUtils.isEmpty(userEntity.getId()) && StringUtils.isEmpty(userEntity.getAccount()));
         if (condition) {
             return R.failure(ResultCode.PARAM_NOT_COMPLETE);
@@ -168,7 +206,17 @@ public class UserController {
     @GetMapping("/getWithRoleNestedSelectTest")
     @ApiOperation(value = "列表查询，携带角色列表", notes = "列表查询，携带角色列表")
     public R<UserEntity> getWithRoleNestedSelectTest(UserEntity userEntity) {
-        return R.success(userService.getWithRoleNestedSelectTest(userEntity));
+        boolean condition = userEntity == null || (StringUtils.isEmpty(userEntity.getId()) && StringUtils.isEmpty(userEntity.getAccount()));
+        if (condition) {
+            return R.failure(ResultCode.PARAM_NOT_COMPLETE);
+        }
+        userEntity = userService.getWithRoleNestedSelectTest(userEntity);
+        if (userEntity == null) {
+            return R.failure(ResultCode.USER_NOT_EXISTED);
+        }
+        // 角色根据ID排序
+        Collections.sort(userEntity.getRoleList(), (r1, r2) -> Integer.valueOf(r1.getId()).compareTo(Integer.valueOf(r2.getId())));
+        return R.success(userEntity);
     }
 
     /**
@@ -188,38 +236,6 @@ public class UserController {
             }
         }
         return R.success(list);
-    }
-
-    /**
-     * 分页查询
-     * 问题：暂不支持排序
-     *
-     * @param page
-     * @param userEntity
-     * @return com.zhaolq.mars.tool.core.result.R<com.baomidou.mybatisplus.core.metadata.IPage < com.zhaolq.mars.service.sys.entity.UserEntity>>
-     */
-    @GetMapping("/getPage")
-    @ApiOperation(value = "分页查询", notes = "分页查询")
-    public R<IPage<UserEntity>> getPage(Page<UserEntity> page, UserEntity userEntity) {
-        QueryWrapper<UserEntity> wrapper = new QueryWrapper<>(userEntity);
-        page = userService.page(page, wrapper);
-        return R.success(page);
-    }
-
-    /**
-     * 分页查询。post请求接受两个参数，只能有一个参数从RequestBody中获取。
-     * 问题：暂不支持排序
-     *
-     * @param page
-     * @param userEntity
-     * @return com.zhaolq.mars.tool.core.result.R<com.baomidou.mybatisplus.core.metadata.IPage < com.zhaolq.mars.service.sys.entity.UserEntity>>
-     */
-    @PostMapping("/getPage2")
-    @ApiOperation(value = "分页查询post请求", notes = "分页查询post请求")
-    public R<IPage<UserEntity>> getPage2(Page<UserEntity> page, @RequestBody(required = false) UserEntity userEntity) {
-        QueryWrapper<UserEntity> wrapper = new QueryWrapper<>(userEntity);
-        page = userService.page(page, wrapper);
-        return R.success(page);
     }
 
     /**

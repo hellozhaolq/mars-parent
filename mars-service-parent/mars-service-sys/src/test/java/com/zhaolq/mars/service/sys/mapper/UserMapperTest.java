@@ -422,7 +422,7 @@ public class UserMapperTest {
         QueryWrapper<UserEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper.ge("AGE", "28");
         // 同样可以不进行 count 查询
-        IPage<UserEntity> page = new Page<>(1, 3);
+        Page<UserEntity> page = new Page<>(1, 3);
         IPage<UserEntity> iPage = userMapper.selectPageByWrapperCustom(page, queryWrapper);
 
         System.out.println("总记录数：" + iPage.getTotal());
@@ -497,7 +497,7 @@ public class UserMapperTest {
         roleEntity.setStatus(Byte.valueOf("1"));
 
         // 同样可以不进行 count 查询
-        IPage<UserEntity> page = new Page<>(1, 3);
+        Page<UserEntity> page = new Page<>(1, 3);
         IPage<UserEntity> iPage = userMapper.selectPageWithRole(page, userEntity, roleEntity);
 
         System.out.println("总记录数：" + iPage.getTotal());

@@ -3,7 +3,9 @@ package com.zhaolq.mars.service.sys.service.impl;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhaolq.mars.service.sys.entity.MenuEntity;
 import com.zhaolq.mars.service.sys.entity.RoleEntity;
@@ -51,8 +53,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     }
 
     @Override
-    public IPage<UserEntity> pageWithRole(IPage<UserEntity> page, UserEntity userEntity, RoleEntity roleEntity) {
-        return userMapper.selectPageWithRole(page, userEntity, roleEntity);
+    public Page<UserEntity> pageWithRole(Page<UserEntity> page, UserEntity userEntity, RoleEntity roleEntity) {
+        List<OrderItem> list = OrderItem.ascs("ID", "ACCOUNT");
+        page.addOrder(list);
+        Page<UserEntity> result = userMapper.selectPageWithRole(page, userEntity, roleEntity);
+
+        QueryWrapper<UserEntity> wrapper = new QueryWrapper<>(userEntity);
+        result.setTotal(userMapper.selectCount(wrapper));
+
+        return result;
     }
 
     @Override

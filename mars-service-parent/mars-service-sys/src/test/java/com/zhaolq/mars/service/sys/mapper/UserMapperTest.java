@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.zhaolq.mars.common.mybatis.pagination.PagePlus;
 import com.zhaolq.mars.service.sys.entity.RoleEntity;
 import com.zhaolq.mars.service.sys.entity.UserEntity;
 import com.zhaolq.mars.tool.core.utils.ObjectUtils;
@@ -497,8 +498,8 @@ public class UserMapperTest {
         roleEntity.setStatus(Byte.valueOf("1"));
 
         // 同样可以不进行 count 查询
-        Page<UserEntity> page = new Page<>(1, 3);
-        IPage<UserEntity> iPage = userMapper.selectPageWithRole(page, userEntity, roleEntity);
+        PagePlus<UserEntity> page = new PagePlus<>(1, 3);
+        PagePlus<UserEntity> iPage = userMapper.selectPageWithRole(page, userEntity, roleEntity);
 
         System.out.println("总记录数：" + iPage.getTotal());
         System.out.println("总页数：" + iPage.getPages());

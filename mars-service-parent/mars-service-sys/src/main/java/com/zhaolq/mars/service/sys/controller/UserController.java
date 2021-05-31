@@ -8,6 +8,7 @@ import cn.hutool.poi.excel.ExcelWriter;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.zhaolq.mars.common.mybatis.pagination.PagePlus;
 import com.zhaolq.mars.common.valid.group.Add;
 import com.zhaolq.mars.common.valid.group.Edit;
 import com.zhaolq.mars.service.sys.entity.MenuEntity;
@@ -247,8 +248,8 @@ public class UserController {
      */
     @GetMapping("/getPageWithRole")
     @ApiOperation(value = "分页查询，携带角色列表", notes = "分页查询，携带角色列表")
-    public R<IPage<UserEntity>> getPageWithRole(Page<UserEntity> page, UserEntity userEntity) {
-        return R.success(userService.pageWithRole(page, userEntity, null));
+    public R<PagePlus<UserEntity>> getPageWithRole(PagePlus<UserEntity> pagePlus, UserEntity userEntity) {
+        return R.success(userService.pageWithRole(pagePlus, userEntity, null));
     }
 
     /**

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.zhaolq.mars.common.mybatis.pagination.PagePlus;
 import com.zhaolq.mars.service.sys.entity.MenuEntity;
 import com.zhaolq.mars.service.sys.entity.RoleEntity;
 import com.zhaolq.mars.service.sys.entity.UserEntity;
@@ -68,12 +69,12 @@ public interface UserMapper extends BaseMapper<UserEntity> {
     /**
      * 分页查询，携带角色列表，连表查询，多个参数
      *
-     * @param page
+     * @param pagePlus
      * @param userEntity
      * @param roleEntity
      * @return com.baomidou.mybatisplus.core.metadata.Page<com.zhaolq.mars.service.sys.entity.UserEntity>
      */
-    Page<UserEntity> selectPageWithRole(Page<UserEntity> page, @Param("u") UserEntity userEntity, @Param("r") RoleEntity roleEntity);
+    PagePlus<UserEntity> selectPageWithRole(PagePlus<UserEntity> pagePlus, @Param("u") UserEntity userEntity, @Param("r") RoleEntity roleEntity);
 
     /**
      * 获取权限下菜单

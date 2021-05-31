@@ -2,11 +2,13 @@ package com.zhaolq.mars.service.sys.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.NumberUtil;
+import cn.hutool.core.util.PageUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.zhaolq.mars.common.mybatis.pagination.PagePlus;
 import com.zhaolq.mars.service.sys.entity.MenuEntity;
 import com.zhaolq.mars.service.sys.entity.RoleEntity;
 import com.zhaolq.mars.service.sys.entity.UserEntity;
@@ -53,11 +55,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     }
 
     @Override
-    public Page<UserEntity> pageWithRole(Page<UserEntity> page, UserEntity userEntity, RoleEntity roleEntity) {
-        List<OrderItem> list = OrderItem.ascs("ID", "ACCOUNT");
-        page.addOrder(list);
-        Page<UserEntity> result = userMapper.selectPageWithRole(page, userEntity, roleEntity);
+    public PagePlus<UserEntity> pageWithRole(PagePlus<UserEntity> pagePlus, UserEntity userEntity, RoleEntity roleEntity) {
+        // List<OrderItem> list = OrderItem.ascs("ID", "ACCOUNT");
+        // 排序条件
+        // page.addOrder(list);
+        // 由于是一对多映射，这里关闭count查询，后面单独查询并设置总数。
+        // page.setSearchCount(false);
+        PagePlus<UserEntity> result = userMapper.selectPageWithRole(pagePlus, userEntity, roleEntity);
 
+        // 设置总数
         QueryWrapper<UserEntity> wrapper = new QueryWrapper<>(userEntity);
         result.setTotal(userMapper.selectCount(wrapper));
 

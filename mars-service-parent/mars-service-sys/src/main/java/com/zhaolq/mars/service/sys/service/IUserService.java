@@ -2,6 +2,7 @@ package com.zhaolq.mars.service.sys.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.zhaolq.mars.common.mybatis.pagination.PagePlus;
 import com.zhaolq.mars.service.sys.entity.MenuEntity;
 import com.zhaolq.mars.service.sys.entity.RoleEntity;
 import com.zhaolq.mars.service.sys.entity.UserEntity;
@@ -45,12 +46,12 @@ public interface IUserService extends IService<UserEntity> {
     /**
      * 分页查询，携带角色列表，连表查询，多个参数
      *
-     * @param page
+     * @param pagePlus
      * @param userEntity
      * @param roleEntity
      * @return com.baomidou.mybatisplus.core.metadata.Page<com.zhaolq.mars.service.sys.entity.UserEntity>
      */
-    Page<UserEntity> pageWithRole(Page<UserEntity> page, UserEntity userEntity, RoleEntity roleEntity);
+    PagePlus<UserEntity> pageWithRole(PagePlus<UserEntity> pagePlus, UserEntity userEntity, RoleEntity roleEntity);
 
     /**
      * 获取权限下菜单树

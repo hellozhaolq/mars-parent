@@ -7,10 +7,11 @@ import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.zhaolq.mars.common.mybatis.pagination.PagePlus;
 import com.zhaolq.mars.common.valid.group.Add;
 import com.zhaolq.mars.common.valid.group.Edit;
 import com.zhaolq.mars.service.sys.entity.MenuEntity;
+import com.zhaolq.mars.service.sys.entity.RoleEntity;
 import com.zhaolq.mars.service.sys.entity.UserEntity;
 import com.zhaolq.mars.service.sys.service.IMenuService;
 import com.zhaolq.mars.service.sys.service.IUserService;
@@ -134,7 +135,7 @@ public class UserController {
      * 列表查询
      *
      * @param userEntity
-     * @return com.zhaolq.mars.tool.core.result.R<java.util.List<com.zhaolq.mars.service.sys.entity.UserEntity>>
+     * @return com.zhaolq.mars.tool.core.result.R<java.util.List < com.zhaolq.mars.service.sys.entity.UserEntity>>
      */
     @GetMapping("/getList")
     @ApiOperation(value = "列表查询", notes = "列表查询")
@@ -145,34 +146,30 @@ public class UserController {
 
     /**
      * get分页查询
-     * 问题：暂不支持排序
      *
-     * @param page
+     * @param pagePlus
      * @param userEntity
      * @return com.zhaolq.mars.tool.core.result.R<com.baomidou.mybatisplus.core.metadata.IPage < com.zhaolq.mars.service.sys.entity.UserEntity>>
      */
     @GetMapping("/getPage")
     @ApiOperation(value = "分页查询", notes = "分页查询")
-    public R<IPage<UserEntity>> getPage(Page<UserEntity> page, UserEntity userEntity) {
+    public R<IPage<UserEntity>> getPage(PagePlus<UserEntity> pagePlus, UserEntity userEntity) {
         QueryWrapper<UserEntity> wrapper = new QueryWrapper<>(userEntity);
-        page = userService.page(page, wrapper);
-        return R.success(page);
+        return R.success(userService.page(pagePlus, wrapper));
     }
 
     /**
      * post分页查询。post请求接受两个参数，只能有一个参数从RequestBody中获取。
-     * 问题：暂不支持排序
      *
-     * @param page
+     * @param pagePlus
      * @param userEntity
      * @return com.zhaolq.mars.tool.core.result.R<com.baomidou.mybatisplus.core.metadata.IPage < com.zhaolq.mars.service.sys.entity.UserEntity>>
      */
     @PostMapping("/getPage2")
     @ApiOperation(value = "分页查询post请求", notes = "分页查询post请求")
-    public R<IPage<UserEntity>> getPage2(Page<UserEntity> page, @RequestBody(required = false) UserEntity userEntity) {
+    public R<IPage<UserEntity>> getPage2(PagePlus<UserEntity> pagePlus, @RequestBody(required = false) UserEntity userEntity) {
         QueryWrapper<UserEntity> wrapper = new QueryWrapper<>(userEntity);
-        page = userService.page(page, wrapper);
-        return R.success(page);
+        return R.success(userService.page(pagePlus, wrapper));
     }
 
     /**
@@ -239,17 +236,38 @@ public class UserController {
     }
 
     /**
-     * 分页查询，携带角色列表
-     * 问题：1、暂不支持排序；2、一对多分页的total值等于多的一方
+     * 分页查询，携带角色列表，连表查询，多个参数
+     * 仅供参考，使用关联的嵌套结果映射进行一对多分页查询时，其实是根据多方分页，会导致多方数据缺失。例如：
+     *      1个user对应3个role，当分页size=2、current=1时，结果会少1个role。
+     * 解决办法：
+     *      1、避免一对多分页查询场景设计。
+     *      2、使用关联的嵌套Select分页，但存在N+1查询问题。参考
      *
-     * @param
-     * @return com.zhaolq.mars.tool.core.result.R<com.baomidou.mybatisplus.core.metadata.IPage < com.zhaolq.mars.service.sys.entity.UserEntity>>
+     * @param pagePlus
+     * @param userEntity
+     * @param roleEntity
+     * @return com.zhaolq.mars.tool.core.result.R<com.baomidou.mybatisplus.core.metadata.IPage<com.zhaolq.mars.service.sys.entity.UserEntity>>
      */
+    @Deprecated
     @GetMapping("/getPageWithRole")
     @ApiOperation(value = "分页查询，携带角色列表", notes = "分页查询，携带角色列表")
-    public R<IPage<UserEntity>> getPageWithRole(Page<UserEntity> page, UserEntity userEntity) {
-        return R.success(userService.pageWithRole(page, userEntity, null));
+    public R<IPage<UserEntity>> getPageWithRole(PagePlus<UserEntity> pagePlus, UserEntity userEntity, RoleEntity roleEntity) {
+        return R.success(userService.pageWithRole(pagePlus, userEntity, roleEntity));
     }
+
+    /**
+     * 分页查询，携带角色列表，关联的嵌套Select查询(N+1查询问题)
+     *
+     * @param pagePlus
+     * @param userEntity
+     * @return com.zhaolq.mars.tool.core.result.R<com.baomidou.mybatisplus.core.metadata.IPage<com.zhaolq.mars.service.sys.entity.UserEntity>>
+     */
+    @GetMapping("/getPageWithRoleNestedSelectTest")
+    @ApiOperation(value = "分页查询，携带角色列表", notes = "分页查询，携带角色列表")
+    public R<IPage<UserEntity>> getPageWithRoleNestedSelectTest(PagePlus<UserEntity> pagePlus, UserEntity userEntity) {
+        return R.success(userService.pageWithRoleNestedSelectTest(pagePlus, userEntity));
+    }
+
 
     /**
      * 导出

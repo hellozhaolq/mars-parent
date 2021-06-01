@@ -498,8 +498,8 @@ public class UserMapperTest {
         roleEntity.setStatus(Byte.valueOf("1"));
 
         // 同样可以不进行 count 查询
-        PagePlus<UserEntity> page = new PagePlus<>(1, 3);
-        PagePlus<UserEntity> iPage = userMapper.selectPageWithRole(page, userEntity, roleEntity);
+        Page<UserEntity> page = new PagePlus<>(1, 3);
+        IPage<UserEntity> iPage = userMapper.selectPageWithRole(page, userEntity, roleEntity);
 
         System.out.println("总记录数：" + iPage.getTotal());
         System.out.println("总页数：" + iPage.getPages());

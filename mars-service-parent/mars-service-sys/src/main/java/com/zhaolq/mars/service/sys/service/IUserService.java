@@ -56,6 +56,7 @@ public interface IUserService extends IService<UserEntity> {
     /**
      * 分页查询，携带角色列表，关联的嵌套Select查询(N+1查询问题)
      *
+     * @param page
      * @param userEntity
      * @return com.baomidou.mybatisplus.core.metadata.IPage<com.zhaolq.mars.service.sys.entity.UserEntity>
      */

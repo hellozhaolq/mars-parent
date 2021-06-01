@@ -53,14 +53,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     @Deprecated
     @Override
     public IPage<UserEntity> pageWithRole(IPage<UserEntity> page, UserEntity userEntity, RoleEntity roleEntity) {
-        IPage<UserEntity> result = userMapper.selectPageWithRole(page, userEntity, roleEntity);
-        return result;
+        return userMapper.selectPageWithRole(page, userEntity, roleEntity);
     }
 
     @Override
     public IPage<UserEntity> pageWithRoleNestedSelectTest(IPage<UserEntity> page, UserEntity userEntity) {
-        IPage<UserEntity> result = userMapper.selectPageWithRoleNestedSelectTest(page, userEntity);
-        return result;
+        return userMapper.selectPageWithRoleNestedSelectTest(page, userEntity);
     }
 
     @Override

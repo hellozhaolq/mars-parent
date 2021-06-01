@@ -57,9 +57,18 @@
     <!-- ******************************** 关联的嵌套Select查询(N+1查询问题) ******************************** -->
     <!-- hasMany，一对多关联。 -->
     <resultMap id="NestedSelect_OneToMany" type="com.zhaolq.mars.service.sys.entity.UserEntity" extends="BaseResultMap">
-        <collection property="roleList" javaType="ArrayList" column="{prop1=id,prop2=id}" ofType="com.zhaolq.mars.service.sys.entity.RoleEntity" select="selectRole">
+        <collection property="roleList" javaType="ArrayList" column="{prop1=id,prop2=id}" ofType="com.zhaolq.mars.service.sys.entity.RoleEntity"
+                    select="selectRole">
         </collection>
     </resultMap>
+    <select id="selectRole" resultMap="com.zhaolq.mars.service.sys.mapper.RoleMapper.BaseResultMap">
+        select
+        <include refid="com.zhaolq.mars.service.sys.mapper.RoleMapper.Base_Column_Alias"></include>
+        from mars_sys_user_role ur
+        inner join mars_sys_role r
+        on ur.role_id = r.id
+        where ur.user_id = #{prop1} and ur.user_id = #{prop2}
+    </select>
     <!-- ******************************** 关联的嵌套 Select 查询 (N+1 查询问题) ******************************** -->
 
 
@@ -211,14 +220,6 @@
             <include refid="Base_Where"></include>
         </where>
     </select>
-    <select id="selectRole" resultMap="com.zhaolq.mars.service.sys.mapper.RoleMapper.BaseResultMap">
-        select
-        <include refid="com.zhaolq.mars.service.sys.mapper.RoleMapper.Base_Column_Alias"></include>
-        from mars_sys_user_role ur
-        inner join mars_sys_role r
-        on ur.role_id = r.id
-        where ur.user_id = #{prop1} and ur.user_id = #{prop2}
-    </select>
 
     <select id="selectListWithRole" resultMap="NestedResultMap_OneToMany">
         select
@@ -247,6 +248,15 @@
         <where>
             <include refid="Base_Where"></include>
             <include refid="com.zhaolq.mars.service.sys.mapper.RoleMapper.Base_Where"></include>
+        </where>
+    </select>
+
+    <select id="selectPageWithRoleNestedSelectTest" resultMap="NestedSelect_OneToMany">
+        select
+        <include refid="Base_Column_Alias"></include>
+        from mars_sys_user u
+        <where>
+            <include refid="Base_Where"></include>
         </where>
     </select>
 

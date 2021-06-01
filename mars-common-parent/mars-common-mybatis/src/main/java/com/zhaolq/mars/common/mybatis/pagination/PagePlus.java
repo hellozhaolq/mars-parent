@@ -20,12 +20,12 @@ import java.util.List;
 public class PagePlus<T> extends Page<T> {
 
     /**
-     * 正序列，格式：column1,column2,column3
+     * 正序列，格式：,,column1,column2,column3,,
      */
     protected String ascColumns;
 
     /**
-     * 反序列，格式：column1,column2,column3
+     * 反序列，格式：,,column1,column2,column3,,
      */
     protected String descColumns;
 

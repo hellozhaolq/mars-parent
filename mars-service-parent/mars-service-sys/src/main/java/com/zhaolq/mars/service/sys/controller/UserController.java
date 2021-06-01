@@ -7,6 +7,7 @@ import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.zhaolq.mars.common.mybatis.pagination.PageConvert;
 import com.zhaolq.mars.common.mybatis.pagination.PagePlus;
 import com.zhaolq.mars.common.valid.group.Add;
 import com.zhaolq.mars.common.valid.group.Edit;
@@ -147,15 +148,15 @@ public class UserController {
     /**
      * get分页查询
      *
-     * @param pagePlus
+     * @param pageConvert
      * @param userEntity
      * @return com.zhaolq.mars.tool.core.result.R<com.baomidou.mybatisplus.core.metadata.IPage < com.zhaolq.mars.service.sys.entity.UserEntity>>
      */
     @GetMapping("/getPage")
     @ApiOperation(value = "分页查询", notes = "分页查询")
-    public R<IPage<UserEntity>> getPage(PagePlus<UserEntity> pagePlus, UserEntity userEntity) {
+    public R<IPage<UserEntity>> getPage(PageConvert<UserEntity> pageConvert, UserEntity userEntity) {
         QueryWrapper<UserEntity> wrapper = new QueryWrapper<>(userEntity);
-        return R.success(userService.page(pagePlus, wrapper));
+        return R.success(userService.page(pageConvert.getPage(), wrapper));
     }
 
     /**

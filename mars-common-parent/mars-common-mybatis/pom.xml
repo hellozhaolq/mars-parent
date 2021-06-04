@@ -49,6 +49,13 @@
             <artifactId>orai18n</artifactId>
             <scope>runtime</scope>
         </dependency>
+
+        <!-- 以下依赖不传递 -->
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-core</artifactId>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
 
 </project>

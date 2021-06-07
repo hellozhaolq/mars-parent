@@ -1,6 +1,9 @@
 package com.zhaolq.mars.service.sys.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.lang.tree.Tree;
+import cn.hutool.core.lang.tree.TreeNode;
+import cn.hutool.core.lang.tree.TreeUtil;
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -97,7 +100,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         });
         setChildren(menuTreeList, sourceList);
 
-        // 校验树状结构菜单总数是否与改变结构前的菜单数量相同
+        // 校验：树状结构菜单总数是否与改变结构前的菜单数量相同
         if (!NumberUtil.equals(getMenuTreeNum(menuTreeList), treeSet.size())) {
             log.error("树状结构菜单总数与期望值不符！");
             return null;
@@ -138,6 +141,28 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
             }
         }
         return num;
+    }
+
+    @Override
+    public List<Tree<String>> getAuthorityMenuTree2(UserEntity userEntity) {
+        // 构建node列表
+        List<TreeNode<String>> nodeList = CollUtil.newArrayList();
+        List<MenuEntity> menuList = userMapper.selectAuthorityMenu(userEntity);
+        List<MenuEntity> menuListDistinct = CollUtil.distinct(menuList);
+
+        // 将所有菜单数据放入node列表
+        menuListDistinct.stream().forEach(e -> {
+            TreeNode<String> treeNode = new TreeNode<>();
+            treeNode.setId(e.getId());
+            treeNode.setParentId(e.getParentId());
+            treeNode.setName(e.getName());
+            treeNode.setWeight(e.getOrderNum());
+            nodeList.add(treeNode);
+        });
+
+        // 0表示最顶层的id是0
+        List<Tree<String>> treeList = TreeUtil.build(nodeList, "0");
+        return treeList;
     }
 
 

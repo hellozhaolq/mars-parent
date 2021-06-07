@@ -12,7 +12,7 @@ import com.baomidou.mybatisplus.extension.conditions.update.LambdaUpdateChainWra
 import com.baomidou.mybatisplus.extension.conditions.update.UpdateChainWrapper;
 
 /**
- * 建造者模式（Builder Pattern）创建各种 Wrapper 对象
+ * 创建各种 Wrapper 对象
  *
  * https://baomidou.com/guide/wrapper.html
  *

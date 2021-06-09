@@ -2,7 +2,7 @@ package com.zhaolq.mars.service.sys.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.tree.Tree;
-import cn.hutool.core.lang.tree.TreeNode;
+import cn.hutool.core.lang.tree.TreeNodeConfig;
 import cn.hutool.core.lang.tree.TreeUtil;
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.StrUtil;
@@ -102,7 +102,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
 
         // 校验：树状结构菜单总数是否与改变结构前的菜单数量相同
         if (!NumberUtil.equals(getMenuTreeNum(menuTreeList), treeSet.size())) {
-            log.error("树状结构菜单总数与期望值不符！");
+            log.error("树状结构菜单总数与期望值不符，证明代码有误！");
             return null;
         }
         return menuTreeList;
@@ -145,23 +145,48 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
 
     @Override
     public List<Tree<String>> getAuthorityMenuTree2(UserEntity userEntity) {
-        // 构建node列表
-        List<TreeNode<String>> nodeList = CollUtil.newArrayList();
-        List<MenuEntity> menuList = userMapper.selectAuthorityMenu(userEntity);
-        List<MenuEntity> menuListDistinct = CollUtil.distinct(menuList);
+        // 查询所有权限菜单。包括已拥有角色的全部菜单，所以有重复数据。
+        List<MenuEntity> allAuthorityMenuList = userMapper.selectAuthorityMenu(userEntity);
+        // 去重集合
+        List<MenuEntity> menuListDistinct = CollUtil.distinct(allAuthorityMenuList);
 
-        // 将所有菜单数据放入node列表
-        menuListDistinct.stream().forEach(e -> {
-            TreeNode<String> treeNode = new TreeNode<>();
-            treeNode.setId(e.getId());
-            treeNode.setParentId(e.getParentId());
-            treeNode.setName(e.getName());
-            treeNode.setWeight(e.getOrderNum());
-            nodeList.add(treeNode);
-        });
+        //配置
+        TreeNodeConfig treeNodeConfig = new TreeNodeConfig();
+        // 自定义属性名 都要默认值的
+        treeNodeConfig.setIdKey("id");
+        treeNodeConfig.setParentIdKey("parentId");
+        treeNodeConfig.setWeightKey("orderNum");
+        treeNodeConfig.setNameKey("name");
+        treeNodeConfig.setChildrenKey("children");
+        // 最大递归深度
+        treeNodeConfig.setDeep(3);
 
         // 0表示最顶层的id是0
-        List<Tree<String>> treeList = TreeUtil.build(nodeList, "0");
+        List<Tree<String>> treeList = TreeUtil.build(menuListDistinct, "0", treeNodeConfig,
+                (menuEntity, tree) -> {
+                    tree.setId(menuEntity.getId());
+                    tree.setParentId(menuEntity.getParentId());
+                    tree.setName(menuEntity.getName());
+                    tree.setWeight(menuEntity.getOrderNum());
+                    // 扩展属性 ...
+                    tree.putExtra("code", menuEntity.getCode());
+                    tree.putExtra("perms", menuEntity.getPerms());
+                    tree.putExtra("type", menuEntity.getType());
+                    tree.putExtra("urlType", menuEntity.getUrlType());
+                    tree.putExtra("url", menuEntity.getUrl());
+                    tree.putExtra("scheme", menuEntity.getScheme());
+                    tree.putExtra("path", menuEntity.getPath());
+                    tree.putExtra("target", menuEntity.getTarget());
+                    tree.putExtra("icon", menuEntity.getIcon());
+                    tree.putExtra("status", menuEntity.getStatus());
+                    tree.putExtra("delFlag", menuEntity.getDelFlag());
+                    tree.putExtra("remark", menuEntity.getRemark());
+                    tree.putExtra("createBy", menuEntity.getCreateBy());
+                    tree.putExtra("createTime", menuEntity.getCreateTime());
+                    tree.putExtra("lastUpdateBy", menuEntity.getLastUpdateBy());
+                    tree.putExtra("lastUpdateTime", menuEntity.getLastUpdateTime());
+                });
+
         return treeList;
     }
 

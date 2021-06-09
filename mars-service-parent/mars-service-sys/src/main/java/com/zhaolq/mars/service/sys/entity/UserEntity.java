@@ -139,7 +139,7 @@ public class UserEntity extends Model<UserEntity> {
     @TableField("IDENTITY_CODE")
     private String identityCode;
 
-    @NotNull(groups = {Add.class}, message = "机构缺失")
+    @NotNull(groups = {Add.class}, message = "机构ID缺失")
     @ApiModelProperty(value = "机构ID")
     @TableField("DEPT_ID")
     private String deptId;
@@ -210,7 +210,7 @@ public class UserEntity extends Model<UserEntity> {
      */
     private static String remarkTest2;
     /**
-     * 3、正确的方法：@TableField(exist = false)
+     * 3、推荐的方法：@TableField(exist = false)
      */
     @TableField(exist = false)
     @EqualsAndHashCode.Exclude

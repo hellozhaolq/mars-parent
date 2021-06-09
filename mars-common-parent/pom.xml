@@ -27,6 +27,7 @@
         <module>mars-common-swagger</module>
         <module>mars-common-all</module>
         <module>mars-common-mq</module>
+        <module>mars-common-property</module>
     </modules>
 
     <dependencies>

@@ -41,6 +41,11 @@
         </dependency>
         <dependency>
             <groupId>com.zhaolq.mars.common</groupId>
+            <artifactId>mars-common-property</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.zhaolq.mars.common</groupId>
             <artifactId>mars-common-swagger</artifactId>
             <version>1.0.0</version>
         </dependency>

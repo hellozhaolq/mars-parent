@@ -1,4 +1,4 @@
-package com.zhaolq.mars.common.mybatis.base;
+package com.zhaolq.mars.tool.core.base;
 
 /**
  *

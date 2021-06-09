@@ -1,19 +1,21 @@
 package com.zhaolq.mars.service.sys.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.zhaolq.mars.common.valid.group.Add;
+import com.zhaolq.mars.common.valid.group.Edit;
+import com.zhaolq.mars.common.valid.group.Remove;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import java.awt.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,14 +35,18 @@ import java.util.List;
 @ApiModel(value = "MenuEntity对象", description = "菜单管理")
 public class MenuEntity extends Model<MenuEntity> {
 
+    @JsonProperty("id")
+    @NotNull(groups = {Edit.class, Remove.class}, message = "id缺失")
     @ApiModelProperty(value = "编号")
     @TableId(value = "ID", type = IdType.ASSIGN_ID)
     private String id;
 
+    @NotNull(groups = {Add.class}, message = "菜单名称缺失")
     @ApiModelProperty(value = "菜单名称")
     @TableField("NAME")
     private String name;
 
+    @NotNull(groups = {Add.class}, message = "菜单代码缺失")
     @ApiModelProperty(value = "菜单代码")
     @TableField("CODE")
     private String code;
@@ -53,6 +59,7 @@ public class MenuEntity extends Model<MenuEntity> {
     @TableField("PERMS")
     private String perms;
 
+    @NotNull(groups = {Add.class}, message = "类型缺失")
     @ApiModelProperty(value = "类型   0：目录   1：菜单   2：按钮")
     @TableField("TYPE")
     private Integer type;
@@ -78,10 +85,12 @@ public class MenuEntity extends Model<MenuEntity> {
     @TableField("TARGET")
     private String target;
 
+    @NotNull(groups = {Add.class}, message = "父菜单ID缺失")
     @ApiModelProperty(value = "父菜单ID，一级菜单为0")
     @TableField("PARENT_ID")
     private String parentId;
 
+    @NotNull(groups = {Add.class}, message = "排序缺失")
     @ApiModelProperty(value = "排序")
     @TableField("ORDER_NUM")
     private Integer orderNum;
@@ -94,22 +103,28 @@ public class MenuEntity extends Model<MenuEntity> {
     @TableField("CREATE_BY")
     private String createBy;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     @ApiModelProperty(value = "创建时间")
-    @TableField("CREATE_TIME")
+    @TableField(value = "CREATE_TIME", fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
     @ApiModelProperty(value = "更新人")
     @TableField("LAST_UPDATE_BY")
     private String lastUpdateBy;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     @ApiModelProperty(value = "更新时间")
-    @TableField("LAST_UPDATE_TIME")
+    @TableField(value = "LAST_UPDATE_TIME", fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime lastUpdateTime;
 
+    @NotNull(groups = {Add.class}, message = "状态缺失")
     @ApiModelProperty(value = "状态  0：禁用   1：正常")
     @TableField("STATUS")
     private Integer status;
 
+    @NotNull(groups = {Add.class}, message = "是否删除缺失")
     @ApiModelProperty(value = "是否删除  -1：已删除  0：正常")
     @TableField("DEL_FLAG")
     private Integer delFlag;
@@ -122,5 +137,7 @@ public class MenuEntity extends Model<MenuEntity> {
     protected Serializable pkVal() {
         return this.id;
     }
+
+    /************* 以上对应数据库字段 *************/
 
 }

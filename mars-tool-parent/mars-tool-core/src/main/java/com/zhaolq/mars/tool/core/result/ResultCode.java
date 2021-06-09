@@ -1,7 +1,5 @@
 package com.zhaolq.mars.tool.core.result;
 
-import com.zhaolq.mars.tool.core.result.IResultCode;
-
 /**
  * API状态码枚举
  *
@@ -14,8 +12,6 @@ public enum ResultCode implements IResultCode {
     SUCCESS(1, "success", "操作成功"),
     /* 失败 */
     FAILURE(2, "failure", "操作失败"),
-    /* 自定义错误 */
-    CUSTOM_ERROR_DESC(9999998, "custom error desc", "自定义错误描述"),
     /* 未知错误 */
     UNKNOWN_ERROR(9999999, "unknown error", "未知错误"),
 

@@ -1,7 +1,6 @@
-package com.zhaolq.mars.common.mq.config;
+package com.zhaolq.mars.common.property.test;
 
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -14,7 +13,7 @@ import java.util.Map;
  *
  * @PropertySource能从父模块中读取资源文件(仅支持.properties和.xml格式)。
  * @ConfigurationProperties注解：将 *.properties 和 application.yml(.yml不可自定义) 配置文件属性转化为bean对象。配合spring-boot-configuration-processor依赖，可以生成
- * 元数据，这样在输入时就会给出可用的属性提示，属性提示仅在 application.yml 和 application.properties 出现，自定义的文件不会有属性提示，如：mq.properties。
+ * 元数据，这样在输入时就会给出可用的属性提示，属性提示仅在 application.yml 和 application.properties 出现，自定义的文件不会有属性提示，如：test.properties。
  *
  * 友情提示: 尽量使用 application.yml 和 application.properties
  *
@@ -30,31 +29,30 @@ import java.util.Map;
  */
 @Data
 @Configuration
-@PropertySource(value = {"classpath:/mq.properties", "classpath:/mq.xml"}, encoding = "UTF-8", ignoreResourceNotFound = true)
-@ConfigurationProperties(prefix = MqConfigInfo.PREFIX, ignoreInvalidFields = true)
-public class MqConfigInfo {
+@PropertySource(value = {"classpath:/test.properties", "classpath:/test.xml"}, encoding = "UTF-8", ignoreResourceNotFound = true)
+@ConfigurationProperties(prefix = ConfigInfo.PREFIX, ignoreInvalidFields = true)
+public class ConfigInfo {
 
-    public static final String PREFIX = "custom.mq";
+    public static final String PREFIX = "test.config.info";
 
     /**
-     * 支持@Value("${custom.mq.username}")
+     * 支持@Value("${test.config.info.username}")
      */
     private String username;
 
     /**
-     * 支持@Value("${custom.mq.password}")
+     * 支持@Value("${test.config.info.password}")
      */
     private String password;
 
     /**
      * 不支持@Value
      */
-    private Host host = new MqConfigInfo.Host();
+    private Host host = new Host();
 
     /**
-     * 支持@Value("#{${custom.mq.map}}")
+     * 支持@Value("#{${test.config.info.map}}")
      */
-    @Value("#{${custom.mq.map}}")
     private Map<String, String> map;
 
     /**
@@ -63,7 +61,7 @@ public class MqConfigInfo {
     private Map<String, String> map2;
 
     /**
-     * 支持@Value("#{'${custom.mq.list}'.split(',')}")
+     * 支持@Value("#{'${test.config.info.list}'.split(',')}")
      */
     private List<String> list;
 

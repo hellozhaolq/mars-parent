@@ -4,6 +4,7 @@ import cn.hutool.db.Db;
 import cn.hutool.db.DbUtil;
 import cn.hutool.db.Entity;
 import cn.hutool.json.JSONObject;
+import com.zhaolq.mars.common.property.datasource.DataSourceInfo;
 import com.zhaolq.mars.tool.core.setting.YamlUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.sql.*;
 
@@ -28,8 +30,10 @@ import java.sql.*;
 @Order(1)
 public class TestRunner implements ApplicationRunner {
 
-    @Autowired
+    @Resource
     private DataSource dataSource;
+    @Resource
+    private DataSourceInfo dataSourceInfo;
 
     @Override
     public void run(ApplicationArguments args) throws SQLException {
@@ -66,7 +70,8 @@ public class TestRunner implements ApplicationRunner {
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
-            conn = TestRunner.DbUtilCustom.getConnection();
+            conn = getConnection();
+            conn.setAutoCommit(false);
             ps = conn.prepareStatement("select t.* from MARS_SYS_USER t where t.id = ?");
             ps.setString(1, "1");
             rs = ps.executeQuery();
@@ -80,65 +85,39 @@ public class TestRunner implements ApplicationRunner {
             e.printStackTrace();
         } finally {
             try {
-                TestRunner.DbUtilCustom.close(rs, ps, conn);
+                close(rs, ps, conn);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
     }
 
-
     /**
-     * 数据库工具类
+     * 获得数据库连接对象
+     *
+     * @return 返回java.sql.Connection接口类型
+     * @throws ClassNotFoundException
+     * @throws SQLException
      */
-    public static class DbUtilCustom {
+    private Connection getConnection() throws ClassNotFoundException,
+            SQLException {
+        Class.forName(dataSourceInfo.getDriverClassName());
+        Connection conn = DriverManager.getConnection(dataSourceInfo.getUrl(), dataSourceInfo.getUsername(), dataSourceInfo.getPassword());
+        return conn;
+    }
 
-        /**
-         * 获得数据库连接对象
-         *
-         * @return 返回java.sql.Connection接口类型
-         * @throws ClassNotFoundException
-         * @throws SQLException
-         */
-        public static Connection getConnection() throws ClassNotFoundException,
-                SQLException {
-
-            // Props props = PropsUtils.get("db.properties", CharsetUtil.CHARSET_UTF_8);
-            JSONObject jsonObject = YamlUtils.get("application.yml");
-            String className = YamlUtils.getValueFromKey("spring.datasource.driver-class-name", jsonObject);
-            String url = YamlUtils.getValueFromKey("spring.datasource.url", jsonObject);
-            String username = YamlUtils.getValueFromKey("spring.datasource.username", jsonObject);
-            String password = YamlUtils.getValueFromKey("spring.datasource.password", jsonObject);
-
-            Class.forName(className);
-            Connection conn = DriverManager.getConnection(url, username, password);
-            conn.setAutoCommit(false);
-            return conn;
+    private void close(ResultSet rs, PreparedStatement ps, Connection conn)
+            throws SQLException {
+        if (rs != null) {
+            rs.close();
         }
-
-        /**
-         * 关闭与数据库相关的对象
-         *
-         * @param rs
-         *            结果集
-         * @param ps
-         *            准备语句对象
-         * @param conn
-         *            连接对象
-         * @throws SQLException
-         */
-        public static void close(ResultSet rs, PreparedStatement ps, Connection conn)
-                throws SQLException {
-            if (rs != null) {
-                rs.close();
-            }
-            if (ps != null) {
-                ps.close();
-            }
-            if (conn != null) {
-                conn.close();
-            }
+        if (ps != null) {
+            ps.close();
+        }
+        if (conn != null) {
+            conn.close();
         }
     }
+
 
 }

@@ -4,7 +4,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.env.Environment;
+
+import javax.annotation.Resource;
 
 /**
  *
@@ -17,28 +22,50 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootApplication
 public class ConfigInfoTest {
 
-    @Autowired
-    private ConfigInfo configInfo;
+    @Resource
+    private Environment env;
+    @Resource
+    private ConfigInfo1 configInfo1;
+    @Resource
+    private ConfigInfo2 configInfo2;
 
-    /**
-     * 获取自定义消息队列配置信息
-     */
     @Test
-    public void getConfigInfo() {
+    public void getEnvironment() {
+        System.out.println(env.getClass().getSimpleName());
+        System.out.println(env.getProperty("test.config.info.username"));
+        System.out.println(env.getProperty("test.config.info.password"));
+        System.out.println(env.getProperty("test.config.info.map"));
+        System.out.println(env.getProperty("test.config.info.list"));
+        System.out.println(env.getProperty("test.config.info.host.ip"));
+        System.out.println(env.getProperty("test.config.info.host.port"));
+    }
+
+    @Test
+    public void getConfigInfo1() {
         // System.out.println(JacksonUtils.objectToJson(configInfo));
         // System.out.println(JSONUtil.parse(configInfo).toString());
-        System.out.println("username:\t" + configInfo.getUsername());
-        System.out.println("password:\t" + configInfo.getPassword());
-        System.out.println("      ip:\t" + configInfo.getHost().getIp());
-        System.out.println("    port:\t" + configInfo.getHost().getPort());
-        System.out.println("     map:\t" + configInfo.getMap());
-        System.out.println("    map2:\t" + configInfo.getMap2());
-        System.out.println("    list:\t" + configInfo.getList());
-        System.out.println("   list2:\t" + configInfo.getList2());
+        System.out.println("username:\t" + configInfo1.getUsername());
+        System.out.println("password:\t" + configInfo1.getPassword());
+        System.out.println("     map:\t" + configInfo1.getMap());
+        System.out.println("    list:\t" + configInfo1.getList());
 
         System.out.println("test.config.info.username:\t" + System.getProperty("test.config.info.username"));
         System.out.println("JAVA_HOME:\t" + System.getenv("JAVA_HOME"));
     }
 
+    @Test
+    public void getConfigInfo2() {
+        // System.out.println(JacksonUtils.objectToJson(configInfo));
+        // System.out.println(JSONUtil.parse(configInfo).toString());
+        System.out.println("username:\t" + configInfo2.getUsername());
+        System.out.println("password:\t" + configInfo2.getPassword());
+        System.out.println("      ip:\t" + configInfo2.getHost().getIp());
+        System.out.println("    port:\t" + configInfo2.getHost().getPort());
+        System.out.println("     map:\t" + configInfo2.getMap());
+        System.out.println("    list:\t" + configInfo2.getList());
+
+        System.out.println("test.config.info.username:\t" + System.getProperty("test.config.info.username"));
+        System.out.println("JAVA_HOME:\t" + System.getenv("JAVA_HOME"));
+    }
 
 }

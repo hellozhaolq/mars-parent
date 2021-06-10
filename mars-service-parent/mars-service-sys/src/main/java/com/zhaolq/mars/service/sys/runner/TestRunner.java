@@ -3,13 +3,10 @@ package com.zhaolq.mars.service.sys.runner;
 import cn.hutool.db.Db;
 import cn.hutool.db.DbUtil;
 import cn.hutool.db.Entity;
-import cn.hutool.json.JSONObject;
-import com.zhaolq.mars.common.property.datasource.DataSourceInfo;
-import com.zhaolq.mars.tool.core.setting.YamlUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -33,7 +30,7 @@ public class TestRunner implements ApplicationRunner {
     @Resource
     private DataSource dataSource;
     @Resource
-    private DataSourceInfo dataSourceInfo;
+    private DataSourceProperties dataSourceProperties;
 
     @Override
     public void run(ApplicationArguments args) throws SQLException {
@@ -101,8 +98,9 @@ public class TestRunner implements ApplicationRunner {
      */
     private Connection getConnection() throws ClassNotFoundException,
             SQLException {
-        Class.forName(dataSourceInfo.getDriverClassName());
-        Connection conn = DriverManager.getConnection(dataSourceInfo.getUrl(), dataSourceInfo.getUsername(), dataSourceInfo.getPassword());
+        Class.forName(dataSourceProperties.getDriverClassName());
+        Connection conn = DriverManager.getConnection(dataSourceProperties.getUrl(), dataSourceProperties.getUsername(),
+                dataSourceProperties.getPassword());
         return conn;
     }
 

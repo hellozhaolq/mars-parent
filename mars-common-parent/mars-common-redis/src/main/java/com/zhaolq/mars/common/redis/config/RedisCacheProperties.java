@@ -4,8 +4,6 @@ import lombok.Data;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Redis缓存有效期配置属性

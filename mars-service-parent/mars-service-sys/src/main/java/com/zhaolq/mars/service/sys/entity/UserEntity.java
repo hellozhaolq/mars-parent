@@ -13,7 +13,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Email;
@@ -33,11 +32,9 @@ import java.util.List;
  * @since 2020-10-29
  */
 @Data
-@Configuration
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("MARS_SYS_USER")
-// @KeySequence("SEQ_SYS_USER_ID")
 @ApiModel(value = "UserEntity对象", description = "用户管理")
 public class UserEntity extends Model<UserEntity> {
 

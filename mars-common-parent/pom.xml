@@ -28,6 +28,7 @@
         <module>mars-common-all</module>
         <module>mars-common-mq</module>
         <module>mars-common-property</module>
+        <module>mars-common-redis</module>
     </modules>
 
     <dependencies>

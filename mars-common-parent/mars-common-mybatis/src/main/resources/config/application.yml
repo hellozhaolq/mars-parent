@@ -3,12 +3,14 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
+      pool-name: HikariPool-1 # 默认HikariPool-1。连接池的用户定义名称，主要出现在日志记录和JMX管理控制台中以识别池和池配置。
       auto-commit: true # 默认true
       maximum-pool-size: 10 # 默认10。池中最大连接数，包括闲置和使用中的连接
-      minimum-idle: 10 # 默认10。控制连接池空闲连接的最小数量，当连接池空闲连接少于minimumIdle，而且总共连接数不大于maximumPoolSize时，HikariCP会尽力补充新的连接。
+      minimum-idle: 10 # 默认10。控制连接池空闲连接的最小数量，当连接池空闲连接少于minimumIdle，而且总共连接数不大于maximumPoolSize时，HikariCP会尽力补充新的连接。为了性能考虑，不建议设置此值，而是让HikariCP把连接池当做固定大小的处理，默认minimumIdle与maximumPoolSize一样。当minIdle<0或者minIdle>maxPoolSize,则被重置为maxPoolSize，
       max-lifetime: 1800000 # 默认1800000，即30分钟。池中连接最长生命周期，如果不等于0且小于30秒则会被重置回30分钟。
       idle-timeout: 600000 # 默认600000，即10分钟。连接允许在池中闲置的最长时间。
       connection-timeout: 30000 # 默认为30000，即30秒。等待来自池的连接的最大毫秒数。
+      read-only: false # 默认false。从池中获取的连接是否默认处于只读模式。
 
 # 配置说明见官网 https://mp.baomidou.com/config/
 

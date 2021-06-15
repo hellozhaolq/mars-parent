@@ -1,4 +1,15 @@
 
+spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      auto-commit: true # 默认true
+      maximum-pool-size: 10 # 默认10。池中最大连接数，包括闲置和使用中的连接
+      minimum-idle: 10 # 默认10。控制连接池空闲连接的最小数量，当连接池空闲连接少于minimumIdle，而且总共连接数不大于maximumPoolSize时，HikariCP会尽力补充新的连接。
+      max-lifetime: 1800000 # 默认1800000，即30分钟。池中连接最长生命周期，如果不等于0且小于30秒则会被重置回30分钟。
+      idle-timeout: 600000 # 默认600000，即10分钟。连接允许在池中闲置的最长时间。
+      connection-timeout: 30000 # 默认为30000，即30秒。等待来自池的连接的最大毫秒数。
+
 # 配置说明见官网 https://mp.baomidou.com/config/
 
 mybatis-plus:

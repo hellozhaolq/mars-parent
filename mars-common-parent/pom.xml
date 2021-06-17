@@ -29,6 +29,9 @@
         <module>mars-common-mq</module>
         <module>mars-common-property</module>
         <module>mars-common-redis</module>
+        <module>mars-common-spring</module>
+        <module>mars-common-springboot</module>
+        <module>mars-common-springcloud</module>
     </modules>
 
     <dependencies>

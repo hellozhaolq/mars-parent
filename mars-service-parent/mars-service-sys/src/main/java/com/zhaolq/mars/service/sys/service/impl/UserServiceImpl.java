@@ -35,7 +35,7 @@ import java.util.TreeSet;
 @Transactional(rollbackFor = Exception.class)
 public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> implements IUserService {
 
-    UserMapper userMapper;
+    private UserMapper userMapper;
 
     @Override
     public UserEntity getWithRole(UserEntity userEntity, RoleEntity roleEntity) {

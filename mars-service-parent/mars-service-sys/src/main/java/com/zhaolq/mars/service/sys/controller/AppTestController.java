@@ -1,10 +1,17 @@
 package com.zhaolq.mars.service.sys.controller;
 
+import cn.hutool.core.util.StrUtil;
 import com.zhaolq.mars.common.spring.utils.SpringContextUtils;
+import com.zhaolq.mars.service.sys.entity.UserEntity;
 import com.zhaolq.mars.service.sys.service.IUserService;
 import com.zhaolq.mars.tool.core.result.R;
+import com.zhaolq.mars.tool.core.utils.ObjectUtils;
+import com.zhaolq.mars.tool.core.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeansException;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,9 +40,17 @@ public class AppTestController {
     }
 
     @GetMapping("/getBean")
-    public String getBean(String beanName) {
+    public R<Object> getBean(String beanName) {
+        if (StringUtils.isEmpty(beanName)) {
+            beanName = "userServiceImpl";
+            IUserService bean = SpringContextUtils.getInstance().getBean(beanName);
+            UserEntity user = bean.getById(1);
+            return R.success(user);
+        }
         Object bean = SpringContextUtils.getInstance().getBean(beanName);
-        return bean.getClass().getSimpleName();
+        if (ObjectUtils.isEmpty(bean)) {
+            return R.success("No bean named '" + beanName + "' available ");
+        }
+        return R.success("bean的简单名称: " + bean.getClass().getSimpleName());
     }
-
 }

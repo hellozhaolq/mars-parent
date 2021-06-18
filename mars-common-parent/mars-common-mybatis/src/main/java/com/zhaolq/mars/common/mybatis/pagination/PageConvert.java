@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zhaolq.mars.tool.core.constant.StringPool;
 import com.zhaolq.mars.tool.core.utils.StringUtils;
-import com.zhaolq.mars.tool.core.utils.UrlUtils;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;

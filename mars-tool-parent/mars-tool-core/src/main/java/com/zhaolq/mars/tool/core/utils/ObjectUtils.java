@@ -8,7 +8,5 @@ import cn.hutool.core.util.ObjectUtil;
  * @author zhaolq
  * @date 2020/11/12 11:47
  */
-public class ObjectUtils extends ObjectUtil {
-
-
+public final class ObjectUtils extends ObjectUtil {
 }

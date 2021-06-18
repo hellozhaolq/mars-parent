@@ -8,5 +8,5 @@ import cn.hutool.core.exceptions.ExceptionUtil;
  * @author zhaolq
  * @date 2021/5/13 14:56
  */
-public class ExceptionUtils extends ExceptionUtil {
+public final class ExceptionUtils extends ExceptionUtil {
 }

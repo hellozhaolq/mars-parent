@@ -8,5 +8,5 @@ import cn.hutool.json.JSONUtil;
  * @author zhaolq
  * @date 2021/5/13 14:48
  */
-public class JsonUtils extends JSONUtil {
+public final class JsonUtils extends JSONUtil {
 }

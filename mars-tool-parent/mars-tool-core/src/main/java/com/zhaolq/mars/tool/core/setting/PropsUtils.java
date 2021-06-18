@@ -1,9 +1,9 @@
 package com.zhaolq.mars.tool.core.setting;
 
 import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.setting.dialect.Props;
 import cn.hutool.setting.dialect.PropsUtil;
+import com.zhaolq.mars.tool.core.utils.StringUtils;
 
 import java.nio.charset.Charset;
 import java.util.Map;
@@ -15,14 +15,14 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author zhaolq
  * @date 2021/5/21 13:22
  */
-public class PropsUtils extends PropsUtil {
+public final class PropsUtils extends PropsUtil {
 
     private static final Map<String, Props> propsMap = new ConcurrentHashMap<>();
 
     public static Props get(String name, Charset charset) {
         return propsMap.computeIfAbsent(name, (filePath) -> {
             final String extName = FileUtil.extName(filePath);
-            if (StrUtil.isEmpty(extName)) {
+            if (StringUtils.isEmpty(extName)) {
                 filePath = filePath + "." + Props.EXT_NAME;
             }
             return new Props(filePath, charset);

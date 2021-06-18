@@ -8,5 +8,5 @@ import cn.hutool.core.io.resource.ResourceUtil;
  * @author zhaolq
  * @date 2021/5/21 13:35
  */
-public class ResourceUtils extends ResourceUtil {
+public final class ResourceUtils extends ResourceUtil {
 }

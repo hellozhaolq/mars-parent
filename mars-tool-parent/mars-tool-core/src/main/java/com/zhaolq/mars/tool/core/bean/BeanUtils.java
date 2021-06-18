@@ -9,5 +9,5 @@ import cn.hutool.core.bean.BeanUtil;
  * @author zhaolq
  * @date 2021/5/12 17:34
  */
-public class BeanUtils extends BeanUtil {
+public final class BeanUtils extends BeanUtil {
 }

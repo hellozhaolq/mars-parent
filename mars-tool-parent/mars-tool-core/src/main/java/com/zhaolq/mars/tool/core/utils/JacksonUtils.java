@@ -40,7 +40,7 @@ import java.util.TimeZone;
  * @author zhaolq
  * @date 2021/4/20 14:54
  */
-public class JacksonUtils {
+public final class JacksonUtils {
 
     private static final ObjectMapper objectMapper;
 

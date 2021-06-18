@@ -11,6 +11,6 @@ import java.io.*;
  * @author zhaolq
  * @date 2020/11/12 11:25
  */
-public class FileUtils extends FileUtil {
+public final class FileUtils extends FileUtil {
 
 }

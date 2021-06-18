@@ -29,7 +29,7 @@ public class SpringContextUtils implements ApplicationContextAware {
     }
 
     /**
-     * 登记式/静态内部类
+     * 登记式/静态内部类 --- 推荐使用
      *
      * 是否 Lazy 初始化：是
      * 是否多线程安全：是

@@ -14,7 +14,7 @@ import java.util.UUID;
  * @author zhaolq
  * @date 2020/11/12 16:16
  */
-public class HashUtils extends HashUtil {
+public final class HashUtils extends HashUtil {
 
     public static final String[] hexDigits = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"};
     public static final String DEFAULT_CHARSET = "UTF8";

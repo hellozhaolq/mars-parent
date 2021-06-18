@@ -8,6 +8,5 @@ import cn.hutool.core.util.StrUtil;
  * @author zhaolq
  * @date 2020/11/12 11:44
  */
-public class StringUtils extends StrUtil {
-
+public final class StringUtils extends StrUtil {
 }

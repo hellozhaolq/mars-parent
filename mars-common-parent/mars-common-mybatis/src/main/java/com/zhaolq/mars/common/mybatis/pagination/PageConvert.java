@@ -1,11 +1,12 @@
 package com.zhaolq.mars.common.mybatis.pagination;
 
-import cn.hutool.core.text.CharPool;
 import cn.hutool.core.text.StrSpliter;
 import cn.hutool.core.util.NumberUtil;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.zhaolq.mars.tool.core.constant.StringPool;
 import com.zhaolq.mars.tool.core.utils.StringUtils;
+import com.zhaolq.mars.tool.core.utils.UrlUtils;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -70,13 +71,13 @@ public class PageConvert<T> {
         page.setCurrent(current == ZERO ? DEFAULT_CURRENT : current);
 
         if (StringUtils.isNotBlank(ascColumns)) {
-            String[] ascColumnArray = StrSpliter.splitToArray(ascColumns, CharPool.COMMA, 0, true, true);
+            String[] ascColumnArray = StrSpliter.splitToArray(ascColumns, StringPool.C_COMMA, 0, true, true);
             List<OrderItem> ascList = OrderItem.ascs(ascColumnArray);
             page.addOrder(ascList);
         }
 
         if (StringUtils.isNotBlank(descColumns)) {
-            String[] descColumnArray = StrSpliter.splitToArray(descColumns, CharPool.COMMA, 0, true, true);
+            String[] descColumnArray = StrSpliter.splitToArray(descColumns, StringPool.C_COMMA, 0, true, true);
             List<OrderItem> descList = OrderItem.descs(descColumnArray);
             page.addOrder(descList);
         }

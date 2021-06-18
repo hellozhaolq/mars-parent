@@ -1,14 +1,16 @@
 package com.zhaolq.mars.tool.core.setting;
 
+
 import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
 import com.zhaolq.mars.tool.core.io.FileUtils;
 import com.zhaolq.mars.tool.core.utils.JsonUtils;
+import com.zhaolq.mars.tool.core.utils.StringUtils;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.InputStream;
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -17,7 +19,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author zhaolq
  * @date 2021/5/21 14:24
  */
-public class YamlUtils {
+public final class YamlUtils {
 
     /**
      * 默认配置文件扩展名
@@ -35,7 +37,7 @@ public class YamlUtils {
     public static JSONObject get(String name) {
         return yamlMap.computeIfAbsent(name, (filePath) -> {
             final String extName = FileUtil.extName(filePath);
-            if (StrUtil.isEmpty(extName)) {
+            if (StringUtils.isEmpty(extName)) {
                 filePath = filePath + "." + YamlUtils.EXT_NAME;
             }
             Yaml yaml = new Yaml();
@@ -47,7 +49,7 @@ public class YamlUtils {
     public static String getValueFromKey(String key, JSONObject jsonObject) {
         String result = null;
         try {
-            String[] strArr = StrUtil.split(key, ".");
+            String[] strArr = StringUtils.split(key, ".");
             JSONObject jsonObjectTemp = JsonUtils.parseObj(jsonObject.toString());
             for (int index = 0; index < strArr.length - 1; index++) {
                 jsonObjectTemp = JsonUtils.parseObj(jsonObjectTemp.get(strArr[index]));

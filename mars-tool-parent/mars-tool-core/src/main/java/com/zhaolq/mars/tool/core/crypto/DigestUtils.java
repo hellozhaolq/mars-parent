@@ -8,7 +8,7 @@ import cn.hutool.crypto.digest.DigestUtil;
  * @author zhaolq
  * @date 2021/5/12 17:00
  */
-public class DigestUtils extends DigestUtil {
+public final class DigestUtils extends DigestUtil {
 
 
 }

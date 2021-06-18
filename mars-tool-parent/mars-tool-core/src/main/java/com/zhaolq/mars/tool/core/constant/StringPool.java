@@ -48,6 +48,11 @@ public interface StringPool {
     char C_LF = CharPool.LF;
 
     /**
+     * 字符常量：减号（连接符） {@code '-'}
+     */
+    char C_DASHED = CharPool.DASHED;
+
+    /**
      * 字符常量：下划线 {@code '_'}
      */
     char C_UNDERLINE = CharPool.UNDERLINE;
@@ -76,6 +81,21 @@ public interface StringPool {
      * 字符常量：中括号（右） {@code ']'}
      */
     char C_BRACKET_END = CharPool.BRACKET_END;
+
+    /**
+     * 字符常量：双引号 {@code '"'}
+     */
+    char C_DOUBLE_QUOTES = CharPool.DOUBLE_QUOTES;
+
+    /**
+     * 字符常量：单引号 {@code '\''}
+     */
+    char C_SINGLE_QUOTE = CharPool.SINGLE_QUOTE;
+
+    /**
+     * 字符常量：与 {@code '&'}
+     */
+    char C_AMP = CharPool.AMP;
 
     /**
      * 字符常量：冒号 {@code ':'}

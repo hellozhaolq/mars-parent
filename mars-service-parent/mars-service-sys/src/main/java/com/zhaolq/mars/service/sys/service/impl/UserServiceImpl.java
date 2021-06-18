@@ -5,7 +5,6 @@ import cn.hutool.core.lang.tree.Tree;
 import cn.hutool.core.lang.tree.TreeNodeConfig;
 import cn.hutool.core.lang.tree.TreeUtil;
 import cn.hutool.core.util.NumberUtil;
-import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhaolq.mars.service.sys.entity.MenuEntity;
@@ -91,7 +90,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
 
         List<MenuEntity> menuTreeList = new ArrayList<>();
         sourceList.removeIf(e -> {
-            if (StrUtil.equals(e.getParentId(), "0")) {
+            if (StringUtils.equals(e.getParentId(), "0")) {
                 // 所有ParentId=0的一级menu添加到menuTreeList，不关心menu的类型（目录、菜单、按钮）
                 menuTreeList.add(e);
                 return true;
@@ -111,7 +110,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     private List<MenuEntity> setChildren(final List<MenuEntity> rootList, final List<MenuEntity> sourceList) {
         for (MenuEntity element : rootList) {
             sourceList.removeIf(e -> {
-                if (StrUtil.equals(e.getParentId(), element.getId())) {
+                if (StringUtils.equals(e.getParentId(), element.getId())) {
                     element.getChildren().add(e);
                     return true;
                 }

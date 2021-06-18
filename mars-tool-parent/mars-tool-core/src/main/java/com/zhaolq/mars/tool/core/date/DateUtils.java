@@ -8,6 +8,6 @@ import cn.hutool.core.date.DateUtil;
  * @author zhaolq
  * @date 2020/11/12 11:23
  */
-public class DateUtils extends DateUtil {
+public final class DateUtils extends DateUtil {
 
 }

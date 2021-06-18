@@ -12,5 +12,5 @@ import cn.hutool.core.util.URLUtil;
  * @author zhaolq
  * @date 2021/5/21 13:39
  */
-public class UrlUtils extends URLUtil {
+public final class UrlUtils extends URLUtil {
 }

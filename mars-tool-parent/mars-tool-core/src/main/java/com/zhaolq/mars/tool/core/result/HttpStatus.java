@@ -107,7 +107,7 @@ public enum HttpStatus implements IResultCode {
     private final String descCh;
 
 
-    HttpStatus(int code, String descEn, String descCh) {
+    private HttpStatus(int code, String descEn, String descCh) {
         this.code = code;
         this.descEn = descEn;
         this.descCh = descCh;
@@ -115,17 +115,17 @@ public enum HttpStatus implements IResultCode {
 
     @Override
     public int getCode() {
-        return code;
+        return this.code;
     }
 
     @Override
     public String getDescEn() {
-        return descEn;
+        return this.descEn;
     }
 
     @Override
     public String getDescCh() {
-        return descCh;
+        return this.descCh;
     }
 
     @Override
@@ -248,7 +248,7 @@ public enum HttpStatus implements IResultCode {
 
         private final int code;
 
-        Series(int code) {
+        private Series(int code) {
             this.code = code;
         }
 

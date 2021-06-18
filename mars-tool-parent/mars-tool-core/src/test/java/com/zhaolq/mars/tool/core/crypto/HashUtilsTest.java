@@ -1,7 +1,6 @@
 package com.zhaolq.mars.tool.core.crypto;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -10,14 +9,6 @@ import org.junit.jupiter.api.Test;
  * @date 2021/5/11 17:34
  */
 public class HashUtilsTest {
-
-    static {
-    }
-
-    @BeforeEach
-    public void before() {
-
-    }
 
     @Test
     public void test() {

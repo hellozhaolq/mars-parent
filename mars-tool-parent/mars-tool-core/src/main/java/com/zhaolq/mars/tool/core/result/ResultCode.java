@@ -46,7 +46,7 @@ public enum ResultCode implements IResultCode {
      */
     private final String descCh;
 
-    ResultCode(int code, String descEn, String descCh) {
+    private ResultCode(int code, String descEn, String descCh) {
         this.code = code;
         this.descEn = descEn;
         this.descCh = descCh;
@@ -54,17 +54,17 @@ public enum ResultCode implements IResultCode {
 
     @Override
     public int getCode() {
-        return code;
+        return this.code;
     }
 
     @Override
     public String getDescEn() {
-        return descEn;
+        return this.descEn;
     }
 
     @Override
     public String getDescCh() {
-        return descCh;
+        return this.descCh;
     }
 
     @Override

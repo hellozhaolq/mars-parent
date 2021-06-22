@@ -22,7 +22,7 @@ import java.io.PrintStream;
 import java.util.Locale;
 
 /**
- * 将 System.err 和 System.out 替换为打印log，待完善...
+ * 将 System.err 和 System.out 替换为打印log，未完待续...
  *
  * @author zhaolq
  * @date 2021/6/17 17:05

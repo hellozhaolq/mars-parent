@@ -191,8 +191,11 @@
              如果需要位置信息，需在所有相关记录器（包括根记录器）中设置 includeLocation = true，你会付出昂贵的代价。仅设置true但没有输出位置信息，并不会有影响。
         -->
 
-        <!-- spring变量应该最先加载，否则会报错，需了解springboot启动顺序 -->
-        <Logger name="com.zhaolq" level="${env.LOGGER_LEVEL}" additivity="false" includeLocation="false">
+        <!--
+             spring变量应该最先加载，否则会报错，需了解springboot启动顺序。
+             log4j2获取外部配置变量方案：springboot启动先加载配置到Spring env中，然后${env.DEFAULT_LOGGER_LEVEL}
+        -->
+        <Logger name="com.zhaolq" level="trace" additivity="false" includeLocation="false">
             <AppenderRef ref="console"/>
             <AppenderRef ref="errorFileRolling"/>
             <AppenderRef ref="warnFileRolling"/>

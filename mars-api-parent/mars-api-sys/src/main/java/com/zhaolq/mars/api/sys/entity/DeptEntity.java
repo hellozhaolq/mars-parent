@@ -1,4 +1,4 @@
-package com.zhaolq.mars.service.sys.entity;
+package com.zhaolq.mars.api.sys.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- * 图片、文件、音乐等媒体文件
+ * 机构管理
  * </p>
  *
  * @author zhaolq
@@ -25,29 +25,41 @@ import java.time.LocalDateTime;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("MARS_SYS_MEDIA_FILE")
-@ApiModel(value="MediaFileEntity对象", description="图片、文件、音乐等媒体文件")
-public class MediaFileEntity extends Model<MediaFileEntity> {
+@TableName("MARS_SYS_DEPT")
+@ApiModel(value="DeptEntity对象", description="机构管理")
+public class DeptEntity extends Model<DeptEntity> {
 
     @ApiModelProperty(value = "编号")
     @TableId(value = "ID", type = IdType.ASSIGN_ID)
     private String id;
 
-    @ApiModelProperty(value = "资源类型(表名)：user-用户；")
-    @TableField("RESOURCE_TYPE")
-    private String resourceType;
+    @ApiModelProperty(value = "机构名称")
+    @TableField("NAME")
+    private String name;
 
-    @ApiModelProperty(value = "资源编号")
-    @TableField("RESOURCE_ID")
-    private String resourceId;
+    @ApiModelProperty(value = "机构代码")
+    @TableField("CODE")
+    private String code;
 
-    @ApiModelProperty(value = "文件类型(字段)：avatar-头像；")
-    @TableField("FILE_TYPE")
-    private String fileType;
+    @ApiModelProperty(value = "备注")
+    @TableField("REMARK")
+    private String remark;
 
-    @ApiModelProperty(value = "文件内容")
-    @TableField("FILE_CONTENT")
-    private byte[] fileContent;
+    @ApiModelProperty(value = "类型【1：集团；2：学校 】")
+    @TableField("TYPE")
+    private Integer type;
+
+    @ApiModelProperty(value = "子类型")
+    @TableField("SUBTYPE")
+    private String subtype;
+
+    @ApiModelProperty(value = "上级机构ID，一级机构为0")
+    @TableField("PARENT_ID")
+    private String parentId;
+
+    @ApiModelProperty(value = "排序")
+    @TableField("ORDER_NUM")
+    private Long orderNum;
 
     @ApiModelProperty(value = "创建人")
     @TableField("CREATE_BY")

@@ -8,7 +8,7 @@ import com.zhaolq.mars.common.mybatis.pagination.PageConvert;
 import com.zhaolq.mars.common.mybatis.pagination.WrapperBuilder;
 import com.zhaolq.mars.common.valid.group.Add;
 import com.zhaolq.mars.common.valid.group.Edit;
-import com.zhaolq.mars.service.sys.entity.RoleEntity;
+import com.zhaolq.mars.api.sys.entity.RoleEntity;
 import com.zhaolq.mars.service.sys.service.IRoleService;
 import com.zhaolq.mars.tool.core.result.R;
 import com.zhaolq.mars.tool.core.result.ResultCode;

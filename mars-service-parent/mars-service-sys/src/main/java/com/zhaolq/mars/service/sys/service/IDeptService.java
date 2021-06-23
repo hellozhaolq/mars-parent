@@ -1,7 +1,7 @@
 package com.zhaolq.mars.service.sys.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.zhaolq.mars.service.sys.entity.DeptEntity;
+import com.zhaolq.mars.api.sys.entity.DeptEntity;
 
 /**
  * <p>

@@ -21,6 +21,7 @@
  -->
 <Configuration status="info" monitorInterval="60">
     <Properties>
+        <Property name="SCHEMA" value="com.zhaolq"/>
         <property name="LOG_PATH" value="/logs/"/>
         <property name="ROLLING_STRATEGY_MAX_FILE_SIZE" value="100MB"/>
 
@@ -190,20 +191,12 @@
              为了提升性能，默认情况下，异步记录器不会将位置传递给I/O线程。
              如果需要位置信息，需在所有相关记录器（包括根记录器）中设置 includeLocation = true，你会付出昂贵的代价。仅设置true但没有输出位置信息，并不会有影响。
         -->
-
         <!--
-             spring变量应该最先加载，否则会报错，需了解springboot启动顺序。
-             log4j2获取外部配置变量方案：springboot启动先加载配置到Spring env中，然后${env.DEFAULT_LOGGER_LEVEL}
+            项目启动时各记录器的级别如下：
+                跟记录器的级别为：info
+                com.zhaolq包及子包的级别：trace
+            这样在启动时可以清楚的看到启动日志，成功启动后可以将所有记录器初始化为 error 级别。
         -->
-        <Logger name="com.zhaolq" level="trace" additivity="false" includeLocation="false">
-            <AppenderRef ref="console"/>
-            <AppenderRef ref="errorFileRolling"/>
-            <AppenderRef ref="warnFileRolling"/>
-            <AppenderRef ref="infoFileRolling"/>
-            <AppenderRef ref="debugFileRolling"/>
-            <AppenderRef ref="traceFileRolling"/>
-        </Logger>
-
         <Root level="info" includeLocation="false">
             <AppenderRef ref="console"/>
             <AppenderRef ref="errorFileRolling"/>
@@ -212,6 +205,15 @@
             <AppenderRef ref="debugFileRolling"/>
             <AppenderRef ref="traceFileRolling"/>
         </Root>
+
+        <Logger name="${SCHEMA}" level="trace" additivity="false" includeLocation="false">
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="errorFileRolling"/>
+            <AppenderRef ref="warnFileRolling"/>
+            <AppenderRef ref="infoFileRolling"/>
+            <AppenderRef ref="debugFileRolling"/>
+            <AppenderRef ref="traceFileRolling"/>
+        </Logger>
     </Loggers>
 
 

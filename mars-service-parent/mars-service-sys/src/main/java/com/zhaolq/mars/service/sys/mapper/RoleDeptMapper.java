@@ -1,7 +1,7 @@
 package com.zhaolq.mars.service.sys.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.zhaolq.mars.service.sys.entity.RoleDeptEntity;
+import com.zhaolq.mars.api.sys.entity.RoleDeptEntity;
 
 /**
  * <p>

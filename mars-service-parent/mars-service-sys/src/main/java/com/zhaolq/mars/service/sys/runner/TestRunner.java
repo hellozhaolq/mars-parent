@@ -34,21 +34,20 @@ public class TestRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws SQLException {
+        log.trace(">>>>>>>> TestRunner 开始 <<<<<<<<");
         conn();
-        log.debug(">>>>>>>> TestRunner 开始 ...");
         jdbc1();
         jdbc2();
-        log.debug(">>>>>>>> TestRunner 结束 ...");
+        log.trace(">>>>>>>> TestRunner 结束 <<<<<<<<");
     }
 
     private void conn() throws SQLException {
-        log.debug(">>>>>>>> 多次获取数据库连接");
         Connection conn1 = Db.use(dataSource).getConnection();
         Connection conn2 = Db.use(dataSource).getConnection();
-        log.debug("\t ThreadLocal同一线程中多次获取的数据库连接相同");
-        log.debug("\t conn1：{}", conn1);
-        log.debug("\t conn2：{}", conn2);
-        log.debug("\t conn1==conn2：{}", conn1 == conn2);
+        log.trace("\t ThreadLocal同一线程中多次获取的数据库连接相同");
+        log.trace("\t conn1：{}", conn1);
+        log.trace("\t conn2：{}", conn2);
+        log.trace("\t conn1==conn2：{}", conn1 == conn2);
         DbUtil.close(conn1);
         DbUtil.close(conn2);
     }
@@ -56,7 +55,7 @@ public class TestRunner implements ApplicationRunner {
     private void jdbc1() throws SQLException {
         String id = "1";
         Entity entity = Db.use(dataSource).queryOne("select t.* from MARS_SYS_USER t where t.id = ?", id);
-        log.debug("\t id为1的account={}", entity.get("account"));
+        log.trace("\t id为1的account={}", entity.get("account"));
     }
 
     /**
@@ -74,7 +73,7 @@ public class TestRunner implements ApplicationRunner {
             rs = ps.executeQuery();
             while (rs.next()) {
                 String account = rs.getString("account");
-                log.debug("\t id为1的account={}", account);
+                log.trace("\t id为1的account={}", account);
             }
         } catch (SQLException e) {
             e.printStackTrace();

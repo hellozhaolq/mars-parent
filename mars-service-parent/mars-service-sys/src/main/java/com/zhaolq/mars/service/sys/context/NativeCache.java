@@ -2,8 +2,8 @@ package com.zhaolq.mars.service.sys.context;
 
 import cn.hutool.core.text.StrPool;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
-import com.zhaolq.mars.service.sys.entity.MenuEntity;
-import com.zhaolq.mars.service.sys.entity.RoleEntity;
+import com.zhaolq.mars.api.sys.entity.MenuEntity;
+import com.zhaolq.mars.api.sys.entity.RoleEntity;
 import com.zhaolq.mars.service.sys.service.IMenuService;
 import org.springframework.stereotype.Service;
 

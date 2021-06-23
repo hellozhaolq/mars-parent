@@ -6,7 +6,7 @@
     <!--<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>-->
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.zhaolq.mars.service.sys.entity.RoleDeptEntity">
+    <resultMap id="BaseResultMap" type="com.zhaolq.mars.api.sys.entity.RoleDeptEntity">
         <id column="ID" property="id" />
         <result column="ROLE_ID" property="roleId" />
         <result column="DEPT_ID" property="deptId" />

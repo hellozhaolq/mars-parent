@@ -1,6 +1,6 @@
 package com.zhaolq.mars.service.sys.controller;
 
-import com.zhaolq.mars.service.sys.entity.UserEntity;
+import com.zhaolq.mars.api.sys.entity.UserEntity;
 import com.zhaolq.mars.tool.core.utils.JacksonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;

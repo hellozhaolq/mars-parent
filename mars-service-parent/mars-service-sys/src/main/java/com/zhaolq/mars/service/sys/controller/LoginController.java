@@ -1,7 +1,7 @@
 package com.zhaolq.mars.service.sys.controller;
 
 import com.zhaolq.mars.common.mybatis.pagination.WrapperBuilder;
-import com.zhaolq.mars.service.sys.entity.UserEntity;
+import com.zhaolq.mars.api.sys.entity.UserEntity;
 import com.zhaolq.mars.service.sys.service.IUserService;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;

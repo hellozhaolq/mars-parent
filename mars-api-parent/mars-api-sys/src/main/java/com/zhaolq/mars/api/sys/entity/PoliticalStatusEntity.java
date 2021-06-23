@@ -1,4 +1,4 @@
-package com.zhaolq.mars.service.sys.entity;
+package com.zhaolq.mars.api.sys.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -15,7 +15,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 国家 ISO 3166-1
+ * 政治面貌
  * </p>
  *
  * @author zhaolq
@@ -24,9 +24,9 @@ import java.io.Serializable;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("MARS_STD_COUNTRY")
-@ApiModel(value="CountryEntity对象", description="国家 ISO 3166-1")
-public class CountryEntity extends Model<CountryEntity> {
+@TableName("MARS_STD_POLITICAL_STATUS")
+@ApiModel(value="PoliticalStatusEntity对象", description="政治面貌")
+public class PoliticalStatusEntity extends Model<PoliticalStatusEntity> {
 
     @ApiModelProperty(value = "代码")
     @TableId(value = "CODE", type = IdType.ASSIGN_ID)
@@ -36,9 +36,9 @@ public class CountryEntity extends Model<CountryEntity> {
     @TableField("NAME")
     private String name;
 
-    @ApiModelProperty(value = "英文名称")
-    @TableField("NAME_EN")
-    private String nameEn;
+    @ApiModelProperty(value = "简称")
+    @TableField("NAME_SHORT")
+    private String nameShort;
 
 
     @Override

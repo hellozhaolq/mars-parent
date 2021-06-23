@@ -2,12 +2,14 @@ package com.zhaolq.mars.common.log;
 
 import cn.hutool.core.lang.Assert;
 import com.zhaolq.mars.tool.core.result.R;
+import com.zhaolq.mars.tool.core.result.ResultCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.logging.LogLevel;
 import org.springframework.boot.logging.LoggerConfiguration;
 import org.springframework.boot.logging.LoggingSystem;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.*;
 
@@ -31,11 +33,28 @@ public class LoggerLevelController {
     @Resource
     private LoggingSystem loggingSystem;
 
+    @PostConstruct
+    public void initLoggerLevel() {
+        /**
+         * @see com.zhaolq.mars.common.log.InitLoggerLevelRunner
+         */
+    }
+
     @GetMapping("/getLoggerLevel")
     public LoggerLevel getLoggerLevel(LoggerLevel loggerLevel) {
         Assert.notBlank(loggerLevel.getName(), "Name must not be null");
-        LoggerConfiguration configuration = this.loggingSystem.getLoggerConfiguration(loggerLevel.getName());
-        return (configuration == null ? null : new LoggerLevel(configuration));
+        // 由Log4J2LoggingSystem.convertLoggerConfig方法可知跟记录器(ROOT)名称可能默认为null或""，这也是loggingSystem.getLoggerConfiguration("ROOT")获取不到记录器的原因
+        // LoggerConfiguration configuration = this.loggingSystem.getLoggerConfiguration(loggerLevel.getName());
+        Collection<LoggerConfiguration> configurations = this.loggingSystem.getLoggerConfigurations();
+        if (configurations == null) {
+            return null;
+        }
+        for (LoggerConfiguration configuration : configurations) {
+            if (configuration.getName().equalsIgnoreCase(loggerLevel.getName())) {
+                loggerLevel = new LoggerLevel(configuration);
+            }
+        }
+        return loggerLevel;
     }
 
     @GetMapping("/getLoggerLevelAll")
@@ -60,7 +79,7 @@ public class LoggerLevelController {
 
     @PostMapping("/setLoggerLevel")
     public void setLoggerLevel(@RequestBody(required = false) LoggerLevel loggerLevel) {
-        Assert.notNull(loggerLevel);
+        Assert.notNull(loggerLevel, ResultCode.PARAM_NOT_COMPLETE.getDescCh());
         Assert.notBlank(loggerLevel.getName(), "Name must not be empty");
         this.loggingSystem.setLogLevel(loggerLevel.getName(), LogLevel.valueOf(loggerLevel.getLevel()));
     }

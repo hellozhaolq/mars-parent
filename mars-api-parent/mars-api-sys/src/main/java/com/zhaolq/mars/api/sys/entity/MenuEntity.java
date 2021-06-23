@@ -1,4 +1,4 @@
-package com.zhaolq.mars.service.sys.entity;
+package com.zhaolq.mars.api.sys.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;

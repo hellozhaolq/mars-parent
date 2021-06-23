@@ -1,7 +1,7 @@
 package com.zhaolq.mars.service.sys.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.zhaolq.mars.service.sys.entity.MediaFileEntity;
+import com.zhaolq.mars.api.sys.entity.MediaFileEntity;
 import com.zhaolq.mars.service.sys.mapper.MediaFileMapper;
 import com.zhaolq.mars.service.sys.service.IMediaFileService;
 import org.springframework.stereotype.Service;

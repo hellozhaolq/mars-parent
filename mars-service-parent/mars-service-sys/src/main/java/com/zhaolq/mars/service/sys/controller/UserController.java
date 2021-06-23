@@ -11,9 +11,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhaolq.mars.common.mybatis.pagination.PageConvert;
 import com.zhaolq.mars.common.valid.group.Add;
 import com.zhaolq.mars.common.valid.group.Edit;
-import com.zhaolq.mars.service.sys.entity.MenuEntity;
-import com.zhaolq.mars.service.sys.entity.RoleEntity;
-import com.zhaolq.mars.service.sys.entity.UserEntity;
+import com.zhaolq.mars.api.sys.entity.MenuEntity;
+import com.zhaolq.mars.api.sys.entity.RoleEntity;
+import com.zhaolq.mars.api.sys.entity.UserEntity;
 import com.zhaolq.mars.service.sys.service.IUserService;
 import com.zhaolq.mars.tool.core.result.R;
 import com.zhaolq.mars.tool.core.result.ResultCode;
@@ -52,7 +52,7 @@ public class UserController {
      * 单个新增
      *
      * @param userEntity
-     * @return com.zhaolq.mars.service.sys.entity.UserEntity
+     * @return com.zhaolq.mars.api.sys.entity.UserEntity
      * @throws
      */
     @PostMapping("/post")
@@ -73,7 +73,7 @@ public class UserController {
      * 单个删除
      *
      * @param id
-     * @return com.zhaolq.mars.service.sys.entity.UserEntity
+     * @return com.zhaolq.mars.api.sys.entity.UserEntity
      * @throws
      */
     @DeleteMapping("/delete/{id}")
@@ -91,7 +91,7 @@ public class UserController {
      * 单个修改
      *
      * @param userEntity
-     * @return com.zhaolq.mars.service.sys.entity.UserEntity
+     * @return com.zhaolq.mars.api.sys.entity.UserEntity
      * @throws
      */
     @PutMapping("/put")
@@ -109,7 +109,7 @@ public class UserController {
      * 单个查询
      *
      * @param userEntity
-     * @return com.zhaolq.mars.service.sys.entity.UserEntity
+     * @return com.zhaolq.mars.api.sys.entity.UserEntity
      * @throws
      */
     @GetMapping("/get")
@@ -133,7 +133,7 @@ public class UserController {
      * 列表查询
      *
      * @param userEntity
-     * @return com.zhaolq.mars.tool.core.result.R<java.util.List < com.zhaolq.mars.service.sys.entity.UserEntity>>
+     * @return com.zhaolq.mars.tool.core.result.R<java.util.List < com.zhaolq.mars.api.sys.entity.UserEntity>>
      */
     @GetMapping("/getList")
     @ApiOperation(value = "列表查询", notes = "列表查询")
@@ -147,7 +147,7 @@ public class UserController {
      *
      * @param pageConvert
      * @param userEntity
-     * @return com.zhaolq.mars.tool.core.result.R<com.baomidou.mybatisplus.core.metadata.IPage < com.zhaolq.mars.service.sys.entity.UserEntity>>
+     * @return com.zhaolq.mars.tool.core.result.R<com.baomidou.mybatisplus.core.metadata.IPage < com.zhaolq.mars.api.sys.entity.UserEntity>>
      */
     @GetMapping("/getPage")
     @ApiOperation(value = "分页查询", notes = "分页查询")
@@ -161,7 +161,7 @@ public class UserController {
      *
      * @param pageConvert
      * @param userEntity
-     * @return com.zhaolq.mars.tool.core.result.R<com.baomidou.mybatisplus.core.metadata.IPage < com.zhaolq.mars.service.sys.entity.UserEntity>>
+     * @return com.zhaolq.mars.tool.core.result.R<com.baomidou.mybatisplus.core.metadata.IPage < com.zhaolq.mars.api.sys.entity.UserEntity>>
      */
     @PostMapping("/getPage2")
     @ApiOperation(value = "分页查询post请求", notes = "分页查询post请求")
@@ -174,7 +174,7 @@ public class UserController {
      * 单个查询，携带角色列表
      *
      * @param userEntity
-     * @return com.zhaolq.mars.tool.core.result.R<com.zhaolq.mars.service.sys.entity.UserEntity>
+     * @return com.zhaolq.mars.tool.core.result.R<com.zhaolq.mars.api.sys.entity.UserEntity>
      */
     @GetMapping("/getWithRole")
     @ApiOperation(value = "单个查询，携带角色列表", notes = "单个查询，携带角色列表")
@@ -196,7 +196,7 @@ public class UserController {
      * 列表查询，携带角色列表，关联的嵌套Select查询(N+1查询问题)
      *
      * @param userEntity
-     * @return com.zhaolq.mars.tool.core.result.R<com.zhaolq.mars.service.sys.entity.UserEntity>
+     * @return com.zhaolq.mars.tool.core.result.R<com.zhaolq.mars.api.sys.entity.UserEntity>
      */
     @GetMapping("/getWithRoleNestedSelectTest")
     @ApiOperation(value = "列表查询，携带角色列表", notes = "列表查询，携带角色列表")
@@ -218,7 +218,7 @@ public class UserController {
      * 列表查询，携带角色列表
      *
      * @param userEntity
-     * @return com.zhaolq.mars.tool.core.result.R<java.util.List < com.zhaolq.mars.service.sys.entity.UserEntity>>
+     * @return com.zhaolq.mars.tool.core.result.R<java.util.List < com.zhaolq.mars.api.sys.entity.UserEntity>>
      */
     @GetMapping("/getListWithRole")
     @ApiOperation(value = "列表查询，携带角色列表", notes = "列表查询，携带角色列表")
@@ -244,7 +244,7 @@ public class UserController {
      * @param pageConvert
      * @param userEntity
      * @param roleEntity
-     * @return com.zhaolq.mars.tool.core.result.R<com.baomidou.mybatisplus.core.metadata.IPage < com.zhaolq.mars.service.sys.entity.UserEntity>>
+     * @return com.zhaolq.mars.tool.core.result.R<com.baomidou.mybatisplus.core.metadata.IPage < com.zhaolq.mars.api.sys.entity.UserEntity>>
      */
     @Deprecated
     @GetMapping("/getPageWithRole")
@@ -258,7 +258,7 @@ public class UserController {
      *
      * @param pageConvert
      * @param userEntity
-     * @return com.zhaolq.mars.tool.core.result.R<com.baomidou.mybatisplus.core.metadata.IPage < com.zhaolq.mars.service.sys.entity.UserEntity>>
+     * @return com.zhaolq.mars.tool.core.result.R<com.baomidou.mybatisplus.core.metadata.IPage < com.zhaolq.mars.api.sys.entity.UserEntity>>
      */
     @GetMapping("/getPageWithRoleNestedSelectTest")
     @ApiOperation(value = "分页查询，携带角色列表", notes = "分页查询，携带角色列表")
@@ -312,7 +312,7 @@ public class UserController {
      * 获取权限下菜单树
      *
      * @param userEntity
-     * @return com.zhaolq.mars.tool.core.result.R<java.util.List < com.zhaolq.mars.service.sys.entity.MenuEntity>>
+     * @return com.zhaolq.mars.tool.core.result.R<java.util.List < com.zhaolq.mars.api.sys.entity.MenuEntity>>
      */
     @GetMapping("/getAuthorityMenuTree")
     @ApiOperation(value = "获取权限下菜单树", notes = "获取权限下菜单树")
@@ -325,7 +325,7 @@ public class UserController {
      * 获取权限下菜单树
      *
      * @param userEntity
-     * @return com.zhaolq.mars.tool.core.result.R<java.util.List < com.zhaolq.mars.service.sys.entity.MenuEntity>>
+     * @return com.zhaolq.mars.tool.core.result.R<java.util.List < com.zhaolq.mars.api.sys.entity.MenuEntity>>
      */
     @GetMapping("/getAuthorityMenuTree2")
     @ApiOperation(value = "获取权限下菜单树", notes = "获取权限下菜单树")

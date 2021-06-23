@@ -1,7 +1,7 @@
 package com.zhaolq.mars.service.sys.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.zhaolq.mars.service.sys.entity.RoleEntity;
+import com.zhaolq.mars.api.sys.entity.RoleEntity;
 import com.zhaolq.mars.service.sys.mapper.RoleMapper;
 import com.zhaolq.mars.service.sys.service.IRoleService;
 import org.springframework.stereotype.Service;

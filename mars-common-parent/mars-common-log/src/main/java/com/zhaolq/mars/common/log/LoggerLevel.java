@@ -49,13 +49,9 @@ public class LoggerLevel {
         return (level == null ? null : level.name());
     }
 
-    public String getName() {
-        return name;
-    }
-
     public void setName(String name) {
         if (ROOT_LOGGER_NAME.equalsIgnoreCase(name)) {
-            this.name = name.toUpperCase();
+            this.name = ROOT_LOGGER_NAME;
             return;
         }
         this.name = name;
@@ -63,6 +59,10 @@ public class LoggerLevel {
 
     public String getLevel() {
         return level;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void setLevel(String level) {

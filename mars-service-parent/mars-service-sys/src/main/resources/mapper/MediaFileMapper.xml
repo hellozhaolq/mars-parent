@@ -6,7 +6,7 @@
     <!--<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>-->
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.zhaolq.mars.service.sys.entity.MediaFileEntity">
+    <resultMap id="BaseResultMap" type="com.zhaolq.mars.api.sys.entity.MediaFileEntity">
         <id column="ID" property="id" />
         <result column="RESOURCE_TYPE" property="resourceType" />
         <result column="RESOURCE_ID" property="resourceId" />

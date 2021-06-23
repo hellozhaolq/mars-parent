@@ -1,7 +1,7 @@
 package com.zhaolq.mars.service.sys.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.zhaolq.mars.service.sys.entity.MenuEntity;
+import com.zhaolq.mars.api.sys.entity.MenuEntity;
 import com.zhaolq.mars.service.sys.mapper.MenuMapper;
 import com.zhaolq.mars.service.sys.service.IMenuService;
 import org.springframework.stereotype.Service;

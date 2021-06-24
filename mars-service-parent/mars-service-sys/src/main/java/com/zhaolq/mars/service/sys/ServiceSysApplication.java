@@ -1,5 +1,6 @@
 package com.zhaolq.mars.service.sys;
 
+import com.zhaolq.mars.common.springboot.MarsApplication;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -14,7 +15,8 @@ public class ServiceSysApplication {
 
     public static void main(String[] args) {
         log.info(">>>>>>>> SpringApplication.run()开始，系统启动中，请耐心等待...");
-        SpringApplication.run(ServiceSysApplication.class, args);
+        // SpringApplication.run(ServiceSysApplication.class, args);
+        MarsApplication.run(ServiceSysApplication.class, args);
         log.info(">>>>>>>> SpringApplication.run()结束，系统启动成功！");
 
     }

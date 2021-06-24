@@ -24,7 +24,7 @@ public class MarsApplication {
     public static ConfigurableApplicationContext run(Class<?> primarySource, String... args) {
         ConfigurableApplicationContext context = SpringApplication.run(primarySource,args);
 
-        // 这里可以对context做些事情
+        // 这里可以对context做些事情，尽量不重写SpringApplication.run
 
         return context;
     }

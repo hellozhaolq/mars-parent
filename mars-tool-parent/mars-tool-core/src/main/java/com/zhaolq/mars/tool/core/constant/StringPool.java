@@ -2,76 +2,64 @@ package com.zhaolq.mars.tool.core.constant;
 
 import cn.hutool.core.text.CharPool;
 import cn.hutool.core.text.StrPool;
-import cn.hutool.core.util.XmlUtil;
+import com.zhaolq.mars.tool.core.system.SystemUtils;
+
+import java.util.Properties;
 
 /**
  * 常用字符串常量定义
+ *
+ * @see com.baomidou.mybatisplus.core.toolkit.StringPool
  *
  * @author zhaolq
  * @date 2021/6/17 17:30
  */
 public interface StringPool extends StrPool {
 
-    /******************** 下面来自com.baomidou.mybatisplus.core.toolkit.StringPool ********************/
-
-    String AMPERSAND = "&";
-    String AND = "and";
-    String ASTERISK = "*";
-    String STAR = ASTERISK;
-    String BACK_SLASH = "\\";
-    String DASH = "-";
-    String DOLLAR = "$";
-    String DOTDOT = "..";
-    String DOT_CLASS = ".class";
-    String DOT_JAVA = ".java";
-    String DOT_XML = ".xml";
-    String EMPTY = "";
-    String EQUALS = "=";
-    String FALSE = "false";
-    String HASH = "#";
-    String HAT = "^";
-    String LEFT_BRACE = "{";
-    String LEFT_BRACKET = "(";
-    String LEFT_CHEV = "<";
-    String DOT_NEWLINE = ",\n";
-    String NEWLINE = "\n";
-    String N = "n";
-    String NO = "no";
     String NULL = "null";
-    String OFF = "off";
-    String ON = "on";
-    String PERCENT = "%";
-    String PIPE = "|";
-    String PLUS = "+";
-    String QUESTION_MARK = "?";
-    String EXCLAMATION_MARK = "!";
-    String QUOTE = "\"";
-    String RETURN = "\r";
-    String RIGHT_BRACE = "}";
-    String RIGHT_BRACKET = ")";
-    String RIGHT_CHEV = ">";
-    String SEMICOLON = ";";
-    String SINGLE_QUOTE = "'";
-    String BACKTICK = "`";
+    String EMPTY = "";
     String SPACE = " ";
-    String TILDA = "~";
-    String LEFT_SQ_BRACKET = "[";
-    String RIGHT_SQ_BRACKET = "]";
-    String TRUE = "true";
-    String UNDERSCORE = "_";
+
     String UTF_8 = "UTF-8";
     String US_ASCII = "US-ASCII";
     String ISO_8859_1 = "ISO-8859-1";
-    String Y = "y";
+
     String YES = "yes";
-    String ONE = "1";
+    String NO = "no";
+
     String ZERO = "0";
-    String DOLLAR_LEFT_BRACE = "${";
-    String HASH_LEFT_BRACE = "#{";
+    String ONE = "1";
 
-    // ---------------------------------------------------------------- array
+    String ON = "on";
+    String OFF = "off";
 
-    String[] EMPTY_ARRAY = new String[0];
+    String TRUE = "true";
+    String FALSE = "false";
 
-    byte[] BYTES_NEW_LINE = StringPool.NEWLINE.getBytes();
+    String DOT_CLASS = ".class";
+    String DOT_JAVA = ".java";
+    String DOT_XML = ".xml";
+    String DOT_PROPERTIES = ".properties";
+
+    String DOT_TXT = ".txt";
+    String DOT_DOCX = ".docx";
+    String DOT_PPTX = ".pptx";
+    String DOT_XLSX = ".xlsx";
+
+    /**
+     * 系统文件分隔符
+     */
+    String FILE_SEPARATOR = SystemUtils.get("file.separator", "");
+
+    /**
+     * 系统路径分隔符
+     */
+    String PATH_SEPARATOR = SystemUtils.get("path.separator", "");
+
+    /**
+     * 系统直线分隔符
+     */
+    String LINE_SEPARATOR = SystemUtils.get("line.separator", "");
+
+
 }

@@ -1,6 +1,7 @@
-package com.zhaolq.mars.api.sys.entity;
+package com.zhaolq.mars.service.sys.entity;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.zhaolq.mars.api.sys.entity.UserEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;

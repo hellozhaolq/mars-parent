@@ -26,6 +26,10 @@ public class ConfigInfoTest {
     @Resource
     private ConfigInfo2 configInfo2;
 
+    /**
+     * 注解@PropertySource可以将PropertySource添加到Spring的Environment
+     * @see org.springframework.context.annotation.PropertySource
+     */
     @Test
     public void getEnvironment() {
         System.out.println(env.getClass().getSimpleName());

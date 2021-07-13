@@ -21,7 +21,6 @@
 
     <modules>
         <module>mars-demo-a</module>
-        <module>mars-demo-thread</module>
         <module>mars-demo-annotation</module>
     </modules>
 

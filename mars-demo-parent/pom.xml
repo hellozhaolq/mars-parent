@@ -23,13 +23,4 @@
         <module>mars-demo-a</module>
         <module>mars-demo-annotation</module>
     </modules>
-
-    <dependencies>
-        <dependency>
-            <groupId>com.zhaolq.mars.common</groupId>
-            <artifactId>mars-common-all</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-    </dependencies>
-
 </project>

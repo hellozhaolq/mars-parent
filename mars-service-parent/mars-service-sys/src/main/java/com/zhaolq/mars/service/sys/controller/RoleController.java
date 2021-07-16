@@ -1,8 +1,5 @@
 package com.zhaolq.mars.service.sys.controller;
 
-
-import cn.hutool.core.lang.Assert;
-import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhaolq.mars.common.mybatis.pagination.PageConvert;
 import com.zhaolq.mars.common.mybatis.pagination.WrapperBuilder;
@@ -10,8 +7,10 @@ import com.zhaolq.mars.common.valid.group.Add;
 import com.zhaolq.mars.common.valid.group.Edit;
 import com.zhaolq.mars.api.sys.entity.RoleEntity;
 import com.zhaolq.mars.service.sys.service.IRoleService;
+import com.zhaolq.mars.tool.core.lang.Assert;
 import com.zhaolq.mars.tool.core.result.R;
 import com.zhaolq.mars.tool.core.result.ResultCode;
+import com.zhaolq.mars.tool.core.utils.ObjectUtils;
 import com.zhaolq.mars.tool.core.utils.StringUtils;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +41,7 @@ public class RoleController {
         // 检查角色code是否存在
         RoleEntity result = roleService.getOne(WrapperBuilder.getQueryWrapper(new RoleEntity().setCode(roleEntity.getCode())));
 
-        if (ObjectUtil.isNotNull(result)) {
+        if (ObjectUtils.isNotNull(result)) {
             return R.failureCh("角色已存在");
         }
         // 不存在，则新增

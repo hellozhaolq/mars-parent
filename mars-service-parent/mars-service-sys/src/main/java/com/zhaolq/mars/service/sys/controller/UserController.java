@@ -1,9 +1,6 @@
 package com.zhaolq.mars.service.sys.controller;
 
-import cn.hutool.core.io.IoUtil;
-import cn.hutool.core.lang.Assert;
 import cn.hutool.core.lang.tree.Tree;
-import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -15,8 +12,11 @@ import com.zhaolq.mars.api.sys.entity.MenuEntity;
 import com.zhaolq.mars.api.sys.entity.RoleEntity;
 import com.zhaolq.mars.api.sys.entity.UserEntity;
 import com.zhaolq.mars.service.sys.service.IUserService;
+import com.zhaolq.mars.tool.core.io.IoUtils;
+import com.zhaolq.mars.tool.core.lang.Assert;
 import com.zhaolq.mars.tool.core.result.R;
 import com.zhaolq.mars.tool.core.result.ResultCode;
+import com.zhaolq.mars.tool.core.utils.ObjectUtils;
 import com.zhaolq.mars.tool.core.utils.StringUtils;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -61,7 +61,7 @@ public class UserController {
         // 检查用户是否存在
         QueryWrapper<UserEntity> wrapper = new QueryWrapper<>(new UserEntity().setAccount(userEntity.getAccount()));
         UserEntity result = userService.getOne(wrapper);
-        if (ObjectUtil.isNotNull(result)) {
+        if (ObjectUtils.isNotNull(result)) {
             return R.failure(ResultCode.USER_HAS_EXISTED);
         }
         // 不存在，则新增
@@ -299,7 +299,7 @@ public class UserController {
         // 关闭writer，释放内存
         writer.close();
         //此处记得关闭输出Servlet流
-        IoUtil.close(out);
+        IoUtils.close(out);
     }
 
     @PostMapping("/postImportExcel")

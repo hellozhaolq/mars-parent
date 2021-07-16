@@ -29,6 +29,12 @@
             <artifactId>auto-service</artifactId>
             <version>${auto-service.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.zhaolq.mars.tool</groupId>
+            <artifactId>mars-tool-core</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
 </project>

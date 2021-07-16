@@ -1,8 +1,5 @@
 package com.zhaolq.mars.service.sys.controller;
 
-
-import cn.hutool.core.lang.Assert;
-import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhaolq.mars.common.mybatis.pagination.PageConvert;
 import com.zhaolq.mars.common.mybatis.pagination.WrapperBuilder;
@@ -10,8 +7,10 @@ import com.zhaolq.mars.common.valid.group.Add;
 import com.zhaolq.mars.common.valid.group.Edit;
 import com.zhaolq.mars.api.sys.entity.MenuEntity;
 import com.zhaolq.mars.service.sys.service.IMenuService;
+import com.zhaolq.mars.tool.core.lang.Assert;
 import com.zhaolq.mars.tool.core.result.R;
 import com.zhaolq.mars.tool.core.result.ResultCode;
+import com.zhaolq.mars.tool.core.utils.ObjectUtils;
 import com.zhaolq.mars.tool.core.utils.StringUtils;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -45,7 +44,7 @@ public class MenuController {
         // 检查菜单code是否存在
         MenuEntity result = menuService.getOne(WrapperBuilder.getQueryWrapper(new MenuEntity().setCode(menuEntity.getCode())));
 
-        if (ObjectUtil.isNotNull(result)) {
+        if (ObjectUtils.isNotNull(result)) {
             return R.failureCh("菜单已存在");
         }
         // 不存在，则新增

@@ -1,10 +1,8 @@
 package com.zhaolq.mars.service.sys.service.impl;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.tree.Tree;
 import cn.hutool.core.lang.tree.TreeNodeConfig;
 import cn.hutool.core.lang.tree.TreeUtil;
-import cn.hutool.core.util.NumberUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhaolq.mars.api.sys.entity.MenuEntity;
@@ -12,6 +10,8 @@ import com.zhaolq.mars.api.sys.entity.RoleEntity;
 import com.zhaolq.mars.api.sys.entity.UserEntity;
 import com.zhaolq.mars.service.sys.mapper.UserMapper;
 import com.zhaolq.mars.service.sys.service.IUserService;
+import com.zhaolq.mars.tool.core.collection.CollectionUtils;
+import com.zhaolq.mars.tool.core.utils.NumberUtils;
 import com.zhaolq.mars.tool.core.utils.StringUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -67,7 +67,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     public List<MenuEntity> getAuthorityMenuTree(UserEntity userEntity) {
         List<MenuEntity> list = userMapper.selectAuthorityMenu(userEntity);
         // 对list去重并排序
-        TreeSet treeSet = CollUtil.toTreeSet(list, new Comparator<MenuEntity>() {
+        TreeSet treeSet = CollectionUtils.toTreeSet(list, new Comparator<MenuEntity>() {
             @Override
             public int compare(MenuEntity o1, MenuEntity o2) {
                 // 如果Id相同，则为重复项，应返回0
@@ -86,7 +86,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
                 return o1.getId().compareTo(o2.getId());
             }
         });
-        List<MenuEntity> sourceList = CollUtil.newArrayList(treeSet);
+        List<MenuEntity> sourceList = CollectionUtils.newArrayList(treeSet);
 
         List<MenuEntity> menuTreeList = new ArrayList<>();
         sourceList.removeIf(e -> {
@@ -100,7 +100,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         setChildren(menuTreeList, sourceList);
 
         // 校验：树状结构菜单总数是否与改变结构前的菜单数量相同
-        if (!NumberUtil.equals(getMenuTreeNum(menuTreeList), treeSet.size())) {
+        if (!NumberUtils.equals(getMenuTreeNum(menuTreeList), treeSet.size())) {
             log.error("树状结构菜单总数与期望值不符，证明代码有误！");
             return null;
         }
@@ -116,7 +116,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
                 }
                 return false;
             });
-            if (CollUtil.isNotEmpty(element.getChildren())) {
+            if (CollectionUtils.isNotEmpty(element.getChildren())) {
                 setChildren(element.getChildren(), sourceList);
             }
         }
@@ -133,7 +133,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         if (menuTreeList == null || menuTreeList.size() == 0) {
             return 0;
         }
-        int num = CollUtil.size(menuTreeList);
+        int num = CollectionUtils.size(menuTreeList);
         for (MenuEntity e : menuTreeList) {
             if (e.getChildren().size() > 0) {
                 num = num + getMenuTreeNum(e.getChildren());
@@ -147,7 +147,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         // 查询所有权限菜单。包括已拥有角色的全部菜单，所以有重复数据。
         List<MenuEntity> allAuthorityMenuList = userMapper.selectAuthorityMenu(userEntity);
         // 去重集合
-        List<MenuEntity> menuListDistinct = CollUtil.distinct(allAuthorityMenuList);
+        List<MenuEntity> menuListDistinct = CollectionUtils.distinct(allAuthorityMenuList);
 
         //配置
         TreeNodeConfig treeNodeConfig = new TreeNodeConfig();

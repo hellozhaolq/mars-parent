@@ -6,7 +6,7 @@ package com.zhaolq.mars.tool.core.exception;
  * @author zhaolq
  * @date 2020/11/12 11:08
  */
-public class MarsException extends RuntimeException {
+public final class MarsException extends RuntimeException {
 
     private String msg;
     private int code = 500;

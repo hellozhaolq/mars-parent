@@ -20,7 +20,7 @@ import java.util.Optional;
 @Data // 等同于@Getter、@Setter、@ToString、@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-public class R<T> implements Serializable {
+public final class R<T> implements Serializable {
 
     @ApiModelProperty(value = "状态码", required = true)
     private int code;

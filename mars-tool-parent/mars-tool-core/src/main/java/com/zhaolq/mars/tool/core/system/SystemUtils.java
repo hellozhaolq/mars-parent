@@ -8,5 +8,5 @@ import cn.hutool.system.SystemUtil;
  * @author zhaolq
  * @date 2021/6/29 10:16
  */
-public class SystemUtils extends SystemUtil {
+public final class SystemUtils extends SystemUtil {
 }

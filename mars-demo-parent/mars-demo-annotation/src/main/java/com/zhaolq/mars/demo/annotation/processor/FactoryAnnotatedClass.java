@@ -1,7 +1,7 @@
 package com.zhaolq.mars.demo.annotation.processor;
 
 import com.zhaolq.mars.demo.annotation.annotation.Factory;
-import org.apache.commons.lang3.StringUtils;
+import com.zhaolq.mars.tool.core.utils.StringUtils;
 
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.DeclaredType;

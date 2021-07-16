@@ -1,6 +1,5 @@
 package com.zhaolq.mars.tool.core;
 
-import com.zhaolq.mars.tool.core.crypto.DigestUtils;
 import org.junit.jupiter.api.*;
 
 /**

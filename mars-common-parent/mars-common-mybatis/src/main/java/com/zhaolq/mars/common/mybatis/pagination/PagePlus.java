@@ -1,10 +1,10 @@
 package com.zhaolq.mars.common.mybatis.pagination;
 
-import cn.hutool.core.text.CharPool;
-import cn.hutool.core.text.StrSpliter;
-import cn.hutool.core.util.PageUtil;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.zhaolq.mars.tool.core.constant.StringPool;
+import com.zhaolq.mars.tool.core.utils.PageUtils;
+import com.zhaolq.mars.tool.core.utils.StringUtils;
 
 import java.util.Arrays;
 import java.util.List;
@@ -58,7 +58,7 @@ public class PagePlus<T> extends Page<T> {
     }
 
     public void setAscColumns(String ascColumns) {
-        String[] columns = StrSpliter.splitToArray(ascColumns, CharPool.COMMA, 0, true, true);
+        String[] columns = StringUtils.split(ascColumns, StringPool.C_COMMA, 0, true, true).toArray(new String[0]);
         List<OrderItem> list = OrderItem.ascs(columns);
         addOrder(list);
         this.ascColumns = Arrays.toString(columns);
@@ -69,7 +69,7 @@ public class PagePlus<T> extends Page<T> {
     }
 
     public void setDescColumns(String descColumns) {
-        String[] columns = StrSpliter.splitToArray(descColumns, CharPool.COMMA, 0, true, true);
+        String[] columns = StringUtils.split(descColumns, StringPool.C_COMMA, 0, true, true).toArray(new String[0]);
         List<OrderItem> list = OrderItem.descs(columns);
         addOrder(list);
         this.descColumns = Arrays.toString(columns);
@@ -87,8 +87,8 @@ public class PagePlus<T> extends Page<T> {
     public Page<T> setTotal(long total) {
         this.total = total;
         // 总页数
-        int totalPage = PageUtil.totalPage((int) total, (int) getSize());
-        this.rainbow = PageUtil.rainbow((int) getCurrent(), totalPage, 7);
+        int totalPage = PageUtils.totalPage((int) total, (int) getSize());
+        this.rainbow = PageUtils.rainbow((int) getCurrent(), totalPage, 7);
         return this;
     }
 

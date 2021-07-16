@@ -1,6 +1,6 @@
 package com.zhaolq.mars.common.log;
 
-import cn.hutool.core.lang.Assert;
+import com.zhaolq.mars.tool.core.lang.Assert;
 import com.zhaolq.mars.tool.core.result.R;
 import com.zhaolq.mars.tool.core.result.ResultCode;
 import lombok.extern.slf4j.Slf4j;

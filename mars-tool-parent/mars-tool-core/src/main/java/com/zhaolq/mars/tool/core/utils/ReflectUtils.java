@@ -11,5 +11,5 @@ import java.lang.reflect.Method;
  * @author zhaolq
  * @date 2020/11/12 11:40
  */
-public final class ReflectionUtils extends ReflectUtil {
+public final class ReflectUtils extends ReflectUtil {
 }

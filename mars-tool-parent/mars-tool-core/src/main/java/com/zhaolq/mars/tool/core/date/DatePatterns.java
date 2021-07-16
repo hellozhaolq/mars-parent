@@ -8,5 +8,5 @@ import cn.hutool.core.date.DatePattern;
  * @author zhaolq
  * @date 2021/7/13 21:32
  */
-public class DatePatterns extends DatePattern {
+public final class DatePatterns extends DatePattern {
 }

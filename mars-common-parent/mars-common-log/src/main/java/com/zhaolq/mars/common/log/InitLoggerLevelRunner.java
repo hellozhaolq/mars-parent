@@ -1,6 +1,6 @@
 package com.zhaolq.mars.common.log;
 
-import cn.hutool.log.level.Level;
+import com.zhaolq.mars.tool.core.enums.Level;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;

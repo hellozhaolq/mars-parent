@@ -23,4 +23,12 @@
         <module>mars-demo-a</module>
         <module>mars-demo-annotation</module>
     </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.zhaolq.mars.tool</groupId>
+            <artifactId>mars-tool-core</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+    </dependencies>
 </project>

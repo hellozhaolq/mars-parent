@@ -1,9 +1,10 @@
 package com.zhaolq.mars.demo.a;
 
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+import com.zhaolq.mars.tool.core.utils.RandomUtils;
+
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 
 /**
  *
@@ -13,51 +14,53 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class Test {
     public static void main(String[] args) {
-        ThreadGroup group = new ThreadGroup("新建线程组1");
+        // 步骤一：创建 Callable 接口的实现类，并实现 call() 方法。创建 Callable 实现类的实例
+        Callable<Integer> call = () -> {
+            System.out.println("线程任务开始，call()方法执行....");
 
-        MyThread myThread = new MyThread();
-        Thread thread1 = new Thread(group, myThread, "thread1");
-        Thread thread2 = new Thread(group, myThread, "thread2");
+            int a = RandomUtils.randomInt(1, 3);
+            int b = RandomUtils.randomInt(1, 3);
+            if (a != b) {
+                System.out.println("两个随机数不相等");
+                throw new Exception("两个随机数不相等");
+            } else {
+                System.out.println("两个随机数相等");
+            }
 
-        thread1.start();
-        thread2.start();
-
+            return a;
+        };
+        // 步骤二：使用 FutureTask 类来包装 Callable 对象
+        FutureTask<Integer> task = new FutureTask<>(call); // 提供了检查任务执行情况和检索结果的方法，具体查看Future接口。
+        System.out.println("task.isDone(): " + task.isDone());
+        // 步骤三：使用 FutureTask 对象作为 Thread 对象的 target 创建并启动新线程
+        new Thread(task).start();
         try {
-            Thread.sleep(3000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        System.out.println("task.isDone(): " + task.isDone());
 
-        System.out.println("此线程组的名称：" + group.getName());
-        System.out.println("此线程组及其子组中活动线程数的估计值：" + group.activeCount());
+        // --------------- 这里是在线程启动之后，线程结果返回之前 ---------------
+        System.out.println("-------------- 这里可以为所欲为 --------------");
+        // --------------- 这里是在线程启动之后，线程结果返回之前 ---------------
 
-        System.out.println("将此线程组及其子组中的每个活动线程复制到指定的数组中：");
-        Thread[] arrary = new Thread[2];
-        int num = group.enumerate(arrary);
-        System.out.println("放入数组的线程数：" + num);
-
-        System.out.println("设置组的最大优先级,线程组中已经具有更高优先级的线程不受影响：");
-        group.setMaxPriority(5);
-
-        System.out.println("返回此线程组的父级：" + group.getParent());
-
-        System.out.println("中断此线程组中的所有线程：");
-        group.interrupt();
-
-        System.out.println("测试此线程组是否已被销毁：" + group.isDestroyed());
-        System.out.println("销毁此线程组及其所有子组。此线程组必须为空，表示此线程组中的所有线程都已停止：");
-        group.destroy();
-        System.out.println("测试此线程组是否已被销毁：" + group.isDestroyed());
-
-    }
-}
-
-class MyThread implements Runnable {
-    @Override
-    public void run() {
-        if (!Thread.currentThread().isInterrupted()) {
-            System.out.println(Thread.currentThread().getThreadGroup().getName() + " " + Thread.currentThread().getName());
+        // 步骤四：为所欲为完毕后，调用 FutureTask 对象的 get() 方法来获得子线程执行结束后的返回值
+        // Integer result = task.get(1, TimeUnit.SECONDS);
+        Integer result = null;
+        while (result == null || !task.isDone()) {
+            try {
+                // 可以多次调用
+                result = task.get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                result = 0;
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+                result = 0;
+            }
         }
-        System.out.println(Thread.currentThread().getName() + " 线程已中断 ");
+        System.out.println("task.isDone(): " + task.isDone());
+        System.out.println("主线程中拿到异步任务执行的结果为：" + result);
     }
 }

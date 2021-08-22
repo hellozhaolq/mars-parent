@@ -1,16 +1,31 @@
 package com.zhaolq.mars.service.sys.controller;
 
+import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
+
 import cn.hutool.core.lang.tree.Tree;
 import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
+import io.swagger.annotations.ApiOperation;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.zhaolq.mars.common.mybatis.pagination.PageConvert;
-import com.zhaolq.mars.common.valid.group.Add;
-import com.zhaolq.mars.common.valid.group.Edit;
 import com.zhaolq.mars.api.sys.entity.MenuEntity;
 import com.zhaolq.mars.api.sys.entity.RoleEntity;
 import com.zhaolq.mars.api.sys.entity.UserEntity;
+import com.zhaolq.mars.common.mybatis.pagination.PageConvert;
+import com.zhaolq.mars.common.valid.group.Add;
+import com.zhaolq.mars.common.valid.group.Edit;
 import com.zhaolq.mars.service.sys.service.IUserService;
 import com.zhaolq.mars.tool.core.io.IoUtils;
 import com.zhaolq.mars.tool.core.lang.Assert;
@@ -18,18 +33,6 @@ import com.zhaolq.mars.tool.core.result.R;
 import com.zhaolq.mars.tool.core.result.ResultCode;
 import com.zhaolq.mars.tool.core.utils.ObjectUtils;
 import com.zhaolq.mars.tool.core.utils.StringUtils;
-import io.swagger.annotations.ApiOperation;
-import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.constraints.NotNull;
-import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * <p>
@@ -117,7 +120,8 @@ public class UserController {
     public R<UserEntity> get(UserEntity userEntity) {
         // 这里永远断言成功，即使请求没有参数userEntity也不是null。
         Assert.notNull(userEntity, ResultCode.PARAM_NOT_COMPLETE.getDescCh());
-        boolean condition = userEntity == null || (StringUtils.isEmpty(userEntity.getId()) && StringUtils.isEmpty(userEntity.getAccount()));
+        boolean condition =
+                userEntity == null || (StringUtils.isEmpty(userEntity.getId()) && StringUtils.isEmpty(userEntity.getAccount()));
         if (condition) {
             return R.failure(ResultCode.PARAM_NOT_COMPLETE);
         }
@@ -165,7 +169,8 @@ public class UserController {
      */
     @PostMapping("/getPage2")
     @ApiOperation(value = "分页查询post请求", notes = "分页查询post请求")
-    public R<IPage<UserEntity>> getPage2(PageConvert<UserEntity> pageConvert, @RequestBody(required = false) UserEntity userEntity) {
+    public R<IPage<UserEntity>> getPage2(PageConvert<UserEntity> pageConvert,
+                                         @RequestBody(required = false) UserEntity userEntity) {
         QueryWrapper<UserEntity> wrapper = new QueryWrapper<>(userEntity);
         return R.success(userService.page(pageConvert.getPagePlus(), wrapper));
     }
@@ -179,7 +184,8 @@ public class UserController {
     @GetMapping("/getWithRole")
     @ApiOperation(value = "单个查询，携带角色列表", notes = "单个查询，携带角色列表")
     public R<UserEntity> getWithRole(UserEntity userEntity) {
-        boolean condition = userEntity == null || (StringUtils.isEmpty(userEntity.getId()) && StringUtils.isEmpty(userEntity.getAccount()));
+        boolean condition =
+                userEntity == null || (StringUtils.isEmpty(userEntity.getId()) && StringUtils.isEmpty(userEntity.getAccount()));
         if (condition) {
             return R.failure(ResultCode.PARAM_NOT_COMPLETE);
         }
@@ -188,7 +194,8 @@ public class UserController {
             return R.failure(ResultCode.USER_NOT_EXISTED);
         }
         // 角色根据ID排序
-        Collections.sort(userEntity.getRoleList(), (r1, r2) -> Integer.valueOf(r1.getId()).compareTo(Integer.valueOf(r2.getId())));
+        Collections.sort(userEntity.getRoleList(),
+                (r1, r2) -> Integer.valueOf(r1.getId()).compareTo(Integer.valueOf(r2.getId())));
         return R.success(userEntity);
     }
 
@@ -201,7 +208,8 @@ public class UserController {
     @GetMapping("/getWithRoleNestedSelectTest")
     @ApiOperation(value = "列表查询，携带角色列表", notes = "列表查询，携带角色列表")
     public R<UserEntity> getWithRoleNestedSelectTest(UserEntity userEntity) {
-        boolean condition = userEntity == null || (StringUtils.isEmpty(userEntity.getId()) && StringUtils.isEmpty(userEntity.getAccount()));
+        boolean condition =
+                userEntity == null || (StringUtils.isEmpty(userEntity.getId()) && StringUtils.isEmpty(userEntity.getAccount()));
         if (condition) {
             return R.failure(ResultCode.PARAM_NOT_COMPLETE);
         }
@@ -210,7 +218,8 @@ public class UserController {
             return R.failure(ResultCode.USER_NOT_EXISTED);
         }
         // 角色根据ID排序
-        Collections.sort(userEntity.getRoleList(), (r1, r2) -> Integer.valueOf(r1.getId()).compareTo(Integer.valueOf(r2.getId())));
+        Collections.sort(userEntity.getRoleList(),
+                (r1, r2) -> Integer.valueOf(r1.getId()).compareTo(Integer.valueOf(r2.getId())));
         return R.success(userEntity);
     }
 
@@ -227,7 +236,8 @@ public class UserController {
         if (list != null) {
             for (UserEntity u : list) {
                 // 角色根据ID排序(roleId转integer排序)
-                Collections.sort(u.getRoleList(), (r1, r2) -> Integer.valueOf(r1.getId()).compareTo(Integer.valueOf(r2.getId())));
+                Collections.sort(u.getRoleList(),
+                        (r1, r2) -> Integer.valueOf(r1.getId()).compareTo(Integer.valueOf(r2.getId())));
             }
         }
         return R.success(list);
@@ -236,10 +246,10 @@ public class UserController {
     /**
      * 分页查询，携带角色列表，连表查询，多个参数
      * 仅供参考，使用关联的嵌套结果映射进行一对多分页查询时，其实是根据多方分页，会导致多方数据缺失。例如：
-     *      1个user对应3个role，当分页size=2、current=1时，结果会少1个role。
+     * 1个user对应3个role，当分页size=2、current=1时，结果会少1个role。
      * 解决办法：
-     *      1、避免一对多分页查询场景设计。
-     *      2、使用关联的嵌套Select分页，但存在N+1查询问题。参考
+     * 1、避免一对多分页查询场景设计。
+     * 2、使用关联的嵌套Select分页，但存在N+1查询问题。参考
      *
      * @param pageConvert
      * @param userEntity
@@ -249,7 +259,8 @@ public class UserController {
     @Deprecated
     @GetMapping("/getPageWithRole")
     @ApiOperation(value = "分页查询，携带角色列表", notes = "分页查询，携带角色列表")
-    public R<IPage<UserEntity>> getPageWithRole(PageConvert<UserEntity> pageConvert, UserEntity userEntity, RoleEntity roleEntity) {
+    public R<IPage<UserEntity>> getPageWithRole(PageConvert<UserEntity> pageConvert, UserEntity userEntity,
+                                                RoleEntity roleEntity) {
         return R.success(userService.pageWithRole(pageConvert.getPagePlus(), userEntity, roleEntity));
     }
 
@@ -262,7 +273,8 @@ public class UserController {
      */
     @GetMapping("/getPageWithRoleNestedSelectTest")
     @ApiOperation(value = "分页查询，携带角色列表", notes = "分页查询，携带角色列表")
-    public R<IPage<UserEntity>> getPageWithRoleNestedSelectTest(PageConvert<UserEntity> pageConvert, UserEntity userEntity) {
+    public R<IPage<UserEntity>> getPageWithRoleNestedSelectTest(PageConvert<UserEntity> pageConvert,
+                                                                UserEntity userEntity) {
         return R.success(userService.pageWithRoleNestedSelectTest(pageConvert.getPagePlus(), userEntity));
     }
 
@@ -340,8 +352,6 @@ public class UserController {
 
         return R.success("");
     }
-
-
 
 }
 

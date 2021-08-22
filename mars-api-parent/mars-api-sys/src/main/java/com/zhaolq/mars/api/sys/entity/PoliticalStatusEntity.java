@@ -42,7 +42,7 @@ public class PoliticalStatusEntity extends Model<PoliticalStatusEntity> {
 
 
     @Override
-    protected Serializable pkVal() {
+    public Serializable pkVal() {
         return this.code;
     }
 

@@ -85,7 +85,7 @@ public class RoleEntity extends Model<RoleEntity> {
     private Byte delFlag;
 
     @Override
-    protected Serializable pkVal() {
+    public Serializable pkVal() {
         return this.id;
     }
 

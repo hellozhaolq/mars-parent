@@ -59,7 +59,7 @@ public class RoleMenuEntity extends Model<RoleMenuEntity> {
 
 
     @Override
-    protected Serializable pkVal() {
+    public Serializable pkVal() {
         return this.id;
     }
 

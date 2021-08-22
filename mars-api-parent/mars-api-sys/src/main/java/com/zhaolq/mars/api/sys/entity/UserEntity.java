@@ -176,7 +176,7 @@ public class UserEntity extends Model<UserEntity> {
     private String flag;
 
     @Override
-    protected Serializable pkVal() {
+    public Serializable pkVal() {
         return this.id;
     }
 

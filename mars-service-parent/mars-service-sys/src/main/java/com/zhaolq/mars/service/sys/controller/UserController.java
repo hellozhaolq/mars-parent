@@ -334,5 +334,14 @@ public class UserController {
         return R.success(menuTreeList);
     }
 
+    @GetMapping("/testPagehelper")
+    @ApiOperation(value = "测试PageHelper", notes = "测试PageHelper")
+    public R<String> testPagehelper() {
+
+        return R.success("");
+    }
+
+
+
 }
 

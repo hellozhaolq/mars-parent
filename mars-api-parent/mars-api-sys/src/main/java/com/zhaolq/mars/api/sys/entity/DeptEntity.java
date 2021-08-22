@@ -87,7 +87,7 @@ public class DeptEntity extends Model<DeptEntity> {
 
 
     @Override
-    protected Serializable pkVal() {
+    public Serializable pkVal() {
         return this.id;
     }
 

@@ -75,7 +75,7 @@ public class MediaFileEntity extends Model<MediaFileEntity> {
 
 
     @Override
-    protected Serializable pkVal() {
+    public Serializable pkVal() {
         return this.id;
     }
 

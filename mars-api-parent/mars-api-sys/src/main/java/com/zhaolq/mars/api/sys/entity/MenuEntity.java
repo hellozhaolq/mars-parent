@@ -134,7 +134,7 @@ public class MenuEntity extends Model<MenuEntity> {
     private List<MenuEntity> children = new ArrayList<MenuEntity>();
 
     @Override
-    protected Serializable pkVal() {
+    public Serializable pkVal() {
         return this.id;
     }
 

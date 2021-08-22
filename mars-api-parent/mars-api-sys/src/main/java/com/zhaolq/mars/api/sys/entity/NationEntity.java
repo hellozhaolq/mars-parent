@@ -38,7 +38,7 @@ public class NationEntity extends Model<NationEntity> {
 
 
     @Override
-    protected Serializable pkVal() {
+    public Serializable pkVal() {
         return this.code;
     }
 

@@ -11,7 +11,7 @@ import org.springframework.lang.Nullable;
  *      {@code javax.servlet.http.HttpServletResponse}
  *      {@code cn.hutool.http.HttpStatus}
  * @author zhaolq
- * @date 2020/10/16 10:34
+ * @since 2020/10/16 10:34
  */
 public enum HttpStatus implements IResultCode {
 

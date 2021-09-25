@@ -6,7 +6,7 @@ import java.time.temporal.ChronoUnit;
  * 日期时间单位，每个单位都是以毫秒为基数
  *
  * @author zhaolq
- * @date 2021/6/18 11:14
+ * @since 2021/6/18 11:14
  */
 public enum DateUnit {
     /**

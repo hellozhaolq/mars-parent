@@ -4,7 +4,7 @@ package com.zhaolq.mars.tool.core.exception;
  * 自定义异常
  *
  * @author zhaolq
- * @date 2020/11/12 11:08
+ * @since 2020/11/12 11:08
  */
 public final class MarsException extends RuntimeException {
 

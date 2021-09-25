@@ -4,7 +4,7 @@ package com.zhaolq.mars.demo.annotation.sample.processor;
  * 食物
  *
  * @author zhaolq
- * @date 2020/7/10 11:23
+ * @since 2020/7/10 11:23
  */
 public interface Meal {
 

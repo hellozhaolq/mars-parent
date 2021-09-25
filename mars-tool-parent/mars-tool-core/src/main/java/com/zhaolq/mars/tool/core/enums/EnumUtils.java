@@ -6,7 +6,7 @@ import cn.hutool.core.util.EnumUtil;
  * 枚举工具类
  *
  * @author zhaolq
- * @date 2021/6/18 12:09
+ * @since 2021/6/18 12:09
  */
 public final class EnumUtils extends EnumUtil {
 }

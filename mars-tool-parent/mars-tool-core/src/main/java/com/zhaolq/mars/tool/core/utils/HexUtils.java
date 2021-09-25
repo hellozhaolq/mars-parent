@@ -8,7 +8,7 @@ import cn.hutool.core.util.HexUtil;
  * 像java,c这样的语言为了区分十六进制和十进制数值,会在十六进制数的前面加上 0x,比如0x20是十进制的32,而不是十进制的20
  *
  * @author zhaolq
- * @date 2021/7/16 9:56
+ * @since 2021/7/16 9:56
  */
 public final class HexUtils extends HexUtil {
 }

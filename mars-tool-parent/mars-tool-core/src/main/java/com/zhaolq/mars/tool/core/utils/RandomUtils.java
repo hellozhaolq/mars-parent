@@ -6,7 +6,7 @@ import cn.hutool.core.util.RandomUtil;
  * 随机工具类
  *
  * @author zhaolq
- * @date 2021/7/26 14:32
+ * @since 2021/7/26 14:32
  */
 public class RandomUtils extends RandomUtil {
 }

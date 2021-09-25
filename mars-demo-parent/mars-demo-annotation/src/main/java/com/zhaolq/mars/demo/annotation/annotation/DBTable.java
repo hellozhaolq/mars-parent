@@ -6,7 +6,7 @@ import java.lang.annotation.*;
  * 类注解
  *
  * @author zhaolq
- * @date 2020/7/10 11:48
+ * @since 2020/7/10 11:48
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

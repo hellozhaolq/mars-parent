@@ -1,8 +1,6 @@
 package com.zhaolq.mars.service.sys.controller;
 
-
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RestController;
 
 /**

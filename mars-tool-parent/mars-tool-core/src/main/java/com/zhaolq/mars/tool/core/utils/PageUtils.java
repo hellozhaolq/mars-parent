@@ -9,7 +9,7 @@ import cn.hutool.core.util.PageUtil;
  * 很多时候这种转换容易出错（边界问题），于是封装了PageUtil工具类。
  *
  * @author zhaolq
- * @date 2021/7/16 11:19
+ * @since 2021/7/16 11:19
  */
 public final class PageUtils extends PageUtil {
 }

@@ -21,7 +21,7 @@ import java.util.Set;
  * 继承AbstractProcessor类实现自定义注解处理器 -- @Factory注解处理器
  *
  * @author zhaolq
- * @date 2020/7/10 10:52
+ * @since 2020/7/10 10:52
  */
 @AutoService(Processor.class)
 public class FactoryProcessor extends AbstractProcessor {

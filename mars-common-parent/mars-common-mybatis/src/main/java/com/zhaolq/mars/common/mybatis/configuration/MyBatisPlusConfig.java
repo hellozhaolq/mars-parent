@@ -17,7 +17,7 @@ import java.util.List;
  * 配置类
  *
  * @author zhaolq
- * @date 2020/10/21 22:25
+ * @since 2020/10/21 22:25
  */
 @Configuration
 // @MapperScan({"com.zhaolq.**.mapper"}) /* 这里扫描与在springboot启动类扫描有何区别 */

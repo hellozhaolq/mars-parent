@@ -9,7 +9,7 @@ import com.zhaolq.mars.demo.annotation.annotation.SQLString;
  * 数据库表成员对应实例类bean
  *
  * @author zhaolq
- * @date 2020/7/10 11:51
+ * @since 2020/7/10 11:51
  */
 @DBTable(name = "USER_INFO")
 public class UserInfo {

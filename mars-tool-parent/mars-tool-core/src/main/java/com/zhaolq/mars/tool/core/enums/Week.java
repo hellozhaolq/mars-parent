@@ -15,7 +15,7 @@ import java.util.Calendar;
  * @see #SATURDAY
  *
  * @author zhaolq
- * @date 2021/6/18 11:17
+ * @since 2021/6/18 11:17
  */
 public enum Week {
 

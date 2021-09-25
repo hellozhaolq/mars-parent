@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.generator.engine.VelocityTemplateEngine;
  *
  *
  * @author zhaolq
- * @date 2020/10/9 9:53
+ * @since 2020/10/9 9:53
  */
 public class CodeGenerator {
 

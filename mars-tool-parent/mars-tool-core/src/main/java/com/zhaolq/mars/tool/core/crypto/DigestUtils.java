@@ -12,7 +12,7 @@ import java.util.UUID;
  * 摘要算法工具类
  *
  * @author zhaolq
- * @date 2021/5/12 17:00
+ * @since 2021/5/12 17:00
  */
 public final class DigestUtils extends DigestUtil {
 

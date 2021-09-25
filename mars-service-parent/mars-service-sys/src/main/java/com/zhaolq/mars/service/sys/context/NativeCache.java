@@ -20,7 +20,7 @@ import java.util.Map;
  * 下一次请求被分配到其他服务时，找不到缓存或缓存未更新，造成状态不一致。除非是永不改变的信息。
  *
  * @author zhaolq
- * @date 2021/6/9 22:12
+ * @since 2021/6/9 22:12
  */
 @Service
 public class NativeCache {

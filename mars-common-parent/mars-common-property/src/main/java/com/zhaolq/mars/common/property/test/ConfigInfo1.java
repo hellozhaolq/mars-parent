@@ -23,7 +23,7 @@ import java.util.Map;
  *      尽量使用.properties格式，为避免部署人员配置格式错误。
  *
  * @author zhaolq
- * @date 2021/6/10 13:48
+ * @since 2021/6/10 13:48
  */
 @Configuration
 @PropertySource(value = {"classpath:/test.properties", "classpath:/test.properties"}, encoding = "UTF-8", ignoreResourceNotFound = true,

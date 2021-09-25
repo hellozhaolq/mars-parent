@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * Props工具类 提供静态方法获取配置文件
  *
  * @author zhaolq
- * @date 2021/5/21 13:22
+ * @since 2021/5/21 13:22
  */
 public final class PropsUtils extends PropsUtil {
 

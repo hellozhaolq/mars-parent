@@ -6,7 +6,7 @@ import cn.hutool.core.util.StrUtil;
  * 字符串工具类
  *
  * @author zhaolq
- * @date 2020/11/12 11:44
+ * @since 2020/11/12 11:44
  */
 public final class StringUtils extends StrUtil {
 }

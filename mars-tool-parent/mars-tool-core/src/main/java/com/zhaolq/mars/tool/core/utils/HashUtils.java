@@ -12,7 +12,7 @@ import java.util.UUID;
  * Hash算法大全
  *
  * @author zhaolq
- * @date 2020/11/12 16:16
+ * @since 2020/11/12 16:16
  */
 public final class HashUtils extends HashUtil {
 }

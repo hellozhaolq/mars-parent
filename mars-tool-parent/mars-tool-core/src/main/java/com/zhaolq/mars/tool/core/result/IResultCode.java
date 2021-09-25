@@ -4,7 +4,7 @@ package com.zhaolq.mars.tool.core.result;
  * 状态码枚举抽象
  *
  * @author zhaolq
- * @date 2020/11/3 20:54
+ * @since 2020/11/3 20:54
  */
 public interface IResultCode {
 

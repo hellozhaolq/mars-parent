@@ -108,10 +108,10 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.22</version>
+            <!-- 提供的，可以理解为此包不由我直接提供，需要调用者/容器提供。 -->
             <scope>provided</scope>
             <!-- 可选的，可以理解为此功能/此依赖可选，如果不需要某项功能，可以不引用这个包 -->
             <!-- <optional>true</optional> -->
-            <!-- 提供的，可以理解为此包不由我直接提供，需要调用者/容器提供。 -->
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -1,0 +1,26 @@
+
+# https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-external-config-application-property-files
+
+server:
+  port: 60001
+  servlet:
+    context-path: /
+    encoding:
+      charset: UTF-8 # 默认UTF-8
+      force: true
+      enabled: true
+  tomcat:
+    uri-encoding: UTF-8 # 默认UTF-8
+
+# DataSource Config
+spring:
+  datasource:
+    name: dataSourceName
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+#    url: jdbc:oracle:thin:@192.168.0.3:1521:orcl
+    url: jdbc:oracle:thin:@192.168.3.206:1521:orcl
+    username: mars
+    password: 123456
+  devtools:
+    restart:
+      enabled: false

@@ -57,6 +57,8 @@
 
         <!-- 优先级低于maven-compiler-plugin插件中的配置 -->
         <maven.compiler.release>${java.version}</maven.compiler.release>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
         <maven.resources.encoding>UTF-8</maven.resources.encoding>
 
@@ -226,6 +228,8 @@
                 <configuration>
                     <!-- 新的release选项替换了三个标志：-source，-target和-bootclasspath -->
                     <release>${maven.compiler.release}</release>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
                     <encoding>${maven.compiler.encoding}</encoding>
                     <fork>true</fork>
                     <!-- 跳过编译的文件 -->

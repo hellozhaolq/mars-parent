@@ -219,8 +219,7 @@
             </resource>
 
 
-
-            <!-- 配置文件外置的资源(存放到config目录，也是classpath路径，下面会配置) -->
+            <!-- 配置文件外置，即提取配置文件到target目录，准备打zip包 -->
             <resource>
                 <directory>${project.basedir}/src/main/resources/config</directory>
                 <includes>

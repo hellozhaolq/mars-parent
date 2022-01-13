@@ -58,6 +58,7 @@
         <!-- 优先级低于maven-compiler-plugin插件中的配置 -->
         <maven.compiler.release>11</maven.compiler.release>
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+        <maven.resources.encoding>UTF-8</maven.resources.encoding>
 
         <!-- maven-resources-plugin将自动使用此编码 -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -229,6 +230,14 @@
                     <excludes>
                         <exclude>**/ExcludeClassesName.java</exclude> <!-- 排除应用程序编译类 -->
                     </excludes>
+                </configuration>
+            </plugin>
+            <!-- 解决资源文件的编码问题 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <encoding>${maven.resources.encoding}</encoding>
                 </configuration>
             </plugin>
             <plugin>

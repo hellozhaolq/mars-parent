@@ -216,6 +216,8 @@
                     maven-compiler-plugin用来编译Java代码
                     maven-resources-plugin资源插件处理项目资源到输出目录的复制。有两种不同的资源：主资源和测试资源。区别在于，主要资源是与主要源代码关联的资源，而测试资源是与测试源代码关联的资源。
                     参考链接：https://blog.csdn.net/u011781521/article/details/79052725
+                idea中maven-compiler-plugin插件控制台乱码问题参考链接：
+                    https://blog.csdn.net/qq_37823003/article/details/109480305
             -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

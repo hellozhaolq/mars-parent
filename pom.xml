@@ -190,7 +190,7 @@
         <!-- 此元素描述了所有 classpath 路径下资源，例如：.java文件、与项目关联的属性文件等。这些资源通常包含在最终软件包中。
         用以规定哪些文件可以编译到target/classes。打包插件默认把target/classes目录下的所有内容打进jar包或者war包。修改配置后请确认target/classes目录内容。 -->
         <resources>
-            
+
             <!-- 控制资源文件的拷贝(默认复制到classes目录，最后打进jar包) -->
             <resource>
                 <!-- 设定主资源目录  -->
@@ -241,8 +241,7 @@
                 </includes>
                 <targetPath>${project.build.directory}/bin</targetPath>
             </resource>
-            
-            
+
         </resources>
         <plugins>
             <!--

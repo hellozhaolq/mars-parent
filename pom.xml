@@ -180,12 +180,18 @@
     </dependencyManagement>
 
     <build>
-        <!-- 打包输出的根目录 -->
-        <!--<directory>target/${project.version}</directory>-->
-        <finalName>${project.name}</finalName>
+        <!-- 此元素指定包含项目源的目录。生成的构建系统将在构建项目时编译此目录中的源代码。给定的路径是相对于项目描述符的。 -->
+        <sourceDirectory>src/main/java</sourceDirectory>
+        <!-- 构建生成的所有文件都放置在这个目录。 -->
+        <!--<directory>${project.basedir}/target/${project.version}</directory>-->
+        <directory>target</directory>
+        <!-- 打包的文件名（不包括扩展名，并且没有路径信息），这里配置成与项目名称相同。默认值是 ${artifactId}-${version} -->
+        <!--<finalName>${project.name}</finalName>-->
         <!-- 此元素描述了所有 classpath 路径下资源，例如：.java文件、与项目关联的属性文件等。这些资源通常包含在最终软件包中。
         用以规定哪些文件可以编译到target/classes。打包插件默认把target/classes目录下的所有内容打进jar包或者war包。修改配置后请确认target/classes目录内容。 -->
         <resources>
+            
+            <!-- 控制资源文件的拷贝(默认复制到classes目录，最后打进jar包) -->
             <resource>
                 <!-- 设定主资源目录  -->
                 <directory>${project.basedir}/src/main/java</directory>
@@ -211,6 +217,33 @@
                 <filtering>true</filtering>
                 <targetPath>${project.build.outputDirectory}</targetPath>
             </resource>
+
+
+
+            <!-- 配置文件外置的资源(存放到config目录，也是classpath路径，下面会配置) -->
+            <resource>
+                <directory>${project.basedir}/src/main/resources/config</directory>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+                <targetPath>${project.build.directory}/config</targetPath>
+            </resource>
+            <resource>
+                <directory>${project.basedir}/src/main/resources/deployment/config</directory>
+                <includes>
+                    <include>*.ini</include>
+                </includes>
+                <targetPath>${project.build.directory}/config</targetPath>
+            </resource>
+            <resource>
+                <directory>${project.basedir}/src/main/resources/deployment/bin</directory>
+                <includes>
+                    <include>*.sh</include>
+                </includes>
+                <targetPath>${project.build.directory}/bin</targetPath>
+            </resource>
+            
+            
         </resources>
         <plugins>
             <!--

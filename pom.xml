@@ -186,7 +186,7 @@
         <!--<directory>${project.basedir}/target/${project.version}</directory>-->
         <directory>target</directory>
         <!-- 打包的文件名（不包括扩展名，并且没有路径信息），这里配置成与项目名称相同。默认值是 ${artifactId}-${version} -->
-        <!--<finalName>${project.name}</finalName>-->
+        <finalName>${project.artifactId}-${project.version}</finalName>
         <!-- 此元素描述了所有 classpath 路径下资源，例如：.java文件、与项目关联的属性文件等。这些资源通常包含在最终软件包中。
         用以规定哪些文件可以编译到target/classes。打包插件默认把target/classes目录下的所有内容打进jar包或者war包。修改配置后请确认target/classes目录内容。 -->
         <resources>
@@ -274,6 +274,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
+                <version>${maven-resources-plugin.version}</version>
                 <configuration>
                     <encoding>${maven.resources.encoding}</encoding>
                 </configuration>
@@ -350,16 +351,26 @@
                     <artifactId>spring-boot-maven-plugin</artifactId>
                     <version>${spring-boot-maven-plugin.version}</version>
                     <configuration>
+                        <outputFile>${project.build.outputDirectory}/META-INF/build-info.properties</outputFile>
                         <!-- 跳过执行：设置true时，打成普通jar包(不可执行)，和使用maven-jar-plugin打的jar包相同。 -->
                         <skip>false</skip>
                         <fork>true</fork>
+                        <!-- repackage的包名 = finalName-classifier -->
                         <finalName>${project.build.finalName}</finalName>
-                        <classifier>start</classifier>
+                        <classifier>startup</classifier>
                     </configuration>
                     <executions>
                         <execution>
+                            <phase>package</phase> <!--默认package阶段 -->
                             <goals>
+                                <!-- 多个执行目标 -->
+                                <goal>build-info</goal>
                                 <goal>repackage</goal>
+                                <!--
+                                    由于maven-jar-plugin和spring-boot-maven-plugin都在package阶段运行，因此首先定义maven-jar-plugin
+                                    是很重要的（以便它在repackage目标之前运行）。repackage目标会在maven-jar-plugin打包后再次打成可执行的
+                                    jar或war包。
+                                -->
                             </goals>
                         </execution>
                     </executions>

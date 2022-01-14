@@ -377,7 +377,6 @@
                     </executions>
                 </plugin>
 
-
                 <!-- 自定义打zip包 -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>

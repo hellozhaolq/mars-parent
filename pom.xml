@@ -181,10 +181,10 @@
 
     <build>
         <!-- 此元素指定包含项目源的目录。生成的构建系统将在构建项目时编译此目录中的源代码。给定的路径是相对于项目描述符的。 -->
-        <sourceDirectory>src/main/java</sourceDirectory>
+        <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
         <!-- 构建生成的所有文件都放置在这个目录。 -->
         <!--<directory>${project.basedir}/target/${project.version}</directory>-->
-        <directory>target</directory>
+        <directory>${project.basedir}/target</directory>
         <!-- 打包的文件名（不包括扩展名，并且没有路径信息），这里配置成与项目名称相同。默认值是 ${artifactId}-${version} -->
         <finalName>${project.artifactId}-${project.version}</finalName>
         <!-- 此元素描述了所有 classpath 路径下资源，例如：.java文件、与项目关联的属性文件等。这些资源通常包含在最终软件包中。

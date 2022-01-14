@@ -23,8 +23,8 @@
     </modules>
 
     <!--
-        .pom文件中定义的变量可以在resources文件夹下的 properties、yml、xml 文件中获取，有待验证
-        .properties文件中定义的变量可以在java代码中通过 java.util.Properties 获取
+        pom.xml文件中定义的变量在resources文件夹下的 properties、yml、xml 文件中可以获得，有待验证
+        .properties文件中定义的变量在java代码中通过 java.util.Properties 可以获得
     -->
     <profiles>
         <profile>
@@ -52,6 +52,8 @@
     </profiles>
 
     <properties>
+        <project.rootdir>${project.basedir}</project.rootdir>
+
         <!-- 升级JDK11需要合适的Maven版本用于构建 -->
         <java.version>11</java.version>
 
@@ -219,27 +221,27 @@
             </resource>
 
 
-            <!-- 配置文件外置，即提取配置文件到target目录，准备打zip包 -->
+            <!-- 配置文件外置，即提取配置文件到target目录。下面的配置是默认的，注释后效果相同 -->
             <resource>
                 <directory>${project.basedir}/src/main/resources/config</directory>
                 <includes>
                     <include>**/*</include>
                 </includes>
-                <targetPath>${project.build.directory}/config</targetPath>
+                <targetPath>${project.basedir}/target/config</targetPath>
             </resource>
             <resource>
                 <directory>${project.basedir}/src/main/resources/deployment/config</directory>
                 <includes>
                     <include>*.ini</include>
                 </includes>
-                <targetPath>${project.build.directory}/config</targetPath>
+                <targetPath>${project.basedir}/target/config</targetPath>
             </resource>
             <resource>
                 <directory>${project.basedir}/src/main/resources/deployment/bin</directory>
                 <includes>
                     <include>*.sh</include>
                 </includes>
-                <targetPath>${project.build.directory}/bin</targetPath>
+                <targetPath>${project.basedir}/target/bin</targetPath>
             </resource>
 
         </resources>
@@ -371,6 +373,32 @@
                                     jar或war包。
                                 -->
                             </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+
+                <!-- 自定义打zip包 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>${maven-assembly-plugin.version}</version>
+                    <configuration>
+                        <appendAssemblyId>false</appendAssemblyId>
+                        <descriptors>
+                            <descriptor>${project.rootdir}/assembly.xml</descriptor>
+                        </descriptors>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>make-assembly</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>single</goal>
+                            </goals>
+                            <configuration>
+                                <finalName>${project.name}</finalName>
+                            </configuration>
                         </execution>
                     </executions>
                 </plugin>

@@ -4,7 +4,7 @@
 server:
   port: 60001
   servlet:
-    context-path: /
+    context-path: /@project.name@
     encoding:
       charset: UTF-8 # 默认UTF-8
       force: true
@@ -12,15 +12,21 @@ server:
   tomcat:
     uri-encoding: UTF-8 # 默认UTF-8
 
-# DataSource Config
 spring:
-  datasource:
-    name: dataSourceName
-    driver-class-name: oracle.jdbc.driver.OracleDriver
-#    url: jdbc:oracle:thin:@192.168.0.3:1521:orcl
-    url: jdbc:oracle:thin:@192.168.3.206:1521:orcl
-    username: mars
-    password: 123456
+  application:
+    name: @project.name@
+  profiles:
+    active: dev
+  mustache:
+    view-names:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 2048MB
+      max-request-size: 2048MB
+  http:
+    encoding:
+      force: true
   devtools:
     restart:
       enabled: false

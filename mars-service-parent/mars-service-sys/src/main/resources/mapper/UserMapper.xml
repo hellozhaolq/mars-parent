@@ -52,6 +52,25 @@
                     columnPrefix="r#" notNullColumn="id,code">
         </collection>
     </resultMap>
+    <!-- hasMany，一对多关联，更简洁 -->
+    <resultMap id="RegionAndOfficeAndOperator" type="com.zhaolq.service.dto.FirstCodeVO">
+        <id column="regionCode" property="code"/>
+        <result column="regionNameCn" property="nameCn"/>
+        <result column="regionNameEn" property="nameEn"/>
+        <result column="isExistData" property="isExistData"/>
+        <collection property="list" ofType="com.zhaolq.service.dto.SecondCodeVO">
+            <id column="officeCode" property="code"/>
+            <result column="officeNameCn" property="nameCn"/>
+            <result column="officeNameEn" property="nameEn"/>
+            <result column="isExistData" property="isExistData"/>
+            <collection property="list" ofType="com.zhaolq.service.dto.ThirdCodeVO">
+                <id column="customerCode" property="code"/>
+                <result column="isExistData" property="isExistData"/>
+                <result column="operatorNameCn" property="nameCn"/>
+                <result column="operatorNameEn" property="nameEn"/>
+            </collection>
+        </collection>
+    </resultMap>
     <!-- ******************************** 关联的嵌套结果映射 ******************************** -->
 
     <!-- ******************************** 关联的嵌套Select查询(N+1查询问题) ******************************** -->

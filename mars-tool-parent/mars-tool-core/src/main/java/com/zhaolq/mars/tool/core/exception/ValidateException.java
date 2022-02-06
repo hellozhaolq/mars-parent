@@ -1,3 +1,8 @@
+package com.zhaolq.mars.tool.core.exception;
+
+import com.zhaolq.mars.tool.core.result.IResultCode;
+import com.zhaolq.mars.tool.core.result.ResultCode;
+
 /**
  * 验证异常
  *

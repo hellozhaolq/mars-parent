@@ -1,16 +1,15 @@
 package com.zhaolq.mars.common.property.test;
 
-import lombok.extern.slf4j.Slf4j;
+import javax.annotation.Resource;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.env.Environment;
 
-import javax.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 
 /**
- *
- *
  * @author zhaolq
  * @since 2021/3/28 12:58
  */
@@ -28,6 +27,7 @@ public class ConfigInfoTest {
 
     /**
      * 注解@PropertySource可以将PropertySource添加到Spring的Environment
+     *
      * @see org.springframework.context.annotation.PropertySource
      */
     @Test
@@ -52,6 +52,7 @@ public class ConfigInfoTest {
 
         System.out.println("test.config.info.username:\t" + System.getProperty("test.config.info.username"));
         System.out.println("JAVA_HOME:\t" + System.getenv("JAVA_HOME"));
+        System.out.println(configInfo1.getDefaultValue());
     }
 
     @Test

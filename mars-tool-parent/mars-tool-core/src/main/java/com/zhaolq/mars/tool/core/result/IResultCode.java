@@ -33,6 +33,4 @@ public interface IResultCode {
      * @return boolean
      */
     Boolean isSuccess();
-
-
 }

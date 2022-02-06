@@ -1,3 +1,10 @@
+package com.zhaolq.mars.tool.core.utils;
+
+import java.util.regex.Pattern;
+
+import com.zhaolq.mars.tool.core.exception.ValidateException;
+import com.zhaolq.mars.tool.core.pools.RegexPools;
+
 /**
  * IP工具类
  *
@@ -41,8 +48,8 @@ public class Ipv4Utils {
         if (ipString == null || ipString.trim().equals("")) {
             throw new ValidateException("Invalid IPv4 address!");
         }
-        Pattern pattern = Pattern.compile(RegexPool.IPV4);
-        if (!pattern.matcher(ipString).matches() || !IPAddressUtil.isIPv4LiteralAddress(ipString)) {
+        Pattern pattern = Pattern.compile(RegexPools.IPV4);
+        if (!pattern.matcher(ipString).matches()) {
             throw new ValidateException("Invalid IPv4 address!");
         }
         // 获取ip的各段

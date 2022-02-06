@@ -74,13 +74,13 @@
                     <dependency>
                         <groupId>com.oracle.ojdbc</groupId>
                         <artifactId>ojdbc8</artifactId>
-                        <version>${ojdbc.version}</version>
+                        <version>${ojdbc8.version}</version>
                         <scope>runtime</scope>
                     </dependency>
                     <dependency>
                         <groupId>com.oracle.ojdbc</groupId>
                         <artifactId>orai18n</artifactId>
-                        <version>${ojdbc.version}</version>
+                        <version>${ojdbc8.version}</version>
                         <scope>runtime</scope>
                     </dependency>
                 </dependencies>

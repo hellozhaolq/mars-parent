@@ -52,8 +52,6 @@
     </profiles>
 
     <properties>
-        <project.rootdir>${project.basedir}</project.rootdir>
-
         <!-- 升级JDK11需要合适的Maven版本用于构建 -->
         <java.version>11</java.version>
 
@@ -160,7 +158,7 @@
                 <scope>runtime</scope>
             </dependency>
             <dependency>
-                <groupId>com.oracle.ojdbc</groupId>
+                <groupId>com.oracle.database.nls</groupId>
                 <artifactId>orai18n</artifactId>
                 <version>${ojdbc8.version}</version>
                 <scope>runtime</scope>
@@ -402,7 +400,7 @@
                     <configuration>
                         <appendAssemblyId>false</appendAssemblyId>
                         <descriptors>
-                            <descriptor>${project.rootdir}/assembly.xml</descriptor>
+                            <descriptor>E:\workspaces\idea\mars-parent/assembly.xml</descriptor>
                         </descriptors>
                     </configuration>
                     <executions>

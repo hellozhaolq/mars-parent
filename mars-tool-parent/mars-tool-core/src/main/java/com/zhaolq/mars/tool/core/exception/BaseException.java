@@ -8,7 +8,7 @@ import com.zhaolq.mars.tool.core.result.IResultCode;
  * https://www.liaoxuefeng.com/wiki/1252599548343744/1264737765214592
  *
  * @author zwx1085453
- * @since 2022/1/30 8:31
+ * @date 2022/1/30 8:31
  */
 public abstract class BaseException extends RuntimeException {
     private IResultCode resultCode = this.setExceptionResultCode();

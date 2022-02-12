@@ -4,7 +4,7 @@ package com.zhaolq.mars.tool.core.enums;
  * 日志等级
  *
  * @author zhaolq
- * @since 2021/7/16 19:14
+ * @date 2021/7/16 19:14
  */
 public enum Level{
     /**

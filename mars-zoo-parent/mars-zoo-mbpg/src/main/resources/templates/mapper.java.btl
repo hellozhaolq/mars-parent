@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Mapper;
  * </p>
  *
  * @author ${author}
- * @since ${date}
+ * @date ${date}
  */
  @Mapper
 <% if(kotlin){ %>

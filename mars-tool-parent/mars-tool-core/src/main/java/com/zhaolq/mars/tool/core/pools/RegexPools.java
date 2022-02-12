@@ -4,7 +4,7 @@ package com.zhaolq.mars.tool.core.pools;
  * 常用正则表达式字符串池
  *
  * @author looly
- * @since 5.7.3
+ * @date 5.7.3
  */
 public interface RegexPools {
 	/**

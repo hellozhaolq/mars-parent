@@ -1,15 +1,17 @@
 package com.zhaolq.mars.service.sys.context;
 
-import com.zhaolq.mars.api.sys.entity.MenuEntity;
-import com.zhaolq.mars.api.sys.entity.RoleEntity;
-import com.zhaolq.mars.service.sys.service.IMenuService;
-import org.springframework.stereotype.Service;
-
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.annotation.PostConstruct;
+
+import org.springframework.stereotype.Service;
+
+import com.zhaolq.mars.api.sys.entity.MenuEntity;
+import com.zhaolq.mars.api.sys.entity.RoleEntity;
+import com.zhaolq.mars.service.sys.service.IMenuService;
 
 /**
  * 本地缓存
@@ -20,7 +22,7 @@ import java.util.Map;
  * 下一次请求被分配到其他服务时，找不到缓存或缓存未更新，造成状态不一致。除非是永不改变的信息。
  *
  * @author zhaolq
- * @since 2021/6/9 22:12
+ * @date 2021/6/9 22:12
  */
 @Service
 public class NativeCache {

@@ -17,7 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * Yaml工具类 提供静态方法获取配置文件
  *
  * @author zhaolq
- * @since 2021/5/21 14:24
+ * @date 2021/5/21 14:24
  */
 public final class YamlUtils {
 

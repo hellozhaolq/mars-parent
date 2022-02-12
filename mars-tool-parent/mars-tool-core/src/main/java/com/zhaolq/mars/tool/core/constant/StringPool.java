@@ -12,7 +12,7 @@ import java.util.Properties;
  * @see com.baomidou.mybatisplus.core.toolkit.StringPool
  *
  * @author zhaolq
- * @since 2021/6/17 17:30
+ * @date 2021/6/17 17:30
  */
 public interface StringPool extends StrPool {
 

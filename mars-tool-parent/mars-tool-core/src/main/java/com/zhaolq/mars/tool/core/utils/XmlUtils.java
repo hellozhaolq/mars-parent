@@ -8,7 +8,7 @@ import cn.hutool.core.util.XmlUtil;
  * 工具类封装了XML文档的创建、读取、写出和部分XML操作
  *
  * @author zhaolq
- * @since 2021/7/16 10:15
+ * @date 2021/7/16 10:15
  */
 public final class XmlUtils extends XmlUtil {
 }

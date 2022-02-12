@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.annotation.SqlCondition;
  * Oracle SQL比较条件常量定义类
  *
  * @author zhaolq
- * @since 2021/5/31 22:28
+ * @date 2021/5/31 22:28
  */
 public class SqlConditionOracle extends SqlCondition {
 

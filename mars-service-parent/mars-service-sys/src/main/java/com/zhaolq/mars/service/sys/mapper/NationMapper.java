@@ -9,7 +9,7 @@ import com.zhaolq.mars.api.sys.entity.NationEntity;
  * </p>
  *
  * @author zhaolq
- * @since 2020-10-29
+ * @date 2020-10-29
  */
 public interface NationMapper extends BaseMapper<NationEntity> {
 

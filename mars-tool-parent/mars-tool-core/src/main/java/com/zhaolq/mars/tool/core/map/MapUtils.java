@@ -6,7 +6,7 @@ import cn.hutool.core.map.MapUtil;
  * Map相关工具类
  *
  * @author zhaolq
- * @since 2021/7/16 9:54
+ * @date 2021/7/16 9:54
  */
 public final class MapUtils extends MapUtil {
 }

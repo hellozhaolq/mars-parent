@@ -16,7 +16,7 @@ import java.util.function.Consumer;
  * 操作Redis的工具类
  *
  * @author zhaolq
- * @since 2021/6/15 22:14
+ * @date 2021/6/15 22:14
  */
 @Repository
 @RequiredArgsConstructor

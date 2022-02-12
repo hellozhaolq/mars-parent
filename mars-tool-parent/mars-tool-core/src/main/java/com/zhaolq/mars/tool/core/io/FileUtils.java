@@ -9,7 +9,7 @@ import java.io.*;
  * 文件工具类
  *
  * @author zhaolq
- * @since 2020/11/12 11:25
+ * @date 2020/11/12 11:25
  */
 public final class FileUtils extends FileUtil {
 

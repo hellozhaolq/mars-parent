@@ -8,7 +8,7 @@ import java.util.Map;
  * 实体基类
  *
  * @author zhaolq
- * @since 2021/6/1 14:04
+ * @date 2021/6/1 14:04
  */
 public abstract class BaseEntity {
 

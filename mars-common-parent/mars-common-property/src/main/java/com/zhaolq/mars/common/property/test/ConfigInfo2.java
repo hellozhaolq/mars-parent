@@ -24,7 +24,7 @@ import java.util.Map;
  *     复杂类型封装           各种复杂类型属性(Map、List、内部类)         支持简单属性(Map、List)
  *
  * @author zhaolq
- * @since 2021/6/10 13:53
+ * @date 2021/6/10 13:53
  */
 @Data
 @Configuration

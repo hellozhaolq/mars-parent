@@ -22,7 +22,7 @@ import java.util.Calendar;
  * @see Calendar#UNDECIMBER
  *
  * @author zhaolq
- * @since 2021/6/18 11:16
+ * @date 2021/6/18 11:16
  */
 public enum Month {
     /**
@@ -172,7 +172,7 @@ public enum Month {
      * @param month 月份，从0开始
      * @param isLeapYear 是否为闰年，闰年只对二月有影响
      * @return 最后一天，可能为28,29,30,31
-     * @since 5.4.7
+     * @date 5.4.7
      */
     public static int getLastDay(int month, boolean isLeapYear){
         int lastDay = DAYS_OF_MONTH[month];

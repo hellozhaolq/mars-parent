@@ -18,7 +18,7 @@ import java.util.List;
  * </p>
  *
  * @author zhaolq
- * @since 2020-10-29
+ * @date 2020-10-29
  */
 @Transactional(rollbackFor = Exception.class)
 public interface UserMapper extends BaseMapper<UserEntity> {

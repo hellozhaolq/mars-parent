@@ -16,7 +16,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * 单例模式
  *
  * @author zhaolq
- * @since 2021/6/17 15:45
+ * @date 2021/6/17 15:45
  */
 @Slf4j
 @Component

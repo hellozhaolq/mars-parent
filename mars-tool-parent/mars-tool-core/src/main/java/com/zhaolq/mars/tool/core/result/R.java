@@ -14,7 +14,7 @@ import java.util.Optional;
  * ApiResult
  *
  * @author zhaolq
- * @since 2020/10/16 11:30
+ * @date 2020/10/16 11:30
  */
 @ApiModel(description = "返回信息")
 @Data // 等同于@Getter、@Setter、@ToString、@EqualsAndHashCode

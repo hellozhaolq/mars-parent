@@ -9,7 +9,7 @@ import com.zhaolq.mars.api.sys.entity.RoleEntity;
  * </p>
  *
  * @author zhaolq
- * @since 2020-10-29
+ * @date 2020-10-29
  */
 public interface IRoleService extends IService<RoleEntity> {
 

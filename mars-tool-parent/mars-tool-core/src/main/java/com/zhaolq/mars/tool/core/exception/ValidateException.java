@@ -7,7 +7,7 @@ import com.zhaolq.mars.tool.core.result.ResultCode;
  * 验证异常
  *
  * @author zwx1085453
- * @since 2022/1/30 10:00
+ * @date 2022/1/30 10:00
  */
 public class ValidateException extends BaseException {
     public ValidateException() {

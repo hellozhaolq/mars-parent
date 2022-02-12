@@ -11,7 +11,7 @@ import cn.hutool.core.util.NumberUtil;
  * 这是因为0.1无法准确的表示为double。因此应该使用new BigDecimal(String)。
  *
  * @author zhaolq
- * @since 2021/7/16 11:53
+ * @date 2021/7/16 11:53
  */
 public final class NumberUtils extends NumberUtil {
 }

@@ -8,7 +8,7 @@ import cn.hutool.core.collection.CollectionUtil;
  * 由于Collection 实现了Iterable接口，因此部分工具此类不提供，而是在IterUtil 中提供
  *
  * @author zhaolq
- * @since 2021/7/16 9:50
+ * @date 2021/7/16 9:50
  */
 public final class CollectionUtils extends CollectionUtil {
 }

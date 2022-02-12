@@ -11,7 +11,7 @@ import javax.lang.model.type.MirroredTypeException;
  * 包含有关用{@link Factory}注解标注的类的信息
  *
  * @author zhaolq
- * @since 2020/7/10 10:54
+ * @date 2020/7/10 10:54
  */
 public class FactoryAnnotatedClass {
 

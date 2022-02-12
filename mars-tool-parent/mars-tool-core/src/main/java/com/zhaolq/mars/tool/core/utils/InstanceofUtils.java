@@ -13,7 +13,7 @@ import java.util.Map;
  * 向下转型工具类
  *
  * @author zhaolq
- * @since 2021/9/25 16:16
+ * @date 2021/9/25 16:16
  */
 public class InstanceofUtils {
     /**

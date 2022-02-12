@@ -10,7 +10,7 @@ import cn.hutool.core.util.URLUtil;
  *      protocol :// hostname[:port] / path / [:parameters][?query]#fragment
  *
  * @author zhaolq
- * @since 2021/5/21 13:39
+ * @date 2021/5/21 13:39
  */
 public final class UrlUtils extends URLUtil {
 }

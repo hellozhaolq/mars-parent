@@ -4,7 +4,7 @@ package com.zhaolq.mars.tool.core.result;
  * API状态码枚举
  *
  * @author zhaolq
- * @since 2020/11/3 19:56
+ * @date 2020/11/3 19:56
  */
 public enum ResultCode implements IResultCode {
 

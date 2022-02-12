@@ -22,7 +22,7 @@ import org.springframework.core.io.support.DefaultPropertySourceFactory;
  * 友情提示:
  * 尽量使用 application.yml 和 application.properties 做为配置文件。
  * 尽量使用.properties格式，为避免部署人员配置格式错误。
- * @since 2021/6/10 13:48
+ * @date 2021/6/10 13:48
  */
 @Configuration
 @PropertySource(value = {"classpath:/test.properties", "classpath:/test.properties"}, encoding = "UTF-8",

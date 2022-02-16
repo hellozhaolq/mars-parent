@@ -151,7 +151,7 @@
     <dependencyManagement>
         <dependencies>
             <!-- 覆盖Spring Boot提供的ojdbc -->
-            <!--<dependency>
+            <dependency>
                 <groupId>com.oracle.database.jdbc</groupId>
                 <artifactId>ojdbc8</artifactId>
                 <version>${ojdbc8.version}</version>
@@ -162,8 +162,8 @@
                 <artifactId>orai18n</artifactId>
                 <version>${ojdbc8.version}</version>
                 <scope>runtime</scope>
-            </dependency>-->
-            <dependency>
+            </dependency>
+            <!--<dependency>
                 <groupId>com.oracle.ojdbc</groupId>
                 <artifactId>ojdbc8</artifactId>
                 <version>${ojdbc8.version}</version>
@@ -174,7 +174,7 @@
                 <artifactId>orai18n</artifactId>
                 <version>${ojdbc8.version}</version>
                 <scope>runtime</scope>
-            </dependency>
+            </dependency>-->
 
             <dependency>
                 <groupId>org.postgresql</groupId>

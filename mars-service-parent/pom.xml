@@ -57,10 +57,10 @@
         </dependency>
 
         <!-- 将导致项目启动时main函数SpringApplication.run()之前的代码执行两次，第二次的线程名为restartedMain -->
-        <dependency>
+        <!--<dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
-        </dependency>
+        </dependency>-->
     </dependencies>
 </project>

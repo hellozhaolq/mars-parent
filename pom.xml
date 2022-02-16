@@ -85,7 +85,7 @@
         <suiteXmlFile>testing.xml</suiteXmlFile>
 
         <ojdbc8.version>21.3.0.0</ojdbc8.version>
-        <postgresql.version>42.3.1</postgresql.version>
+        <postgresql.version>42.3.3</postgresql.version>
         <mysql-connector-java.version>8.0.28</mysql-connector-java.version>
 
         <hutool-all.version>5.6.5</hutool-all.version>

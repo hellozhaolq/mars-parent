@@ -84,7 +84,7 @@
 
         <suiteXmlFile>testing.xml</suiteXmlFile>
 
-        <ojdbc8.version>21.3.0.0</ojdbc8.version>
+        <ojdbc8.version>19.3.0.0</ojdbc8.version>
         <postgresql.version>42.3.1</postgresql.version>
         <mysql-connector-java.version>8.0.28</mysql-connector-java.version>
 
@@ -96,8 +96,8 @@
         <mybatis-generator-maven-plugin.version>1.4.0</mybatis-generator-maven-plugin.version>
         <mybatis-generator-core.version>1.4.0</mybatis-generator-core.version>
 
-        <mybatis-plus-boot-starter.version>3.4.3.1</mybatis-plus-boot-starter.version>
-        <mybatis-plus-generator.version>3.4.1</mybatis-plus-generator.version>
+        <mybatis-plus-boot-starter.version>3.5.0</mybatis-plus-boot-starter.version>
+        <mybatis-plus-generator.version>3.5.0</mybatis-plus-generator.version>
 
         <auto-service.version>1.0-rc7</auto-service.version>
         <javapoet.version>1.9.0</javapoet.version>
@@ -151,7 +151,7 @@
     <dependencyManagement>
         <dependencies>
             <!-- 覆盖Spring Boot提供的ojdbc -->
-            <dependency>
+            <!--<dependency>
                 <groupId>com.oracle.database.jdbc</groupId>
                 <artifactId>ojdbc8</artifactId>
                 <version>${ojdbc8.version}</version>
@@ -159,6 +159,18 @@
             </dependency>
             <dependency>
                 <groupId>com.oracle.database.nls</groupId>
+                <artifactId>orai18n</artifactId>
+                <version>${ojdbc8.version}</version>
+                <scope>runtime</scope>
+            </dependency>-->
+            <dependency>
+                <groupId>com.oracle.ojdbc</groupId>
+                <artifactId>ojdbc8</artifactId>
+                <version>${ojdbc8.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.oracle.ojdbc</groupId>
                 <artifactId>orai18n</artifactId>
                 <version>${ojdbc8.version}</version>
                 <scope>runtime</scope>

@@ -1,23 +1,32 @@
 package com.zhaolq.mars.service.sys.mapper;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.zhaolq.mars.common.mybatis.pagination.PagePlus;
+
 import com.zhaolq.mars.api.sys.entity.RoleEntity;
 import com.zhaolq.mars.api.sys.entity.UserEntity;
+import com.zhaolq.mars.common.mybatis.pagination.PagePlus;
 import com.zhaolq.mars.tool.core.utils.ObjectUtils;
 import com.zhaolq.mars.tool.core.utils.StringUtils;
-import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.annotation.Resource;
-import java.util.*;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  *
@@ -101,7 +110,7 @@ public class UserMapperTest {
     public void selectCount() {
         QueryWrapper<UserEntity> queryWrapper = new QueryWrapper<>();
         queryWrapper.lt("AGE", 30);
-        int count = userMapper.selectCount(queryWrapper);
+        Long count = userMapper.selectCount(queryWrapper);
         System.out.println(count);
     }
 

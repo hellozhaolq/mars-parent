@@ -91,13 +91,17 @@
         <hutool-all.version>5.6.5</hutool-all.version>
         <swagger.version>2.9.2</swagger.version>
 
-        <mybatis-spring-boot-starter.version>2.2.0</mybatis-spring-boot-starter.version>
-        <pagehelper-spring-boot-starter.version>1.3.1</pagehelper-spring-boot-starter.version>
+        <!-- 推荐使用MyBatis-Plus -->
+        <!-- 
+        <mybatis-spring-boot-starter.version>2.2.2</mybatis-spring-boot-starter.version>
         <mybatis-generator-maven-plugin.version>1.4.0</mybatis-generator-maven-plugin.version>
         <mybatis-generator-core.version>1.4.0</mybatis-generator-core.version>
-
-        <mybatis-plus-boot-starter.version>3.5.0</mybatis-plus-boot-starter.version>
-        <mybatis-plus-generator.version>3.5.0</mybatis-plus-generator.version>
+        -->
+        <!-- MyBatis-Plus和boot-starter版本号对应 -->
+        <mybatis-plus-boot-starter.version>3.5.1</mybatis-plus-boot-starter.version>
+        <mybatis-plus-generator.version>3.5.1</mybatis-plus-generator.version>
+        <!-- MyBatis分页插件PageHelper -->
+        <pagehelper-spring-boot-starter.version>1.4.1</pagehelper-spring-boot-starter.version>
 
         <auto-service.version>1.0-rc7</auto-service.version>
         <javapoet.version>1.9.0</javapoet.version>

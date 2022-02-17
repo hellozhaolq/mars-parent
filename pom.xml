@@ -23,7 +23,7 @@
     </modules>
 
     <!--
-        pom.xml文件中定义的变量在resources文件夹下的 properties、yml、xml 文件中可以获得，有待验证
+        pom.xml文件中定义的变量在resources文件夹下的 properties、yml、xml 文件中可以获得
         .properties文件中定义的变量在java代码中通过 java.util.Properties 可以获得
     -->
     <profiles>

@@ -12,7 +12,6 @@
 
     <groupId>com.zhaolq.mars.demo</groupId>
     <artifactId>mars-demo-parent</artifactId>
-    <version>${project.parent.version}</version>
     <packaging>pom</packaging>
 
     <name>${project.artifactId}</name>

@@ -12,7 +12,6 @@
 
     <groupId>com.zhaolq.mars.zoo</groupId>
     <artifactId>mars-zoo-parent</artifactId>
-    <version>${project.parent.version}</version>
     <packaging>pom</packaging>
 
     <name>${project.artifactId}</name>

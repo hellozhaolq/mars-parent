@@ -12,7 +12,6 @@
 
     <groupId>com.zhaolq.mars.service</groupId>
     <artifactId>mars-service-parent</artifactId>
-    <version>${project.parent.version}</version>
     <packaging>pom</packaging>
 
     <name>${project.artifactId}</name>

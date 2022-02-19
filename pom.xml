@@ -7,7 +7,7 @@
     <groupId>com.zhaolq.mars</groupId>
     <artifactId>mars-parent</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.0-deluxe</version>
+    <version>${mars.version}</version>
 
     <name>${project.artifactId}</name>
     <url>https://blog.zhaolq.com</url>
@@ -52,7 +52,7 @@
     </profiles>
 
     <properties>
-        <mars.version>${project.version}</mars.version>
+        <mars.version>1.0.0-deluxe</mars.version>
 
         <!-- 升级JDK11需要合适的Maven版本用于构建 -->
         <java.version>11</java.version>

@@ -12,7 +12,6 @@
 
     <groupId>com.zhaolq.mars.common</groupId>
     <artifactId>mars-common-parent</artifactId>
-    <version>${project.parent.version}</version>
     <packaging>pom</packaging>
 
     <name>${project.artifactId}</name>

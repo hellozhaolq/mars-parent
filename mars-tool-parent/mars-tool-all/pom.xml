@@ -22,7 +22,7 @@
         <dependency>
             <groupId>com.zhaolq.mars.tool</groupId>
             <artifactId>mars-tool-core</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>${mars.version}</version>
         </dependency>
     </dependencies>
 

@@ -22,7 +22,7 @@
         <dependency>
             <groupId>com.zhaolq.mars.api</groupId>
             <artifactId>mars-api-sys</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>${mars.version}</version>
         </dependency>
     </dependencies>
 

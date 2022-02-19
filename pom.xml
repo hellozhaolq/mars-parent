@@ -84,7 +84,7 @@
         <maven-shade-plugin.version>3.2.4</maven-shade-plugin.version>
         <maven-assembly-plugin.version>3.2.0</maven-assembly-plugin.version>
 
-        <suiteXmlFile>testing.xml</suiteXmlFile>
+        <!--<suiteXmlFile>testing.xml</suiteXmlFile>-->
 
         <ojdbc8.version>21.5.0.0</ojdbc8.version>
         <postgresql.version>42.3.3</postgresql.version>

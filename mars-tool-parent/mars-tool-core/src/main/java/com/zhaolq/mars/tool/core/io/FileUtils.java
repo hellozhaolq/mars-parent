@@ -2,9 +2,6 @@ package com.zhaolq.mars.tool.core.io;
 
 import cn.hutool.core.io.FileUtil;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.*;
-
 /**
  * 文件工具类
  *

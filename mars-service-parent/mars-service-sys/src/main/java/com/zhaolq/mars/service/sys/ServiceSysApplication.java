@@ -1,11 +1,12 @@
 package com.zhaolq.mars.service.sys;
 
-import com.zhaolq.mars.common.springboot.MarsApplication;
-import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
+
+import com.zhaolq.mars.common.springboot.MarsApplication;
+
+import lombok.extern.slf4j.Slf4j;
 
 @SpringBootApplication
 @MapperScan({"com.zhaolq.**.mapper"})

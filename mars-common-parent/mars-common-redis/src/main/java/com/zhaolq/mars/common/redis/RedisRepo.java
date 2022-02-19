@@ -1,16 +1,28 @@
 package com.zhaolq.mars.common.redis;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.data.redis.connection.RedisConnection;
-import org.springframework.data.redis.core.*;
-import org.springframework.stereotype.Repository;
-
-import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
+
+import javax.annotation.PostConstruct;
+
+import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.core.Cursor;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.ListOperations;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ScanOptions;
+import org.springframework.data.redis.core.SetOperations;
+import org.springframework.stereotype.Repository;
+
+import lombok.RequiredArgsConstructor;
 
 /**
  * 操作Redis的工具类

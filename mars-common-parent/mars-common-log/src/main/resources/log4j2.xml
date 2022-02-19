@@ -4,7 +4,7 @@
     log4j2开启全异步输出步骤(与关闭相反)：
         1、引入依赖disruptor
         2、在resources下创建log4j2.component.properties文件，设置系统属性 log4j2.contextSelector=org.apache.logging.log4j.core.async.AsyncLoggerContextSelector
-        3、(非必须)修改log4j2.xml：immediateFlush="false"(同步输出时必须为true，否则日志打印不全)、includeLocation="false"
+        3、(非必须)修改log4j2.xml：immediateFlush="false"(可选的，同步输出时必须为true，否则日志打印不全)、includeLocation="false"
 
     org.springframework.boot.logging.LogLevel类中7个日志级别从高到低
         OFF > FATAL > ERROR > WARN > INFO > DEBUG > TRACE
@@ -193,9 +193,14 @@
         -->
         <!--
             项目启动时各记录器的级别如下：
-                跟记录器的级别为：info
+                根记录器(ROOT)的级别为：info
                 com.zhaolq包及子包的级别：trace
-            这样在启动时可以清楚的看到启动日志，成功启动后可以将所有记录器初始化为 error 级别。
+            这样在启动时可以看到com.zhaolq包下所有级别的日志，成功启动后可以将所有记录器初始化为 error 级别。
+
+            根记录器(ROOT)没有name属性，默认为空字符串。
+            根记录器不支持additivity属性，因为它没有父级。
+
+            AppenderRef：Root的子节点，用来指定该日志输出到哪个Appender.
         -->
         <Root level="info" includeLocation="false">
             <AppenderRef ref="console"/>

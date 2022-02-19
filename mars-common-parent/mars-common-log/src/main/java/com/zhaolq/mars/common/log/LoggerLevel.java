@@ -12,9 +12,8 @@ import static org.springframework.boot.logging.LoggingSystem.ROOT_LOGGER_NAME;
  * @date 2021/6/21 21:10
  */
 public class LoggerLevel {
-
     /**
-     * 记录器的名称
+     * 记录器的名称（又叫 loggerName，packageName）
      */
     private String name;
 
@@ -40,13 +39,15 @@ public class LoggerLevel {
     }
 
     public LoggerLevel(LoggerConfiguration configuration) {
-        this.configuredLevel = getLevelName(configuration.getConfiguredLevel());
-        this.effectiveLevel = getLevelName(configuration.getEffectiveLevel());
+        LogLevel configuredLevel = configuration.getConfiguredLevel();
+        this.configuredLevel = configuredLevel == null ? null : configuredLevel.name();
+        LogLevel effectiveLevel = configuration.getEffectiveLevel();
+        this.effectiveLevel = effectiveLevel == null ? null : effectiveLevel.name();
         this.name = configuration.getName();
     }
 
-    private String getLevelName(LogLevel level) {
-        return (level == null ? null : level.name());
+    public String getName() {
+        return name;
     }
 
     public void setName(String name) {
@@ -61,13 +62,10 @@ public class LoggerLevel {
         return level;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public void setLevel(String level) {
         this.level = level.toUpperCase();
     }
+
 
     public String getConfiguredLevel() {
         return this.configuredLevel;
@@ -76,5 +74,4 @@ public class LoggerLevel {
     public String getEffectiveLevel() {
         return this.effectiveLevel;
     }
-
 }

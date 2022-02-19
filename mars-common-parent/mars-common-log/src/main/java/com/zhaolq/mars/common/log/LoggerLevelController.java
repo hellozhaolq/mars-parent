@@ -1,17 +1,32 @@
 package com.zhaolq.mars.common.log;
 
-import com.zhaolq.mars.tool.core.lang.Assert;
-import com.zhaolq.mars.tool.core.result.R;
-import com.zhaolq.mars.tool.core.result.ResultCode;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.logging.LogLevel;
-import org.springframework.boot.logging.LoggerConfiguration;
-import org.springframework.boot.logging.LoggingSystem;
-import org.springframework.web.bind.annotation.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.NavigableSet;
+import java.util.Optional;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-import java.util.*;
+
+import org.springframework.boot.logging.LogLevel;
+import org.springframework.boot.logging.LoggerConfiguration;
+import org.springframework.boot.logging.LoggingSystem;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.zhaolq.mars.tool.core.lang.Assert;
+import com.zhaolq.mars.tool.core.result.R;
+import com.zhaolq.mars.tool.core.result.ResultCode;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 日志级别设置控制器
@@ -24,10 +39,9 @@ import java.util.*;
 @RestController
 @RequestMapping("/logger")
 public class LoggerLevelController {
-
     /**
-     * LoggingSystem服务是SpringBoot对日志系统的抽象，是一个顶层的抽象类。他有很多具体的实现。
-     * 有了LoggingSystem以后，我们就可以通过他来动态的修改日志级别。他帮我们屏蔽掉了底层的具体日志框架。
+     * LoggingSystem服务是SpringBoot对日志系统的抽象，是一个顶层的抽象类。它有很多具体的实现。
+     * 有了LoggingSystem以后，我们就可以通过它来动态的修改日志级别。它帮我们屏蔽掉了底层的具体日志框架。
      * SpringBoot在启动时，会完成LoggingSystem的初始化，这部分代码是在LoggingApplicationListener类的onApplicationStartingEvent方法中实现的。
      */
     @Resource
@@ -42,19 +56,16 @@ public class LoggerLevelController {
 
     @GetMapping("/getLoggerLevel")
     public LoggerLevel getLoggerLevel(LoggerLevel loggerLevel) {
-        Assert.notBlank(loggerLevel.getName(), "Name must not be null");
-        // 由Log4J2LoggingSystem.convertLoggerConfig方法可知跟记录器(ROOT)名称可能默认为null或""，这也是loggingSystem.getLoggerConfiguration("ROOT")获取不到记录器的原因
-        // LoggerConfiguration configuration = this.loggingSystem.getLoggerConfiguration(loggerLevel.getName());
-        Collection<LoggerConfiguration> configurations = this.loggingSystem.getLoggerConfigurations();
-        if (configurations == null) {
-            return null;
+        Assert.notNull(loggerLevel, "Name must not be null");
+        Assert.notNull(loggerLevel.getName(), "Name must not be null");
+        LoggerConfiguration configuration = null;
+        // 根记录器(ROOT)没有name属性，默认为空字符串，所以单独特殊处理。
+        if ("ROOT".equalsIgnoreCase(loggerLevel.getName()) || "".equals(loggerLevel.getName().trim())) {
+            configuration = this.loggingSystem.getLoggerConfiguration("");
+        } else {
+            configuration = this.loggingSystem.getLoggerConfiguration(loggerLevel.getName());
         }
-        for (LoggerConfiguration configuration : configurations) {
-            if (configuration.getName().equalsIgnoreCase(loggerLevel.getName())) {
-                loggerLevel = new LoggerLevel(configuration);
-            }
-        }
-        return loggerLevel;
+        return configuration == null ? new LoggerLevel() : new LoggerLevel(configuration);
     }
 
     @GetMapping("/getLoggerLevelAll")
@@ -114,5 +125,4 @@ public class LoggerLevelController {
 
         return R.boo(true);
     }
-
 }

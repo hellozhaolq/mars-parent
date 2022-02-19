@@ -1,15 +1,23 @@
 package com.zhaolq.mars.service.sys.service;
 
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.zhaolq.mars.api.sys.entity.UserEntity;
-import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.*;
+import java.util.Arrays;
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 
-import javax.annotation.Resource;
-import java.util.Arrays;
-import java.util.List;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+
+import com.zhaolq.mars.api.sys.entity.UserEntity;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  *

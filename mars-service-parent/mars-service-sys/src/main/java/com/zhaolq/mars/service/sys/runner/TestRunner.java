@@ -1,22 +1,29 @@
 package com.zhaolq.mars.service.sys.runner;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.annotation.Resource;
+import javax.sql.DataSource;
+
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
+
 import cn.hutool.db.Db;
 import cn.hutool.db.DbUtil;
 import cn.hutool.db.Entity;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.ApplicationArguments;
-import org.springframework.boot.ApplicationRunner;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
-import org.springframework.core.annotation.Order;
-import org.springframework.stereotype.Component;
-
-import javax.annotation.Resource;
-import javax.sql.DataSource;
-import java.sql.*;
 
 /**
  * 推荐：https://bbs.huaweicloud.com/blogs/184825
- *
+ * <p>
  * 执行时机：参考org.springframework.boot.SpringApplication.run()方法的源码
  *
  * @author zhaolq
@@ -24,9 +31,8 @@ import java.sql.*;
  */
 @Component
 @Slf4j
-@Order(1)
+@Order(Ordered.HIGHEST_PRECEDENCE)
 public class TestRunner implements ApplicationRunner {
-
     @Resource
     private DataSource dataSource;
     @Resource
@@ -44,12 +50,8 @@ public class TestRunner implements ApplicationRunner {
     private void conn() throws SQLException {
         Connection conn1 = Db.use(dataSource).getConnection();
         Connection conn2 = Db.use(dataSource).getConnection();
-        log.trace("\t ThreadLocal同一线程中多次获取的数据库连接相同");
-        log.trace("\t conn1：{}", conn1);
-        log.trace("\t conn2：{}", conn2);
-        log.trace("\t conn1==conn2：{}", conn1 == conn2);
-        DbUtil.close(conn1);
-        DbUtil.close(conn2);
+        log.trace("\t ThreadLocal同一线程中多次获取的数据库连接相同: {}", conn1 == conn2);
+        DbUtil.close(conn1, conn2);
     }
 
     private void jdbc1() throws SQLException {
@@ -115,6 +117,4 @@ public class TestRunner implements ApplicationRunner {
             conn.close();
         }
     }
-
-
 }

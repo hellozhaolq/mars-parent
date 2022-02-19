@@ -1,9 +1,17 @@
 package com.zhaolq.mars.demo.annotation.processor;
 
-import com.google.auto.service.AutoService;
-import com.zhaolq.mars.demo.annotation.annotation.Factory;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.Writer;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
-import javax.annotation.processing.*;
+import javax.annotation.processing.AbstractProcessor;
+import javax.annotation.processing.Filer;
+import javax.annotation.processing.Messager;
+import javax.annotation.processing.ProcessingEnvironment;
+import javax.annotation.processing.Processor;
+import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
@@ -13,11 +21,10 @@ import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
 import javax.tools.JavaFileObject;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.Writer;
-import java.util.LinkedHashSet;
-import java.util.Set;
+
+import com.google.auto.service.AutoService;
+
+import com.zhaolq.mars.demo.annotation.annotation.Factory;
 
 /**
  * 继承AbstractProcessor类实现自定义注解处理器 -- 工厂注解处理器

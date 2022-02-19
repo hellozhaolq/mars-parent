@@ -1,14 +1,20 @@
 package com.zhaolq.mars.common.redis;
 
-import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.*;
+import java.io.Serializable;
+import java.util.Properties;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
 
-import java.io.Serializable;
-import java.util.Properties;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  *

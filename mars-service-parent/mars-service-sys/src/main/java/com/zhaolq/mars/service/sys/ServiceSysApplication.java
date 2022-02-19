@@ -4,7 +4,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
-import com.zhaolq.mars.common.springboot.MarsApplication;
+import com.zhaolq.mars.common.spring.application.MarsApplication;
 
 import lombok.extern.slf4j.Slf4j;
 

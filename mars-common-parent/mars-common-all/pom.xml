@@ -21,57 +21,47 @@
         <dependency>
             <groupId>com.zhaolq.mars.common</groupId>
             <artifactId>mars-common-export</artifactId>
-            <version>${mars.version}</version>
+            <version>1.0.0-deluxe</version>
         </dependency>
         <dependency>
             <groupId>com.zhaolq.mars.common</groupId>
             <artifactId>mars-common-log</artifactId>
-            <version>${mars.version}</version>
+            <version>1.0.0-deluxe</version>
         </dependency>
         <dependency>
             <groupId>com.zhaolq.mars.common</groupId>
             <artifactId>mars-common-mq</artifactId>
-            <version>${mars.version}</version>
+            <version>1.0.0-deluxe</version>
         </dependency>
         <dependency>
             <groupId>com.zhaolq.mars.common</groupId>
             <artifactId>mars-common-mybatis</artifactId>
-            <version>${mars.version}</version>
+            <version>1.0.0-deluxe</version>
         </dependency>
         <dependency>
             <groupId>com.zhaolq.mars.common</groupId>
             <artifactId>mars-common-property</artifactId>
-            <version>${mars.version}</version>
+            <version>1.0.0-deluxe</version>
         </dependency>
         <dependency>
             <groupId>com.zhaolq.mars.common</groupId>
             <artifactId>mars-common-redis</artifactId>
-            <version>${mars.version}</version>
+            <version>1.0.0-deluxe</version>
         </dependency>
         <dependency>
             <groupId>com.zhaolq.mars.common</groupId>
             <artifactId>mars-common-spring</artifactId>
-            <version>${mars.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.zhaolq.mars.common</groupId>
-            <artifactId>mars-common-springboot</artifactId>
-            <version>${mars.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.zhaolq.mars.common</groupId>
-            <artifactId>mars-common-springcloud</artifactId>
-            <version>${mars.version}</version>
+            <version>1.0.0-deluxe</version>
         </dependency>
         <dependency>
             <groupId>com.zhaolq.mars.common</groupId>
             <artifactId>mars-common-swagger</artifactId>
-            <version>${mars.version}</version>
+            <version>1.0.0-deluxe</version>
         </dependency>
         <dependency>
             <groupId>com.zhaolq.mars.common</groupId>
             <artifactId>mars-common-valid</artifactId>
-            <version>${mars.version}</version>
+            <version>1.0.0-deluxe</version>
         </dependency>
     </dependencies>
 

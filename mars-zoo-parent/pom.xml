@@ -27,7 +27,7 @@
         <dependency>
             <groupId>com.zhaolq.mars.common</groupId>
             <artifactId>mars-common-all</artifactId>
-            <version>${mars.version}</version>
+            <version>1.0.0-deluxe</version>
         </dependency>
     </dependencies>
 

@@ -1,4 +1,4 @@
-package com.zhaolq.mars.common.springboot;
+package com.zhaolq.mars.common.spring.application;
 
 import java.util.ArrayList;
 import java.util.Arrays;

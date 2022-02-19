@@ -21,7 +21,7 @@
         <dependency>
             <groupId>com.zhaolq.mars.tool</groupId>
             <artifactId>mars-tool-core</artifactId>
-            <version>${mars.version}</version>
+            <version>1.0.0-deluxe</version>
         </dependency>
     </dependencies>
 

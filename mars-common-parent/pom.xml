@@ -29,15 +29,13 @@
         <module>mars-common-property</module>
         <module>mars-common-redis</module>
         <module>mars-common-spring</module>
-        <module>mars-common-springboot</module>
-        <module>mars-common-springcloud</module>
     </modules>
 
     <dependencies>
         <dependency>
             <groupId>com.zhaolq.mars.tool</groupId>
             <artifactId>mars-tool-all</artifactId>
-            <version>${mars.version}</version>
+            <version>1.0.0-deluxe</version>
         </dependency>
     </dependencies>
 

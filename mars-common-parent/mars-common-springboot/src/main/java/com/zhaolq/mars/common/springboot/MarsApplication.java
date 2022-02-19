@@ -74,13 +74,13 @@ public class MarsApplication {
         Properties props = System.getProperties();
         props.setProperty("spring.application.name", appName);
         props.setProperty("spring.profiles.active", profile);
-        props.setProperty("info.version", "1.0.0-SNAPSHOT");
+        props.setProperty("info.version", "1.0.0-deluxe");
         props.setProperty("info.desc", appName);
         props.setProperty("blade.env", profile);
         props.setProperty("blade.name", appName);
         props.setProperty("blade.is-local", String.valueOf(isLocalDev()));
         props.setProperty("blade.dev-mode", profile.equals("prod") ? "false" : "true");
-        props.setProperty("blade.service.version", "1.0.0-SNAPSHOT");
+        props.setProperty("blade.service.version", "1.0.0-deluxe");
         props.setProperty("spring.main.allow-bean-definition-overriding", "true");
         props.setProperty("spring.cloud.nacos.config.prefix", "blade");
         props.setProperty("spring.cloud.nacos.config.file-extension", "yaml");

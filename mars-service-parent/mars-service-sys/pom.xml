@@ -7,11 +7,11 @@
     <parent>
         <groupId>com.zhaolq.mars.service</groupId>
         <artifactId>mars-service-parent</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>mars-service-sys</artifactId>
-    <version>1.0.0</version>
+    <version>${project.parent.version}</version>
     <packaging>jar</packaging>
 
     <name>${project.artifactId}</name>
@@ -22,7 +22,7 @@
         <dependency>
             <groupId>com.zhaolq.mars.api</groupId>
             <artifactId>mars-api-sys</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

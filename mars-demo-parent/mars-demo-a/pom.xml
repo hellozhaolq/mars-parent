@@ -7,11 +7,11 @@
     <parent>
         <groupId>com.zhaolq.mars.demo</groupId>
         <artifactId>mars-demo-parent</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>mars-demo-a</artifactId>
-    <version>1.0.0</version>
+    <version>${project.parent.version}</version>
     <packaging>jar</packaging>
 
     <name>${project.artifactId}</name>

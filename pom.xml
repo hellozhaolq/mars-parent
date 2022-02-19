@@ -7,7 +7,7 @@
     <groupId>com.zhaolq.mars</groupId>
     <artifactId>mars-parent</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.0</version>
+    <version>1.0.0-SNAPSHOT</version>
 
     <name>${project.artifactId}</name>
     <url>https://blog.zhaolq.com</url>
@@ -52,6 +52,8 @@
     </profiles>
 
     <properties>
+        <mars.version>${project.version}</mars.version>
+
         <!-- 升级JDK11需要合适的Maven版本用于构建 -->
         <java.version>11</java.version>
 
@@ -91,12 +93,6 @@
         <hutool-all.version>5.6.5</hutool-all.version>
         <swagger.version>2.9.2</swagger.version>
 
-        <!-- 推荐使用MyBatis-Plus -->
-        <!-- 
-        <mybatis-spring-boot-starter.version>2.2.2</mybatis-spring-boot-starter.version>
-        <mybatis-generator-maven-plugin.version>1.4.0</mybatis-generator-maven-plugin.version>
-        <mybatis-generator-core.version>1.4.0</mybatis-generator-core.version>
-        -->
         <!-- MyBatis-Plus和boot-starter版本号对应 -->
         <mybatis-plus-boot-starter.version>3.5.1</mybatis-plus-boot-starter.version>
         <mybatis-plus-generator.version>3.5.1</mybatis-plus-generator.version>
@@ -458,7 +454,7 @@
     </repositories>
 
     <pluginRepositories>
-	    <pluginRepository>
+        <pluginRepository>
             <id>central</id>
             <name>Central Plugin</name>
             <url>https://repo.maven.apache.org/maven2/</url>
@@ -470,7 +466,7 @@
                 <enabled>false</enabled>
             </snapshots>
         </pluginRepository>
-		
+
         <pluginRepository>
             <id>aliyun</id>
             <name>aliyun Plugin</name>

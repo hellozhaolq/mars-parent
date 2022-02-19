@@ -7,12 +7,12 @@
     <parent>
         <groupId>com.zhaolq.mars</groupId>
         <artifactId>mars-parent</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
 
     <groupId>com.zhaolq.mars.service</groupId>
     <artifactId>mars-service-parent</artifactId>
-    <version>1.0.0</version>
+    <version>${project.parent.version}</version>
     <packaging>pom</packaging>
 
     <name>${project.artifactId}</name>
@@ -27,7 +27,7 @@
         <dependency>
             <groupId>com.zhaolq.mars.common</groupId>
             <artifactId>mars-common-all</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.0-SNAPSHOT</version>
         </dependency>
 
         <!-- spring boot Web项目 -->

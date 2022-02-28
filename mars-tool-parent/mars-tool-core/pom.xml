@@ -23,10 +23,11 @@
             <artifactId>hutool-all</artifactId>
             <version>${hutool-all.version}</version>
         </dependency>
-        <!--<dependency>
+        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-        </dependency>-->
+            <version>${commons-lang3.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -37,9 +38,8 @@
         <!-- 以下依赖不传递 -->
         <dependency>
             <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>${swagger.version}</version>
-            <optional>true</optional>
+            <artifactId>springfox-boot-starter</artifactId>
+            <version>${springfox-boot-starter.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>

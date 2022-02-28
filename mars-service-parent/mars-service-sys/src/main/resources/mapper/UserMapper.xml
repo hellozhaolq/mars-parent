@@ -110,6 +110,21 @@
         u.LAST_UPDATE_BY u#LAST_UPDATE_BY, u.LAST_UPDATE_TIME u#LAST_UPDATE_TIME, u.STATUS u#STATUS, u.DEL_FLAG u#DEL_FLAG, u.FLAG u#FLAG
     </sql>
 
+    <!-- json请求参数
+        {"orderList": [{"field": "quantity", "direction": "DESC"},{"field": "quantity", "direction": "DESC"}]}
+    -->
+    <sql id="Base_Order_By">
+        <if test="requestParam != null and requestParam.orderList != null and requestParam.orderList.size() > 0">
+            order by
+            <foreach item="order" collection="requestParam.orderList" separator="," index="index">
+                <!-- 为防止SQL注入，排序方式使用枚举，排序字段写死 -->
+                <if test="order.field != null and order.field == 'age'">
+                    age ${order.direction}
+                </if>
+            </foreach>
+        </if>
+    </sql>
+
     <!-- 基本查询条件 -->
     <sql id="Base_Where">
         <if test="u != null">

@@ -30,3 +30,11 @@ spring:
   devtools:
     restart:
       enabled: false
+
+# 自定义swagger配置
+swagger:
+  enable: true
+  application-name: ${spring.application.name}
+  application-version: @project.version@
+  application-description: @project.description@
+  try-host: http://localhost:${server.port}

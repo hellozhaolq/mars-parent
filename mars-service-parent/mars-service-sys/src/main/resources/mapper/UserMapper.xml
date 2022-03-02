@@ -54,7 +54,7 @@
     </resultMap>
     <!-- hasMany，一对多关联，更简洁 -->
     <resultMap id="NestedResultMap_OneToMany_Simple" type="com.zhaolq.mars.api.sys.entity.UserEntity">
-        <id column="ID" property="id"/>
+        <id column="ID" property="id"/> <!-- id好像只会有一个生效，如果不配置？ -->
         <result column="ACCOUNT" property="account"/>
         <result column="PASSWORD" property="password"/>
         <result column="NAME" property="name"/>

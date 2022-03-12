@@ -1,5 +1,5 @@
 /*
- * Copyright (c) Zhaolq Technologies Co., Ltd. 大约40亿年前-2022. All rights reserved.
+ * Copyright (c) Zhaolq Technologies Co., Ltd. 大约40亿年前-9999. All rights reserved.
  */
 
 package com.zhaolq.mars.service.sys.configcmn;

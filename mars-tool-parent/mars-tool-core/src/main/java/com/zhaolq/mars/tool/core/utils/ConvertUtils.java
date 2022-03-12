@@ -4,13 +4,14 @@
 
 package com.zhaolq.mars.tool.core.utils;
 
-import cn.hutool.core.util.ReflectUtil;
+import cn.hutool.core.convert.Convert;
 
 /**
- * 反射工具类
+ * 类型转换器
  *
  * @author zhaolq
- * @date 2020/11/12 11:40
+ * @date 2022/3/12 16:30
+ * @since 1.0.0
  */
-public final class ReflectUtils extends ReflectUtil {
+public class ConvertUtils extends Convert {
 }

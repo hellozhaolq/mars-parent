@@ -1,4 +1,8 @@
-package com.zhaolq.mars.tool.core.pools;
+/*
+ * Copyright (c) Zhaolq Technologies Co., Ltd. 大约40亿年前-9999. All rights reserved.
+ */
+
+package com.zhaolq.mars.tool.core.constant;
 
 /**
  * 常用正则表达式字符串池
@@ -6,7 +10,7 @@ package com.zhaolq.mars.tool.core.pools;
  * @author looly
  * @date 5.7.3
  */
-public interface RegexPools {
+public interface RegexPool {
 	/**
 	 * 英文字母 、数字和下划线
 	 */

@@ -1,10 +1,12 @@
+/*
+ * Copyright (c) Zhaolq Technologies Co., Ltd. 大约40亿年前-9999. All rights reserved.
+ */
+
 package com.zhaolq.mars.tool.core.constant;
 
-import cn.hutool.core.text.CharPool;
-import cn.hutool.core.text.StrPool;
 import com.zhaolq.mars.tool.core.system.SystemUtils;
 
-import java.util.Properties;
+import cn.hutool.core.text.StrPool;
 
 /**
  * 常用字符串常量定义
@@ -12,7 +14,8 @@ import java.util.Properties;
  * @see com.baomidou.mybatisplus.core.toolkit.StringPool
  *
  * @author zhaolq
- * @date 2021/6/17 17:30
+ * @date 2022/3/12 17:25
+ * @since 1.0.0
  */
 public interface StringPool extends StrPool {
 
@@ -60,6 +63,4 @@ public interface StringPool extends StrPool {
      * 系统直线分隔符
      */
     String LINE_SEPARATOR = SystemUtils.get("line.separator", "");
-
-
 }

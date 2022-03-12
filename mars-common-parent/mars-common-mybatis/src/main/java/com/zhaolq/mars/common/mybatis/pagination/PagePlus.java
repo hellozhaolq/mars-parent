@@ -3,7 +3,7 @@ package com.zhaolq.mars.common.mybatis.pagination;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zhaolq.mars.tool.core.constant.StringPool;
-import com.zhaolq.mars.tool.core.utils.PageUtils;
+import com.zhaolq.mars.tool.core.db.PageUtils;
 import com.zhaolq.mars.tool.core.utils.StringUtils;
 
 import java.util.Arrays;

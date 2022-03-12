@@ -1,9 +1,13 @@
 
-Centos8-Oracle: 
+Centos8-Oracle:
 	IP: 192.168.0.3
 	用户:
 		root / 123456
 		oracle / 123456
+
+Redis:
+	192.168.0.3:6379
+	123456789
 
 Oracle:
 	切换用户: su - oracle

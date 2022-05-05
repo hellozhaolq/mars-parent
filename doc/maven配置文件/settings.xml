@@ -303,7 +303,7 @@ under the License.
     -->
 
     <profile>
-        <id>repo1</id> <!-- profile的唯一id。配置仓库镜像时是否用到待测试。 -->
+        <id>repo1</id> <!-- profile的唯一id。activeProfiles激活时用到。 -->
 	<!-- repositories和pluginRepositories标签是从pom.xml拷贝来的 -->
         <repositories>
             <!-- 按顺序搜索jar包，最后找默认的中央仓库。若将id=central的仓库放在最前就直接去中央仓库搜索 -->

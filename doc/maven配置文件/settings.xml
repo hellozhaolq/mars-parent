@@ -104,13 +104,13 @@ under the License.
     </proxy>
     -->
 
-	<proxy>
-      <id>local-proxy</id> <!-- 声明一个id为local-proxy的代理 -->
-      <active>true</active> <!-- 激活该代理 -->
-      <protocol>http</protocol> <!-- 代理协议 -->
-      <host>127.0.0.1</host> <!-- 主机名 -->
-      <port>1080</port> <!-- 端口 -->
-	</proxy>
+    <proxy>
+        <id>local-proxy</id> <!-- 声明一个id为local-proxy的代理 -->
+        <active>true</active> <!-- 激活该代理 -->
+        <protocol>http</protocol> <!-- 代理协议 -->
+        <host>127.0.0.1</host> <!-- 主机名 -->
+        <port>1080</port> <!-- 端口 -->
+    </proxy>
 
   </proxies>
 
@@ -177,27 +177,28 @@ under the License.
 <!--
     mirror就是镜像，主要提供一个方便地切换远程仓库的途径。它相当于一个拦截器，它会拦截maven对远程仓库的相关请求，把请求里的远程仓库地址，重定向到mirror配置的地址。
     
-    <mirrorOf>repo1,repo2</mirrorOf>   匹配id为repo1和repo2的仓库请求，用逗号分隔多个远程仓库
-	<mirrorOf>*</mirrorOf>             匹配所有仓库请求，即:对所有的仓库请求都转到该镜像上
-	<mirrorOf>*,!repo1</mirrorOf>      匹配所有仓库请求，repo1除外，使用感叹号将仓库从匹配中排除
+        <mirrorOf>repo1,repo2</mirrorOf>   匹配id为repo1和repo2的仓库请求，用逗号分隔多个远程仓库
+        <mirrorOf>*</mirrorOf>             匹配所有仓库请求，即:对所有的仓库请求都转到该镜像上
+        <mirrorOf>*,!repo1</mirrorOf>      匹配所有仓库请求，repo1除外，使用感叹号将仓库从匹配中排除
+
     配置多个mirror时的加载顺序：优先加载mirrorOf与repositoryId相同的mirror。
-	mirrorOf为*最后加载。
-	只配置mirrorOf为central的时候可以不用配置repository。
+    mirrorOf为*最后加载。
+    只配置mirrorOf为central的时候可以不用配置repository。
  -->
 
-	<mirror>
-      <id>central</id> <!-- 仓库的唯一标识符，无其他作用 -->
-      <name>Central Repository</name>
-      <url>https://repo.maven.apache.org/maven2/</url>
-	  <mirrorOf>central</mirrorOf> <!-- 配置为 repositoryId=central 的仓库镜像，任何对id为central的仓库请求都会转至该镜像 -->
+    <mirror>
+        <id>central</id> <!-- 仓库的唯一标识符，无其他作用 -->
+        <name>Central Repository</name>
+        <url>https://repo.maven.apache.org/maven2/</url>
+        <mirrorOf>central</mirrorOf> <!-- 配置为 repositoryId=central 的仓库镜像，任何对id为central的仓库请求都会转至该镜像 -->
     </mirror>
 
-	<mirror>
-      <id>aliyun</id>
-      <name>aliyun Repository</name>
-      <url>https://maven.aliyun.com/repository/public</url>
-      <mirrorOf>aliyun</mirrorOf>
-	</mirror>
+    <mirror>
+        <id>aliyun</id>
+        <name>aliyun Repository</name>
+        <url>https://maven.aliyun.com/repository/public</url>
+        <mirrorOf>aliyun</mirrorOf>
+    </mirror>
 
   </mirrors>
 
@@ -252,6 +253,19 @@ under the License.
       </repositories>
     </profile>
     -->
+	  
+    <profile>
+        <id>JDK1.8</id>
+        <activation>
+            <activeByDefault>true</activeByDefault>
+            <jdk>1.8</jdk>
+        </activation>
+        <properties>
+            <maven.compiler.source>1.8</maven.compiler.source>
+            <maven.compiler.target>1.8</maven.compiler.target>
+            <maven.compiler.compilerVersion>1.8</maven.compiler.compilerVersion>
+        </properties>
+    </profile>
 
     <!--
      | Here is another profile, activated by the system property 'target-env' with a value of 'dev',
@@ -287,6 +301,72 @@ under the License.
       </properties>
     </profile>
     -->
+
+    <profile>
+        <id>repo1</id> <!-- profile的唯一id。配置仓库镜像时是否用到待测试。 -->
+	<!-- repositories和pluginRepositories标签是从pom.xml拷贝来的 -->
+        <repositories>
+            <!-- 按顺序搜索jar包，最后找默认的中央仓库。若将id=central的仓库放在最前就直接去中央仓库搜索 -->
+            <!-- maven把id=central的仓库做为中央仓库 -->
+            <repository>
+                <id>central</id>
+                <name>Central Repository</name>
+                <url>https://repo.maven.apache.org/maven2/</url>
+                <layout>default</layout>
+                <releases>
+                    <enabled>true</enabled>
+                </releases>
+                <snapshots>
+                    <enabled>false</enabled>
+                </snapshots>
+            </repository>
+
+            <repository>
+                <id>aliyun</id> <!-- 仓库声明的唯一id，中央仓库占用id:central。配置仓库镜像时用到。 -->
+                <name>aliyun Repository</name> <!-- 仓库的名称，为了方便人阅读，无其他作用 -->
+                <url>https://maven.aliyun.com/repository/public</url> <!-- 仓库的地址 -->
+                <layout>default</layout> <!-- 仓库的布局是Maven2及Maven3的默认布局 -->
+                <releases> <!-- 控制Maven对于发布版构件的下载 -->
+                    <enabled>true</enabled> <!-- 开启nexus-releases仓库的发布版本下载支持 -->
+                    <updatePolicy>daily</updatePolicy> <!-- 检查更新的频率，默认值是daily，表示Maven每天检查一次 -->
+                    <checksumPolicy>warn</checksumPolicy> <!-- 配置Maven检查校验和文件的策略 -->
+                </releases>
+                <snapshots> <!-- 控制Maven对于快照版构件的下载 -->
+                    <enabled>false</enabled> <!-- 关闭nexus-releases仓库的快照版本下载支持 -->
+                    <updatePolicy>daily</updatePolicy>
+                    <checksumPolicy>warn</checksumPolicy>
+                </snapshots>
+            </repository>
+        </repositories>
+        <pluginRepositories>
+            <pluginRepository>
+                <id>central</id>
+                <name>Central Plugin</name>
+                <url>https://repo.maven.apache.org/maven2/</url>
+                <layout>default</layout>
+                <releases>
+                    <enabled>true</enabled>
+                </releases>
+                <snapshots>
+                    <enabled>false</enabled>
+                </snapshots>
+            </pluginRepository>
+
+            <pluginRepository>
+                <id>aliyun</id>
+                <name>aliyun Plugin</name>
+                <url>https://maven.aliyun.com/repository/public</url>
+                <layout>default</layout>
+                <releases>
+                    <enabled>true</enabled>
+                </releases>
+                <snapshots>
+                    <enabled>false</enabled>
+                </snapshots>
+            </pluginRepository>
+        </pluginRepositories>
+    </profile>
+
   </profiles>
 
   <!-- activeProfiles
@@ -297,4 +377,8 @@ under the License.
     <activeProfile>anotherAlwaysActiveProfile</activeProfile>
   </activeProfiles>
   -->
+    <activeProfiles>
+        <activeProfile>repo1</activeProfile>
+        <activeProfile>JDK1.8</activeProfile>
+    </activeProfiles>
 </settings>

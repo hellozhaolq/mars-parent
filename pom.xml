@@ -123,6 +123,8 @@
     </properties>
 
     <dependencies>
+        <!-- Apache Commons是对JDK的扩展，包含了很多开源的工具，可以减少重复劳动。 https://mvnrepository.com/artifact/org.apache.commons -->
+             
         <!-- 为了避免循环依赖，请不要依赖子模块 -->
         <dependency>
             <groupId>org.projectlombok</groupId>

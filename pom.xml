@@ -66,6 +66,7 @@
 
         <!-- 优先级低于maven-compiler-plugin插件中的配置 -->
         <!-- 新的release选项需要JDK版本支持(详见源码since标签) -->
+        <!-- 这里的配置不知道什么时候有效，建议在plugin中配置，后期需要将这里的配置删除，提取全局java版本和编码变量 -->
         <maven.compiler.release>${java.version}</maven.compiler.release>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>

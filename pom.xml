@@ -353,7 +353,7 @@
                 <version>${maven-source-plugin.version}</version>
                 <configuration>
                     <outputDirectory>${project.build.directory}</outputDirectory>
-                    <finalName>${project.name}-${project.version}</finalName>
+                    <finalName>${project.artifactId}-${project.version}</finalName>
                     <attach>true</attach>
                 </configuration>
                 <executions>
@@ -471,8 +471,8 @@
                         </descriptors>
                         <!-- 归档zip -->
 
-                        <!--<finalName>${project.name}-${project.version}_${maven.build.timestamp}</finalName>-->
-                        <finalName>${project.name}-${project.version}_${build.time}</finalName>
+                        <!--<finalName>${project.artifactId}-${project.version}_${maven.build.timestamp}</finalName>-->
+                        <finalName>${project.artifactId}-${project.version}_${build.time}</finalName>
                     </configuration>
                     <executions>
                         <execution>

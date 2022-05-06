@@ -446,6 +446,7 @@
                     <artifactId>maven-assembly-plugin</artifactId>
                     <version>${maven-assembly-plugin.version}</version>
                     <configuration>
+                        <!-- 生成可执行jar包 -->
                         <descriptorRefs>
                             <descriptorRef>jar-with-dependencies</descriptorRef>
                         </descriptorRefs>
@@ -454,11 +455,18 @@
                                 <mainClass>${app.main.class}</mainClass>
                             </manifest>
                         </archive>
-                        <appendAssemblyId>false</appendAssemblyId>
+                        <appendAssemblyId>false</appendAssemblyId> <!-- false，否则 -jar-with-dependencies 将附加到finalName -->
+                        <!-- 生成可执行jar包 -->
+                        
+                        <!-- 归档zip -->
                         <descriptors>
                             <descriptor>E:\workspaces\idea\mars-parent/assembly.xml</descriptor>
                             <!-- <descriptor>${project.basedir}/src/main/resources/config/assembly.xml</descriptor> -->
                         </descriptors>
+                        <!-- 归档zip -->
+
+                        <!--<finalName>${project.name}-${project.version}_${maven.build.timestamp}</finalName>-->
+                        <finalName>${project.name}-${project.version}_${build.time}</finalName>
                     </configuration>
                     <executions>
                         <execution>
@@ -467,10 +475,6 @@
                             <goals>
                                 <goal>single</goal>
                             </goals>
-                            <configuration>
-                                <!--<finalName>${project.name}-${project.version}_${maven.build.timestamp}</finalName>-->
-                                <finalName>${project.name}-${project.version}_${build.time}</finalName>
-                            </configuration>
                         </execution>
                     </executions>
                 </plugin>

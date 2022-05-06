@@ -63,6 +63,8 @@
     <properties>
         <!-- 升级JDK11需要合适的Maven版本用于构建 -->
         <java.version>11</java.version>
+        <!-- ${maven.build.timestamp}获取时间 -->
+        <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
 
         <!-- 优先级低于maven-compiler-plugin插件中的配置 -->
         <!-- 新的release选项需要JDK版本支持(详见源码since标签) -->
@@ -406,6 +408,27 @@
                     </executions>
                 </plugin>
 
+                <!-- build-helper-maven-plugin 是Maven 开源插件生态圈中org.codehaus.mojo 这个分组中的，这个分组是次要分组（二级分组）；一级分组是org.apache.maven.plugins这一组。 -->
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <version>3.3.0</version>
+                    <executions>
+                        <execution>
+                            <id>timestamp-property</id>
+                            <goals>
+                                <goal>timestamp-property</goal>
+                            </goals>
+                            <configuration>
+                                <name>build.time</name>
+                                <pattern>yyyyMMddHHmmss</pattern>
+                                <locale>zh_CN</locale>
+                                <timeZone>Asia/Shanghai</timeZone>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                
                 <!-- 自定义打zip包 -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -426,7 +449,8 @@
                                 <goal>single</goal>
                             </goals>
                             <configuration>
-                                <finalName>${project.name}</finalName>
+                                <!--<finalName>${project.name}-${project.version}_${maven.build.timestamp}</finalName>-->
+                                <finalName>${project.name}-${project.version}_${build.time}</finalName>
                             </configuration>
                         </execution>
                     </executions>

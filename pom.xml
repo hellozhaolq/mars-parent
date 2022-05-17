@@ -302,7 +302,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler-plugin.version}</version>
                 <configuration>
-                    <!-- 新的release选项需要JDK版本支持(详见源码since标签)，该选项替换了三个标志：-source，-target和-bootclasspath -->
+                    <!-- release选项从JDK9开始支持(详见源码since标签)，该选项替换了三个标志：-source，-target和-bootclasspath -->
                     <release>${maven.compiler.release}</release>
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>

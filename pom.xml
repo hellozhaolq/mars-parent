@@ -425,34 +425,6 @@
                     </executions>
                 </plugin>
 
-                <!-- 重命名文件输出到指定目录 -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-dependency-plugin</artifactId>
-                    <version>3.3.0</version>
-                    <executions>
-                        <execution>
-                            <id>copy</id>
-                            <phase>package</phase>
-                            <goals>
-                                <goal>copy</goal>
-                            </goals>
-                            <configuration>
-                                <artifactItems>
-                                    <artifactItem>
-                                        <groupId>${project.groupId}</groupId>
-                                        <artifactId>${project.artifactId}</artifactId>
-                                        <version>${project.version}</version>
-                                        <type>jar</type>
-                                        <outputDirectory>${project.build.directory}</outputDirectory>
-                                        <destFileName>${project.build.finalName}.jar.origin</destFileName>
-                                    </artifactItem>
-                                </artifactItems>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-
                 <!-- build-helper-maven-plugin 是Maven 开源插件生态圈中org.codehaus.mojo 这个分组中的，这个分组是次要分组（二级分组）；一级分组是org.apache.maven.plugins这一组。 -->
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
@@ -488,7 +460,7 @@
                                 <mainClass>${app.main.class}</mainClass>
                             </manifest>
                         </archive>
-                        <appendAssemblyId>false</appendAssemblyId> <!-- false，否则 -jar-with-dependencies 将附加到finalName -->
+                        <appendAssemblyId>true</appendAssemblyId> <!-- false，否则 -jar-with-dependencies 将附加到finalName -->
                         <!-- 生成可执行jar包 -->
                         
                         <!-- 归档zip -->

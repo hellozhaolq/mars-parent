@@ -97,7 +97,11 @@
         <maven-shade-plugin.version>3.2.4</maven-shade-plugin.version>
         <maven-assembly-plugin.version>3.2.0</maven-assembly-plugin.version>
 
+        <build-helper-maven-plugin.version>3.3.0</build-helper-maven-plugin.version>
+
         <!--<suiteXmlFile>testing.xml</suiteXmlFile>-->
+
+        <lombok.version>1.18.22</lombok.version>
 
         <ojdbc8.version>21.5.0.0</ojdbc8.version>
         <postgresql.version>42.3.3</postgresql.version>
@@ -105,6 +109,7 @@
 
         <hutool-all.version>5.6.5</hutool-all.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
+        <fastjson.version>2.0.2</fastjson.version>
         <springfox-boot-starter.version>3.0.0</springfox-boot-starter.version>
 
         <!-- MyBatis-Plus和boot-starter版本号对应 -->
@@ -120,22 +125,18 @@
         <disruptor.version>3.4.2</disruptor.version>
         <poi.version>4.1.2</poi.version>
 
+        <selenium-java.version>4.1.4</selenium-java.version>
+        <jsoup.version>1.15.1</jsoup.version>
+        <webdrivermanager.version>5.1.1</webdrivermanager.version>
+
     </properties>
 
     <dependencies>
-        <!-- Apache Commons是对JDK的扩展，包含了很多开源的工具，可以减少重复劳动。 https://mvnrepository.com/artifact/org.apache.commons -->
-
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>2.0.2</version>
-        </dependency>
-
         <!-- 为了避免循环依赖，请不要依赖子模块 -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.22</version>
+            <version>${lombok.version}</version>
             <!-- 提供的，可以理解为此包不由我直接提供，需要调用者/容器提供。 -->
             <scope>provided</scope>
             <!-- 可选的，可以理解为此功能/此依赖可选，如果不需要某项功能，可以不引用这个包 -->
@@ -391,6 +392,27 @@
                     </excludes>
                 </configuration>
             </plugin>
+
+            <!-- build-helper-maven-plugin 是Maven 开源插件生态圈中org.codehaus.mojo 这个分组中的，这个分组是次要分组（二级分组）；一级分组是org.apache.maven.plugins这一组。 -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>${build-helper-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>timestamp-property</id>
+                        <goals>
+                            <goal>timestamp-property</goal>
+                        </goals>
+                        <configuration>
+                            <name>build.time</name>
+                            <pattern>yyyyMMddHHmmss</pattern>
+                            <locale>zh_CN</locale>
+                            <timeZone>Asia/Shanghai</timeZone>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
         <pluginManagement>
             <plugins>
@@ -420,65 +442,6 @@
                                     是很重要的（以便它在repackage目标之前运行）。repackage目标会在maven-jar-plugin打包后再次打成可执行的
                                     jar或war包。
                                 -->
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-
-                <!-- build-helper-maven-plugin 是Maven 开源插件生态圈中org.codehaus.mojo 这个分组中的，这个分组是次要分组（二级分组）；一级分组是org.apache.maven.plugins这一组。 -->
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>build-helper-maven-plugin</artifactId>
-                    <version>3.3.0</version>
-                    <executions>
-                        <execution>
-                            <id>timestamp-property</id>
-                            <goals>
-                                <goal>timestamp-property</goal>
-                            </goals>
-                            <configuration>
-                                <name>build.time</name>
-                                <pattern>yyyyMMddHHmmss</pattern>
-                                <locale>zh_CN</locale>
-                                <timeZone>Asia/Shanghai</timeZone>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-                <!-- 自定义打zip包 -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-assembly-plugin</artifactId>
-                    <version>${maven-assembly-plugin.version}</version>
-                    <configuration>
-                        <!-- 生成可执行jar包 -->
-                        <descriptorRefs>
-                            <descriptorRef>jar-with-dependencies</descriptorRef>
-                        </descriptorRefs>
-                        <archive>
-                            <manifest>
-                                <mainClass>${app.main.class}</mainClass>
-                            </manifest>
-                        </archive>
-                        <appendAssemblyId>true</appendAssemblyId> <!-- false，否则 -jar-with-dependencies 将附加到finalName -->
-                        <!-- 生成可执行jar包 -->
-                        
-                        <!-- 归档zip -->
-                        <descriptors>
-                            <descriptor>E:\workspaces\idea\mars-parent/assembly.xml</descriptor>
-                            <!-- <descriptor>${project.basedir}/src/main/resources/config/assembly.xml</descriptor> -->
-                        </descriptors>
-                        <!-- 归档zip -->
-
-                        <!--<finalName>${project.build.finalName}_${maven.build.timestamp}</finalName>-->
-                        <finalName>${project.build.finalName}_${build.time}</finalName>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <id>make-assembly</id>
-                            <phase>package</phase>
-                            <goals>
-                                <goal>single</goal>
                             </goals>
                         </execution>
                     </executions>

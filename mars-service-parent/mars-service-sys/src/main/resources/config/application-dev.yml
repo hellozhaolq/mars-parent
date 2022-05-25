@@ -6,3 +6,8 @@ spring:
     url: jdbc:oracle:thin:@192.168.0.3:1521:orcl
     username: mars
     password: 123456
+
+logging:
+  level:
+    root: debug
+    com.zhaolq.*: debug

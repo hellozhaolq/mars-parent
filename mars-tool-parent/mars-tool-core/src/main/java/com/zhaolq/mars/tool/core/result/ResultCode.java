@@ -13,7 +13,7 @@ public enum ResultCode implements IResultCode {
     /* 失败 */
     FAILURE(2, "failure", "操作失败"),
     /* 未知错误 */
-    UNKNOWN_ERROR(9999999, "unknown error", "未知错误"),
+    UNKNOWN_ERROR(999999999, "unknown error", "未知错误"),
 
 
     /* 参数错误：10000-19999 */

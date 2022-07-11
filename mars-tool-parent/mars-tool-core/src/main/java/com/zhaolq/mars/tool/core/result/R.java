@@ -32,6 +32,8 @@ public final class R<T> implements Serializable {
     private String msgCh;
     @ApiModelProperty(value = "是否成功", required = true)
     private Boolean success;
+    @ApiModelProperty(value = "响应时间", required = true)
+    private String respTime = DateUtil.now();
 
     protected R(IResultCode resultCode) {
         this(resultCode.getCode(), null, resultCode.getDescEn(), resultCode.getDescCh(), resultCode.isSuccess());

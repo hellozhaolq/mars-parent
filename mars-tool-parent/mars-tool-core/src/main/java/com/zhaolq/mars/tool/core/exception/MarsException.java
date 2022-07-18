@@ -6,7 +6,7 @@ package com.zhaolq.mars.tool.core.exception;
  * @author zhaolq
  * @date 2020/11/12 11:08
  */
-public final class MarsException extends RuntimeException {
+public final class MarsException extends RuntimeException { // 应该继承 BaseException 类，待修改
 
     private String msg;
     private int code = 500;

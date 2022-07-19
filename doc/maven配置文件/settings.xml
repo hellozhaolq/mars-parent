@@ -187,7 +187,7 @@ under the License.
  -->
 
     <mirror>
-        <id>central</id> <!-- 仓库的唯一标识符，无其他作用 -->
+        <id>central</id> <!-- 镜像的唯一标识符，无其他作用 -->
         <name>Central Repository</name>
         <url>https://repo.maven.apache.org/maven2/</url>
         <mirrorOf>central</mirrorOf> <!-- 配置为 repositoryId=central 的仓库镜像，任何对id为central的仓库请求都会转至该镜像 -->

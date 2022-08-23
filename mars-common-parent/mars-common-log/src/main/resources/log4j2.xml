@@ -22,7 +22,7 @@
 <Configuration status="info" monitorInterval="60">
     <Properties>
         <Property name="SCHEMA" value="${project.groupId}"/>
-        <property name="LOG_PATH" value="${project.artifactId}-logs/"/>
+        <property name="LOG_PATH" value="/${project.artifactId}-logs/"/>
         <property name="ROLLING_STRATEGY_MAX_FILE_SIZE" value="100MB"/>
 
         <Property name="ROLLOVER_STRATEGY_MAX_SERIAL_NUMBER" value="100"/>

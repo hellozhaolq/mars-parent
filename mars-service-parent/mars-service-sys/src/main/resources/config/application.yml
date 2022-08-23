@@ -38,3 +38,4 @@ swagger:
   application-version: @project.version@
   application-description: @project.description@
   try-host: http://localhost:${server.port}
+

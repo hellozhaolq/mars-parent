@@ -21,7 +21,6 @@
     <modules>
         <module>mars-demo-a</module>
         <module>mars-demo-annotation</module>
-        <module>mars-demo-reptile</module>
     </modules>
 
     <dependencies>

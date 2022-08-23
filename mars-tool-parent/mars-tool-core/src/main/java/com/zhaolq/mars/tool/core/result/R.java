@@ -1,14 +1,17 @@
 package com.zhaolq.mars.tool.core.result;
 
+import java.io.Serializable;
+import java.util.Optional;
+
+import org.springframework.lang.Nullable;
+
+import com.zhaolq.mars.tool.core.date.DateUtils;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.lang.Nullable;
-
-import java.io.Serializable;
-import java.util.Optional;
 
 /**
  * ApiResult
@@ -33,18 +36,18 @@ public final class R<T> implements Serializable {
     @ApiModelProperty(value = "是否成功", required = true)
     private Boolean success;
     @ApiModelProperty(value = "返回时间", required = true)
-    private String datetime = DateUtil.now();
+    private String datetime = DateUtils.now();
 
     protected R(IResultCode resultCode) {
-        this(resultCode.getCode(), null, resultCode.getDescEn(), resultCode.getDescCh(), resultCode.isSuccess());
+        this(resultCode.getCode(), null, resultCode.getDescEn(), resultCode.getDescCh(), resultCode.isSuccess(), null);
     }
 
     protected R(IResultCode resultCode, T data) {
-        this(resultCode.getCode(), data, resultCode.getDescEn(), resultCode.getDescCh(), resultCode.isSuccess());
+        this(resultCode.getCode(), data, resultCode.getDescEn(), resultCode.getDescCh(), resultCode.isSuccess(), null);
     }
 
     protected R(IResultCode resultCode, String msgEn, String msgCh) {
-        this(resultCode.getCode(), null, msgEn, msgCh, resultCode.isSuccess());
+        this(resultCode.getCode(), null, msgEn, msgCh, resultCode.isSuccess(), null);
     }
 
     /** success */

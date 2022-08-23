@@ -49,11 +49,19 @@ public class MyApplication {
         log.info(">>>>>>> 系统启动中... <<<<<<<");
         log.info("用户当前工作路径: " + System.getProperty("user.dir"));
         log.info("classpath路径: " + primarySource.getClassLoader().getResource("").getPath());
-        SpringApplicationBuilder builder = createSpringApplicationBuilder(serviceName, primarySource, args);
+        SpringApplicationBuilder builder = new SpringApplicationBuilder(new Class<?>[]{primarySource});
         ConfigurableApplicationContext context = builder.headless(false).run(args);
         log.info(">>>>>>> 系统启动成功 <<<<<<<");
     }
 
+    /**
+     * 此方法不推荐使用，系统初始化工作尽量放到bean加载完成后执行。
+     *
+     * @param serviceName serviceName
+     * @param primarySource primarySource
+     * @param args args
+     * @return org.springframework.boot.builder.SpringApplicationBuilder
+     */
     public static SpringApplicationBuilder createSpringApplicationBuilder(
             String serviceName, Class primarySource, String... args) {
         Assert.hasText(serviceName, "服务名不能为空");

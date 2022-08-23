@@ -39,3 +39,8 @@ swagger:
   application-description: @project.description@
   try-host: http://localhost:${server.port}
 
+logging:
+  config: classpath:log4j2.xml
+  level:
+    root: info
+    com.zhaolq.*: info

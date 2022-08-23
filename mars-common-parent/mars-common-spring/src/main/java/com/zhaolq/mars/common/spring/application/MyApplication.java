@@ -48,7 +48,7 @@ public class MyApplication {
     public static void run(String serviceName, Class<?> primarySource, String... args) {
         log.info(">>>>>>> 系统启动中... <<<<<<<");
         log.info("用户当前工作路径: " + System.getProperty("user.dir"));
-        log.info("classpath路径: " + ClassLoader.getSystemResource("").getPath());
+        log.info("classpath路径: " + primarySource.getClassLoader().getResource("").getPath());
         SpringApplicationBuilder builder = createSpringApplicationBuilder(serviceName, primarySource, args);
         ConfigurableApplicationContext context = builder.headless(false).run(args);
         log.info(">>>>>>> 系统启动成功 <<<<<<<");
@@ -60,8 +60,7 @@ public class MyApplication {
 
         try {
             // 加载配置文件，设置或更新键值，用做系统属性
-            System.getProperties().load(ClassLoader.getSystemClassLoader().getResourceAsStream("application" +
-                    ".properties"));
+            System.getProperties().load(primarySource.getClassLoader().getResourceAsStream("application.properties"));
         } catch (IOException e) {
             log.error(e.getMessage());
         }
@@ -97,10 +96,10 @@ public class MyApplication {
 
         PropertySource<?> customizeProperties = new PropertiesPropertySource(CUSTOMIZE_PROPERTIES, properties);
         // MapPropertySource子类比较少，可以从名称上区分其功能
-        PropertySource<?> systemProperties = new MapPropertySource(
-                SYSTEM_PROPERTIES, environment.getSystemProperties());
-        PropertySource<?> systemEnvironment = new SystemEnvironmentPropertySource(
-                SYSTEM_ENVIRONMENT, environment.getSystemEnvironment());
+        PropertySource<?> systemProperties = new MapPropertySource(SYSTEM_PROPERTIES,
+                environment.getSystemProperties());
+        PropertySource<?> systemEnvironment = new SystemEnvironmentPropertySource(SYSTEM_ENVIRONMENT,
+                environment.getSystemEnvironment());
 
         MutablePropertySources propertySources = environment.getPropertySources();
         // 将命令行参数添加到属性

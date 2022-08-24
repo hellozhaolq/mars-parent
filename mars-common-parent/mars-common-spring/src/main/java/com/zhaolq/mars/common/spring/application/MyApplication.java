@@ -104,10 +104,8 @@ public class MyApplication {
 
         PropertySource<?> customizeProperties = new PropertiesPropertySource(CUSTOMIZE_PROPERTIES, properties);
         // MapPropertySource子类比较少，可以从名称上区分其功能
-        PropertySource<?> systemProperties = new MapPropertySource(SYSTEM_PROPERTIES,
-                environment.getSystemProperties());
-        PropertySource<?> systemEnvironment = new SystemEnvironmentPropertySource(SYSTEM_ENVIRONMENT,
-                environment.getSystemEnvironment());
+        PropertySource<?> systemProperties = new MapPropertySource(SYSTEM_PROPERTIES, environment.getSystemProperties());
+        PropertySource<?> systemEnvironment = new SystemEnvironmentPropertySource(SYSTEM_ENVIRONMENT, environment.getSystemEnvironment());
 
         MutablePropertySources propertySources = environment.getPropertySources();
         // 将命令行参数添加到属性

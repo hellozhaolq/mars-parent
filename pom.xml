@@ -102,14 +102,20 @@
         <!--<suiteXmlFile>testing.xml</suiteXmlFile>-->
 
         <lombok.version>1.18.22</lombok.version>
+        <fastjson.version>2.0.2</fastjson.version>
+        <commons-lang3.version>3.12.0</commons-lang3.version>
+        <commons-math3.version>3.6.1</commons-math3.version>
+        <commons-collections4.version>4.4</commons-collections4.version>
+        <commons-io.version>2.11.0</commons-io.version>
+        <commons-configuration2.version>2.8.0</commons-configuration2.version>
+        <commons-dbutils.version>1.7</commons-dbutils.version>
+        <commons-beanutils.version>1.9.4</commons-beanutils.version>
+        <hutool-all.version>5.8.0</hutool-all.version>
 
         <ojdbc8.version>21.5.0.0</ojdbc8.version>
         <postgresql.version>42.3.3</postgresql.version>
         <mysql-connector-java.version>8.0.28</mysql-connector-java.version>
 
-        <hutool-all.version>5.6.5</hutool-all.version>
-        <commons-lang3.version>3.12.0</commons-lang3.version>
-        <fastjson.version>2.0.2</fastjson.version>
         <springfox-boot-starter.version>3.0.0</springfox-boot-starter.version>
 
         <!-- MyBatis-Plus和boot-starter版本号对应 -->

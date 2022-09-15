@@ -127,7 +127,7 @@
         <auto-service.version>1.0.1</auto-service.version>
         <javapoet.version>1.13.0</javapoet.version>
 
-        <log4j-web.version>2.12.1</log4j-web.version>
+        <log4j2.version>2.18.0</log4j2.version>
         <disruptor.version>3.4.2</disruptor.version>
         <poi.version>4.1.2</poi.version>
 

@@ -25,21 +25,21 @@
              log4j2 两个核心jar包 log4j-core、log4j-api，各实现已有依赖，故无需重复引入。普通项目只需要引入单个实现包log4j-slf4j-impl即可。
              log4j2 包路径: org.apache.logging.log4j.log4j-core。
         -->
-        <dependency>
+        <!-- <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j-impl</artifactId>
-        </dependency>
+        </dependency> -->
+        <!-- 使用log4j2时，web项目需要log4j-web模块，版本与log4j-core保持一致，删掉是否可以有待测试 -->
+        <!-- <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-web</artifactId>
+            <version>${log4j2.version}</version>
+        </dependency> -->
 
         
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-log4j2</artifactId>
-        </dependency>
-        <!-- 使用log4j2时，web项目需要log4j-web模块，版本与log4j-core保持一致，删掉是否可以有待测试 -->
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-web</artifactId>
-            <version>${log4j2.version}</version>
         </dependency>
         <dependency>
             <groupId>com.lmax</groupId>

@@ -14,7 +14,7 @@ server:
 
 spring:
   application:
-    name: @project.name@
+    name: @project.name@ # 需要项目打包以后才能运行
   profiles:
     active: dev
   mustache:

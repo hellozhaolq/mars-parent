@@ -14,7 +14,7 @@ server:
 
 spring:
   application:
-    name: @project.name@
+    name: "@project.name@"
   profiles:
     active: dev
   mustache:

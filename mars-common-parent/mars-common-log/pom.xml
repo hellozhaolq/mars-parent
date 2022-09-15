@@ -22,24 +22,24 @@
              使用 Log4j2 作为 SLF4J 实现 https://logging.apache.org/log4j/2.x/manual/api-separation.html
 
              org.slf4j.slf4j-api是slf4j核心包，提供日志相关接口。
-             log4j2 两个核心jar包 log4j-core、log4j-api，包路径:org.apache.logging.log4j.log4j-core。
-             各实现已有依赖，故无需重复引入。
+             log4j2 两个核心jar包 log4j-core、log4j-api，各实现已有依赖，故无需重复引入。普通项目只需要引入单个实现包log4j-slf4j-impl即可。
+             log4j2 包路径: org.apache.logging.log4j.log4j-core。
         -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j-impl</artifactId>
         </dependency>
 
-        <!-- log4j2实现slf4j -->
+        
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-log4j2</artifactId>
         </dependency>
-        <!-- 使用log4j2时，web项目需要log4j-web模块，版本与log4j-core保持一致 -->
+        <!-- 使用log4j2时，web项目需要log4j-web模块，版本与log4j-core保持一致，删掉是否可以有待测试 -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-web</artifactId>
-            <version>${log4j-web.version}</version>
+            <version>${log4j2.version}</version>
         </dependency>
         <dependency>
             <groupId>com.lmax</groupId>

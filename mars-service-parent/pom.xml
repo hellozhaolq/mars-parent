@@ -75,7 +75,7 @@
                         <appendAssemblyId>false</appendAssemblyId>
                         <!-- 归档zip -->
                         <descriptors>
-                            <descriptor>E:\workspaces\idea\mars-parent/assembly.xml</descriptor>
+                            <descriptor>D:\workspaces\mars-parent\assembly.xml</descriptor>
                             <!-- <descriptor>${project.basedir}/src/main/resources/config/assembly.xml</descriptor> -->
                         </descriptors>
                         <!-- 归档zip -->

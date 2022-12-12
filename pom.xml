@@ -490,20 +490,19 @@
                     <configuration>
                         <finalName>${project.build.finalName}_${maven.build.timestamp}</finalName>
                         <!-- <finalName>${project.build.finalName}_${build.time}</finalName> -->
-                        
-                        <appendAssemblyId>false</appendAssemblyId>
 
-                        <!-- 
+                        <!-- 打包为可执行jar的配置---开始 -->
                         <!-- 能够将依赖一起打包为可执行jar，命令：mvn assembly:assembly。而maven-jar-plugin不会将依赖一起打包 -->
                         <archive>
                             <manifest>
                                 <mainClass>${app.main.class}</mainClass>
                             </manifest>
                         </archive>
+                        <appendAssemblyId>false</appendAssemblyId>
                         <descriptorRefs>
                             <descriptorRef>jar-with-dependencies</descriptorRef>
                         </descriptorRefs>
-                         -->
+                        <!-- 打包为可执行jar的配置---结束 -->
 
                         <!-- 归档为zip的配置---开始 -->
                         <descriptors>

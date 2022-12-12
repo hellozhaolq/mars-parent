@@ -355,7 +355,7 @@
                     <execution>
                         <id>attach-javadocs</id> <!-- 唯一标识，运行maven时会在控制台输出 -->
                         <!-- 绑定到声明周期阶段deploy，默认是package。避免在package时执行此插件目标 -->
-                        <phase>deploy</phase>
+                        <phase>package</phase>
                         <goals>
                             <!-- 绑定到此插件的jar目标。jar和javadoc-no-fork区别：
                                     jar目标默认绑定到生命周期阶段package，会生成JavaDoc文档并捆绑到jar文件中。
@@ -379,7 +379,7 @@
                     <execution>
                         <id>attach-sources</id>
                         <!-- 绑定到声明周期阶段deploy，默认是package。避免在package时执行此插件目标 -->
-                        <phase>deploy</phase>
+                        <phase>package</phase>
                         <goals>
                             <goal>jar-no-fork</goal>
                         </goals>

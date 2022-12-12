@@ -464,6 +464,33 @@
                         </execution>
                     </executions>
                 </plugin>
+                <!-- 自定义打zip包 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>${maven-assembly-plugin.version}</version>
+                    <configuration>
+                        <appendAssemblyId>false</appendAssemblyId>
+                        <!-- 归档zip -->
+                        <descriptors>
+                            <descriptor>${project.basedir}/assembly.xml</descriptor>
+                            <!-- <descriptor>${project.basedir}/src/main/resources/config/assembly.xml</descriptor> -->
+                        </descriptors>
+                        <!-- 归档zip -->
+
+                        <!--<finalName>${project.build.finalName}_${maven.build.timestamp}</finalName>-->
+                        <finalName>${project.build.finalName}_${build.time}</finalName>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>make-assembly</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>single</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>

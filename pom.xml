@@ -446,7 +446,7 @@
                         <fork>true</fork>
                         <!-- repackage的包名 = finalName-classifier -->
                         <finalName>${project.build.finalName}</finalName>
-                        <classifier>startup</classifier>
+                        <classifier>spring-boot</classifier> <!-- 分类器 -->
                     </configuration>
                     <executions>
                         <execution>

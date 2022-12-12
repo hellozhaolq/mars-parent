@@ -488,16 +488,10 @@
                     <artifactId>maven-assembly-plugin</artifactId>
                     <version>${maven-assembly-plugin.version}</version>
                     <configuration>
-                        <appendAssemblyId>false</appendAssemblyId>
-                        <!-- 归档zip -->
-                        <descriptors>
-                            <descriptor>${project.basedir}/assembly.xml</descriptor>
-                            <!-- <descriptor>${project.basedir}/src/main/resources/config/assembly.xml</descriptor> -->
-                        </descriptors>
-                        <!-- 归档zip -->
-
                         <finalName>${project.build.finalName}_${maven.build.timestamp}</finalName>
                         <!-- <finalName>${project.build.finalName}_${build.time}</finalName> -->
+                        
+                        <appendAssemblyId>false</appendAssemblyId>
 
                         <!-- 
                         <!-- 能够将依赖一起打包为可执行jar，命令：mvn assembly:assembly。而maven-jar-plugin不会将依赖一起打包 -->
@@ -510,6 +504,13 @@
                             <descriptorRef>jar-with-dependencies</descriptorRef>
                         </descriptorRefs>
                          -->
+
+                        <!-- 归档为zip的配置---开始 -->
+                        <descriptors>
+                            <descriptor>${project.basedir}/assembly.xml</descriptor>
+                            <!-- <descriptor>${project.basedir}/src/main/resources/config/assembly.xml</descriptor> -->
+                        </descriptors>
+                        <!-- 归档为zip的配置---结束 -->
                     </configuration>
                     <executions>
                         <execution>

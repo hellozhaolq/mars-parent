@@ -64,7 +64,7 @@
         <!-- 升级JDK11需要合适的Maven版本用于构建 -->
         <java.version>11</java.version>
 
-        <!-- 覆盖 ${maven.build.timestamp} 的默认格式 yyyy-MM-dd'T'HH:mm:ss'Z' -->
+        <!-- UTC时间！覆盖 ${maven.build.timestamp} 的默认格式 yyyy-MM-dd'T'HH:mm:ss'Z' -->
         <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
 
         <!-- 优先级低于maven-compiler-plugin插件中的配置 -->

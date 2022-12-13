@@ -65,7 +65,9 @@
         <java.version>11</java.version>
 
         <!-- UTC时间！覆盖 ${maven.build.timestamp} 的默认格式 yyyy-MM-dd'T'HH:mm:ss'Z' -->
-        <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
+        <maven.build.timestamp.format>yyMMdd</maven.build.timestamp.format>
+
+        <app.main.class>com.zhaolq.mars.MainClass</app.main.class>
 
         <!-- 优先级低于maven-compiler-plugin插件中的配置 -->
         <!-- 新的release选项需要JDK版本支持(详见源码since标签) -->
@@ -251,7 +253,7 @@
         <!-- 构建生成的所有文件都放置在这个目录。 -->
         <!--<directory>${project.basedir}/target/${project.version}</directory>-->
         <!-- 打包的文件名（不包括扩展名，并且没有路径信息），这里配置成与项目名称相同。默认值是 ${artifactId}-${version} -->
-        <finalName>${project.artifactId}-${project.version}</finalName>
+        <finalName>${project.artifactId}-${project.version}_${maven.build.timestamp}</finalName>
         <!-- 此元素描述了所有 classpath 路径下资源，例如：.java文件、与项目关联的属性文件等。这些资源通常包含在最终软件包中。
         用以规定哪些文件可以编译到target/classes。打包插件默认把target/classes目录下的所有内容打进jar包或者war包。修改配置后请确认target/classes目录内容。 -->
         <resources>
@@ -319,7 +321,7 @@
                         <manifest>
                             <!-- <mainClass>${app.main.class}</mainClass> -->
                             <addClasspath>true</addClasspath>
-                            <classpathPrefix>D:/maven/repository</classpathPrefix>
+                            <classpathPrefix>D:/apache-maven-repository</classpathPrefix>
                             <classpathLayoutType>repository</classpathLayoutType>
                             <useUniqueVersions>false</useUniqueVersions>
                         </manifest>
@@ -366,7 +368,9 @@
                 <version>${maven-javadoc-plugin.version}</version>
                 <configuration>
                     <release>${java.version}</release>
+                    <charset>UTF-8</charset>
                     <encoding>UTF-8</encoding>
+                    <docencoding>UTF-8</docencoding>
                     <doclint>none</doclint>
                 </configuration>
                 <executions>
@@ -488,10 +492,10 @@
                     <artifactId>maven-assembly-plugin</artifactId>
                     <version>${maven-assembly-plugin.version}</version>
                     <configuration>
-                        <finalName>${project.build.finalName}_${maven.build.timestamp}</finalName>
+                        <finalName>${project.build.finalName}</finalName>
                         <!-- <finalName>${project.build.finalName}_${build.time}</finalName> -->
 
-                        <!-- 打包为可执行jar的配置---开始 -->
+                        <!-- 打包为可执行jar的配置***开始 -->
                         <!-- 能够将依赖一起打包为可执行jar，命令：mvn assembly:assembly。而maven-jar-plugin不会将依赖一起打包 -->
                         <archive>
                             <manifest>
@@ -502,14 +506,13 @@
                         <descriptorRefs>
                             <descriptorRef>jar-with-dependencies</descriptorRef>
                         </descriptorRefs>
-                        <!-- 打包为可执行jar的配置---结束 -->
+                        <!-- 打包为可执行jar的配置***结束 -->
 
-                        <!-- 归档为zip的配置---开始 -->
+                        <!-- 归档为zip的配置***开始 -->
                         <descriptors>
-                            <descriptor>${project.basedir}/assembly.xml</descriptor>
-                            <!-- <descriptor>${project.basedir}/src/main/resources/config/assembly.xml</descriptor> -->
+                             <descriptor>${project.basedir}/src/main/resources/config/assembly.xml</descriptor>
                         </descriptors>
-                        <!-- 归档为zip的配置---结束 -->
+                        <!-- 归档为zip的配置***结束 -->
                     </configuration>
                     <executions>
                         <execution>

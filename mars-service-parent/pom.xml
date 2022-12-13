@@ -62,4 +62,64 @@
             <optional>true</optional>
         </dependency>-->
     </dependencies>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <!-- 官方配置文档：https://docs.spring.io/spring-boot/docs/current/maven-plugin/reference/html/ -->
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot-maven-plugin.version}</version>
+                    <configuration>
+                        <outputFile>${project.build.outputDirectory}/META-INF/build-info.properties</outputFile>
+                        <!-- 跳过执行：设置true时，打成普通jar包(不可执行)，和使用maven-jar-plugin打的jar包相同。 -->
+                        <skip>false</skip>
+                        <fork>true</fork>
+                        <!-- repackage的包名 = finalName-classifier -->
+                        <finalName>${project.build.finalName}</finalName>
+                        <classifier>spring-boot</classifier> <!-- 分类器 -->
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <phase>package</phase> <!--默认package阶段 -->
+                            <goals>
+                                <!-- 多个执行目标 -->
+                                <goal>build-info</goal>
+                                <goal>repackage</goal>
+                                <!--
+                                    由于maven-jar-plugin和spring-boot-maven-plugin都在package阶段运行，因此首先定义maven-jar-plugin
+                                    是很重要的（以便它在repackage目标之前运行）。repackage目标会在maven-jar-plugin打包后再次打成可执行的
+                                    jar或war包。
+                                -->
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- 自定义打zip包 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>${maven-assembly-plugin.version}</version>
+                    <configuration>
+                        <finalName>${project.build.finalName}</finalName>
+                        <!-- 归档为zip的配置***开始 -->
+                        <descriptors>
+                            <descriptor>${project.basedir}/src/main/resources/config/assembly.xml</descriptor>
+                        </descriptors>
+                        <!-- 归档为zip的配置***结束 -->
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>make-assembly</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>single</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 </project>

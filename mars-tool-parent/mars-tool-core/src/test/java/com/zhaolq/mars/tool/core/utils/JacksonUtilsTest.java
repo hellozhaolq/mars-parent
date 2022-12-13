@@ -25,6 +25,7 @@ import static com.zhaolq.mars.tool.core.utils.JacksonUtils.objectToObject;
  * @author zhaolq
  * @date 2021/4/23 13:36
  */
+@SuppressWarnings("unchecked")
 public class JacksonUtilsTest {
 
     private User user;

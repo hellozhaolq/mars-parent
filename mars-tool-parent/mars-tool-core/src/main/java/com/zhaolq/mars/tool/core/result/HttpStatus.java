@@ -1,6 +1,5 @@
 package com.zhaolq.mars.tool.core.result;
 
-import com.zhaolq.mars.tool.core.result.IResultCode;
 import org.springframework.lang.Nullable;
 
 /**

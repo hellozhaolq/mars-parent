@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.TimeZone;
 
 /**
- * Jackson工具类
+ * Jackson工具类(仅供学习)
  *
  * json     to
  *              object

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.zhaolq.mars.demo</groupId>
+        <artifactId>mars-demo-parent</artifactId>
+        <version>1.0.0-deluxe</version>
+    </parent>
+
+    <artifactId>mars-demo-jar</artifactId>
+    <packaging>jar</packaging>
+
+    <name>${project.artifactId}</name>
+    <url>https://blog.zhaolq.com</url>
+    <description>这是一个可执行的jar包</description>
+
+    <properties>
+        <app.main.class>com.zhaolq.mars.demo.jar.Main</app.main.class>
+    </properties>
+
+    <build>
+        <plugins>
+            <!-- 不会将依赖一起打包 https://maven.apache.org/shared/maven-archiver/examples/classpath.html -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>${maven-jar-plugin.version}</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>${app.main.class}</mainClass>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>D:/apache-maven-repository/repository</classpathPrefix>
+                            <classpathLayoutType>repository</classpathLayoutType>
+                            <useUniqueVersions>false</useUniqueVersions>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            <!-- 将依赖一起打包 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>${maven-assembly-plugin.version}</version>
+                <configuration>
+                    <finalName>${project.build.finalName}</finalName>
+                    <!-- 打包为可执行jar的配置***开始 -->
+                    <!-- 能够将依赖一起打包为可执行jar，命令：mvn assembly:assembly。而maven-jar-plugin不会将依赖一起打包 -->
+                    <archive>
+                        <manifest>
+                            <mainClass>${app.main.class}</mainClass>
+                        </manifest>
+                    </archive>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <!-- 打包为可执行jar的配置***结束 -->
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

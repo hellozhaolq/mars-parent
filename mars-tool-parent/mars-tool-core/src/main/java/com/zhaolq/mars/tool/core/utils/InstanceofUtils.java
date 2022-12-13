@@ -17,24 +17,6 @@ import java.util.Map;
  */
 public class InstanceofUtils {
     /**
-     * List转型判断
-     *
-     * @param val val
-     * @return java.util.List<T1>
-     */
-    public static <T1, T2> List<T1> instanceofList(T2 val) {
-        List<T1> list = null;
-        if (val != null) {
-            if (val instanceof List) {
-                list = (List<T1>) val;
-            } else {
-                list = new ArrayList<>();
-            }
-        }
-        return list;
-    }
-
-    /**
      * 字符串转型判断
      *
      * @param val val
@@ -44,24 +26,6 @@ public class InstanceofUtils {
         String data = null;
         if (val != null) {
             data = String.valueOf(val);
-        }
-        return data;
-    }
-
-    /**
-     * Map转型
-     *
-     * @param val val
-     * @return java.util.Map
-     */
-    public static <T> Map instanceofMap(T val) {
-        Map data = null;
-        if (val != null) {
-            if (val instanceof Map) {
-                data = (Map) val;
-            } else {
-                data = new HashMap();
-            }
         }
         return data;
     }

@@ -69,7 +69,6 @@ public class FactoryProcessor extends AbstractProcessor {
      * 作为参数，该对象提供一些工具类。
      *
      * @param processingEnv 注解处理工具框架提供给处理器的处理环境
-     * @return void
      */
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {

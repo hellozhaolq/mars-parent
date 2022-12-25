@@ -11,10 +11,10 @@ import cn.hutool.core.text.StrPool;
 /**
  * 常用字符串常量定义
  *
- * @see com.baomidou.mybatisplus.core.toolkit.StringPool
- *
  * @author zhaolq
  * @date 2022/3/12 17:25
+ * @see
+ * <a href="https://github.com/baomidou/mybatis-plus/blob/3.0/mybatis-plus-core/src/main/java/com/baomidou/mybatisplus/core/toolkit/StringPool.java">StringPool</a>
  * @since 1.0.0
  */
 public interface StringPool extends StrPool {

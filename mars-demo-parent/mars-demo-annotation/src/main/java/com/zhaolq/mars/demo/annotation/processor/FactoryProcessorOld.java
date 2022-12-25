@@ -59,7 +59,6 @@ public class FactoryProcessorOld extends AbstractProcessor {
      * 作为参数，该对象提供一些工具类。
      *
      * @param processingEnv
-     * @return void
      */
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
@@ -187,7 +186,6 @@ public class FactoryProcessorOld extends AbstractProcessor {
      * 将内容输出到文件
      *
      * @param content
-     * @return void
      */
     private void createFile(String content) {
         try {
@@ -209,7 +207,6 @@ public class FactoryProcessorOld extends AbstractProcessor {
      * 打印
      *
      * @param msg
-     * @return void
      */
     private void printErrorMsg(String msg) {
         messager.printMessage(Diagnostic.Kind.ERROR, msg);

@@ -147,7 +147,7 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
-            <!-- 提供的，可以理解为此包不由我直接提供，需要调用者/容器提供。 -->
+            <!-- 此包由调用者/容器提供，不参与打包 -->
             <scope>provided</scope>
             <!-- 可选的，可以理解为此功能/此依赖可选，如果不需要某项功能，可以不引用这个包 -->
             <!-- <optional>true</optional> -->
@@ -345,7 +345,7 @@
                     <encoding>${maven.resources.encoding}</encoding>
                 </configuration>
             </plugin>
-            <!--<plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>${maven-javadoc-plugin.version}</version>
@@ -358,18 +358,18 @@
                 </configuration>
                 <executions>
                     <execution>
-                        <id>attach-javadocs</id> &lt;!&ndash; 唯一标识，运行maven时会在控制台输出 &ndash;&gt;
-                        &lt;!&ndash; 绑定到声明周期阶段deploy，默认是package。避免在package时执行此插件目标 &ndash;&gt;
+                        <id>attach-javadocs</id> <!-- 唯一标识，运行maven时会在控制台输出 -->
+                        <!-- 绑定到声明周期阶段deploy，默认是package。避免在package时执行此插件目标 -->
                         <phase>package</phase>
                         <goals>
-                            &lt;!&ndash; 绑定到此插件的jar目标。jar和javadoc-no-fork区别：
+                            <!-- 绑定到此插件的jar目标。jar和javadoc-no-fork区别：
                                     jar目标默认绑定到生命周期阶段package，会生成JavaDoc文档并捆绑到jar文件中。
-                                    javadoc-no-fork目标需要在站点生成之前生成源，例如，通过调用mvn clean deploy site。生成的JavaDoc文档在target/site下，不会捆绑到jar文件中。 &ndash;&gt;
+                                    javadoc-no-fork目标需要在站点生成之前生成源，例如，通过调用mvn clean deploy site。生成的JavaDoc文档在target/site下，不会捆绑到jar文件中。 -->
                             <goal>jar</goal>
                         </goals>
                     </execution>
                 </executions>
-            </plugin>-->
+            </plugin>
             <!-- 打源码包 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

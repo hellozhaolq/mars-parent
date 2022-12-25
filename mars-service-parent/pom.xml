@@ -103,6 +103,7 @@
                     <version>${maven-assembly-plugin.version}</version>
                     <configuration>
                         <finalName>${project.build.finalName}-assembly</finalName>
+                        <appendAssemblyId>false</appendAssemblyId>
                         <!-- 归档为zip的配置***开始 -->
                         <descriptors>
                             <descriptor>${project.basedir}/src/main/resources/config/assembly.xml</descriptor>

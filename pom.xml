@@ -257,7 +257,6 @@
         <!-- 此元素描述了所有 classpath 路径下资源，例如：.java文件、与项目关联的属性文件等。这些资源通常包含在最终软件包中。
         用以规定哪些文件可以编译到target/classes。打包插件默认把target/classes目录下的所有内容打进jar包或者war包。修改配置后请确认target/classes目录内容。 -->
         <resources>
-
             <!-- 控制资源文件的拷贝(默认复制到classes目录，最后打进jar包) -->
             <resource>
                 <!-- 设定主资源目录  -->
@@ -285,7 +284,6 @@
                 <targetPath>${project.build.outputDirectory}</targetPath>
             </resource>
 
-
             <!-- 配置文件外置，即提取配置文件到target目录。下面的配置是默认的，注释后效果相同 -->
             <resource>
                 <directory>${project.basedir}/src/main/resources/config</directory>
@@ -308,8 +306,8 @@
                 </includes>
                 <targetPath>${project.basedir}/target/bin</targetPath>
             </resource>
-
         </resources>
+
         <plugins>
             <!--
                 为了使项目结构更为清晰，Maven区别对待Java代码文件和资源文件：
@@ -345,98 +343,82 @@
                     <encoding>${maven.resources.encoding}</encoding>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>${maven-javadoc-plugin.version}</version>
-                <configuration>
-                    <release>${java.version}</release>
-                    <charset>UTF-8</charset>
-                    <encoding>UTF-8</encoding>
-                    <docencoding>UTF-8</docencoding>
-                    <doclint>none</doclint>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id> <!-- 唯一标识，运行maven时会在控制台输出 -->
-                        <!-- 绑定到声明周期阶段deploy，默认是package。避免在package时执行此插件目标 -->
-                        <phase>package</phase>
-                        <goals>
-                            <!-- 绑定到此插件的jar目标。jar和javadoc-no-fork区别：
-                                    jar目标默认绑定到生命周期阶段package，会生成JavaDoc文档并捆绑到jar文件中。
-                                    javadoc-no-fork目标需要在站点生成之前生成源，例如，通过调用mvn clean deploy site。生成的JavaDoc文档在target/site下，不会捆绑到jar文件中。 -->
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <!-- 打源码包 -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>${maven-source-plugin.version}</version>
-                <configuration>
-                    <outputDirectory>${project.build.directory}</outputDirectory>
-                    <finalName>${project.build.finalName}</finalName>
-                    <attach>true</attach>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <!-- 绑定到声明周期阶段deploy，默认是package。避免在package时执行此插件目标 -->
-                        <phase>package</phase>
-                        <goals>
-                            <goal>jar-no-fork</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <!-- default声明周期的test阶段默认绑定了maven-surefire-plugin -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>${maven-surefire-plugin.version}</version>
-                <configuration>
-                    <skipTests>true</skipTests>
-                    <argLine>-Dfile.encoding=UTF-8</argLine>
-                    <parallel>all</parallel>
-                    <threadCount>10</threadCount> <!-- 与parallel参数结合使用 -->
-                    <!-- 设置为错误/失败计数以跳过其余测试 -->
-                    <skipAfterFailureCount>1</skipAfterFailureCount> <!-- 当有一个测试用例发生错误或失败时，跳过后续其他测试 -->
-                    <!-- 测试失败后的重试次数。当测试含有远程服务时，在某些情况下可能由于环境问题(比如网络)导致测试用例执行失败，但这并不是程序问题。换句话说,当一个测试用例执行N次,有一次执行成功就认为成功. -->
-                    <rerunFailingTestsCount>2</rerunFailingTestsCount> <!-- 两次重试机会 -->
-                    <includes>
-                        <include>*</include>
-                    </includes>
-                    <excludes>
-                        <exclude>**/mapper/*</exclude>
-                        <exclude>**/controller/*</exclude>
-                        <exclude>**/service/*</exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
-
-            <!-- build-helper-maven-plugin 是Maven 开源插件生态圈中org.codehaus.mojo 这个分组中的，这个分组是次要分组（二级分组）；一级分组是org.apache.maven.plugins这一组。 -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>build-helper-maven-plugin</artifactId>
-                <version>${build-helper-maven-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <id>timestamp-property</id>
-                        <goals>
-                            <goal>timestamp-property</goal>
-                        </goals>
-                        <configuration>
-                            <name>build.time</name>
-                            <pattern>yyyyMMddHHmmss</pattern>
-                            <locale>zh_CN</locale>
-                            <timeZone>Asia/Shanghai</timeZone>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
+
+        <pluginManagement>
+            <plugins>
+                <!-- 打源码包 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>${maven-source-plugin.version}</version>
+                    <configuration>
+                        <outputDirectory>${project.build.directory}</outputDirectory>
+                        <finalName>${project.build.finalName}</finalName>
+                        <attach>true</attach>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>attach-sources</id>
+                            <!-- 绑定到声明周期阶段deploy，默认是package。避免在package时执行此插件目标 -->
+                            <phase>package</phase>
+                            <goals>
+                                <goal>jar-no-fork</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>${maven-javadoc-plugin.version}</version>
+                    <configuration>
+                        <release>${java.version}</release>
+                        <charset>UTF-8</charset>
+                        <encoding>UTF-8</encoding>
+                        <docencoding>UTF-8</docencoding>
+                        <doclint>none</doclint>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>attach-javadocs</id> <!-- 唯一标识，运行maven时会在控制台输出 -->
+                            <!-- 绑定到声明周期阶段deploy，默认是package。避免在package时执行此插件目标 -->
+                            <phase>package</phase>
+                            <goals>
+                                <!-- 绑定到此插件的jar目标。jar和javadoc-no-fork区别：
+                                        jar目标默认绑定到生命周期阶段package，会生成JavaDoc文档并捆绑到jar文件中。
+                                        javadoc-no-fork目标需要在站点生成之前生成源，例如，通过调用mvn clean deploy site。生成的JavaDoc文档在target/site下，不会捆绑到jar文件中。 -->
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- default声明周期的test阶段默认绑定了maven-surefire-plugin -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${maven-surefire-plugin.version}</version>
+                    <configuration>
+                        <skipTests>true</skipTests>
+                        <argLine>-Dfile.encoding=UTF-8</argLine>
+                        <parallel>all</parallel>
+                        <threadCount>10</threadCount> <!-- 与parallel参数结合使用 -->
+                        <!-- 设置为错误/失败计数以跳过其余测试 -->
+                        <skipAfterFailureCount>1</skipAfterFailureCount> <!-- 当有一个测试用例发生错误或失败时，跳过后续其他测试 -->
+                        <!-- 测试失败后的重试次数。当测试含有远程服务时，在某些情况下可能由于环境问题(比如网络)导致测试用例执行失败，但这并不是程序问题。换句话说,当一个测试用例执行N次,有一次执行成功就认为成功. -->
+                        <rerunFailingTestsCount>2</rerunFailingTestsCount> <!-- 两次重试机会 -->
+                        <includes>
+                            <include>*</include>
+                        </includes>
+                        <excludes>
+                            <exclude>**/mapper/*</exclude>
+                            <exclude>**/controller/*</exclude>
+                            <exclude>**/service/*</exclude>
+                        </excludes>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 
     <repositories>

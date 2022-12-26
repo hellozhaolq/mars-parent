@@ -19,9 +19,9 @@ Oracle:
 		密码: 123456789
 
 mars:
-	--创建表空间 Linux
-	create tablespace mars_data datafile '/u01/app/oracle/oradata/orcl/mars_data.dbf' size 256m;
-	--创建表空间 Windows
+    --创建表空间 Linux
+    create tablespace mars_data datafile '/u01/app/oracle/oradata/orcl/mars_data.dbf' size 256m;
+    --创建表空间 Windows
     create tablespace mars_data datafile 'F:/oracle19c/oradata/ORCL/orclpdb/mars_data.dbf' size 256m;
     --表空间将满时会自动增加256m大小空间
     alter database datafile 'F:/oracle19c/oradata/ORCL/orclpdb/mars_data.dbf' autoextend on next 256m;

@@ -22,15 +22,6 @@
         <module>mars-api-parent</module>
     </modules>
 
-<!--
-    配置maven仓库，可以在maven的settings.xml里改。优点是全局统一配置，缺点是不受你项目git管理。
-    也可以直接在pom.xml里改, 好处就是 可以受git管理，缺点是每个项目的pom你都得配置。
-    maven自动下载依赖时，会涉级读取三个配置文件，分别是项目下的pom.xml 文件 、home目录下的.m2/settings.xml 与 maven 全局配置settings.xml ，后面两者不难理解，就像linux下的用户一样，有一个/etc/profile ，用户用目录下还有一个.bash_profile 文件是一样的，用户自定义配置会覆盖全局配置。
-    三者的级先是 pom.xml > /home_dir/.m2/settings.xml > /maven_dir/conf/settings.xml
-
-    总结： 相对来说，在pom中配置maven仓库比较好，项目代码放到哪都没有问题。
--->
-
     <!--
         pom.xml文件中定义的变量在resources文件夹下的 properties、yml、xml 文件中可以获得
         .properties文件中定义的变量在java代码中通过 java.util.Properties 可以获得
@@ -190,8 +181,8 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            
-            
+
+
             <!--******************************** jdbc ********************************-->
             <!-- 覆盖Spring Boot提供的ojdbc -->
             <dependency>
@@ -220,7 +211,7 @@
                 <version>${mysql-connector-java.version}</version>
                 <scope>runtime</scope>
             </dependency>
-                 
+
             <dependency>
                 <groupId>Impala</groupId>
                 <artifactId>ImpalaJDBC42</artifactId>
@@ -421,11 +412,20 @@
         </pluginManagement>
     </build>
 
+    <!-- ********************************************* 仓库配置 start ********************************************* -->
+    <!-- pom.xml和settings.xml中的repositories和pluginRepositories标签通用 -->
+    <!--
+        配置maven仓库，可以在maven的settings.xml里改。优点是全局统一配置，缺点是不受你项目git管理。
+        也可以直接在pom.xml里改, 好处就是 可以受git管理，缺点是每个项目的pom你都得配置。
+        maven自动下载依赖时，会涉级读取三个配置文件，分别是项目下的pom.xml 文件 、home目录下的.m2/settings.xml 与 maven 全局配置settings.xml ，后面两者不难理解，就像linux下的用户一样，有一个/etc/profile ，用户用目录下还有一个.bash_profile 文件是一样的，用户自定义配置会覆盖全局配置。
+        三者的级先是 pom.xml > /home_dir/.m2/settings.xml > /maven_dir/conf/settings.xml
+
+        总结： 相对来说，在pom中配置maven仓库比较好，项目代码放到哪都没有问题。
+    -->
     <repositories>
         <!-- 按顺序搜索jar包，最后找默认的中央仓库。若将id=central的仓库放在最前就直接去中央仓库搜索 -->
-        <!-- maven把id=central的仓库做为中央仓库 -->
         <repository>
-            <id>central</id>
+            <id>central</id> <!-- maven把id=central的仓库做为中央仓库，这意味着修改中央仓库地址 -->
             <name>Central Repository</name>
             <url>https://repo.maven.apache.org/maven2/</url>
             <layout>default</layout>
@@ -482,6 +482,7 @@
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
+    <!-- ********************************************* 仓库配置 end ********************************************* -->
 
     <!-- 部署构件至远程仓库 -->
     <distributionManagement>

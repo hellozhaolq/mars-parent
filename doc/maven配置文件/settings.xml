@@ -118,6 +118,7 @@ under the License.
    | This is a list of authentication profiles, keyed by the server-id used within the system.
    | Authentication profiles can be used whenever maven must make a connection to a remote server.
    |-->
+  <!--表示当需要连接到一个私有服务器的时候需要的认证信息 。-->
   <servers>
     <!-- server
      | Specifies the authentication information to use when connecting to a particular server, identified by
@@ -140,6 +141,39 @@ under the License.
       <passphrase>optional; leave empty if not used.</passphrase>
     </server>
     -->
+
+    <!--
+        server元素包含下载和部署构件时需要的认证信息。
+        其中 id 由POM中的 <repositories> 和 <distributionManagement> 元素定义。
+        认证信息只有Settings可以配置，这样设计是因为敏感信息理应存在于服务器上的Settings文件，而不是项目的POM中。
+    -->
+
+    <server>
+      <id>aliyun</id>
+      <username>zhaolq</username>
+      <password>123456789</password>
+    </server>
+
+    <server>
+      <id>nexus-releases</id>
+      <username>zhaolq</username>
+      <password>123456789</password>
+      <!-- Linux文件基本属性 https://www.runoob.com/linux/linux-file-attr-permission.html -->
+      <filePermissions>664</filePermissions> <!-- 在部署时，创建存储库文件的权限，110 110 100 -->
+      <directoryPermissions>775</directoryPermissions> <!-- 在部署时，创建存储库目录的权限，111 111 101 -->
+      <configuration></configuration>
+    </server>
+
+    <!-- 注意：如果使用私钥登录服务器，请确保省略 <password> 元素。否则，密钥将被忽略 -->
+    <server>
+      <id>nexus-snapshots</id>
+      <privateKey>${user.home}/.ssh/id_dsa</privateKey>
+      <passphrase>123456789</passphrase> <!-- 私钥秘钥 -->
+      <filePermissions>664</filePermissions>
+      <directoryPermissions>775</directoryPermissions>
+      <configuration></configuration>
+    </server>
+
   </servers>
 
   <!-- mirrors

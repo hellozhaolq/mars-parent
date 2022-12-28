@@ -52,7 +52,7 @@ under the License.
    | Default: ${user.home}/.m2/repository
   <localRepository>/path/to/local/repo</localRepository>
   -->
-  <localRepository>E:\apache-maven-repository\repository</localRepository>
+  <localRepository>D:\apache-maven-repository\repository</localRepository>
 
   <!-- interactiveMode
    | This will determine whether maven prompts you when it needs input. If set to false,
@@ -187,17 +187,24 @@ under the License.
  -->
 
     <mirror>
-        <id>central</id> <!-- 镜像的唯一标识符，无其他作用 -->
+        <id>mvn</id> <!-- 镜像的唯一标识符，无其他作用 -->
         <name>Central Repository</name>
         <url>https://repo.maven.apache.org/maven2/</url>
         <mirrorOf>central</mirrorOf> <!-- 配置为 repositoryId=central 的仓库镜像，任何对id为central的仓库请求都会转至该镜像 -->
     </mirror>
 
     <mirror>
-        <id>aliyun</id>
-        <name>aliyun Repository</name>
+        <id>ali</id>
+        <name>Aliyun Repository</name>
         <url>https://maven.aliyun.com/repository/public</url>
         <mirrorOf>aliyun</mirrorOf>
+    </mirror>
+
+    <mirror>
+        <id>target</id>
+        <name>Target Repository</name>
+        <url>https://maven.aliyun.com/repository/public</url>
+        <mirrorOf>*,!central,!aliyun</mirrorOf>
     </mirror>
 
   </mirrors>

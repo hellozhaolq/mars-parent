@@ -471,7 +471,7 @@
 
         <pluginRepository>
             <id>aliyun</id>
-            <name>aliyun Plugin</name>
+            <name>Aliyun Plugin</name>
             <url>https://maven.aliyun.com/repository/public</url>
             <layout>default</layout>
             <releases>

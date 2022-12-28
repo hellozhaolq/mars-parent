@@ -28,26 +28,134 @@
     -->
     <profiles>
         <profile>
-            <id>dev</id> <!-- 开发环境 -->
+            <id>dev-prop</id> <!-- 开发环境 -->
             <activation>
-                <activeByDefault>true</activeByDefault> <!-- 默认激活该profile -->
+                <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
                 <db.driver>com.mysql.jdbc.Driver</db.driver>
-                <db.url>jdbc:mysql//localhost:3306/dev</db.url>
+                <db.url>jdbc:mysql//localhost:3306/test</db.url>
                 <db.user>dev</db.user>
                 <db.pw>dev-pwd</db.pw>
             </properties>
         </profile>
 
         <profile>
-            <id>test</id> <!-- 测试环境 -->
+            <id>sit-prop</id> <!-- 测试环境 -->
             <properties>
                 <db.driver>com.mysql.jdbc.Driver</db.driver>
-                <db.url>jdbc:mysql//localhost:3306/test</db.url>
-                <db.user>test</db.user>
-                <db.pw>test-pwd</db.pw>
+                <db.url>jdbc:mysql//localhost:3306/dev</db.url>
+                <db.user>sit</db.user>
+                <db.pw>sit-pwd</db.pw>
             </properties>
+        </profile>
+
+        <profile>
+            <id>dev</id> <!-- 开发环境 -->
+            <activation>
+                <activeByDefault>true</activeByDefault>
+                <jdk>11</jdk>
+                <os>
+                    <name>Windows XP</name>
+                    <family>Windows</family>
+                    <arch>x86</arch>
+                    <version>5.1.2600</version>
+                </os>
+                <property>
+                    <name>key</name>
+                    <value>value</value>
+                </property>
+            </activation>
+
+            <!-- ********************************************* 仓库配置 start ********************************************* -->
+            <!-- pom.xml和settings.xml中的repositories和pluginRepositories标签通用 -->
+            <!--
+                配置maven仓库，可以在maven的settings.xml里改。优点是全局统一配置，缺点是不受你项目git管理。
+                也可以直接在pom.xml里改, 好处就是 可以受git管理，缺点是每个项目的pom你都得配置。
+                maven自动下载依赖时，会涉级读取三个配置文件，分别是项目下的pom.xml 文件 、home目录下的.m2/settings.xml 与 maven 全局配置settings.xml ，后面两者不难理解，就像linux下的用户一样，有一个/etc/profile ，用户用目录下还有一个.bash_profile 文件是一样的，用户自定义配置会覆盖全局配置。
+                三者的级先是 pom.xml > /home_dir/.m2/settings.xml > /maven_dir/conf/settings.xml
+
+                总结： 相对来说，在pom中配置maven仓库比较好，项目代码放到哪都没有问题。
+            -->
+            <repositories>
+                <!-- 按顺序搜索jar包，最后找默认的中央仓库。若将id=central的仓库放在最前就直接去中央仓库搜索 -->
+                <repository>
+                    <id>central</id> <!-- maven把id=central的仓库做为中央仓库，这意味着修改中央仓库地址 -->
+                    <name>Central Repository</name>
+                    <url>https://repo.maven.apache.org/maven2/</url>
+                    <layout>default</layout>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </repository>
+
+                <repository>
+                    <id>aliyun</id> <!-- repository的唯一表示，中央仓库占用id:central。配置仓库镜像时用到。 -->
+                    <name>Aliyun Repository</name> <!-- 仓库的名称，为了方便人阅读，无其他作用 -->
+                    <url>https://maven.aliyun.com/repository/public</url> <!-- 仓库的地址 -->
+                    <layout>default</layout> <!-- default:Maven2/3的布局，legacy:Maven 1.x的布局 -->
+                    <releases> <!-- 控制Maven对于发布版构件的下载 -->
+                        <enabled>true</enabled> <!-- 开启nexus-releases仓库的发布版本下载支持 -->
+                        <updatePolicy>daily</updatePolicy> <!-- 检查更新的频率，默认值是daily，表示Maven每天检查一次 -->
+                        <checksumPolicy>warn</checksumPolicy> <!-- 配置Maven检查校验和文件的策略 -->
+                    </releases>
+                    <snapshots> <!-- 控制Maven对于快照版构件的下载 -->
+                        <enabled>false</enabled> <!-- 关闭nexus-releases仓库的快照版本下载支持 -->
+                        <updatePolicy>daily</updatePolicy>
+                        <checksumPolicy>warn</checksumPolicy>
+                    </snapshots>
+                </repository>
+            </repositories>
+
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>central-plugin</id>
+                    <name>Central Plugin</name>
+                    <url>https://repo.maven.apache.org/maven2/</url>
+                    <layout>default</layout>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </pluginRepository>
+
+                <pluginRepository>
+                    <id>aliyun-plugin</id>
+                    <name>Aliyun Plugin</name>
+                    <url>https://maven.aliyun.com/repository/public</url>
+                    <layout>default</layout>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </pluginRepository>
+            </pluginRepositories>
+            <!-- ********************************************* 仓库配置 end ********************************************* -->
+
+            <!-- 部署构件至远程仓库，mvn deploy 用来将项目生成的构件分发到远程Maven仓库-->
+            <distributionManagement>
+                <repository>
+                    <id>nexus-releases</id> <!-- repository的唯一标识 -->
+                    <name>Demo Release Repository</name> <!-- name是人类可读的形式 -->
+                    <url>http://192.168.3.206:8081/nexus/content/repositories/releases</url>
+                    <layout>default</layout>
+                    <uniqueVersion>false</uniqueVersion> <!-- true:为部署到仓库的构件分配一个由时间戳和内部版本号组成的唯一版本，false:每次都使用相同的版本 -->
+                </repository>
+                <snapshotRepository>
+                    <id>nexus-snapshots</id>
+                    <name>Demo Snapshot Repository</name>
+                    <url>http://192.168.3.206:8081/nexus/content/repositories/snapshots</url>
+                    <layout>default</layout>
+                    <uniqueVersion>true</uniqueVersion>
+                </snapshotRepository>
+            </distributionManagement>
         </profile>
     </profiles>
 
@@ -411,92 +519,6 @@
             </plugins>
         </pluginManagement>
     </build>
-
-    <!-- ********************************************* 仓库配置 start ********************************************* -->
-    <!-- pom.xml和settings.xml中的repositories和pluginRepositories标签通用 -->
-    <!--
-        配置maven仓库，可以在maven的settings.xml里改。优点是全局统一配置，缺点是不受你项目git管理。
-        也可以直接在pom.xml里改, 好处就是 可以受git管理，缺点是每个项目的pom你都得配置。
-        maven自动下载依赖时，会涉级读取三个配置文件，分别是项目下的pom.xml 文件 、home目录下的.m2/settings.xml 与 maven 全局配置settings.xml ，后面两者不难理解，就像linux下的用户一样，有一个/etc/profile ，用户用目录下还有一个.bash_profile 文件是一样的，用户自定义配置会覆盖全局配置。
-        三者的级先是 pom.xml > /home_dir/.m2/settings.xml > /maven_dir/conf/settings.xml
-
-        总结： 相对来说，在pom中配置maven仓库比较好，项目代码放到哪都没有问题。
-    -->
-    <repositories>
-        <!-- 按顺序搜索jar包，最后找默认的中央仓库。若将id=central的仓库放在最前就直接去中央仓库搜索 -->
-        <repository>
-            <id>central</id> <!-- maven把id=central的仓库做为中央仓库，这意味着修改中央仓库地址 -->
-            <name>Central Repository</name>
-            <url>https://repo.maven.apache.org/maven2/</url>
-            <layout>default</layout>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-
-        <repository>
-            <id>aliyun</id> <!-- 仓库声明的唯一id，中央仓库占用id:central。配置仓库镜像时用到。 -->
-            <name>aliyun Repository</name> <!-- 仓库的名称，为了方便人阅读，无其他作用 -->
-            <url>https://maven.aliyun.com/repository/public</url> <!-- 仓库的地址 -->
-            <layout>default</layout> <!-- 仓库的布局是Maven2及Maven3的默认布局 -->
-            <releases> <!-- 控制Maven对于发布版构件的下载 -->
-                <enabled>true</enabled> <!-- 开启nexus-releases仓库的发布版本下载支持 -->
-                <updatePolicy>daily</updatePolicy> <!-- 检查更新的频率，默认值是daily，表示Maven每天检查一次 -->
-                <checksumPolicy>warn</checksumPolicy> <!-- 配置Maven检查校验和文件的策略 -->
-            </releases>
-            <snapshots> <!-- 控制Maven对于快照版构件的下载 -->
-                <enabled>false</enabled> <!-- 关闭nexus-releases仓库的快照版本下载支持 -->
-                <updatePolicy>daily</updatePolicy>
-                <checksumPolicy>warn</checksumPolicy>
-            </snapshots>
-        </repository>
-    </repositories>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>central</id>
-            <name>Central Plugin</name>
-            <url>https://repo.maven.apache.org/maven2/</url>
-            <layout>default</layout>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </pluginRepository>
-
-        <pluginRepository>
-            <id>aliyun</id>
-            <name>Aliyun Plugin</name>
-            <url>https://maven.aliyun.com/repository/public</url>
-            <layout>default</layout>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>
-    <!-- ********************************************* 仓库配置 end ********************************************* -->
-
-    <!-- 部署构件至远程仓库 -->
-    <distributionManagement>
-        <repository>
-            <id>nexus-releases</id>
-            <name>Demo Release Repository</name>
-            <url>http://192.168.3.206:8081/nexus/content/repositories/releases</url>
-        </repository>
-        <snapshotRepository>
-            <id>nexus-snapshots</id>
-            <name>Demo Snapshot Repository</name>
-            <url>http://192.168.3.206:8081/nexus/content/repositories/snapshots</url>
-        </snapshotRepository>
-    </distributionManagement>
 
     <!--***********************************************************************************************-->
     <!--***********************************************************************************************-->

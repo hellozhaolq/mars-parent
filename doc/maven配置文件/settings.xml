@@ -253,11 +253,11 @@ under the License.
       </repositories>
     </profile>
     -->
-	  
+
     <profile>
-        <id>JDK1.8</id>
+        <id>profile-jdk-repo-test</id> <!-- profile的唯一id。activeProfiles激活时用到。 -->
         <activation>
-            <activeByDefault>true</activeByDefault>
+            <activeByDefault>false</activeByDefault>
             <jdk>1.8</jdk>
         </activation>
         <properties>
@@ -265,6 +265,35 @@ under the License.
             <maven.compiler.target>1.8</maven.compiler.target>
             <maven.compiler.compilerVersion>1.8</maven.compiler.compilerVersion>
         </properties>
+	<!-- pom.xml和settings.xml中的repositories和pluginRepositories标签通用 -->
+        <repositories>
+            <repository>
+                <id>central</id>
+                <name>Central Repository</name>
+                <url>https://repo.maven.apache.org/maven2/</url>
+                <layout>default</layout>
+                <releases>
+                    <enabled>true</enabled>
+                </releases>
+                <snapshots>
+                    <enabled>false</enabled>
+                </snapshots>
+            </repository>
+        </repositories>
+        <pluginRepositories>
+            <pluginRepository>
+                <id>central</id>
+                <name>Central Plugin</name>
+                <url>https://repo.maven.apache.org/maven2/</url>
+                <layout>default</layout>
+                <releases>
+                    <enabled>true</enabled>
+                </releases>
+                <snapshots>
+                    <enabled>false</enabled>
+                </snapshots>
+            </pluginRepository>
+        </pluginRepositories>
     </profile>
 
     <!--
@@ -302,71 +331,6 @@ under the License.
     </profile>
     -->
 
-    <profile>
-        <id>repo1</id> <!-- profile的唯一id。activeProfiles激活时用到。 -->
-	<!-- repositories和pluginRepositories标签是从pom.xml拷贝来的 -->
-        <repositories>
-            <!-- 按顺序搜索jar包，最后找默认的中央仓库。若将id=central的仓库放在最前就直接去中央仓库搜索 -->
-            <!-- maven把id=central的仓库做为中央仓库 -->
-            <repository>
-                <id>central</id>
-                <name>Central Repository</name>
-                <url>https://repo.maven.apache.org/maven2/</url>
-                <layout>default</layout>
-                <releases>
-                    <enabled>true</enabled>
-                </releases>
-                <snapshots>
-                    <enabled>false</enabled>
-                </snapshots>
-            </repository>
-
-            <repository>
-                <id>aliyun</id> <!-- 仓库声明的唯一id，中央仓库占用id:central。配置仓库镜像时用到。 -->
-                <name>aliyun Repository</name> <!-- 仓库的名称，为了方便人阅读，无其他作用 -->
-                <url>https://maven.aliyun.com/repository/public</url> <!-- 仓库的地址 -->
-                <layout>default</layout> <!-- 仓库的布局是Maven2及Maven3的默认布局 -->
-                <releases> <!-- 控制Maven对于发布版构件的下载 -->
-                    <enabled>true</enabled> <!-- 开启nexus-releases仓库的发布版本下载支持 -->
-                    <updatePolicy>daily</updatePolicy> <!-- 检查更新的频率，默认值是daily，表示Maven每天检查一次 -->
-                    <checksumPolicy>warn</checksumPolicy> <!-- 配置Maven检查校验和文件的策略 -->
-                </releases>
-                <snapshots> <!-- 控制Maven对于快照版构件的下载 -->
-                    <enabled>false</enabled> <!-- 关闭nexus-releases仓库的快照版本下载支持 -->
-                    <updatePolicy>daily</updatePolicy>
-                    <checksumPolicy>warn</checksumPolicy>
-                </snapshots>
-            </repository>
-        </repositories>
-        <pluginRepositories>
-            <pluginRepository>
-                <id>central</id>
-                <name>Central Plugin</name>
-                <url>https://repo.maven.apache.org/maven2/</url>
-                <layout>default</layout>
-                <releases>
-                    <enabled>true</enabled>
-                </releases>
-                <snapshots>
-                    <enabled>false</enabled>
-                </snapshots>
-            </pluginRepository>
-
-            <pluginRepository>
-                <id>aliyun</id>
-                <name>aliyun Plugin</name>
-                <url>https://maven.aliyun.com/repository/public</url>
-                <layout>default</layout>
-                <releases>
-                    <enabled>true</enabled>
-                </releases>
-                <snapshots>
-                    <enabled>false</enabled>
-                </snapshots>
-            </pluginRepository>
-        </pluginRepositories>
-    </profile>
-
   </profiles>
 
   <!-- activeProfiles
@@ -378,7 +342,7 @@ under the License.
   </activeProfiles>
   -->
     <activeProfiles>
-        <activeProfile>repo1</activeProfile>
-        <activeProfile>JDK1.8</activeProfile>
+        <!--<activeProfile>profile-repo1</activeProfile>-->
+        <!--<activeProfile>profile-jdk</activeProfile>-->
     </activeProfiles>
 </settings>

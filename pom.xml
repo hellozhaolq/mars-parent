@@ -53,17 +53,19 @@
         <profile>
             <id>dev</id> <!-- 开发环境 -->
             <activation>
-                <activeByDefault>true</activeByDefault>
-                <jdk>11</jdk>
+                <activeByDefault>false</activeByDefault>
+                <jdk>11</jdk> <!-- 当检测到匹配的JDK时激活此配置文件。而 !1.4 匹配任何非1.4版本的JDK -->
+                <!-- 当检测到匹配的操作系统属性时激活此配置文件 -->
                 <os>
-                    <name>Windows XP</name>
-                    <family>Windows</family>
-                    <arch>x86</arch>
-                    <version>5.1.2600</version>
+                    <name>${os.name}</name> <!-- System.properties文件，Java：System.getProperties() -->
+                    <family>${sun.desktop}</family>
+                    <arch>${os.arch}</arch>
+                    <version>${os.version}</version>
                 </os>
+                <!-- 指定在指定此系统属性时将激活此配置文件 -->
                 <property>
-                    <name>key</name>
-                    <value>value</value>
+                    <name>${env.JAVA_HOME}</name> <!-- Environment.properties文件，Java：System.getenv() -->
+                    <value>a</value>
                 </property>
             </activation>
 

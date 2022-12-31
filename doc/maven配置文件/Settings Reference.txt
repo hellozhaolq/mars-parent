@@ -1,1 +1,0 @@
-https://maven.apache.org/settings.html

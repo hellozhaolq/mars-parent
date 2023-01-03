@@ -24,7 +24,7 @@
 
     <!--
         POM 文件中的属性，在项目资源文件中使用${project.artifactId}，编译时会被替换，如properties、yml、xml。【编译时】
-        Properties 文件中的属性，先加载到系统属性，再通过 System.getProperties() 获得。【运行时】
+        Properties 文件中的属性，需手动加载到系统属性，再通过 System.getProperties() 获得。【运行时】
     -->
     <profiles>
         <profile>

@@ -51,7 +51,7 @@
         </profile>
 
         <profile>
-            <id>dev</id>
+            <id>repo-home</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>

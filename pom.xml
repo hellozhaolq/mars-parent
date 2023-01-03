@@ -53,7 +53,7 @@
         <profile>
             <id>dev</id>
             <activation>
-                <activeByDefault>false</activeByDefault>
+                <activeByDefault>true</activeByDefault>
             </activation>
             <!-- ********************************************* 仓库配置 start ********************************************* -->
             <!-- pom.xml和settings.xml中的repositories和pluginRepositories标签通用 -->

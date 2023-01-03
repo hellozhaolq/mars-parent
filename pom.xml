@@ -23,25 +23,25 @@
     </modules>
 
     <!--
-        pom.xml文件中定义的变量在resources文件夹下的 properties、yml、xml 文件中可以获得
-        .properties文件中定义的变量在java代码中通过 java.util.Properties 可以获得
+        POM 文件中的属性，在项目资源文件中使用${project.artifactId}，编译时会被替换，如properties、yml、xml。【编译时】
+        Properties 文件中的属性，先加载到系统属性，再通过 System.getProperties() 获得。【运行时】
     -->
     <profiles>
         <profile>
-            <id>dev-prop</id> <!-- 开发环境 -->
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
+            <id>home</id>
             <properties>
                 <db.driver>com.mysql.jdbc.Driver</db.driver>
                 <db.url>jdbc:mysql//localhost:3306/test</db.url>
                 <db.user>dev</db.user>
                 <db.pw>dev-pwd</db.pw>
+
+                <java.home>${env.JAVA_HOME}</java.home> <!-- Environment.properties文件，Java：System.getenv() -->
+                <os.name>!${os.name}</os.name> <!-- System.properties文件，Java：System.getProperties() -->
             </properties>
         </profile>
 
         <profile>
-            <id>sit-prop</id> <!-- 测试环境 -->
+            <id>company</id>
             <properties>
                 <db.driver>com.mysql.jdbc.Driver</db.driver>
                 <db.url>jdbc:mysql//localhost:3306/dev</db.url>
@@ -51,33 +51,19 @@
         </profile>
 
         <profile>
-            <id>dev</id> <!-- 开发环境 -->
+            <id>dev</id>
             <activation>
                 <activeByDefault>false</activeByDefault>
-                <jdk>11</jdk> <!-- 当检测到匹配的JDK时激活此配置文件。而 !1.4 匹配任何非1.4版本的JDK -->
-                <!-- 当检测到匹配的操作系统属性时激活此配置文件 -->
-                <os>
-                    <name>${os.name}</name> <!-- System.properties文件，Java：System.getProperties() -->
-                    <family>${sun.desktop}</family>
-                    <arch>${os.arch}</arch>
-                    <version>${os.version}</version>
-                </os>
-                <!-- 指定在指定此系统属性时将激活此配置文件 -->
-                <property>
-                    <name>${env.JAVA_HOME}</name> <!-- Environment.properties文件，Java：System.getenv() -->
-                    <value>a</value>
-                </property>
             </activation>
-
             <!-- ********************************************* 仓库配置 start ********************************************* -->
             <!-- pom.xml和settings.xml中的repositories和pluginRepositories标签通用 -->
             <!--
-                配置maven仓库，可以在maven的settings.xml里改。优点是全局统一配置，缺点是不受你项目git管理。
-                也可以直接在pom.xml里改, 好处就是 可以受git管理，缺点是每个项目的pom你都得配置。
-                maven自动下载依赖时，会涉级读取三个配置文件，分别是项目下的pom.xml 文件 、home目录下的.m2/settings.xml 与 maven 全局配置settings.xml ，后面两者不难理解，就像linux下的用户一样，有一个/etc/profile ，用户用目录下还有一个.bash_profile 文件是一样的，用户自定义配置会覆盖全局配置。
+                远程仓库，可以在Settings里配置。优点是全局统一配置，缺点是不受你项目git管理。
+                也可以在POM里配置。优点是可以受git管理，缺点是每个项目的pom你都得配置。
+                maven自动下载依赖时，会涉级读取三个配置文件，分别是项目下的POM文件、home目录下的.m2/settings.xml与Maven全局配置settings.xml ，后面两者不难理解，就像linux下的用户一样，有一个/etc/profile ，home目录下还有一个.bash_profile 文件是一样的，用户自定义配置会覆盖全局配置。
                 三者的级先是 pom.xml > /home_dir/.m2/settings.xml > /maven_dir/conf/settings.xml
 
-                总结： 相对来说，在pom中配置maven仓库比较好，项目代码放到哪都没有问题。
+                总结： 相对来说，在POM中配置远程仓库比较好，项目代码放到哪都没有问题。
             -->
             <repositories>
                 <!-- 按顺序搜索jar包，最后找默认的中央仓库。若将id=central的仓库放在最前就直接去中央仓库搜索 -->

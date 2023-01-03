@@ -28,7 +28,7 @@
     -->
     <profiles>
         <profile>
-            <id>home</id>
+            <id>profile-home</id>
             <properties>
                 <db.driver>com.mysql.jdbc.Driver</db.driver>
                 <db.url>jdbc:mysql//localhost:3306/test</db.url>
@@ -41,7 +41,7 @@
         </profile>
 
         <profile>
-            <id>company</id>
+            <id>profile-company</id>
             <properties>
                 <db.driver>com.mysql.jdbc.Driver</db.driver>
                 <db.url>jdbc:mysql//localhost:3306/dev</db.url>

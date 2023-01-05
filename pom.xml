@@ -28,7 +28,7 @@
     -->
     <profiles>
         <profile>
-            <id>prop-public-dev</id>
+            <id>prop-dev-public</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
@@ -44,7 +44,7 @@
         </profile>
 
         <profile>
-            <id>prop-home-dev</id>
+            <id>prop-dev-home</id>
             <properties>
                 <mars.db.oracle.userinfo.url>jdbc:oracle:thin:@//192.168.31.5:1521/orclpdb.zhaolq.com</mars.db.oracle.userinfo.url>
                 <mars.db.oracle.userinfo.username>mars</mars.db.oracle.userinfo.username>
@@ -64,7 +64,7 @@
         </profile>
 
         <profile>
-            <id>prop-company-dev</id>
+            <id>prop-dev-company</id>
             <properties>
             </properties>
         </profile>

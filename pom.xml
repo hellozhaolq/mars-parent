@@ -33,11 +33,11 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <!-- Oracle 9i 之后，建议使用 oracle.jdbc.OracleDriver ，而不是 oracle.jdbc.driver.OracleDriver。 -->
+                <!-- Oracle 19c，https://docs.oracle.com/en/database/oracle/oracle-database/21/jjdbc/index.html -->
                 <mars.oracle.driver-class-name>oracle.jdbc.OracleDriver</mars.oracle.driver-class-name>
-                <!-- MySQL 8.0 以上版本的数据库连接有所不同：https://www.runoob.com/java/java-mysql-connect.html -->
+                <!-- MySQL 8.0，https://dev.mysql.com/doc/index-connectors.html、https://www.runoob.com/java/java-mysql-connect.html -->
                 <mars.mysql.driver-class-name>com.mysql.cj.jdbc.Driver</mars.mysql.driver-class-name>
-                <!-- PostgreSQL，该驱动程序不需要显示加载，详见https://jdbc.postgresql.org/documentation/use/ -->
+                <!-- PostgreSQL 15，该驱动程序不需要显示加载，详见https://jdbc.postgresql.org/documentation/use/ -->
                 <mars.postgresql.driver-class-name>org.postgresql.Driver</mars.postgresql.driver-class-name>
                 <!--
                     Environment.properties文件，Java：System.getenv()

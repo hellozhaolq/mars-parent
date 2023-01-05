@@ -51,21 +51,43 @@
         <profile>
             <id>prop-dev-home</id>
             <properties>
-                <mars.db.oracle.userinfo.url>jdbc:oracle:thin:@//192.168.31.5:1521/orclpdb.zhaolq.com</mars.db.oracle.userinfo.url>
-                <mars.db.oracle.userinfo.username>mars</mars.db.oracle.userinfo.username>
-                <mars.db.oracle.userinfo.password>123456789</mars.db.oracle.userinfo.password>
+                <!--
+                    jdbc:mysql://192.168.0.5:3306/dbname?useUnicode=true&characterEncoding=utf8&useSSL=false&autoReconnect=true&allowMultiQueries=true
+                    &noAccessToProcedureBodies=true
+                    jdbc:postgresql://192.168.0.5:5432/dbname?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false
+                -->
 
-                <!-- jdbc:mysql://192.168.31.5:3306/dbname?useUnicode=true&characterEncoding=utf8&useSSL=false&autoReconnect=true&allowMultiQueries=true
-                &noAccessToProcedureBodies=true -->
-                <mars.db.mysql.userinfo.url>jdbc:mysql://192.168.31.5:3306/dbname</mars.db.mysql.userinfo.url>
-                <mars.db.mysql.userinfo.username>mars</mars.db.mysql.userinfo.username>
-                <mars.db.mysql.userinfo.password>123456789</mars.db.mysql.userinfo.password>
+                <!-- 基础库，数据底座，包括用户信息、权限等，t_base -->
+                <mars.db.oracle.url.base>jdbc:oracle:thin:@//192.168.31.5:1521/orclpdb.zhaolq.com</mars.db.oracle.url.base>
+                <mars.db.oracle.username.base>base</mars.db.oracle.username.base>
+                <mars.db.oracle.password.base>123456789</mars.db.oracle.password.base>
 
-                <!-- jdbc:postgresql://192.168.31.5:5432/dbname?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false -->
-                <mars.db.postgresql.userinfo.url>jdbc:postgresql://192.168.31.5:5432/dbname</mars.db.postgresql.userinfo.url>
-                <mars.db.postgresql.userinfo.username>mars</mars.db.postgresql.userinfo.username>
-                <mars.db.postgresql.userinfo.password>123456789</mars.db.postgresql.userinfo.password>
+                <!-- 日志库 -->
+                <mars.db.mysql.url.log>jdbc:mysql://192.168.31.5:3306/dbname</mars.db.mysql.url.log>
+                <mars.db.mysql.username.log>log</mars.db.mysql.username.log>
+                <mars.db.mysql.password.log>123456789</mars.db.mysql.password.log>
+
+                <!-- 商户商品库，t_merchant_goods -->
+                <mars.db.postgresql.url.goods>jdbc:postgresql://192.168.31.5:5432/dbname</mars.db.postgresql.url.goods>
+                <mars.db.postgresql.username.goods>goods</mars.db.postgresql.username.goods>
+                <mars.db.postgresql.password.goods>123456789</mars.db.postgresql.password.goods>
+
+                <!-- 库存库，t_merchant_goods_inventory -->
+                <mars.db.postgresql.url.inventory>jdbc:postgresql://192.168.31.5:5432/dbname</mars.db.postgresql.url.inventory>
+                <mars.db.postgresql.username.inventory>inventory</mars.db.postgresql.username.inventory>
+                <mars.db.postgresql.password.inventory>123456789</mars.db.postgresql.password.inventory>
+
+                <!-- 客户订单库，t_customer_order -->
+                <mars.db.postgresql.url.order>jdbc:postgresql://192.168.31.5:5432/dbname</mars.db.postgresql.url.order>
+                <mars.db.postgresql.username.order>order</mars.db.postgresql.username.order>
+                <mars.db.postgresql.password.order>123456789</mars.db.postgresql.password.order>
+
+                <!-- 购物车库，t_customer_cart -->
+                <mars.db.postgresql.url.cart>jdbc:postgresql://192.168.31.5:5432/dbname</mars.db.postgresql.url.cart>
+                <mars.db.postgresql.username.cart>cart</mars.db.postgresql.username.cart>
+                <mars.db.postgresql.password.cart>123456789</mars.db.postgresql.password.cart>
             </properties>
+        </profile>
         </profile>
 
         <profile>

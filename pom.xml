@@ -37,9 +37,14 @@
                 <mars.oracle.driver-class-name>oracle.jdbc.OracleDriver</mars.oracle.driver-class-name>
                 <!-- MySQL 8.0 以上版本的数据库连接有所不同：https://www.runoob.com/java/java-mysql-connect.html -->
                 <mars.mysql.driver-class-name>com.mysql.cj.jdbc.Driver</mars.mysql.driver-class-name>
+                <!-- PostgreSQL，该驱动程序不需要显示加载，详见https://jdbc.postgresql.org/documentation/use/ -->
                 <mars.postgresql.driver-class-name>org.postgresql.Driver</mars.postgresql.driver-class-name>
-                <mars.java.home>${env.JAVA_HOME}</mars.java.home> <!-- Environment.properties文件，Java：System.getenv() -->
-                <mars.os.name>!${os.name}</mars.os.name> <!-- System.properties文件，Java：System.getProperties() -->
+                <!--
+                    Environment.properties文件，Java：System.getenv()
+                    System.properties文件，Java：System.getProperties()
+                -->
+                <mars.java.home>${env.JAVA_HOME}</mars.java.home>
+                <mars.os.name>${os.name}</mars.os.name>
             </properties>
         </profile>
 

@@ -1,3 +1,4 @@
+Oracle转MySQL，Navicat->工具->数据传输->目标选择【文件】->SQL格式选择"MySQL"，下方【选项】可在配置对象大小写。
 
 Centos8-Oracle:
 	IP: 192.168.0.3

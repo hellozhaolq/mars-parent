@@ -1,0 +1,12 @@
+
+Oracle 19c，
+    https://docs.oracle.com/en/database/oracle/oracle-database/21/jjdbc/index.html
+    https://docs.oracle.com/en/database/oracle/oracle-database/21/books.html
+MySQL 8.0
+    https://dev.mysql.com/doc/index-connectors.html
+    https://www.runoob.com/java/java-mysql-connect.html
+PostgreSQL 15
+    驱动程序不需要显示加载，详见 https://jdbc.postgresql.org/documentation/use/
+
+jdbc:mysql://192.168.0.5:3306/dbname?useUnicode=true&characterEncoding=utf8&useSSL=false&autoReconnect=true&allowMultiQueries=true&noAccessToProcedureBodies=true
+jdbc:postgresql://192.168.0.5:5432/dbname?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false

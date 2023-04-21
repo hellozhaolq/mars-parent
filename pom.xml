@@ -2,6 +2,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!--**********************************************************-->
+    <!--********* https://maven.apache.org/pom.html      *********-->
+    <!--********* https://maven.apache.org/settings.html *********-->
+    <!--**********************************************************-->
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.zhaolq.mars</groupId>
@@ -28,81 +32,21 @@
     -->
     <profiles>
         <profile>
-            <id>prop-dev-public</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
+            <id>dev</id>
             <properties>
-                <!--
-                    Oracle 19c，
-                    https://docs.oracle.com/en/database/oracle/oracle-database/21/jjdbc/index.html
-                    https://docs.oracle.com/en/database/oracle/oracle-database/21/books.html
-                -->
-                <mars.oracle.driver-class-name>oracle.jdbc.OracleDriver</mars.oracle.driver-class-name>
-                <!--
-                    MySQL 8.0
-                    https://dev.mysql.com/doc/index-connectors.html
-                    https://www.runoob.com/java/java-mysql-connect.html
-                -->
-                <mars.mysql.driver-class-name>com.mysql.cj.jdbc.Driver</mars.mysql.driver-class-name>
-                <!--
-                    PostgreSQL 15
-                    该驱动程序不需要显示加载，详见 https://jdbc.postgresql.org/documentation/use/
-                -->
-                <mars.postgresql.driver-class-name>org.postgresql.Driver</mars.postgresql.driver-class-name>
-                <!--
-                    Environment.properties文件，Java：System.getenv()
-                    System.properties文件，Java：System.getProperties()
-                -->
+                <profiles.active>dev</profiles.active>
                 <mars.java.home>${env.JAVA_HOME}</mars.java.home>
                 <mars.os.name>${os.name}</mars.os.name>
             </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
         </profile>
 
         <profile>
-            <id>prop-dev-home</id>
+            <id>sit</id>
             <properties>
-                <!--
-                    jdbc:mysql://192.168.0.5:3306/dbname?useUnicode=true&characterEncoding=utf8&useSSL=false&autoReconnect=true&allowMultiQueries=true
-                    &noAccessToProcedureBodies=true
-                    jdbc:postgresql://192.168.0.5:5432/dbname?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false
-                -->
-
-                <!-- 基础库，数据底座，包括用户信息、权限等，t_base -->
-                <mars.db.oracle.url.base>jdbc:oracle:thin:@//192.168.31.5:1521/orclpdb.zhaolq.com</mars.db.oracle.url.base>
-                <mars.db.oracle.username.base>base</mars.db.oracle.username.base>
-                <mars.db.oracle.password.base>123456789</mars.db.oracle.password.base>
-
-                <!-- 日志库 -->
-                <mars.db.mysql.url.log>jdbc:mysql://192.168.31.5:3306/dbname</mars.db.mysql.url.log>
-                <mars.db.mysql.username.log>log</mars.db.mysql.username.log>
-                <mars.db.mysql.password.log>123456789</mars.db.mysql.password.log>
-
-                <!-- 商户商品库，t_merchant_goods -->
-                <mars.db.postgresql.url.goods>jdbc:postgresql://192.168.31.5:5432/dbname</mars.db.postgresql.url.goods>
-                <mars.db.postgresql.username.goods>goods</mars.db.postgresql.username.goods>
-                <mars.db.postgresql.password.goods>123456789</mars.db.postgresql.password.goods>
-
-                <!-- 库存库，t_merchant_goods_inventory -->
-                <mars.db.postgresql.url.inventory>jdbc:postgresql://192.168.31.5:5432/dbname</mars.db.postgresql.url.inventory>
-                <mars.db.postgresql.username.inventory>inventory</mars.db.postgresql.username.inventory>
-                <mars.db.postgresql.password.inventory>123456789</mars.db.postgresql.password.inventory>
-
-                <!-- 客户订单库，t_customer_order -->
-                <mars.db.postgresql.url.order>jdbc:postgresql://192.168.31.5:5432/dbname</mars.db.postgresql.url.order>
-                <mars.db.postgresql.username.order>order</mars.db.postgresql.username.order>
-                <mars.db.postgresql.password.order>123456789</mars.db.postgresql.password.order>
-
-                <!-- 购物车库，t_customer_cart -->
-                <mars.db.postgresql.url.cart>jdbc:postgresql://192.168.31.5:5432/dbname</mars.db.postgresql.url.cart>
-                <mars.db.postgresql.username.cart>cart</mars.db.postgresql.username.cart>
-                <mars.db.postgresql.password.cart>123456789</mars.db.postgresql.password.cart>
-            </properties>
-        </profile>
-
-        <profile>
-            <id>prop-dev-company</id>
-            <properties>
+                <profiles.active>sit</profiles.active>
             </properties>
         </profile>
 
@@ -357,11 +301,17 @@
                 <scope>runtime</scope>
             </dependency>
 
-            <dependency>
+            <!--<dependency>
                 <groupId>com.mysql</groupId>
                 <artifactId>mysql-connector-j</artifactId>
                 <version>${mysql-connector-java.version}</version>
                 <scope>runtime</scope>
+            </dependency>-->
+
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>8.0.29</version>
             </dependency>
 
             <dependency>
@@ -573,12 +523,4 @@
     <distributionManagement>
     </distributionManagement>
 
-    <!--***********************************************************************************************-->
-    <!--***********************************************************************************************-->
-    <!--***********************************************************************************************-->
-    <!-- https://maven.apache.org/pom.html -->
-    <!-- https://maven.apache.org/settings.html -->
-    <!--***********************************************************************************************-->
-    <!--***********************************************************************************************-->
-    <!--***********************************************************************************************-->
 </project>

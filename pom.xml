@@ -99,7 +99,6 @@
                 <mars.db.postgresql.password.cart>123456789</mars.db.postgresql.password.cart>
             </properties>
         </profile>
-        </profile>
 
         <profile>
             <id>prop-dev-company</id>

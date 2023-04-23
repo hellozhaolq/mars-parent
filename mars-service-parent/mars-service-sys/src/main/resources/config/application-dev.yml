@@ -3,9 +3,12 @@
 # DataSource Config
 spring:
   datasource:
-    name: dataSourceName
-    driver-class-name: oracle.jdbc.OracleDriver # Oracle 9i 之后，建议使用 oracle.jdbc.OracleDriver ，而不是 oracle.jdbc.driver.OracleDriver。
-    url: jdbc:oracle:thin:@192.168.31.5:1521:orcl
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mars?useUnicode=true&characterEncoding=utf8&useSSL=false&autoReconnect=true&allowMultiQueries=true&noAccessToProcedureBodies=true
     username: mars
     password: 123456789
 
+logging:
+  level:
+    root: info
+    com.zhaolq.*: debug

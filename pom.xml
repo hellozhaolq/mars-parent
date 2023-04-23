@@ -22,7 +22,6 @@
         <module>mars-demo-parent</module>
         <module>mars-service-parent</module>
         <module>mars-tool-parent</module>
-        <module>mars-zoo-parent</module>
         <module>mars-api-parent</module>
     </modules>
 

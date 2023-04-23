@@ -1,1 +1,14 @@
 # SIT（system integration test）：系统集成测试
+
+# DataSource Config
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mars?useUnicode=true&characterEncoding=utf8&useSSL=false&autoReconnect=true&allowMultiQueries=true&noAccessToProcedureBodies=true
+    username: root
+    password: 1234567
+
+logging:
+  level:
+    root: info
+    com.zhaolq.*: debug

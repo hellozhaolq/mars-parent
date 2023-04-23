@@ -21,8 +21,9 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.alibaba.fastjson2.JSON;
+
 import com.zhaolq.mars.api.sys.entity.UserEntity;
-import com.zhaolq.mars.tool.core.utils.JacksonUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -110,7 +111,7 @@ public class UserControllerTest {
                 .headers(httpHeaders)
                 .session(session)
                 .cookie(cookie)
-                .content(JacksonUtils.objectToJson(userEntity));
+                .content(JSON.toJSONString(userEntity));
         // 执行一个请求并返回一个类型，该类型允许对结果链接进一步的操作，例如：打印MvcResult详细信息、断言期望。
         ResultActions resultActions = mockMvc.perform(request);
         MvcResult mvcResult = resultActions
@@ -156,7 +157,7 @@ public class UserControllerTest {
                 .headers(httpHeaders)
                 .session(session)
                 .cookie(cookie)
-                .content(JacksonUtils.objectToJson(userEntity))
+                .content(JSON.toJSONString(userEntity))
                 .param("account", userTemp.getAccount());
         ResultActions resultActions = mockMvc.perform(request);
 

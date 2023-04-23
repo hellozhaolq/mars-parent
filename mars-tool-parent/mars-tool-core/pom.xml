@@ -76,11 +76,6 @@
             <version>${hutool-all.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-json</artifactId>
-        </dependency>
-
         <!-- 以下依赖不传递 -->
         <dependency>
             <groupId>io.springfox</groupId>

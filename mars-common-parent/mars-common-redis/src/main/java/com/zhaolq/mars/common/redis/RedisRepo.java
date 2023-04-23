@@ -84,9 +84,9 @@ public class RedisRepo<T> {
     /**
      * 设置存活时间
      *
-     * @param key     键
+     * @param key 键
      * @param timeout 存活时间
-     * @param unit    时间单位
+     * @param unit 时间单位
      * @return bool
      */
     public Boolean expire(String key, long timeout, TimeUnit unit) {
@@ -96,7 +96,7 @@ public class RedisRepo<T> {
     /**
      * 设置过期时间点
      *
-     * @param key  键
+     * @param key 键
      * @param date 过期时间
      * @return bool
      */
@@ -107,7 +107,7 @@ public class RedisRepo<T> {
     /**
      * 查询 key 的剩余的过期时间
      *
-     * @param key  键
+     * @param key 键
      * @param unit 时间单位
      * @return 剩余过期时间
      */
@@ -141,7 +141,7 @@ public class RedisRepo<T> {
      * 分批查找匹配的key
      *
      * @param pattern 匹配的模式
-     * @param count   每次查询的数量
+     * @param count 每次查询的数量
      * @return 符合条件的所有key
      */
     public Set<String> scan(String pattern, long count) {
@@ -157,19 +157,15 @@ public class RedisRepo<T> {
     /**
      * Scan 方法
      *
-     * @param pattern  匹配的模式
-     * @param count    每次查询的数量
+     * @param pattern 匹配的模式
+     * @param count 每次查询的数量
      * @param consumer 对找到的key的处理方式
      */
     private void scanLambda(String pattern, long count, Consumer<byte[]> consumer) {
         this.redis.execute((RedisConnection connection) -> {
-            try (Cursor<byte[]> cursor = connection.scan(ScanOptions.scanOptions().count(count).match(pattern).build())) {
-                cursor.forEachRemaining(consumer);
-                return null;
-            } catch (IOException e) {
-                e.printStackTrace();
-                throw new RuntimeException(e);
-            }
+            Cursor<byte[]> cursor = connection.scan(ScanOptions.scanOptions().count(count).match(pattern).build());
+            cursor.forEachRemaining(consumer);
+            return null;
         });
     }
 
@@ -197,7 +193,7 @@ public class RedisRepo<T> {
     /**
      * 设置指定 key 的值
      *
-     * @param key   键
+     * @param key 键
      * @param value 值
      */
     public void set(String key, T value) {
@@ -207,7 +203,7 @@ public class RedisRepo<T> {
     /**
      * 只有在 key 不存在时设置 key 的值
      *
-     * @param key   键
+     * @param key 键
      * @param value 值
      * @return 之前已经存在返回false, 不存在返回true
      */
@@ -218,10 +214,10 @@ public class RedisRepo<T> {
     /**
      * 设置 key-value，并单独设置过期时间
      *
-     * @param key     键
-     * @param value   值
+     * @param key 键
+     * @param value 值
      * @param timeout 单独的存活时间
-     * @param unit    时间单位
+     * @param unit 时间单位
      */
     public void setEx(String key, T value, long timeout, TimeUnit unit) {
         redis.opsForValue().set(key, value, timeout, unit);
@@ -269,7 +265,7 @@ public class RedisRepo<T> {
     /**
      * 增加(Value必须是数字)
      *
-     * @param key       键
+     * @param key 键
      * @param increment 增加值
      * @return 新的值
      */
@@ -280,7 +276,7 @@ public class RedisRepo<T> {
     /**
      * 增加(Value必须是数字)
      *
-     * @param key       键
+     * @param key 键
      * @param increment 增加值
      * @return 新的值
      */
@@ -293,7 +289,7 @@ public class RedisRepo<T> {
     /**
      * 获取存储在哈希表中指定键的值
      *
-     * @param key     键
+     * @param key 键
      * @param hashKey 哈希表的键
      * @return 值
      */
@@ -314,7 +310,7 @@ public class RedisRepo<T> {
     /**
      * 获取所有给定键的值
      *
-     * @param key      键
+     * @param key 键
      * @param hashKeys 哈希表的键列表
      * @return 哈希表的值列表
      */
@@ -325,9 +321,9 @@ public class RedisRepo<T> {
     /**
      * 设置hash表中的值
      *
-     * @param key     键
+     * @param key 键
      * @param hashKey 哈希表的键
-     * @param value   哈希表的值
+     * @param value 哈希表的值
      */
     public void hPut(String key, String hashKey, T value) {
         hashOps.put(key, hashKey, value);
@@ -336,7 +332,7 @@ public class RedisRepo<T> {
     /**
      * 批量设置hash表中的值
      *
-     * @param key  键
+     * @param key 键
      * @param maps 哈希表的键值对
      */
     public void hPutAll(String key, Map<String, T> maps) {
@@ -346,9 +342,9 @@ public class RedisRepo<T> {
     /**
      * 仅当hashKey不存在时才设置
      *
-     * @param key     键
+     * @param key 键
      * @param hashKey 哈希表的键
-     * @param value   值
+     * @param value 值
      * @return bool
      */
     public Boolean hPutIfAbsent(String key, String hashKey, T value) {
@@ -358,7 +354,7 @@ public class RedisRepo<T> {
     /**
      * 删除哈希表字段
      *
-     * @param key     键
+     * @param key 键
      * @param hashKey 哈希表的键
      * @return 删除的数量
      */
@@ -369,7 +365,7 @@ public class RedisRepo<T> {
     /**
      * 删除哈希表字段
      *
-     * @param key      键
+     * @param key 键
      * @param hashKeys 哈希表的键列表
      * @return 删除的数量
      */
@@ -380,7 +376,7 @@ public class RedisRepo<T> {
     /**
      * 查看哈希表中，指定的 Key 是否存在
      *
-     * @param key     键
+     * @param key 键
      * @param hashKey 哈希表的键
      * @return 是否存在
      */
@@ -391,8 +387,8 @@ public class RedisRepo<T> {
     /**
      * 为哈希表中指定key加上增量
      *
-     * @param key       键
-     * @param hashKey   哈希表的键
+     * @param key 键
+     * @param hashKey 哈希表的键
      * @param increment 增加值
      * @return 新的值
      */
@@ -403,8 +399,8 @@ public class RedisRepo<T> {
     /**
      * 为哈希表中指定key加上增量
      *
-     * @param key       键
-     * @param hashKey   哈希表的键
+     * @param key 键
+     * @param hashKey 哈希表的键
      * @param increment 增加值
      * @return 新的值
      */
@@ -447,7 +443,7 @@ public class RedisRepo<T> {
     /**
      * 通过索引获取列表中的元素
      *
-     * @param key   键
+     * @param key 键
      * @param index 索引
      * @return list中的值
      */
@@ -458,9 +454,9 @@ public class RedisRepo<T> {
     /**
      * 获取列表指定范围内的元素
      *
-     * @param key   键
+     * @param key 键
      * @param start 开始位置, 0是开始位置
-     * @param end   结束位置, -1返回所有
+     * @param end 结束位置, -1返回所有
      * @return 范围内的元素
      */
     public List<T> lGetRange(String key, long start, long end) {
@@ -470,7 +466,7 @@ public class RedisRepo<T> {
     /**
      * 在 list 前面加入新的元素
      *
-     * @param key   键
+     * @param key 键
      * @param value 新的元素
      * @return 当前列表长度
      */
@@ -482,7 +478,7 @@ public class RedisRepo<T> {
      * 在指定元素的前面添加新的元素
      * 如果pivot存在, 在pivot前面添加
      *
-     * @param key   键
+     * @param key 键
      * @param pivot 指定元素
      * @param value 新的元素
      * @return 当前列表长度
@@ -494,7 +490,7 @@ public class RedisRepo<T> {
     /**
      * 在 list 前面加入新的元素
      *
-     * @param key    键
+     * @param key 键
      * @param values 新的元素
      * @return 当前列表长度
      */
@@ -505,7 +501,7 @@ public class RedisRepo<T> {
     /**
      * 当list存在的时候才加入
      *
-     * @param key   键
+     * @param key 键
      * @param value 新的元素
      * @return 当前列表长度
      */
@@ -516,7 +512,7 @@ public class RedisRepo<T> {
     /**
      * 在 list 后面加入新的元素
      *
-     * @param key   键
+     * @param key 键
      * @param value 新的元素
      * @return 当前列表长度
      */
@@ -528,7 +524,7 @@ public class RedisRepo<T> {
      * 在指定元素的后面添加新的元素
      * 如果pivot存在, 在pivot后面添加
      *
-     * @param key   键
+     * @param key 键
      * @param pivot 指定元素
      * @param value 新的元素
      * @return 当前列表长度
@@ -540,7 +536,7 @@ public class RedisRepo<T> {
     /**
      * 在 list 后面加入新的元素
      *
-     * @param key    键
+     * @param key 键
      * @param values 新的元素
      * @return 当前列表长度
      */
@@ -551,7 +547,7 @@ public class RedisRepo<T> {
     /**
      * 当list存在的时候才加入
      *
-     * @param key   键
+     * @param key 键
      * @param value 新的元素
      * @return 当前列表长度
      */
@@ -562,7 +558,7 @@ public class RedisRepo<T> {
     /**
      * 通过索引设置列表元素的值(必须是已存在的索引)
      *
-     * @param key   键
+     * @param key 键
      * @param index 索引
      * @param value 值
      */
@@ -593,7 +589,7 @@ public class RedisRepo<T> {
     /**
      * 移除列表的最后一个元素，并将该元素添加到另一个列表并返回
      *
-     * @param sourceKey      源列表的Key
+     * @param sourceKey 源列表的Key
      * @param destinationKey 目标列表的Key
      * @return 被转移的元素
      */
@@ -604,10 +600,10 @@ public class RedisRepo<T> {
     /**
      * 删除集合中值等于value得元素
      *
-     * @param key   键
+     * @param key 键
      * @param count count > 0: Remove elements equal to value moving from head to tail.
-     *              count < 0: Remove elements equal to value moving from tail to head.
-     *              count = 0: Remove all elements equal to value.
+     * count < 0: Remove elements equal to value moving from tail to head.
+     * count = 0: Remove all elements equal to value.
      * @param value 要删除的值
      * @return 删除的数量
      */
@@ -618,9 +614,9 @@ public class RedisRepo<T> {
     /**
      * 裁剪list, 只保留list中指定范围内的部分
      *
-     * @param key   键
+     * @param key 键
      * @param start 开始位置
-     * @param end   结束位置
+     * @param end 结束位置
      */
     public void lTrim(String key, long start, long end) {
         listOps.trim(key, start, end);
@@ -641,7 +637,7 @@ public class RedisRepo<T> {
     /**
      * set添加元素
      *
-     * @param key    键
+     * @param key 键
      * @param values 值
      * @return size
      */
@@ -653,7 +649,7 @@ public class RedisRepo<T> {
     /**
      * set移除元素
      *
-     * @param key    键
+     * @param key 键
      * @param values 值
      * @return size
      */
@@ -675,8 +671,8 @@ public class RedisRepo<T> {
     /**
      * 将元素value从一个集合移到另一个集合
      *
-     * @param key     键
-     * @param value   元素
+     * @param key 键
+     * @param value 元素
      * @param destKey 目标键
      * @return bool
      */
@@ -697,7 +693,7 @@ public class RedisRepo<T> {
     /**
      * 判断集合是否包含value
      *
-     * @param key   键
+     * @param key 键
      * @param value 元素
      * @return 是否存在
      */
@@ -708,7 +704,7 @@ public class RedisRepo<T> {
     /**
      * 获取两个集合的交集
      *
-     * @param key      键
+     * @param key 键
      * @param otherKey 其它键
      * @return 结果集合
      */
@@ -719,7 +715,7 @@ public class RedisRepo<T> {
     /**
      * 获取key集合与多个集合的交集
      *
-     * @param key       键
+     * @param key 键
      * @param otherKeys 其它键
      * @return 结果集合
      */
@@ -730,9 +726,9 @@ public class RedisRepo<T> {
     /**
      * key集合与otherKey集合的交集存储到destKey集合中
      *
-     * @param key      键
+     * @param key 键
      * @param otherKey 其它键
-     * @param destKey  目标键
+     * @param destKey 目标键
      * @return 结果集合的大小
      */
     public Long sIntersectAndStore(String key, String otherKey, String destKey) {
@@ -742,9 +738,9 @@ public class RedisRepo<T> {
     /**
      * key集合与多个集合的交集存储到destKey集合中
      *
-     * @param key       键
+     * @param key 键
      * @param otherKeys 其它键
-     * @param destKey   目标键
+     * @param destKey 目标键
      * @return 结果集合的大小
      */
     public Long sIntersectAndStore(String key, Collection<String> otherKeys, String destKey) {
@@ -754,7 +750,7 @@ public class RedisRepo<T> {
     /**
      * 获取两个集合的并集
      *
-     * @param key       键
+     * @param key 键
      * @param otherKeys 其它键
      * @return 结果集合
      */
@@ -765,7 +761,7 @@ public class RedisRepo<T> {
     /**
      * 获取key集合与多个集合的并集
      *
-     * @param key       键
+     * @param key 键
      * @param otherKeys 其它键
      * @return 结果集合
      */
@@ -776,9 +772,9 @@ public class RedisRepo<T> {
     /**
      * key集合与otherKey集合的并集存储到destKey中
      *
-     * @param key      键
+     * @param key 键
      * @param otherKey 其它键
-     * @param destKey  目标键
+     * @param destKey 目标键
      * @return 结果集合的大小
      */
     public Long sUnionAndStore(String key, String otherKey, String destKey) {
@@ -788,9 +784,9 @@ public class RedisRepo<T> {
     /**
      * key集合与多个集合的并集存储到destKey中
      *
-     * @param key       键
+     * @param key 键
      * @param otherKeys 其它键
-     * @param destKey   目标键
+     * @param destKey 目标键
      * @return 结果集合的大小
      */
     public Long sUnionAndStore(String key, Collection<String> otherKeys, String destKey) {
@@ -800,7 +796,7 @@ public class RedisRepo<T> {
     /**
      * 获取两个集合的差集
      *
-     * @param key      键
+     * @param key 键
      * @param otherKey 其它键
      * @return 结果集合
      */
@@ -811,7 +807,7 @@ public class RedisRepo<T> {
     /**
      * 获取key集合与多个集合的差集
      *
-     * @param key       键
+     * @param key 键
      * @param otherKeys 其它键
      * @return 结果集合
      */
@@ -822,9 +818,9 @@ public class RedisRepo<T> {
     /**
      * key集合与otherKey集合的差集存储到destKey中
      *
-     * @param key      键
+     * @param key 键
      * @param otherKey 其它键
-     * @param destKey  目标键
+     * @param destKey 目标键
      * @return 结果集合的大小
      */
     public Long sDifference(String key, String otherKey, String destKey) {
@@ -834,9 +830,9 @@ public class RedisRepo<T> {
     /**
      * key集合与多个集合的差集存储到destKey中
      *
-     * @param key       键
+     * @param key 键
      * @param otherKeys 其它键
-     * @param destKey   目标键
+     * @param destKey 目标键
      * @return 结果集合的大小
      */
     public Long sDifference(String key, Collection<String> otherKeys, String destKey) {
@@ -866,7 +862,7 @@ public class RedisRepo<T> {
     /**
      * 随机获取集合中count个元素
      *
-     * @param key   键
+     * @param key 键
      * @param count 个数
      * @return 随机元素列表
      */
@@ -877,7 +873,7 @@ public class RedisRepo<T> {
     /**
      * 随机获取集合中count个元素并且去除重复的
      *
-     * @param key   键
+     * @param key 键
      * @param count 个数
      * @return 随机元素集合
      */

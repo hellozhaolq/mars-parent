@@ -53,11 +53,11 @@
             <artifactId>mars-common-spring</artifactId>
             <version>1.0.0-deluxe</version>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>com.zhaolq.mars.common</groupId>
             <artifactId>mars-common-swagger</artifactId>
             <version>1.0.0-deluxe</version>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>com.zhaolq.mars.common</groupId>
             <artifactId>mars-common-valid</artifactId>

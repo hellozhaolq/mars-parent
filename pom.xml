@@ -68,22 +68,9 @@
             <repositories>
                 <!-- 按顺序搜索jar包，最后找默认的中央仓库。若将id=central的仓库放在最前就直接去中央仓库搜索 -->
                 <repository>
-                    <id>central</id> <!-- maven把id=central的仓库做为中央仓库，这意味着修改中央仓库地址 -->
-                    <name>Central Repository</name>
-                    <url>https://repo.maven.apache.org/maven2/</url>
-                    <layout>default</layout>
-                    <releases>
-                        <enabled>true</enabled>
-                    </releases>
-                    <snapshots>
-                        <enabled>false</enabled>
-                    </snapshots>
-                </repository>
-
-                <repository>
-                    <id>aliyun</id> <!-- repository的唯一表示，中央仓库占用id:central。配置仓库镜像时用到。 -->
-                    <name>Aliyun Repository</name> <!-- 仓库的名称，为了方便人阅读，无其他作用 -->
-                    <url>https://maven.aliyun.com/repository/public</url> <!-- 仓库的地址 -->
+                    <id>central</id> <!-- repository的唯一标识。可用其创建镜像引用，用作备用下载站点。maven把id=central的仓库做为中央仓库，指定central意味着修改中央仓库地址 -->
+                    <name>Central Repository</name> <!-- 仓库的名称，为了方便人阅读，无其他作用 -->
+                    <url>https://repo.maven.apache.org/maven2/</url> <!-- 仓库的地址 -->
                     <layout>default</layout> <!-- default:Maven2/3的布局，legacy:Maven 1.x的布局 -->
                     <releases> <!-- 控制Maven对于发布版构件的下载 -->
                         <enabled>true</enabled> <!-- 开启nexus-releases仓库的发布版本下载支持 -->
@@ -92,6 +79,23 @@
                     </releases>
                     <snapshots> <!-- 控制Maven对于快照版构件的下载 -->
                         <enabled>false</enabled> <!-- 关闭nexus-releases仓库的快照版本下载支持 -->
+                        <updatePolicy>daily</updatePolicy>
+                        <checksumPolicy>warn</checksumPolicy>
+                    </snapshots>
+                </repository>
+
+                <repository>
+                    <id>aliyun</id>
+                    <name>Aliyun Repository</name>
+                    <url>https://maven.aliyun.com/repository/public</url>
+                    <layout>default</layout>
+                    <releases>
+                        <enabled>true</enabled>
+                        <updatePolicy>daily</updatePolicy>
+                        <checksumPolicy>warn</checksumPolicy>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
                         <updatePolicy>daily</updatePolicy>
                         <checksumPolicy>warn</checksumPolicy>
                     </snapshots>
@@ -145,6 +149,43 @@
                 </snapshotRepository>
             </distributionManagement>
         </profile>
+
+        <profile>
+            <id>repo-company</id>
+            <repositories>
+                <repository>
+                    <id>central</id> <!-- repository的唯一表示，中央仓库占用id:central。配置仓库镜像时用到。 -->
+                    <name>Central Repository</name> <!-- 仓库的名称，为了方便人阅读，无其他作用 -->
+                    <url>https://mirrors.tools.huawei.com/maven/</url> <!-- 仓库的地址 -->
+                    <layout>default</layout> <!-- default:Maven2/3的布局，legacy:Maven 1.x的布局 -->
+                    <releases> <!-- 控制Maven对于发布版构件的下载 -->
+                        <enabled>true</enabled> <!-- 开启nexus-releases仓库的发布版本下载支持 -->
+                        <updatePolicy>daily</updatePolicy> <!-- 检查更新的频率，默认值是daily，表示Maven每天检查一次 -->
+                        <checksumPolicy>warn</checksumPolicy> <!-- 配置Maven检查校验和文件的策略 -->
+                    </releases>
+                    <snapshots> <!-- 控制Maven对于快照版构件的下载 -->
+                        <enabled>false</enabled> <!-- 关闭nexus-releases仓库的快照版本下载支持 -->
+                        <updatePolicy>daily</updatePolicy>
+                        <checksumPolicy>warn</checksumPolicy>
+                    </snapshots>
+                </repository>
+            </repositories>
+
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>huawei-plugin</id>
+                    <name>Huawei Plugin</name>
+                    <url>https://mirrors.tools.huawei.com/maven/</url>
+                    <layout>default</layout>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </pluginRepository>
+            </pluginRepositories>
+        </profile>
     </profiles>
 
     <properties>
@@ -153,8 +194,6 @@
 
         <!-- UTC时间！覆盖 ${maven.build.timestamp} 的默认格式 yyyy-MM-dd'T'HH:mm:ss'Z' -->
         <maven.build.timestamp.format>yyMMdd</maven.build.timestamp.format>
-
-        <app.main.class>com.zhaolq.mars.MainClass</app.main.class>
 
         <!-- 优先级低于maven-compiler-plugin插件中的配置 -->
         <!-- 新的release选项需要JDK版本支持(详见源码since标签) -->
@@ -170,7 +209,7 @@
         <!-- 配置所有Maven插件输出的报告编码 -->
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <spring-boot.version>2.3.10.RELEASE</spring-boot.version>
+        <spring-boot.version>2.7.9</spring-boot.version>
         <spring-boot-maven-plugin.version>2.3.12.RELEASE</spring-boot-maven-plugin.version>
         <spring-cloud.version>Hoxton.SR12</spring-cloud.version>
 
@@ -311,7 +350,7 @@
             <!--<dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
-                <version>8.0.29</version>
+                <version>8.0.28</version>
             </dependency>-->
 
             <dependency>

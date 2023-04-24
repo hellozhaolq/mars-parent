@@ -7,8 +7,7 @@ import org.springframework.lang.Nullable;
 
 import com.zhaolq.mars.tool.core.date.DateUtils;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,23 +18,23 @@ import lombok.NoArgsConstructor;
  * @author zhaolq
  * @date 2020/10/16 11:30
  */
-@ApiModel(description = "返回信息")
+@Schema(description = "返回信息")
 @Data // 等同于@Getter、@Setter、@ToString、@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 public final class R<T> implements Serializable {
 
-    @ApiModelProperty(value = "状态码", required = true)
+    @Schema(description = "状态码", example = "200")
     private int code;
-    @ApiModelProperty(value = "承载数据")
+    @Schema(description = "承载数据")
     private T data;
-    @ApiModelProperty(value = "返回消息", required = true)
+    @Schema(description = "返回消息")
     private String msgEn;
-    @ApiModelProperty(value = "返回消息", required = true)
+    @Schema(description = "返回消息")
     private String msgCh;
-    @ApiModelProperty(value = "是否成功", required = true)
+    @Schema(description = "是否成功", example = "true")
     private Boolean success;
-    @ApiModelProperty(value = "返回时间", required = true)
+    @Schema(description = "返回时间")
     private String datetime = DateUtils.now();
 
     protected R(IResultCode resultCode) {

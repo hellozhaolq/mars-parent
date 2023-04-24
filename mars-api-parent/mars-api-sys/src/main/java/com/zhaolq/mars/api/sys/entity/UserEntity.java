@@ -25,8 +25,7 @@ import com.zhaolq.mars.common.valid.group.Add;
 import com.zhaolq.mars.common.valid.group.Edit;
 import com.zhaolq.mars.common.valid.group.Remove;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -43,143 +42,143 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("MARS_SYS_USER")
-@ApiModel(value = "UserEntity对象", description = "用户管理")
+@Schema(description = "用户管理")
 public class UserEntity extends Model<UserEntity> {
 
     @JsonProperty("id")
     @NotNull(groups = {Edit.class, Remove.class}, message = "id缺失")
-    @ApiModelProperty(value = "编号")
+    @Schema(description = "编号")
     @TableId(value = "ID", type = IdType.ASSIGN_ID) // 局部主键策略
     private String id;
 
     @NotNull(groups = {Add.class}, message = "账号缺失")
-    @ApiModelProperty(value = "账号")
+    @Schema(description = "账号")
     @TableField("ACCOUNT")
     private String account;
 
     @NotNull(groups = {Add.class}, message = "密码缺失")
-    @ApiModelProperty(value = "密码")
+    @Schema(description = "密码")
     @TableField("PASSWORD")
     private String password;
 
     @NotNull(groups = {Add.class}, message = "用户名缺失")
-    @ApiModelProperty(value = "用户名")
+    @Schema(description = "用户名")
     @TableField(value = "NAME", condition = SqlConditionOracle.LIKE)
     private String name;
 
-    @ApiModelProperty(value = "昵称")
+    @Schema(description = "昵称")
     @TableField("NICK_NAME")
     private String nickName;
 
-    @ApiModelProperty(value = "加密盐")
+    @Schema(description = "加密盐")
     @TableField("SALT")
     private String salt;
 
     @NotNull(groups = {Add.class}, message = "性别缺失")
-    @ApiModelProperty(value = "性别  1：男   2：女")
+    @Schema(description = "性别  1：男   2：女")
     @TableField("SEX")
     private Byte sex;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss") // 序列化时转换成指定的格式
-    @ApiModelProperty(value = "出生日期")
+    @Schema(description = "出生日期")
     @TableField("BIRTHDAY")
     private Date birthday;
 
-    @ApiModelProperty(value = "年龄")
+    @Schema(description = "年龄")
     @TableField("AGE")
     private Integer age;
 
-    @ApiModelProperty(value = "身份证号")
+    @Schema(description = "身份证号")
     @TableField("ID_NUMBER")
     private String idNumber;
 
-    @ApiModelProperty(value = "地址")
+    @Schema(description = "地址")
     @TableField("ADDRESS")
     private String address;
 
     @NotNull(groups = {Add.class}, message = "邮箱缺失")
     @Email(message = "邮件格式错误")
-    @ApiModelProperty(value = "邮箱")
+    @Schema(description = "邮箱")
     @TableField("EMAIL")
     private String email;
 
     @NotNull(groups = {Add.class}, message = "手机号缺失")
     @Pattern(regexp = "^[1][3,4,5,6,7,8,9][0-9]{9}$", message = "手机号格式有误")
-    @ApiModelProperty(value = "手机号")
+    @Schema(description = "手机号")
     @TableField("MOBILE")
     private String mobile;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
-    @ApiModelProperty(value = "入职时间")
+    @Schema(description = "入职时间")
     @TableField("ENTRY_TIME")
     private Date entryTime;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
-    @ApiModelProperty(value = "离职时间")
+    @Schema(description = "离职时间")
     @TableField("DEPARTURE_TIME")
     private Date departureTime;
 
     @NotNull(groups = {Add.class}, message = "国家代码缺失")
-    @ApiModelProperty(value = "国家代码")
+    @Schema(description = "国家代码")
     @TableField("COUNTRY_CODE")
     private String countryCode;
 
     @NotNull(groups = {Add.class}, message = "民族代码缺失")
-    @ApiModelProperty(value = "民族代码")
+    @Schema(description = "民族代码")
     @TableField("NATION_CODE")
     private String nationCode;
 
-    @ApiModelProperty(value = "政治面貌代码")
+    @Schema(description = "政治面貌代码")
     @TableField("POLITICAL_STATUS_CODE")
     private String politicalStatusCode;
 
-    @ApiModelProperty(value = "用户类型")
+    @Schema(description = "用户类型")
     @TableField("USER_TYPE")
     private String userType;
 
-    @ApiModelProperty(value = "身份代码")
+    @Schema(description = "身份代码")
     @TableField("IDENTITY_CODE")
     private String identityCode;
 
     @NotNull(groups = {Add.class}, message = "机构ID缺失")
-    @ApiModelProperty(value = "机构ID")
+    @Schema(description = "机构ID")
     @TableField("DEPT_ID")
     private String deptId;
 
-    @ApiModelProperty(value = "创建人")
+    @Schema(description = "创建人")
     @TableField("CREATE_BY")
     private String createBy;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
-    @ApiModelProperty(value = "创建时间")
+    @Schema(description = "创建时间")
     @TableField(value = "CREATE_TIME", fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
-    @ApiModelProperty(value = "更新人")
+    @Schema(description = "更新人")
     @TableField("LAST_UPDATE_BY")
     private String lastUpdateBy;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
-    @ApiModelProperty(value = "更新时间")
+    @Schema(description = "更新时间")
     @TableField(value = "LAST_UPDATE_TIME", fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime lastUpdateTime;
 
     @NotNull(groups = {Add.class}, message = "状态缺失")
-    @ApiModelProperty(value = "状态  0：禁用   1：正常")
+    @Schema(description = "状态  0：禁用   1：正常")
     @TableField("STATUS")
     private Byte status;
 
     @NotNull(groups = {Add.class}, message = "是否删除缺失")
-    @ApiModelProperty(value = "是否删除  -1：已删除  0：正常")
+    @Schema(description = "是否删除  -1：已删除  0：正常")
     @TableField("DEL_FLAG")
     private Byte delFlag;
 
-    @ApiModelProperty(value = "【0】是否:1是0否")
+    @Schema(description = "【0】是否:1是0否")
     @TableField("FLAG")
     private String flag;
 

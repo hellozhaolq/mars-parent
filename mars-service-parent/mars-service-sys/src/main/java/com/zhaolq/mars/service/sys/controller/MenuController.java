@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
+import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +29,10 @@ import com.zhaolq.mars.tool.core.result.ResultCode;
 import com.zhaolq.mars.tool.core.utils.ObjectUtils;
 import com.zhaolq.mars.tool.core.utils.StringUtils;
 
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterStyle;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -43,14 +47,15 @@ import lombok.extern.slf4j.Slf4j;
 @Validated
 @Slf4j
 @RestController
-@RequestMapping("/menu")
+@Tag(name = "菜单模块", description = "菜单模块")
+@RequestMapping(path = "/menu", produces = {MediaType.ALL_VALUE})
 @AllArgsConstructor
 public class MenuController {
 
     private IMenuService menuService;
 
     @PostMapping("/post")
-    @ApiOperation(value = "单个新增", notes = "单个新增")
+    @Operation(summary = "单个新增", description = "单个新增")
     public R<Boolean> post(@Validated({Add.class}) @RequestBody(required = true) MenuEntity menuEntity) {
         // 检查菜单code是否存在
         MenuEntity result = menuService.getOne(WrapperBuilder.getQueryWrapper(new MenuEntity().setCode(menuEntity.getCode())));
@@ -64,7 +69,8 @@ public class MenuController {
     }
 
     @DeleteMapping("/delete/{id}")
-    @ApiOperation(value = "单个删除", notes = "单个删除")
+    @Operation(summary = "单个删除", description = "单个删除")
+    @Parameter(name = "id", description = "菜单id", required = true, style = ParameterStyle.SIMPLE)
     public R<Boolean> delete(@PathVariable("id") @NotNull(message = "缺少id") String id) {
         MenuEntity menuEntity = menuService.getById(id);
         if (menuEntity == null) {
@@ -75,7 +81,7 @@ public class MenuController {
     }
 
     @PutMapping("/put")
-    @ApiOperation(value = "单个修改", notes = "单个修改")
+    @Operation(summary = "单个修改", description = "单个修改")
     public R<Boolean> put(@Validated({Edit.class}) @RequestBody MenuEntity menuEntity) {
         MenuEntity menuEntityTemp = menuService.getById(menuEntity.getId());
         if (menuEntityTemp == null) {
@@ -86,7 +92,7 @@ public class MenuController {
     }
 
     @GetMapping("/get")
-    @ApiOperation(value = "单个查询", notes = "单个查询")
+    @Operation(summary = "单个查询", description = "单个查询")
     public R<MenuEntity> get(MenuEntity menuEntity) {
         // 这里永远断言成功，即使请求没有参数userEntity也不是null。
         Assert.notNull(menuEntity, ResultCode.PARAM_NOT_COMPLETE.getDescCh());
@@ -102,13 +108,13 @@ public class MenuController {
     }
 
     @GetMapping("/getList")
-    @ApiOperation(value = "列表查询", notes = "列表查询")
+    @Operation(summary = "列表查询", description = "列表查询")
     public R<List<MenuEntity>> getList(MenuEntity menuEntity) {
         return R.success(menuService.list(WrapperBuilder.getQueryWrapper(menuEntity)));
     }
 
     @GetMapping("/getPage")
-    @ApiOperation(value = "分页查询", notes = "分页查询")
+    @Operation(summary = "分页查询", description = "分页查询")
     public R<IPage<MenuEntity>> getPage(PageConvert<MenuEntity> pageConvert, MenuEntity menuEntity) {
         return R.success(menuService.page(pageConvert.getPagePlus(), WrapperBuilder.getQueryWrapper(menuEntity)));
     }

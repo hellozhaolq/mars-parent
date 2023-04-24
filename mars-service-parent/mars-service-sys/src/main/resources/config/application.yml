@@ -1,5 +1,4 @@
-
-# https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-external-config-application-property-files
+# 外部应用属性优先级 https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-external-config-application-property-files
 
 server:
   port: 60001
@@ -14,7 +13,7 @@ server:
 
 spring:
   application:
-    name: @project.name@ # 需要项目打包以后才能运行
+    name: @project.name@
   profiles:
     active: @profiles.active@
   mustache:
@@ -39,6 +38,11 @@ swagger:
   application-description: @project.description@
   try-host: http://localhost:${server.port}
 
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    path: /swagger-ui.html # http://127.0.0.1:60001/mars-service-sys/swagger-ui.html
+
 logging:
   config: classpath:log4j2.xml
-

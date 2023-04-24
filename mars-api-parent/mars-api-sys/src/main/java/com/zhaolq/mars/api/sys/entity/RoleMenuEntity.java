@@ -1,18 +1,18 @@
 package com.zhaolq.mars.api.sys.entity;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
+
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-
-import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -26,34 +26,34 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("MARS_SYS_ROLE_MENU")
-@ApiModel(value="RoleMenuEntity对象", description="角色菜单")
+@Schema(description = "角色菜单")
 public class RoleMenuEntity extends Model<RoleMenuEntity> {
 
-    @ApiModelProperty(value = "编号")
+    @Schema(description = "编号")
     @TableId(value = "ID", type = IdType.ASSIGN_ID)
     private String id;
 
-    @ApiModelProperty(value = "角色ID")
+    @Schema(description = "角色ID")
     @TableField("ROLE_ID")
     private String roleId;
 
-    @ApiModelProperty(value = "菜单ID")
+    @Schema(description = "菜单ID")
     @TableField("MENU_ID")
     private String menuId;
 
-    @ApiModelProperty(value = "创建人")
+    @Schema(description = "创建人")
     @TableField("CREATE_BY")
     private String createBy;
 
-    @ApiModelProperty(value = "创建时间")
+    @Schema(description = "创建时间")
     @TableField("CREATE_TIME")
     private LocalDateTime createTime;
 
-    @ApiModelProperty(value = "更新人")
+    @Schema(description = "更新人")
     @TableField("LAST_UPDATE_BY")
     private String lastUpdateBy;
 
-    @ApiModelProperty(value = "更新时间")
+    @Schema(description = "更新时间")
     @TableField("LAST_UPDATE_TIME")
     private LocalDateTime lastUpdateTime;
 

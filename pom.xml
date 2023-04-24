@@ -75,7 +75,7 @@
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
         <hutool-all.version>5.8.0</hutool-all.version>
 
-        <springfox-boot-starter.version>3.0.0</springfox-boot-starter.version>
+        <springdoc-openapi-ui.version>1.7.0</springdoc-openapi-ui.version>
 
         <!-- MyBatis-Plus和boot-starter版本号对应 -->
         <mybatis-plus-boot-starter.version>3.5.1</mybatis-plus-boot-starter.version>
@@ -138,13 +138,11 @@
 
     <dependencyManagement>
         <dependencies>
-            <!--<dependency>
-                <groupId>org.junit</groupId>
-                <artifactId>junit-bom</artifactId>
-                <version>${junit-bom.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>-->
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-ui</artifactId>
+                <version>${springdoc-openapi-ui.version}</version>
+            </dependency>
 
             <!-- 覆盖应写在上面 -->
             <dependency>
@@ -256,6 +254,7 @@
                 <version>${maven-resources-plugin.version}</version>
                 <configuration>
                     <encoding>${maven.resources.encoding}</encoding>
+                    <useDefaultDelimiters>true</useDefaultDelimiters>
                 </configuration>
             </plugin>
         </plugins>

@@ -1,20 +1,28 @@
 package com.zhaolq.mars.service.sys.controller;
 
-import com.zhaolq.mars.common.spring.utils.SpringContextUtils;
-import com.zhaolq.mars.tool.core.result.R;
-import com.zhaolq.mars.tool.core.utils.ObjectUtils;
-import com.zhaolq.mars.tool.core.utils.StringUtils;
-import lombok.extern.slf4j.Slf4j;
+import java.util.Comparator;
+import java.util.Map;
+import java.util.TreeMap;
+
+import javax.annotation.Resource;
+
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.logging.LoggingSystem;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
-import java.util.Comparator;
-import java.util.Map;
-import java.util.TreeMap;
+import com.zhaolq.mars.common.spring.utils.SpringContextUtils;
+import com.zhaolq.mars.tool.core.result.R;
+import com.zhaolq.mars.tool.core.utils.ObjectUtils;
+import com.zhaolq.mars.tool.core.utils.StringUtils;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterStyle;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 测试
@@ -24,7 +32,8 @@ import java.util.TreeMap;
  */
 @Slf4j
 @RestController
-@RequestMapping("/appTest")
+@Tag(name = "测试模块", description = "测试模块")
+@RequestMapping(path = "/appTest", produces = {MediaType.ALL_VALUE})
 public class AppTestController {
 
     @Resource
@@ -34,6 +43,7 @@ public class AppTestController {
     private LoggingSystem loggingSystem;
 
     @GetMapping("/getDataSourceProperties")
+    @Operation(summary = "获取数据源配置", description = "获取数据源配置")
     public R<Object> getDataSourceProperties() {
         Map<String, String> map = new TreeMap<>(new Comparator<String>() {
             @Override
@@ -50,6 +60,8 @@ public class AppTestController {
     }
 
     @GetMapping("/getBean")
+    @Parameter(name = "beanName", description = "Bean名称", style = ParameterStyle.SIMPLE)
+    @Operation(summary = "获取Bean", description = "获取Bean")
     public R<Object> getBean(String beanName) {
         if (StringUtils.isEmpty(beanName)) {
             beanName = "userServiceImpl";
@@ -61,9 +73,9 @@ public class AppTestController {
         }
         Object bean = SpringContextUtils.getInstance().getBean(beanName);
         if (ObjectUtils.isEmpty(bean)) {
-            return R.success("No bean named '" + beanName + "' available ");
+            return R.failure("No bean named '" + beanName + "' available ", "没有可用的名为 '" + beanName + "' 的bean");
         }
-        return R.success("bean的简单名称: " + bean.getClass().getSimpleName());
+        return R.success("Simple name of the bean: " + bean.getClass().getSimpleName());
     }
 
 }

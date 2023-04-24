@@ -8,6 +8,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,7 +39,10 @@ import com.zhaolq.mars.tool.core.utils.StringUtils;
 import cn.hutool.core.lang.tree.Tree;
 import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterStyle;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -53,7 +57,8 @@ import lombok.extern.slf4j.Slf4j;
 @Validated
 @Slf4j
 @RestController
-@RequestMapping("/user")
+@Tag(name = "用户模块", description = "用户模块")
+@RequestMapping(path = "/user", produces = {MediaType.ALL_VALUE})
 @AllArgsConstructor
 public class UserController {
 
@@ -67,7 +72,7 @@ public class UserController {
      * @throws
      */
     @PostMapping("/post")
-    @ApiOperation(value = "单个新增", notes = "单个新增")
+    @Operation(summary = "单个新增", description = "单个新增")
     public R<Boolean> post(@Validated({Add.class}) @RequestBody(required = true) UserEntity userEntity) {
         // 检查用户是否存在
         QueryWrapper<UserEntity> wrapper = new QueryWrapper<>(new UserEntity().setAccount(userEntity.getAccount()));
@@ -88,7 +93,8 @@ public class UserController {
      * @throws
      */
     @DeleteMapping("/delete/{id}")
-    @ApiOperation(value = "单个删除", notes = "单个删除")
+    @Parameter(name = "id", description = "用户id", required = true, style = ParameterStyle.SIMPLE)
+    @Operation(summary = "单个删除", description = "单个删除")
     public R<Boolean> delete(@PathVariable("id") @NotNull(message = "缺少id") String id) {
         UserEntity userEntity = userService.getById(id);
         if (userEntity == null) {
@@ -106,7 +112,7 @@ public class UserController {
      * @throws
      */
     @PutMapping("/put")
-    @ApiOperation(value = "单个修改", notes = "单个修改")
+    @Operation(summary = "单个修改", description = "单个修改")
     public R<Boolean> put(@Validated({Edit.class}) @RequestBody UserEntity userEntity) {
         UserEntity userEntityTemp = userService.getById(userEntity.getId());
         if (userEntityTemp == null) {
@@ -124,7 +130,7 @@ public class UserController {
      * @throws
      */
     @GetMapping("/get")
-    @ApiOperation(value = "单个查询", notes = "单个查询")
+    @Operation(summary = "单个查询", description = "单个查询")
     public R<UserEntity> get(UserEntity userEntity) {
         // 这里永远断言成功，即使请求没有参数userEntity也不是null。
         Assert.notNull(userEntity, ResultCode.PARAM_NOT_COMPLETE.getDescCh());
@@ -148,7 +154,7 @@ public class UserController {
      * @return com.zhaolq.mars.tool.core.result.R<java.util.List < com.zhaolq.mars.api.sys.entity.UserEntity>>
      */
     @GetMapping("/getList")
-    @ApiOperation(value = "列表查询", notes = "列表查询")
+    @Operation(summary = "列表查询", description = "列表查询")
     public R<List<UserEntity>> getList(UserEntity userEntity) {
         QueryWrapper<UserEntity> wrapper = new QueryWrapper<>(userEntity);
         return R.success(userService.list(wrapper));
@@ -162,7 +168,7 @@ public class UserController {
      * @return com.zhaolq.mars.tool.core.result.R<com.baomidou.mybatisplus.core.metadata.IPage < com.zhaolq.mars.api.sys.entity.UserEntity>>
      */
     @GetMapping("/getPage")
-    @ApiOperation(value = "分页查询", notes = "分页查询")
+    @Operation(summary = "分页查询", description = "分页查询")
     public R<IPage<UserEntity>> getPage(PageConvert<UserEntity> pageConvert, UserEntity userEntity) {
         QueryWrapper<UserEntity> wrapper = new QueryWrapper<>(userEntity);
         return R.success(userService.page(pageConvert.getPagePlus(), wrapper));
@@ -176,9 +182,10 @@ public class UserController {
      * @return com.zhaolq.mars.tool.core.result.R<com.baomidou.mybatisplus.core.metadata.IPage < com.zhaolq.mars.api.sys.entity.UserEntity>>
      */
     @PostMapping("/getPage2")
-    @ApiOperation(value = "分页查询post请求", notes = "分页查询post请求")
-    public R<IPage<UserEntity>> getPage2(PageConvert<UserEntity> pageConvert,
-                                         @RequestBody(required = false) UserEntity userEntity) {
+    @Operation(summary = "分页查询post请求", description = "分页查询post请求")
+    public R<IPage<UserEntity>> getPage2(
+            PageConvert<UserEntity> pageConvert,
+            @RequestBody(required = false) UserEntity userEntity) {
         QueryWrapper<UserEntity> wrapper = new QueryWrapper<>(userEntity);
         return R.success(userService.page(pageConvert.getPagePlus(), wrapper));
     }
@@ -190,7 +197,7 @@ public class UserController {
      * @return com.zhaolq.mars.tool.core.result.R<com.zhaolq.mars.api.sys.entity.UserEntity>
      */
     @GetMapping("/getWithRole")
-    @ApiOperation(value = "单个查询，携带角色列表", notes = "单个查询，携带角色列表")
+    @Operation(summary = "单个查询，携带角色列表", description = "单个查询，携带角色列表")
     public R<UserEntity> getWithRole(UserEntity userEntity) {
         boolean condition =
                 userEntity == null || (StringUtils.isEmpty(userEntity.getId()) && StringUtils.isEmpty(userEntity.getAccount()));
@@ -214,7 +221,7 @@ public class UserController {
      * @return com.zhaolq.mars.tool.core.result.R<com.zhaolq.mars.api.sys.entity.UserEntity>
      */
     @GetMapping("/getWithRoleNestedSelectTest")
-    @ApiOperation(value = "列表查询，携带角色列表", notes = "列表查询，携带角色列表")
+    @Operation(summary = "列表查询，携带角色列表", description = "列表查询，携带角色列表")
     public R<UserEntity> getWithRoleNestedSelectTest(UserEntity userEntity) {
         boolean condition =
                 userEntity == null || (StringUtils.isEmpty(userEntity.getId()) && StringUtils.isEmpty(userEntity.getAccount()));
@@ -238,7 +245,7 @@ public class UserController {
      * @return com.zhaolq.mars.tool.core.result.R<java.util.List < com.zhaolq.mars.api.sys.entity.UserEntity>>
      */
     @GetMapping("/getListWithRole")
-    @ApiOperation(value = "列表查询，携带角色列表", notes = "列表查询，携带角色列表")
+    @Operation(summary = "列表查询，携带角色列表", description = "列表查询，携带角色列表")
     public R<List<UserEntity>> getListWithRole(UserEntity userEntity) {
         List<UserEntity> list = userService.listWithRole(userEntity, null);
         if (list != null) {
@@ -266,9 +273,10 @@ public class UserController {
      */
     @Deprecated
     @GetMapping("/getPageWithRole")
-    @ApiOperation(value = "分页查询，携带角色列表", notes = "分页查询，携带角色列表")
-    public R<IPage<UserEntity>> getPageWithRole(PageConvert<UserEntity> pageConvert, UserEntity userEntity,
-                                                RoleEntity roleEntity) {
+    @Operation(summary = "分页查询，携带角色列表", description = "分页查询，携带角色列表")
+    public R<IPage<UserEntity>> getPageWithRole(
+            PageConvert<UserEntity> pageConvert, UserEntity userEntity,
+            RoleEntity roleEntity) {
         return R.success(userService.pageWithRole(pageConvert.getPagePlus(), userEntity, roleEntity));
     }
 
@@ -280,9 +288,10 @@ public class UserController {
      * @return com.zhaolq.mars.tool.core.result.R<com.baomidou.mybatisplus.core.metadata.IPage < com.zhaolq.mars.api.sys.entity.UserEntity>>
      */
     @GetMapping("/getPageWithRoleNestedSelectTest")
-    @ApiOperation(value = "分页查询，携带角色列表", notes = "分页查询，携带角色列表")
-    public R<IPage<UserEntity>> getPageWithRoleNestedSelectTest(PageConvert<UserEntity> pageConvert,
-                                                                UserEntity userEntity) {
+    @Operation(summary = "分页查询，携带角色列表", description = "分页查询，携带角色列表")
+    public R<IPage<UserEntity>> getPageWithRoleNestedSelectTest(
+            PageConvert<UserEntity> pageConvert,
+            UserEntity userEntity) {
         return R.success(userService.pageWithRoleNestedSelectTest(pageConvert.getPagePlus(), userEntity));
     }
 
@@ -294,7 +303,7 @@ public class UserController {
      * @param response
      */
     @GetMapping("/getExportExcel")
-    @ApiOperation(value = "导出", notes = "导出")
+    @Operation(summary = "导出", description = "导出")
     public void getExportExcel(UserEntity userEntity, HttpServletResponse response) {
         QueryWrapper<UserEntity> wrapper = new QueryWrapper<>(userEntity);
         List<UserEntity> list = userService.list(wrapper);
@@ -322,7 +331,7 @@ public class UserController {
     }
 
     @PostMapping("/postImportExcel")
-    @ApiOperation(value = "导入", notes = "导入")
+    @Operation(summary = "导入", description = "导入")
     public R<Boolean> postImportExcel() {
         return R.boo(true);
     }
@@ -334,7 +343,7 @@ public class UserController {
      * @return com.zhaolq.mars.tool.core.result.R<java.util.List < com.zhaolq.mars.api.sys.entity.MenuEntity>>
      */
     @GetMapping("/getAuthorityMenuTree")
-    @ApiOperation(value = "获取权限下菜单树", notes = "获取权限下菜单树")
+    @Operation(summary = "获取权限下菜单树", description = "获取权限下菜单树")
     public R<List<MenuEntity>> getAuthorityMenuTree(UserEntity userEntity) {
         List<MenuEntity> menuTreeList = userService.getAuthorityMenuTree(userEntity);
         return R.success(menuTreeList);
@@ -347,14 +356,14 @@ public class UserController {
      * @return com.zhaolq.mars.tool.core.result.R<java.util.List < com.zhaolq.mars.api.sys.entity.MenuEntity>>
      */
     @GetMapping("/getAuthorityMenuTree2")
-    @ApiOperation(value = "获取权限下菜单树", notes = "获取权限下菜单树")
+    @Operation(summary = "获取权限下菜单树", description = "获取权限下菜单树")
     public R<List<Tree<String>>> getAuthorityMenuTree2(UserEntity userEntity) {
         List<Tree<String>> menuTreeList = userService.getAuthorityMenuTree2(userEntity);
         return R.success(menuTreeList);
     }
 
     @GetMapping("/testPagehelper")
-    @ApiOperation(value = "测试PageHelper", notes = "测试PageHelper")
+    @Operation(summary = "测试PageHelper", description = "测试PageHelper")
     public R<String> testPagehelper() {
 
         return R.success("");

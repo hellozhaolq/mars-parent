@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +30,10 @@ import com.zhaolq.mars.tool.core.result.ResultCode;
 import com.zhaolq.mars.tool.core.utils.ObjectUtils;
 import com.zhaolq.mars.tool.core.utils.StringUtils;
 
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterStyle;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
  * <p>
@@ -40,14 +44,15 @@ import io.swagger.annotations.ApiOperation;
  * @date 2020-10-29
  */
 @RestController
-@RequestMapping("/role")
+@Tag(name = "角色模块", description = "角色模块")
+@RequestMapping(path = "/role", produces = {MediaType.ALL_VALUE})
 public class RoleController {
 
     @Autowired
     private IRoleService roleService;
 
     @PostMapping("/post")
-    @ApiOperation(value = "单个新增", notes = "单个新增")
+    @Operation(summary = "单个新增", description = "单个新增")
     public R<Boolean> post(@Validated({Add.class}) @RequestBody(required = true) RoleEntity roleEntity) {
         // 检查角色code是否存在
         RoleEntity result = roleService.getOne(WrapperBuilder.getQueryWrapper(new RoleEntity().setCode(roleEntity.getCode())));
@@ -61,7 +66,8 @@ public class RoleController {
     }
 
     @DeleteMapping("/delete/{id}")
-    @ApiOperation(value = "单个删除", notes = "单个删除")
+    @Parameter(name = "id", description = "角色id", required = true, style = ParameterStyle.SIMPLE)
+    @Operation(summary = "单个删除", description = "单个删除")
     public R<Boolean> delete(@PathVariable("id") @NotNull(message = "缺少id") String id) {
         RoleEntity roleEntity = roleService.getById(id);
         if (roleEntity == null) {
@@ -72,7 +78,7 @@ public class RoleController {
     }
 
     @PutMapping("/put")
-    @ApiOperation(value = "单个修改", notes = "单个修改")
+    @Operation(summary = "单个修改", description = "单个修改")
     public R<Boolean> put(@Validated({Edit.class}) @RequestBody RoleEntity roleEntity) {
         RoleEntity roleEntityTemp = roleService.getById(roleEntity.getId());
         if (roleEntityTemp == null) {
@@ -83,7 +89,7 @@ public class RoleController {
     }
 
     @GetMapping("/get")
-    @ApiOperation(value = "单个查询", notes = "单个查询")
+    @Operation(summary = "单个查询", description = "单个查询")
     public R<RoleEntity> get(RoleEntity roleEntity) {
         // 这里永远断言成功，即使请求没有参数userEntity也不是null。
         Assert.notNull(roleEntity, ResultCode.PARAM_NOT_COMPLETE.getDescCh());
@@ -99,13 +105,13 @@ public class RoleController {
     }
 
     @GetMapping("/getList")
-    @ApiOperation(value = "列表查询", notes = "列表查询")
+    @Operation(summary = "列表查询", description = "列表查询")
     public R<List<RoleEntity>> getList(RoleEntity roleEntity) {
         return R.success(roleService.list(WrapperBuilder.getQueryWrapper(roleEntity)));
     }
 
     @GetMapping("/getPage")
-    @ApiOperation(value = "分页查询", notes = "分页查询")
+    @Operation(summary = "分页查询", description = "分页查询")
     public R<IPage<RoleEntity>> getPage(PageConvert<RoleEntity> pageConvert, RoleEntity roleEntity) {
         return R.success(roleService.page(pageConvert.getPagePlus(), WrapperBuilder.getQueryWrapper(roleEntity)));
     }

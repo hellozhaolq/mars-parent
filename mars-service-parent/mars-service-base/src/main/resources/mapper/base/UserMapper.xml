@@ -77,8 +77,8 @@
     <select id="selectRole" resultMap="com.zhaolq.mars.service.base.mapper.base.RoleMapper.BaseResultMap">
         select
         <include refid="com.zhaolq.mars.service.base.mapper.base.RoleMapper.Base_Column_Alias"></include>
-        from mars_sys_user_role ur
-        inner join mars_sys_role r
+        from t_base_user_role ur
+        inner join t_base_role r
         on ur.role_id = r.id
         where ur.user_id = #{prop1} and ur.user_id = #{prop2}
     </select>
@@ -217,22 +217,22 @@
 
     <select id="selectByWrapperCustom" resultType="com.zhaolq.mars.api.sys.entity.UserEntity">
         <!-- 注意：这里没有加where -->
-        select * from mars_sys_user ${ew.customSqlSegment}
+        select * from t_base_user ${ew.customSqlSegment}
     </select>
 
     <select id="selectPageByWrapperCustom" resultType="com.zhaolq.mars.api.sys.entity.UserEntity">
         <!-- 注意：这里没有加where -->
-        select * from mars_sys_user ${ew.customSqlSegment}
+        select * from t_base_user ${ew.customSqlSegment}
     </select>
 
     <select id="selectWithRole" resultMap="NestedResultMap_OneToMany">
         select
         <include refid="Base_Column_Alias"></include>,
         <include refid="com.zhaolq.mars.service.base.mapper.base.RoleMapper.Base_Column_Alias_Nested"></include>
-        from mars_sys_user u
-        inner join mars_sys_user_role ur
+        from t_base_user u
+        inner join t_base_user_role ur
         on u.id = ur.user_id
-        inner join mars_sys_role r
+        inner join t_base_role r
         on ur.role_id = r.id
         <where>
             <include refid="Base_Where"></include>
@@ -243,7 +243,7 @@
     <select id="selectWithRoleNestedSelectTest" resultMap="NestedSelect_OneToMany">
         select
         <include refid="Base_Column_Alias"></include>
-        from mars_sys_user u
+        from t_base_user u
         <where>
             <include refid="Base_Where"></include>
         </where>
@@ -253,10 +253,10 @@
         select
         <include refid="Base_Column_Alias"></include>,
         <include refid="com.zhaolq.mars.service.base.mapper.base.RoleMapper.Base_Column_Alias_Nested"></include>
-        from mars_sys_user u
-        inner join mars_sys_user_role ur
+        from t_base_user u
+        inner join t_base_user_role ur
         on u.id = ur.user_id
-        inner join mars_sys_role r
+        inner join t_base_role r
         on ur.role_id = r.id
         <where>
             <include refid="Base_Where"></include>
@@ -268,10 +268,10 @@
         select
         <include refid="Base_Column_Alias"></include>,
         <include refid="com.zhaolq.mars.service.base.mapper.base.RoleMapper.Base_Column_Alias_Nested"></include>
-        from mars_sys_user u
-        inner join mars_sys_user_role ur
+        from t_base_user u
+        inner join t_base_user_role ur
         on u.id = ur.user_id
-        inner join mars_sys_role r
+        inner join t_base_role r
         on ur.role_id = r.id
         <where>
             <include refid="Base_Where"></include>
@@ -282,7 +282,7 @@
     <select id="selectPageWithRoleNestedSelectTest" resultMap="NestedSelect_OneToMany">
         select
         <include refid="Base_Column_Alias"></include>
-        from mars_sys_user u
+        from t_base_user u
         <where>
             <include refid="Base_Where"></include>
         </where>
@@ -309,14 +309,14 @@
                m.last_update_time,
                m.status,
                m.del_flag
-        from mars_sys_user u
-                 inner join mars_sys_user_role ur
+        from t_base_user u
+                 inner join t_base_user_role ur
                             on u.id = ur.user_id
-                 inner join mars_sys_role r
+                 inner join t_base_role r
                             on ur.role_id = r.id
-                 inner join mars_sys_role_menu rm
+                 inner join t_base_role_menu rm
                             on r.id = rm.role_id
-                 inner join mars_sys_menu m
+                 inner join t_base_menu m
                             on rm.menu_id = m.id
         <where>
             <include refid="Base_Where"></include>

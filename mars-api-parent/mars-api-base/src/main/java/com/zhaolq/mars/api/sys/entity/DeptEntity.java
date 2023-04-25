@@ -25,7 +25,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("MARS_SYS_DEPT")
+@TableName("T_BASE_DEPT")
 @Schema(description = "机构管理")
 public class DeptEntity extends Model<DeptEntity> {
 

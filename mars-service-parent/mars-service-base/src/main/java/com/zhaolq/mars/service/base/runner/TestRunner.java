@@ -67,7 +67,7 @@ public class TestRunner implements ApplicationRunner {
     }
 
     private void example1() {
-        String sql = "select t.* from MARS_SYS_USER t where t.id = ? and t.account = ?";
+        String sql = "select t.* from T_BASE_USER t where t.id = ? and t.account = ?";
         int id = 1;
         String account = "admin";
 
@@ -84,7 +84,7 @@ public class TestRunner implements ApplicationRunner {
      * https://zh.wikipedia.org/wiki/Java%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5
      */
     private void example2() {
-        String sql = "select t.* from MARS_SYS_USER t where t.id = ? and t.account = ?";
+        String sql = "select t.* from T_BASE_USER t where t.id = ? and t.account = ?";
         int id = 1;
         String account = "admin";
 

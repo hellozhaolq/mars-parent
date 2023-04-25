@@ -25,7 +25,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("MARS_SYS_ROLE_MENU")
+@TableName("T_BASE_ROLE_MENU")
 @Schema(description = "角色菜单")
 public class RoleMenuEntity extends Model<RoleMenuEntity> {
 

@@ -38,7 +38,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("MARS_SYS_MENU")
+@TableName("T_BASE_MENU")
 @Schema(description = "菜单管理")
 public class MenuEntity extends Model<MenuEntity> {
 

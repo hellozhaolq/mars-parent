@@ -175,7 +175,7 @@ public class UserMapperTest {
         // queryWrapper.apply("to_char(create_time, 'yyyy-mm-dd hh24:mi:ss') = " + "'2020-01-01 10:00:00' or 1=1").inSql("DEPT_ID", "select id from
         // tab_earth_dept where name like '蜀%'");
         queryWrapper.apply("to_char(create_time, 'yyyy-mm-dd hh24:mi:ss') = {0}", "2020-01-01 10:00:00").inSql("DEPT_ID", "select id from " +
-                "mars_sys_dept where name like '蜀%'");
+                "t_base_dept where name like '蜀%'");
         List<UserEntity> userList = userMapper.selectList(queryWrapper);
         userList.forEach(System.out::println);
     }

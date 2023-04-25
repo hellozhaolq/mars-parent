@@ -41,7 +41,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("MARS_SYS_USER")
+@TableName("T_BASE_USER")
 @Schema(description = "用户管理")
 public class UserEntity extends Model<UserEntity> {
 

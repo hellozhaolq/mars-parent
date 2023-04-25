@@ -25,7 +25,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("MARS_STD_COUNTRY")
+@TableName("T_BASE_COUNTRY")
 @Schema(description = "国家 ISO 3166-1")
 public class CountryEntity extends Model<CountryEntity> {
 

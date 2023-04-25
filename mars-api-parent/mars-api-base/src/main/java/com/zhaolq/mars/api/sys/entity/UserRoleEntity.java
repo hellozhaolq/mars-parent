@@ -25,7 +25,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("MARS_SYS_USER_ROLE")
+@TableName("T_BASE_USER_ROLE")
 @Schema(description = "用户角色")
 public class UserRoleEntity extends Model<UserRoleEntity> {
 

@@ -25,7 +25,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("MARS_SYS_ROLE_DEPT")
+@TableName("T_BASE_ROLE_DEPT")
 @Schema(description = "角色机构")
 public class RoleDeptEntity extends Model<RoleDeptEntity> {
 

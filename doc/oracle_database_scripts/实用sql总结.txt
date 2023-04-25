@@ -1,5 +1,0 @@
--- 修改身份证号为18位随机数，可能重复，首位可能是0，所以多次执行下面语句
-update MARS_SYS_USER t
-   set t.id_number = substr(dbms_random.value, 2, 18)
- where t.id_number is null
-    or substr(t.id_number, 0, 1) = 0

@@ -24,7 +24,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("MARS_STD_POLITICAL_STATUS")
+@TableName("T_BASE_POLITICAL_STATUS")
 @Schema(description = "政治面貌")
 public class PoliticalStatusEntity extends Model<PoliticalStatusEntity> {
 

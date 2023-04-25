@@ -25,7 +25,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("MARS_SYS_MEDIA_FILE")
+@TableName("T_BASE_MEDIA_FILE")
 @Schema(description = "图片、文件、音乐等媒体文件")
 public class MediaFileEntity extends Model<MediaFileEntity> {
 

@@ -37,7 +37,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("MARS_SYS_ROLE")
+@TableName("T_BASE_ROLE")
 @Schema(description = "角色管理")
 public class RoleEntity extends Model<RoleEntity> {
 

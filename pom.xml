@@ -488,7 +488,7 @@
 
             <pluginRepositories>
                 <pluginRepository>
-                    <id>huawei</id>
+                    <id>huawei-plugin</id>
                     <name>Huawei Plugin</name>
                     <url>https://mirrors.tools.huawei.com/maven/</url>
                     <layout>default</layout>

@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhaolq.mars.service.base.mapper.base.UserMapper">
+
+    <!-- 开启二级缓存 -->
+    <!--<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>-->
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.zhaolq.mars.api.sys.entity.UserEntity">
+        <id column="ID" property="id"/>
+        <result column="ACCOUNT" property="account"/>
+        <result column="PASSWORD" property="password"/>
+        <result column="NAME" property="name"/>
+        <result column="NICK_NAME" property="nickName"/>
+        <result column="SALT" property="salt"/>
+        <result column="SEX" property="sex"/>
+        <result column="BIRTHDAY" property="birthday"/>
+        <result column="AGE" property="age"/>
+        <result column="ID_NUMBER" property="idNumber"/>
+        <result column="ADDRESS" property="address"/>
+        <result column="EMAIL" property="email"/>
+        <result column="MOBILE" property="mobile"/>
+        <result column="ENTRY_TIME" property="entryTime"/>
+        <result column="DEPARTURE_TIME" property="departureTime"/>
+        <result column="COUNTRY_CODE" property="countryCode"/>
+        <result column="NATION_CODE" property="nationCode"/>
+        <result column="POLITICAL_STATUS_CODE" property="politicalStatusCode"/>
+        <result column="USER_TYPE" property="userType"/>
+        <result column="IDENTITY_CODE" property="identityCode"/>
+        <result column="DEPT_ID" property="deptId"/>
+        <result column="CREATE_BY" property="createBy"/>
+        <result column="CREATE_TIME" property="createTime"/>
+        <result column="LAST_UPDATE_BY" property="lastUpdateBy"/>
+        <result column="LAST_UPDATE_TIME" property="lastUpdateTime"/>
+        <result column="STATUS" property="status"/>
+        <result column="DEL_FLAG" property="delFlag"/>
+        <result column="FLAG" property="flag"/>
+    </resultMap>
+
+    <!-- 官方结果映射文档：https://mybatis.org/mybatis-3/zh/sqlmap-xml.html#Result_Maps -->
+
+    <!-- ******************************** 关联的嵌套结果映射 ******************************** -->
+    <!-- hasOne，一对一关联。因为user和role实际是多对多关系，应该使用一对多关联，否则关联查询的多条数据只会显示一条，解决办法：指定一个不会重复的列充当唯一标识，如：rownum id； -->
+    <resultMap id="NestedResultMap_OneToOne" type="com.zhaolq.mars.api.sys.entity.UserEntity" extends="BaseResultMap">
+        <association property="role" resultMap="com.zhaolq.mars.service.base.mapper.base.RoleMapper.BaseResultMap"
+                     columnPrefix="r#" notNullColumn="id,code">
+        </association>
+    </resultMap>
+    <!-- hasMany，一对多关联 -->
+    <resultMap id="NestedResultMap_OneToMany" type="com.zhaolq.mars.api.sys.entity.UserEntity" extends="BaseResultMap">
+        <collection property="roleList" resultMap="com.zhaolq.mars.service.base.mapper.base.RoleMapper.BaseResultMap"
+                    columnPrefix="r#" notNullColumn="id,code">
+        </collection>
+    </resultMap>
+    <!-- hasMany，一对多关联，更简洁 -->
+    <resultMap id="NestedResultMap_OneToMany_Simple" type="com.zhaolq.mars.api.sys.entity.UserEntity">
+        <id column="ID" property="id"/> <!-- id好像只会有一个生效，如果不配置？ -->
+        <result column="ACCOUNT" property="account"/>
+        <result column="PASSWORD" property="password"/>
+        <result column="NAME" property="name"/>
+        <collection property="roleList" ofType="com.zhaolq.mars.api.sys.entity.RoleEntity">
+            <id column="ID" property="id"/>
+            <result column="NAME" property="name"/>
+            <result column="CODE" property="code"/>
+            <result column="REMARK" property="remark"/>
+        </collection>
+    </resultMap>
+    <!-- ******************************** 关联的嵌套结果映射 ******************************** -->
+
+    <!-- ******************************** 关联的嵌套Select查询(N+1查询问题) ******************************** -->
+    <!-- hasMany，一对多关联。 -->
+    <resultMap id="NestedSelect_OneToMany" type="com.zhaolq.mars.api.sys.entity.UserEntity" extends="BaseResultMap">
+        <collection property="roleList" javaType="ArrayList" column="{prop1=id,prop2=id}" ofType="com.zhaolq.mars.api.sys.entity.RoleEntity"
+                    select="selectRole">
+        </collection>
+    </resultMap>
+    <select id="selectRole" resultMap="com.zhaolq.mars.service.base.mapper.base.RoleMapper.BaseResultMap">
+        select
+        <include refid="com.zhaolq.mars.service.base.mapper.base.RoleMapper.Base_Column_Alias"></include>
+        from mars_sys_user_role ur
+        inner join mars_sys_role r
+        on ur.role_id = r.id
+        where ur.user_id = #{prop1} and ur.user_id = #{prop2}
+    </select>
+    <!-- ******************************** 关联的嵌套 Select 查询 (N+1 查询问题) ******************************** -->
+
+
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column">
+        ID, ACCOUNT, PASSWORD, NAME, NICK_NAME, SALT, SEX, BIRTHDAY, AGE, ID_NUMBER, ADDRESS, EMAIL, MOBILE, ENTRY_TIME,
+        DEPARTURE_TIME, COUNTRY_CODE, NATION_CODE, POLITICAL_STATUS_CODE, USER_TYPE, IDENTITY_CODE, DEPT_ID, CREATE_BY,
+        CREATE_TIME, LAST_UPDATE_BY, LAST_UPDATE_TIME, STATUS, DEL_FLAG, FLAG
+    </sql>
+
+    <!-- 通用查询结果列，加表别名 -->
+    <sql id="Base_Column_Alias">
+        u.ID, u.ACCOUNT, u.PASSWORD, u.NAME, u.NICK_NAME, u.SALT, u.SEX, u.BIRTHDAY, u.AGE, u.ID_NUMBER, u.ADDRESS, u.EMAIL,
+        u.MOBILE, u.ENTRY_TIME, u.DEPARTURE_TIME, u.COUNTRY_CODE, u.NATION_CODE, u.POLITICAL_STATUS_CODE, u.USER_TYPE,
+        u.IDENTITY_CODE, u.DEPT_ID, u.CREATE_BY, u.CREATE_TIME, u.LAST_UPDATE_BY, u.LAST_UPDATE_TIME, u.STATUS, u.DEL_FLAG, u.FLAG
+    </sql>
+
+    <!-- 通用查询结果列，加表别名，实体被嵌套时的列别名 -->
+    <sql id="Base_Column_Alias_Nested">
+        u.ID u#ID, u.ACCOUNT u#ACCOUNT, u.PASSWORD u#PASSWORD, u.NAME u#NAME, u.NICK_NAME u#NICK_NAME, u.SALT u#SALT,
+        u.SEX u#SEX, u.BIRTHDAY u#BIRTHDAY, u.AGE u#AGE, u.ID_NUMBER u#ID_NUMBER, u.ADDRESS u#ADDRESS, u.EMAIL u#EMAIL,
+        u.MOBILE u#MOBILE, u.ENTRY_TIME u#ENTRY_TIME, u.DEPARTURE_TIME u#DEPARTURE_TIME, u.COUNTRY_CODE u#COUNTRY_CODE,
+        u.NATION_CODE u#NATION_CODE, u.POLITICAL_STATUS_CODE u#POLITICAL_STATUS_CODE, u.USER_TYPE u#USER_TYPE,
+        u.IDENTITY_CODE u#IDENTITY_CODE, u.DEPT_ID u#DEPT_ID, u.CREATE_BY u#CREATE_BY, u.CREATE_TIME u#CREATE_TIME,
+        u.LAST_UPDATE_BY u#LAST_UPDATE_BY, u.LAST_UPDATE_TIME u#LAST_UPDATE_TIME, u.STATUS u#STATUS, u.DEL_FLAG u#DEL_FLAG, u.FLAG u#FLAG
+    </sql>
+
+    <!-- json请求参数
+        {"orderList": [{"field": "quantity", "direction": "DESC"},{"field": "quantity", "direction": "DESC"}]}
+    -->
+    <sql id="Base_Order_By">
+        <if test="requestParam != null and requestParam.orderList != null and requestParam.orderList.size() > 0">
+            order by
+            <foreach item="order" collection="requestParam.orderList" separator="," index="index">
+                <!-- 为防止SQL注入，排序方式使用枚举，排序字段写死 -->
+                <if test="order.field != null and order.field == 'age'">
+                    age ${order.direction}
+                </if>
+            </foreach>
+        </if>
+    </sql>
+
+    <!-- 基本查询条件 -->
+    <sql id="Base_Where">
+        <if test="u != null">
+            <if test="u.id != null">
+                and u.ID = #{u.id,jdbcType=NUMERIC}
+            </if>
+            <if test="u.account != null">
+                and u.ACCOUNT = #{u.account,jdbcType=VARCHAR}
+            </if>
+            <if test="u.password != null">
+                and u.PASSWORD = #{u.password,jdbcType=VARCHAR}
+            </if>
+            <if test="u.name != null">
+                and u.NAME = #{u.name,jdbcType=NVARCHAR}
+            </if>
+            <if test="u.nickName != null">
+                and u.NICK_NAME = #{u.nickName,jdbcType=NVARCHAR}
+            </if>
+            <if test="u.salt != null">
+                and u.SALT = #{u.salt,jdbcType=VARCHAR}
+            </if>
+            <if test="u.sex != null">
+                and u.SEX = #{u.sex,jdbcType=NUMERIC}
+            </if>
+            <if test="u.birthday != null">
+                and u.BIRTHDAY = #{u.birthday,jdbcType=TIMESTAMP}
+            </if>
+            <if test="u.age != null">
+                and u.AGE = #{u.age,jdbcType=NUMERIC}
+            </if>
+            <if test="u.idNumber != null">
+                and u.ID_NUMBER = #{u.idNumber,jdbcType=VARCHAR}
+            </if>
+            <if test="u.address != null">
+                and u.ADDRESS = #{u.address,jdbcType=NVARCHAR}
+            </if>
+            <if test="u.email != null">
+                and u.EMAIL = #{u.email,jdbcType=VARCHAR}
+            </if>
+            <if test="u.mobile != null">
+                and u.MOBILE = #{u.mobile,jdbcType=VARCHAR}
+            </if>
+            <if test="u.entryTime != null">
+                and u.ENTRY_TIME = #{u.entryTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="u.departureTime != null">
+                and u.DEPARTURE_TIME = #{u.departureTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="u.countryCode != null">
+                and u.COUNTRY_CODE = #{u.countryCode,jdbcType=VARCHAR}
+            </if>
+            <if test="u.nationCode != null">
+                and u.NATION_CODE = #{u.nationCode,jdbcType=VARCHAR}
+            </if>
+            <if test="u.politicalStatusCode != null">
+                and u.POLITICAL_STATUS_CODE = #{u.politicalStatusCode,jdbcType=VARCHAR}
+            </if>
+            <if test="u.userType != null">
+                and u.USER_TYPE = #{u.userType,jdbcType=VARCHAR}
+            </if>
+            <if test="u.identityCode != null">
+                and u.IDENTITY_CODE = #{u.identityCode,jdbcType=VARCHAR}
+            </if>
+            <if test="u.deptId != null">
+                and u.DEPT_ID = #{u.deptId,jdbcType=NUMERIC}
+            </if>
+            <if test="u.createBy != null">
+                and u.CREATE_BY = #{u.createBy,jdbcType=NVARCHAR}
+            </if>
+            <if test="u.createTime != null">
+                and u.CREATE_TIME = #{u.createTime,jdbcType=OTHER}
+            </if>
+            <if test="u.lastUpdateBy != null">
+                and u.LAST_UPDATE_BY = #{u.lastUpdateBy,jdbcType=NVARCHAR}
+            </if>
+            <if test="u.lastUpdateTime != null">
+                and u.LAST_UPDATE_TIME = #{u.lastUpdateTime,jdbcType=OTHER}
+            </if>
+            <if test="u.status != null">
+                and u.STATUS = #{u.status,jdbcType=NUMERIC}
+            </if>
+            <if test="u.delFlag != null">
+                and u.DEL_FLAG = #{u.delFlag,jdbcType=NUMERIC}
+            </if>
+            <if test="u.flag != null">
+                and u.FLAG = #{u.flag,jdbcType=VARCHAR}
+            </if>
+        </if>
+    </sql>
+
+    <select id="selectByWrapperCustom" resultType="com.zhaolq.mars.api.sys.entity.UserEntity">
+        <!-- 注意：这里没有加where -->
+        select * from mars_sys_user ${ew.customSqlSegment}
+    </select>
+
+    <select id="selectPageByWrapperCustom" resultType="com.zhaolq.mars.api.sys.entity.UserEntity">
+        <!-- 注意：这里没有加where -->
+        select * from mars_sys_user ${ew.customSqlSegment}
+    </select>
+
+    <select id="selectWithRole" resultMap="NestedResultMap_OneToMany">
+        select
+        <include refid="Base_Column_Alias"></include>,
+        <include refid="com.zhaolq.mars.service.base.mapper.base.RoleMapper.Base_Column_Alias_Nested"></include>
+        from mars_sys_user u
+        inner join mars_sys_user_role ur
+        on u.id = ur.user_id
+        inner join mars_sys_role r
+        on ur.role_id = r.id
+        <where>
+            <include refid="Base_Where"></include>
+            <include refid="com.zhaolq.mars.service.base.mapper.base.RoleMapper.Base_Where"></include>
+        </where>
+    </select>
+
+    <select id="selectWithRoleNestedSelectTest" resultMap="NestedSelect_OneToMany">
+        select
+        <include refid="Base_Column_Alias"></include>
+        from mars_sys_user u
+        <where>
+            <include refid="Base_Where"></include>
+        </where>
+    </select>
+
+    <select id="selectListWithRole" resultMap="NestedResultMap_OneToMany">
+        select
+        <include refid="Base_Column_Alias"></include>,
+        <include refid="com.zhaolq.mars.service.base.mapper.base.RoleMapper.Base_Column_Alias_Nested"></include>
+        from mars_sys_user u
+        inner join mars_sys_user_role ur
+        on u.id = ur.user_id
+        inner join mars_sys_role r
+        on ur.role_id = r.id
+        <where>
+            <include refid="Base_Where"></include>
+            <include refid="com.zhaolq.mars.service.base.mapper.base.RoleMapper.Base_Where"></include>
+        </where>
+    </select>
+
+    <select id="selectPageWithRole" resultMap="NestedResultMap_OneToMany">
+        select
+        <include refid="Base_Column_Alias"></include>,
+        <include refid="com.zhaolq.mars.service.base.mapper.base.RoleMapper.Base_Column_Alias_Nested"></include>
+        from mars_sys_user u
+        inner join mars_sys_user_role ur
+        on u.id = ur.user_id
+        inner join mars_sys_role r
+        on ur.role_id = r.id
+        <where>
+            <include refid="Base_Where"></include>
+            <include refid="com.zhaolq.mars.service.base.mapper.base.RoleMapper.Base_Where"></include>
+        </where>
+    </select>
+
+    <select id="selectPageWithRoleNestedSelectTest" resultMap="NestedSelect_OneToMany">
+        select
+        <include refid="Base_Column_Alias"></include>
+        from mars_sys_user u
+        <where>
+            <include refid="Base_Where"></include>
+        </where>
+    </select>
+
+    <select id="selectAuthorityMenu" resultMap="com.zhaolq.mars.service.base.mapper.base.MenuMapper.BaseResultMap">
+        select m.id,
+               m.name,
+               m.code,
+               m.remark,
+               m.perms,
+               m.type,
+               m.url_type,
+               m.url,
+               m.scheme,
+               m.path,
+               m.target,
+               m.parent_id,
+               m.order_num,
+               m.icon,
+               m.create_by,
+               m.create_time,
+               m.last_update_by,
+               m.last_update_time,
+               m.status,
+               m.del_flag
+        from mars_sys_user u
+                 inner join mars_sys_user_role ur
+                            on u.id = ur.user_id
+                 inner join mars_sys_role r
+                            on ur.role_id = r.id
+                 inner join mars_sys_role_menu rm
+                            on r.id = rm.role_id
+                 inner join mars_sys_menu m
+                            on rm.menu_id = m.id
+        <where>
+            <include refid="Base_Where"></include>
+        </where>
+    </select>
+
+</mapper>

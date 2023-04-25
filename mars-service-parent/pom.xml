@@ -19,7 +19,7 @@
     <description>所有微服务</description>
 
     <modules>
-        <module>mars-service-sys</module>
+        <module>mars-service-base</module>
     </modules>
 
     <dependencies>

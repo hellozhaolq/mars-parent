@@ -1,0 +1,21 @@
+抛开中英歧视，以好用为前提，国产文档看着会方便些。
+
+习惯使用 apache common 工具包
+
+消息队列
+        RocketMQ（检索消息队列对比）
+数据库连接池
+        Druid
+Apache Commons
+        https://zh.wikipedia.org/zh-hans/Apache_Commons
+        https://commons.apache.org/
+        BeanUtils、Collections、DbUtils、Email、Exec、FileUpload、IO、Lang、Text、Math、Net、Numbers、Pool、Proxy、RNG、VFS
+        CSV、JCS、Statistics
+Apache POI
+        POI用于Microsoft文档的JavaAPI
+
+
+http请求工具
+Java：   HttpURLConnection 同步阻塞
+spring： RestTemplate 同步阻塞（默认Http客户端类型是 JDK原生的URLConnection）、WebClient 异步非阻塞式客户端
+apache： HttpComponents 官网：HttpCore 支持两种 I/O 模型：基于经典 Java I/O 的阻塞 I/O 模型和基于 Java NIO 的非阻塞、事件驱动 I/O 模型。

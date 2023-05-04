@@ -12,8 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 @MapperScan({"com.zhaolq.**.mapper"})
 @ComponentScan({"com.zhaolq.*"})
 @Slf4j
-public class ServiceSysApplication {
+public class ServiceBaseApplication {
     public static void main(String[] args) {
-        MyApplication.run("mars", ServiceSysApplication.class, args);
+        MyApplication.run("mars", ServiceBaseApplication.class, args);
     }
 }

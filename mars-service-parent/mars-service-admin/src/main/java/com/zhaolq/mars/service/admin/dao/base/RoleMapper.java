@@ -1,0 +1,16 @@
+package com.zhaolq.mars.service.admin.dao.base;
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.zhaolq.mars.api.sys.entity.RoleEntity;
+
+/**
+ * <p>
+ * 角色管理 Mapper 接口
+ * </p>
+ *
+ * @author zhaolq
+ * @date 2020-10-29
+ */
+public interface RoleMapper extends BaseMapper<RoleEntity> {
+
+}

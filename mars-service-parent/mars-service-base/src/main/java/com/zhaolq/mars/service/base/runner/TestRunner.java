@@ -136,10 +136,10 @@ public class TestRunner implements ApplicationRunner {
             props.load(in);
         }
 
-        String drivers = props.getProperty("jdbc.drivers");
-        if (drivers != null) {
-            //  DriverManager类将尝试加载“jdbc.drivers”系统属性中引用的驱动程序类，详见DriverManager类注释。不必担心多数据源情况，因为它总能找到合适的驱动程序。
-            System.setProperty("jdbc.drivers", drivers);
+        String driver = props.getProperty("jdbc.driver");
+        if (driver != null) {
+            //  DriverManager类将尝试加载“jdbc.driver”系统属性中引用的驱动程序类，详见DriverManager类注释。不必担心多数据源情况，因为它总能找到合适的驱动程序。
+            System.setProperty("jdbc.driver", driver);
         }
         String url = props.getProperty("jdbc.url");
         String username = props.getProperty("jdbc.username");

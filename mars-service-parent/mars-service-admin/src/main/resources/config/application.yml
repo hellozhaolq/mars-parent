@@ -14,8 +14,9 @@ server:
 spring:
   application:
     name: @project.name@
-  profiles:
-    active: @profiles.active@
+  config:
+    activate:
+      on-profile: @profiles.active@
   mustache:
     view-names:
   servlet:
@@ -23,12 +24,6 @@ spring:
       enabled: true
       max-file-size: 2048MB
       max-request-size: 2048MB
-  http:
-    encoding:
-      force: true
-  devtools:
-    restart:
-      enabled: false
 
 # 自定义swagger配置
 swagger:

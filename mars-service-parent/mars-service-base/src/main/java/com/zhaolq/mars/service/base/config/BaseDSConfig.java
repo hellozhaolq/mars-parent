@@ -1,5 +1,6 @@
 package com.zhaolq.mars.service.base.config;
 
+import java.io.IOException;
 import java.util.Properties;
 
 import javax.sql.DataSource;
@@ -10,6 +11,7 @@ import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -29,54 +31,98 @@ import lombok.extern.slf4j.Slf4j;
  * @date 2023/4/25 14:59:20
  */
 @Configuration
-@MapperScan(basePackages = "com.zhaolq.service.sys.mapper.user.*", sqlSessionTemplateRef = "userSqlSessionTemplate")
+@MapperScan(basePackages = {"com.zhaolq.mars.service.base.mapper.base.*", ""}, sqlSessionTemplateRef = "baseSqlSessionTemplate")
 @Slf4j
 public class BaseDSConfig {
+    private String mapperLocation = "classpath*:**/mapper/base/*/*.xml";
+    private String typeAliasesPackage = "com.zhaolq.*.entity";
 
-    @Bean(name = "userDataSource")
-    @ConfigurationProperties(prefix = "spring.datasource.user", ignoreInvalidFields = false)
+    @Value("${jdbc.driver}")
+    private String driver;
+
+    @Value("${jdbc.url}")
+    private String url;
+
+    @Value("${jdbc.username}")
+    private String username;
+
+    @Value("${jdbc.password}")
+    private String password;
+
+    /**
+     * 主数据源，Primary注解必须增加，它表示该数据源为默认数据源
+     * 项目中还可能存在其他的数据源，如获取时不指定名称，则默认获取这个数据源，如果不添加，则启动时候会报错
+     */
+    @Bean(name = "baseDataSource")
+    @ConfigurationProperties(prefix = "jdbc.basedb", ignoreInvalidFields = false)
     @Primary
     public DataSource setDataSource() {
+        DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
+        dataSourceBuilder.driverClassName(driver);
+        dataSourceBuilder.url(url);
+        dataSourceBuilder.username(username);
+        dataSourceBuilder.password(password);
+
+        // ComboPooledDataSource dataSource = new ComboPooledDataSource();
+        // dataSource.setDriverClass(jdbcDriver);
+        // dataSource.setJdbcUrl(jdbcUrl);
+        // dataSource.setUser(jdbcUserName);
+        // dataSource.setPassword(jdbcPassWord);
+        // // 关闭连接后不自动commit
+        // dataSource.setAutoCommitOnClose(false);
+        // dataSource.setTestConnectionOnCheckin(true);
+        // dataSource.setTestConnectionOnCheckout(true);
+        // dataSource.setAutomaticTestTable("c3p0TestTable");
+        // dataSource.setIdleConnectionTestPeriod(300);
+        // dataSource.setMaxIdleTime(25000);
+        // dataSource.setPreferredTestQuery("SELECT 1 FROM dual");
+
         return DataSourceBuilder.create().build();
     }
 
-    @Bean(name = "userSqlSessionFactory")
+    @Bean(name = "baseTransactionManager")
     @Primary
-    public SqlSessionFactory setSqlSessionFactory(@Qualifier("userDataSource") DataSource dataSource) throws Exception {
-        SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
-        bean.setDataSource(dataSource);
-        bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mybatis/mapper/user/*/*.xml"));
-        bean.getObject().getConfiguration().setMapUnderscoreToCamelCase(true); // 支持驼峰
-
-
-        Properties properties = new Properties();
-        properties.setProperty("helperDialect", "mysql");
-        properties.setProperty("offsetAsPageNum", "true");
-        properties.setProperty("rowBoundsWithCount", "true");
-        properties.setProperty("reasonable", "true");
-        properties.setProperty("supportMethodsArguments", "true");
-        properties.setProperty("params", "pageNum=pageNumKey;pageSize=pageSizeKey;");
-        // 分页插件
-        Interceptor interceptor = new PageInterceptor();
-        interceptor.setProperties(properties);
-        bean.setPlugins(new Interceptor[]{interceptor});
-
-        bean.setPlugins(new Interceptor[]{interceptor});
-
-
-        return bean.getObject();
-    }
-
-    @Bean(name = "baseTransactionManager1")
-    @Primary
-    public DataSourceTransactionManager setTransactionManager(@Qualifier("baseDataSource1") DataSource dataSource) {
+    public DataSourceTransactionManager setTransactionManager(@Qualifier("baseDataSource") DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
 
-    @Bean(name = "baseSqlSessionTemplate1")
+    @Bean(name = "baseSqlSessionFactory")
     @Primary
-    public SqlSessionTemplate setSqlSessionTemplate(
-            @Qualifier("baseSqlSessionFactory1") SqlSessionFactory sqlSessionFactory) {
+    public SqlSessionFactory setSqlSessionFactory(@Qualifier("baseDataSource") DataSource dataSource) {
+        SqlSessionFactory sqlSessionFactory = null;
+        try {
+            SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
+            factoryBean.setDataSource(dataSource);
+            // factoryBean.setConfigLocation(new ClassPathResource("mybatisConfigFilePath"));
+            factoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(mapperLocation));
+            factoryBean.setTypeAliasesPackage(typeAliasesPackage);
+
+            Properties properties = new Properties();
+            properties.setProperty("helperDialect", "mysql");
+            properties.setProperty("offsetAsPageNum", "true");
+            properties.setProperty("rowBoundsWithCount", "true");
+            properties.setProperty("reasonable", "true");
+            properties.setProperty("supportMethodsArguments", "true");
+            properties.setProperty("params", "pageNum=pageNumKey;pageSize=pageSizeKey;");
+            // 分页插件
+            Interceptor interceptor = new PageInterceptor();
+            interceptor.setProperties(properties);
+            factoryBean.setPlugins(new Interceptor[]{interceptor});
+            // 支持驼峰
+            factoryBean.getObject().getConfiguration().setMapUnderscoreToCamelCase(true);
+
+            sqlSessionFactory = factoryBean.getObject();
+        } catch (IOException e) {
+            log.error(e.getMessage(), e);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
+        return sqlSessionFactory;
+    }
+
+    @Bean(name = "baseSqlSessionTemplate")
+    @Primary
+    public SqlSessionTemplate setSqlSessionTemplate(@Qualifier("baseSqlSessionFactory") SqlSessionFactory sqlSessionFactory) {
         return new SqlSessionTemplate(sqlSessionFactory);
     }
 }

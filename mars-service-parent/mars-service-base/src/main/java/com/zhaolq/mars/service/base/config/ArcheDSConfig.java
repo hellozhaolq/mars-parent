@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
  * @since 1.0.0
  */
 @Configuration
-@MapperScan(basePackages = "com.zhaolq.service.sys.mapper.arche.*", sqlSessionTemplateRef = "archeSqlSessionTemplate")
+@MapperScan(basePackages = "com.zhaolq.service.base.mapper.arche.*", sqlSessionTemplateRef = "archeSqlSessionTemplate")
 @Slf4j
 public class ArcheDSConfig {
 }

@@ -1,4 +1,4 @@
-package com.zhaolq.mars.api.sys.entity;
+package com.zhaolq.mars.api.admin.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 
-import com.zhaolq.mars.api.sys.entity.MenuEntity;
+import com.zhaolq.mars.api.admin.entity.MenuEntity;
 import com.zhaolq.mars.common.mybatis.pagination.PageConvert;
 import com.zhaolq.mars.common.mybatis.pagination.WrapperBuilder;
 import com.zhaolq.mars.common.valid.group.Add;

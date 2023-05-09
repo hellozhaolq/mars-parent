@@ -31,22 +31,22 @@ import lombok.extern.slf4j.Slf4j;
  * @date 2023/4/25 14:59:20
  */
 @Configuration
-@MapperScan(basePackages = {"com.zhaolq.mars.service.base.mapper.base.*", ""}, sqlSessionTemplateRef = "baseSqlSessionTemplate")
+@MapperScan(basePackages = {"com.zhaolq.mars.service.admin.dao.base.*", ""}, sqlSessionTemplateRef = "baseSqlSessionTemplate")
 @Slf4j
 public class BaseDSConfig {
-    private String mapperLocation = "classpath*:**/mapper/base/*/*.xml";
+    private String mapperLocation = "classpath*:**/mappers/base/*/*.xml";
     private String typeAliasesPackage = "com.zhaolq.*.entity";
 
-    @Value("${jdbc.driver}")
+    @Value("${jdbc.basedb.driver}")
     private String driver;
 
-    @Value("${jdbc.url}")
+    @Value("${jdbc.basedb.url}")
     private String url;
 
-    @Value("${jdbc.username}")
+    @Value("${jdbc.basedb.username}")
     private String username;
 
-    @Value("${jdbc.password}")
+    @Value("${jdbc.basedb.password}")
     private String password;
 
     /**
@@ -78,12 +78,6 @@ public class BaseDSConfig {
         // dataSource.setPreferredTestQuery("SELECT 1 FROM dual");
 
         return DataSourceBuilder.create().build();
-    }
-
-    @Bean(name = "baseTransactionManager")
-    @Primary
-    public DataSourceTransactionManager setTransactionManager(@Qualifier("baseDataSource") DataSource dataSource) {
-        return new DataSourceTransactionManager(dataSource);
     }
 
     @Bean(name = "baseSqlSessionFactory")
@@ -118,6 +112,12 @@ public class BaseDSConfig {
             log.error(e.getMessage(), e);
         }
         return sqlSessionFactory;
+    }
+
+    @Bean(name = "baseTransactionManager")
+    @Primary
+    public DataSourceTransactionManager setTransactionManager(@Qualifier("baseDataSource") DataSource dataSource) {
+        return new DataSourceTransactionManager(dataSource);
     }
 
     @Bean(name = "baseSqlSessionTemplate")

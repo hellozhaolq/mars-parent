@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.zhaolq.mars.api.sys.entity.UserEntity;
+import com.zhaolq.mars.api.admin.entity.UserEntity;
 import com.zhaolq.mars.common.mybatis.pagination.WrapperBuilder;
 import com.zhaolq.mars.service.admin.service.IUserService;
 

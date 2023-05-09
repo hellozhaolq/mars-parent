@@ -1,4 +1,4 @@
-package com.zhaolq.mars.api.sys.entity;
+package com.zhaolq.mars.api.admin.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -16,7 +16,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 角色机构
+ * 角色菜单
  * </p>
  *
  * @author zhaolq
@@ -25,9 +25,9 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("T_BASE_ROLE_DEPT")
-@Schema(description = "角色机构")
-public class RoleDeptEntity extends Model<RoleDeptEntity> {
+@TableName("T_BASE_ROLE_MENU")
+@Schema(description = "角色菜单")
+public class RoleMenuEntity extends Model<RoleMenuEntity> {
 
     @Schema(description = "编号")
     @TableId(value = "ID", type = IdType.ASSIGN_ID)
@@ -37,9 +37,9 @@ public class RoleDeptEntity extends Model<RoleDeptEntity> {
     @TableField("ROLE_ID")
     private String roleId;
 
-    @Schema(description = "机构ID")
-    @TableField("DEPT_ID")
-    private String deptId;
+    @Schema(description = "菜单ID")
+    @TableField("MENU_ID")
+    private String menuId;
 
     @Schema(description = "创建人")
     @TableField("CREATE_BY")

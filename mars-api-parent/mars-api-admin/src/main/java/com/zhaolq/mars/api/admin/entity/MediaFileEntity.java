@@ -1,4 +1,4 @@
-package com.zhaolq.mars.api.sys.entity;
+package com.zhaolq.mars.api.admin.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -16,7 +16,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 用户角色
+ * 图片、文件、音乐等媒体文件
  * </p>
  *
  * @author zhaolq
@@ -25,21 +25,29 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("T_BASE_USER_ROLE")
-@Schema(description = "用户角色")
-public class UserRoleEntity extends Model<UserRoleEntity> {
+@TableName("T_BASE_MEDIA_FILE")
+@Schema(description = "图片、文件、音乐等媒体文件")
+public class MediaFileEntity extends Model<MediaFileEntity> {
 
     @Schema(description = "编号")
     @TableId(value = "ID", type = IdType.ASSIGN_ID)
     private String id;
 
-    @Schema(description = "用户ID")
-    @TableField("USER_ID")
-    private String userId;
+    @Schema(description = "资源类型(表名)：user-用户；")
+    @TableField("RESOURCE_TYPE")
+    private String resourceType;
 
-    @Schema(description = "角色ID")
-    @TableField("ROLE_ID")
-    private String roleId;
+    @Schema(description = "资源编号")
+    @TableField("RESOURCE_ID")
+    private String resourceId;
+
+    @Schema(description = "文件类型(字段)：avatar-头像；")
+    @TableField("FILE_TYPE")
+    private String fileType;
+
+    @Schema(description = "文件内容")
+    @TableField("FILE_CONTENT")
+    private byte[] fileContent;
 
     @Schema(description = "创建人")
     @TableField("CREATE_BY")
@@ -56,6 +64,14 @@ public class UserRoleEntity extends Model<UserRoleEntity> {
     @Schema(description = "更新时间")
     @TableField("LAST_UPDATE_TIME")
     private LocalDateTime lastUpdateTime;
+
+    @Schema(description = "状态  0：禁用   1：正常")
+    @TableField("STATUS")
+    private Integer status;
+
+    @Schema(description = "是否删除  -1：已删除  0：正常")
+    @TableField("DEL_FLAG")
+    private Integer delFlag;
 
 
     @Override

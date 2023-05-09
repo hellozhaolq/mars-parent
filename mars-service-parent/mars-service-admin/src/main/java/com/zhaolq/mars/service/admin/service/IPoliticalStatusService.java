@@ -1,7 +1,7 @@
 package com.zhaolq.mars.service.admin.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.zhaolq.mars.api.sys.entity.PoliticalStatusEntity;
+import com.zhaolq.mars.api.admin.entity.PoliticalStatusEntity;
 
 /**
  * <p>

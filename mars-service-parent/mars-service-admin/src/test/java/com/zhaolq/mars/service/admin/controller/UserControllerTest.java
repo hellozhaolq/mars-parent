@@ -23,7 +23,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.alibaba.fastjson2.JSON;
 
-import com.zhaolq.mars.api.sys.entity.UserEntity;
+import com.zhaolq.mars.api.admin.entity.UserEntity;
 
 import lombok.extern.slf4j.Slf4j;
 

@@ -1,4 +1,4 @@
-package com.zhaolq.mars.api.sys.entity;
+package com.zhaolq.mars.api.admin.entity;
 
 import java.io.Serializable;
 
@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 政治面貌
+ * 民族 GB 3304-91
  * </p>
  *
  * @author zhaolq
@@ -24,9 +24,9 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("T_BASE_POLITICAL_STATUS")
-@Schema(description = "政治面貌")
-public class PoliticalStatusEntity extends Model<PoliticalStatusEntity> {
+@TableName("T_BASE_NATION")
+@Schema(description = "民族 GB 3304-91")
+public class NationEntity extends Model<NationEntity> {
 
     @Schema(description = "代码")
     @TableId(value = "CODE", type = IdType.ASSIGN_ID)
@@ -35,10 +35,6 @@ public class PoliticalStatusEntity extends Model<PoliticalStatusEntity> {
     @Schema(description = "名称")
     @TableField("NAME")
     private String name;
-
-    @Schema(description = "简称")
-    @TableField("NAME_SHORT")
-    private String nameShort;
 
 
     @Override

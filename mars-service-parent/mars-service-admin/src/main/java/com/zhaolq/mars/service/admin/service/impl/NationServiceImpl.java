@@ -1,7 +1,7 @@
 package com.zhaolq.mars.service.admin.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.zhaolq.mars.api.sys.entity.NationEntity;
+import com.zhaolq.mars.api.admin.entity.NationEntity;
 import com.zhaolq.mars.service.admin.dao.base.NationMapper;
 import com.zhaolq.mars.service.admin.service.INationService;
 import org.springframework.stereotype.Service;

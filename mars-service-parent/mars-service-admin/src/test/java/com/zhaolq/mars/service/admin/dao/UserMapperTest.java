@@ -20,8 +20,8 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
-import com.zhaolq.mars.api.sys.entity.RoleEntity;
-import com.zhaolq.mars.api.sys.entity.UserEntity;
+import com.zhaolq.mars.api.admin.entity.RoleEntity;
+import com.zhaolq.mars.api.admin.entity.UserEntity;
 import com.zhaolq.mars.common.mybatis.pagination.PagePlus;
 import com.zhaolq.mars.service.admin.dao.base.UserMapper;
 import com.zhaolq.mars.tool.core.utils.ObjectUtils;

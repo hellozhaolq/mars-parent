@@ -1,4 +1,4 @@
-package com.zhaolq.mars.api.sys.entity;
+package com.zhaolq.mars.api.admin.entity;
 
 import java.io.Serializable;
 
@@ -15,7 +15,8 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 民族 GB 3304-91
+ * 国家 ISO 3166-1
+ * https://zh.wikipedia.org/wiki/ISO_3166-1
  * </p>
  *
  * @author zhaolq
@@ -24,9 +25,9 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("T_BASE_NATION")
-@Schema(description = "民族 GB 3304-91")
-public class NationEntity extends Model<NationEntity> {
+@TableName("T_BASE_COUNTRY")
+@Schema(description = "国家 ISO 3166-1")
+public class CountryEntity extends Model<CountryEntity> {
 
     @Schema(description = "代码")
     @TableId(value = "CODE", type = IdType.ASSIGN_ID)
@@ -35,6 +36,10 @@ public class NationEntity extends Model<NationEntity> {
     @Schema(description = "名称")
     @TableField("NAME")
     private String name;
+
+    @Schema(description = "英文名称")
+    @TableField("NAME_EN")
+    private String nameEn;
 
 
     @Override

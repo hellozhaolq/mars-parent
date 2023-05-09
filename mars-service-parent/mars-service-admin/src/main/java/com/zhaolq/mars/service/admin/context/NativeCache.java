@@ -9,8 +9,8 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.stereotype.Service;
 
-import com.zhaolq.mars.api.sys.entity.MenuEntity;
-import com.zhaolq.mars.api.sys.entity.RoleEntity;
+import com.zhaolq.mars.api.admin.entity.MenuEntity;
+import com.zhaolq.mars.api.admin.entity.RoleEntity;
 import com.zhaolq.mars.service.admin.service.IMenuService;
 
 /**

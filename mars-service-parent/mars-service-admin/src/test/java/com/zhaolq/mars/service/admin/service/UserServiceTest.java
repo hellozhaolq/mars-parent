@@ -15,7 +15,7 @@ import org.springframework.boot.web.server.LocalServerPort;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 
-import com.zhaolq.mars.api.sys.entity.UserEntity;
+import com.zhaolq.mars.api.admin.entity.UserEntity;
 
 import lombok.extern.slf4j.Slf4j;
 

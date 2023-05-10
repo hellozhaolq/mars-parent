@@ -31,10 +31,10 @@ import lombok.extern.slf4j.Slf4j;
  * @date 2023/4/25 14:59:20
  */
 @Configuration
-@MapperScan(basePackages = {"com.zhaolq.mars.service.admin.dao.base.*", ""}, sqlSessionTemplateRef = "baseSqlSessionTemplate")
+@MapperScan(basePackages = {"com.zhaolq.**.dao.base", ""}, sqlSessionTemplateRef = "baseSqlSessionTemplate")
 @Slf4j
 public class BaseDSConfig {
-    private String mapperLocation = "classpath*:**/mappers/base/*/*.xml";
+    private String mapperLocation = "classpath*:**/mappers/base/**/*.xml";
     private String typeAliasesPackage = "com.zhaolq.*.entity";
 
     @Value("${jdbc.basedb.driver}")

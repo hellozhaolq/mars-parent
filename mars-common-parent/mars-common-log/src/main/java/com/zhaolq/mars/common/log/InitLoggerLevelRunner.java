@@ -7,6 +7,9 @@ import java.util.Optional;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.EnumUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.logging.LogLevel;
@@ -14,8 +17,6 @@ import org.springframework.boot.logging.LoggingSystem;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-
-import com.zhaolq.mars.tool.core.enums.Level;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,6 +33,12 @@ import static org.springframework.boot.logging.LoggingSystem.ROOT_LOGGER_NAME;
 @Order(Ordered.LOWEST_PRECEDENCE)
 public class InitLoggerLevelRunner implements ApplicationRunner {
 
+    @Value("${logging.level.root}")
+    private String rootLogLevel;
+
+    @Value("${logging.level.com.zhaolq}")
+    private String marsLogLevel;
+
     @Resource
     private LoggingSystem loggingSystem;
 
@@ -41,25 +48,27 @@ public class InitLoggerLevelRunner implements ApplicationRunner {
     public static final String SCHEMA = "com.zhaolq";
 
     @Override
-    public void run(ApplicationArguments args) throws Exception {
-        log.trace(">>>>>>>> Initialize the logger level <<<<<<<<");
-
+    public void run(ApplicationArguments args) {
+        log.trace(">>>>>>>> Initialize the logger level start <<<<<<<<");
         List<LoggerLevel> loggerLevelList = new ArrayList<>();
 
         // 根记录器级别
         LoggerLevel rootLoggerLevel = new LoggerLevel();
         rootLoggerLevel.setName(ROOT_LOGGER_NAME);
-        rootLoggerLevel.setLevel(Level.ERROR.name());
+        rootLoggerLevel.setLevel(EnumUtils.getEnumIgnoreCase(LogLevel.class, rootLogLevel, LogLevel.INFO).name());
         loggerLevelList.add(rootLoggerLevel);
 
         // com.zhaolq记录器级别
         LoggerLevel projectLoggerLevel = new LoggerLevel();
         projectLoggerLevel.setName(SCHEMA);
-        projectLoggerLevel.setLevel(Level.ERROR.name());
+        projectLoggerLevel.setLevel(EnumUtils.getEnumIgnoreCase(LogLevel.class, marsLogLevel, LogLevel.INFO).name());
         loggerLevelList.add(projectLoggerLevel);
 
         Optional.ofNullable(loggerLevelList).orElse(Collections.emptyList()).forEach(loggerLevel -> {
             this.loggingSystem.setLogLevel(loggerLevel.getName(), LogLevel.valueOf(loggerLevel.getLevel()));
+            String msg = StringUtils.join("Logger Level >>>>>>>> ", loggerLevel.getName(), ": ", loggerLevel.getLevel());
+            log.info(msg);
         });
+        log.trace(">>>>>>>> Initialize the logger level end <<<<<<<<");
     }
 }

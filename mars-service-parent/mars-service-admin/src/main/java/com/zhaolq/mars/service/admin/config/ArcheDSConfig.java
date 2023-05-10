@@ -33,10 +33,10 @@ import lombok.extern.slf4j.Slf4j;
  * @since 1.0.0
  */
 @Configuration
-@MapperScan(basePackages = "com.zhaolq.mars.service.admin.dao.arche.*", sqlSessionTemplateRef = "archeSqlSessionTemplate")
+@MapperScan(basePackages = {"com.zhaolq.**.dao.arche", ""}, sqlSessionTemplateRef = "archeSqlSessionTemplate")
 @Slf4j
 public class ArcheDSConfig {
-    private String mapperLocation = "classpath*:**/mappers/arche/*/*.xml";
+    private String mapperLocation = "classpath*:**/mappers/arche/**/*.xml";
     private String typeAliasesPackage = "com.zhaolq.*.entity";
 
     @Value("${jdbc.archedb.driver}")
@@ -90,13 +90,11 @@ public class ArcheDSConfig {
     }
 
     @Bean(name = "archeTransactionManager")
-    @Primary
     public DataSourceTransactionManager setTransactionManager(@Qualifier("archeDataSource") DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
 
     @Bean(name = "archeSqlSessionTemplate")
-    @Primary
     public SqlSessionTemplate setSqlSessionTemplate(@Qualifier("archeSqlSessionFactory") SqlSessionFactory sqlSessionFactory) {
         return new SqlSessionTemplate(sqlSessionFactory);
     }

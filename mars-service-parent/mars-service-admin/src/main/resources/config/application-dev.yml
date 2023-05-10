@@ -13,6 +13,7 @@ jdbc:
     username: arche
     password: 123456789
 logging:
+  config: classpath:log4j2.xml
   level:
     root: info
-    com.zhaolq.*: debug
+    com.zhaolq: debug

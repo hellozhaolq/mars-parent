@@ -14,9 +14,11 @@ server:
 spring:
   application:
     name: @project.name@
-  config:
-    activate:
-      on-profile: @profiles.active@
+#  config:
+#    activate:
+#      on-profile: @profiles.active@
+  profiles:
+    active: @profiles.active@
   mustache:
     view-names:
   servlet:
@@ -38,6 +40,3 @@ springdoc:
     enabled: true
   swagger-ui:
     path: /swagger-ui.html # http://127.0.0.1:60001/mars-service-admin/swagger-ui.html
-
-logging:
-  config: classpath:log4j2.xml

@@ -206,7 +206,7 @@
 
             AppenderRef：Root的子节点，用来指定该日志输出到哪个Appender.
         -->
-        <Root level="info" includeLocation="false">
+        <Root level="trace" includeLocation="false">
             <AppenderRef ref="console"/>
             <AppenderRef ref="errorFileRolling"/>
             <AppenderRef ref="warnFileRolling"/>
@@ -215,14 +215,14 @@
             <AppenderRef ref="traceFileRolling"/>
         </Root>
 
-        <Logger name="${SCHEMA}" level="trace" additivity="false" includeLocation="false">
+        <!--<Logger name="${SCHEMA}" level="trace" additivity="false" includeLocation="false">
             <AppenderRef ref="console"/>
             <AppenderRef ref="errorFileRolling"/>
             <AppenderRef ref="warnFileRolling"/>
             <AppenderRef ref="infoFileRolling"/>
             <AppenderRef ref="debugFileRolling"/>
             <AppenderRef ref="traceFileRolling"/>
-        </Logger>
+        </Logger>-->
     </Loggers>
 
 

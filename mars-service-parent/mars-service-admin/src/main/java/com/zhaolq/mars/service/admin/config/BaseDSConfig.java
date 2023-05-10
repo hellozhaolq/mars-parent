@@ -49,13 +49,9 @@ public class BaseDSConfig {
     @Value("${jdbc.basedb.password}")
     private String password;
 
-    /**
-     * 主数据源，Primary注解必须增加，它表示该数据源为默认数据源
-     * 项目中还可能存在其他的数据源，如获取时不指定名称，则默认获取这个数据源，如果不添加，则启动时候会报错
-     */
     @Bean(name = "baseDataSource")
     @ConfigurationProperties(prefix = "jdbc.basedb", ignoreInvalidFields = false)
-    @Primary
+    @Primary // 主数据源，若不添加启动时可能报错
     public DataSource setDataSource() {
         DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
         dataSourceBuilder.driverClassName(driver);

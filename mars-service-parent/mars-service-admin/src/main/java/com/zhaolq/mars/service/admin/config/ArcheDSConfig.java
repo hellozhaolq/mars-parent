@@ -58,7 +58,7 @@ public class ArcheDSConfig {
     }
 
     @Bean(name = "archeSqlSessionFactory")
-    public SqlSessionFactory setSqlSessionFactory(@Qualifier("archeDataSource") DataSource dataSource) {
+    public SqlSessionFactory setSqlSessionFactory(@Qualifier("archeDataSource") DataSource dataSource) throws Exception {
         SqlSessionFactory sqlSessionFactory = null;
         try {
             SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
@@ -82,8 +82,6 @@ public class ArcheDSConfig {
 
             sqlSessionFactory = factoryBean.getObject();
         } catch (IOException e) {
-            log.error(e.getMessage(), e);
-        } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
         return sqlSessionFactory;

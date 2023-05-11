@@ -31,6 +31,10 @@ public enum ResultCode implements IResultCode {
     USER_NOT_EXISTED(20004, "user not existed", "用户不存在"),
     USER_HAS_EXISTED(20005, "user has existed", "用户已存在"),
 
+    /* 异常代码：1000000-1999999 */
+    // 对应JDK异常
+    FILE_NOT_FOUND(1000000, "", "")
+
     ;
 
     /**

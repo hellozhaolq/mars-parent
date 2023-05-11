@@ -66,7 +66,7 @@ public class InitLoggerLevelRunner implements ApplicationRunner {
 
         Optional.ofNullable(loggerLevelList).orElse(Collections.emptyList()).forEach(loggerLevel -> {
             this.loggingSystem.setLogLevel(loggerLevel.getName(), LogLevel.valueOf(loggerLevel.getLevel()));
-            String msg = StringUtils.join("Logger Level >>>>>>>> ", loggerLevel.getName(), ": ", loggerLevel.getLevel());
+            String msg = StringUtils.join("Logger Level >>>>>>>> ", loggerLevel.getName(), ": ", loggerLevel.getLevel(), "<<<<<<<<");
             log.info(msg);
         });
         log.trace(">>>>>>>> Initialize the logger level end <<<<<<<<");

@@ -78,7 +78,7 @@ public class BaseDSConfig {
 
     @Bean(name = "baseSqlSessionFactory")
     @Primary
-    public SqlSessionFactory setSqlSessionFactory(@Qualifier("baseDataSource") DataSource dataSource) {
+    public SqlSessionFactory setSqlSessionFactory(@Qualifier("baseDataSource") DataSource dataSource) throws Exception {
         SqlSessionFactory sqlSessionFactory = null;
         try {
             SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
@@ -103,8 +103,6 @@ public class BaseDSConfig {
 
             sqlSessionFactory = factoryBean.getObject();
         } catch (IOException e) {
-            log.error(e.getMessage(), e);
-        } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
         return sqlSessionFactory;

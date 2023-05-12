@@ -30,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @Tag(name = "登录模块", description = "登录模块")
 @AllArgsConstructor
-@RequestMapping(path = "/", produces = {MediaType.ALL_VALUE})
+@RequestMapping(path = "/", consumes = {MediaType.ALL_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
 public class LoginController {
 
     private ServerProperties serverProperties;

@@ -51,6 +51,54 @@ public final class R<T> implements Serializable {
         this(resultCode.getCode(), null, msgEn, msgCh, resultCode.isSuccess());
     }
 
+    public int getCode() {
+        return code;
+    }
+
+    private void setCode(int code) {
+        this.code = code;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    private void setData(T data) {
+        this.data = data;
+    }
+
+    public String getMsgEn() {
+        return msgEn;
+    }
+
+    private void setMsgEn(String msgEn) {
+        this.msgEn = msgEn;
+    }
+
+    public String getMsgCh() {
+        return msgCh;
+    }
+
+    private void setMsgCh(String msgCh) {
+        this.msgCh = msgCh;
+    }
+
+    public Boolean getSuccess() {
+        return success;
+    }
+
+    private void setSuccess(Boolean success) {
+        this.success = success;
+    }
+
+    public String getDatetime() {
+        return datetime;
+    }
+
+    private void setDatetime(String datetime) {
+        this.datetime = datetime;
+    }
+
     /** success */
 
     public static <T> R<T> success() {
@@ -99,51 +147,4 @@ public final class R<T> implements Serializable {
         return Optional.ofNullable(r).map(R::getSuccess).orElseGet(() -> Boolean.FALSE);
     }
 
-    public int getCode() {
-        return code;
-    }
-
-    private void setCode(int code) {
-        this.code = code;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    private void setData(T data) {
-        this.data = data;
-    }
-
-    public String getMsgEn() {
-        return msgEn;
-    }
-
-    private void setMsgEn(String msgEn) {
-        this.msgEn = msgEn;
-    }
-
-    public String getMsgCh() {
-        return msgCh;
-    }
-
-    private void setMsgCh(String msgCh) {
-        this.msgCh = msgCh;
-    }
-
-    public Boolean getSuccess() {
-        return success;
-    }
-
-    private void setSuccess(Boolean success) {
-        this.success = success;
-    }
-
-    public String getDatetime() {
-        return datetime;
-    }
-
-    private void setDatetime(String datetime) {
-        this.datetime = datetime;
-    }
 }

@@ -48,7 +48,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @Tag(name = "菜单模块", description = "菜单模块")
-@RequestMapping(path = "/menu", produces = {MediaType.ALL_VALUE})
+@RequestMapping(path = "/menu", consumes = {MediaType.ALL_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
 @AllArgsConstructor
 public class MenuController {
 

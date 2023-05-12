@@ -1,16 +1,13 @@
 package com.zhaolq.mars.tool.core.result;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Optional;
 
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.lang.Nullable;
 
-import com.zhaolq.mars.tool.core.date.DateUtils;
-
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * ApiResult
@@ -19,11 +16,7 @@ import lombok.NoArgsConstructor;
  * @date 2020/10/16 11:30
  */
 @Schema(description = "返回信息")
-@Data // 等同于@Getter、@Setter、@ToString、@EqualsAndHashCode
-@NoArgsConstructor
-@AllArgsConstructor
 public final class R<T> implements Serializable {
-
     @Schema(description = "状态码", example = "200")
     private int code;
     @Schema(description = "承载数据")
@@ -35,18 +28,27 @@ public final class R<T> implements Serializable {
     @Schema(description = "是否成功", example = "true")
     private Boolean success;
     @Schema(description = "返回时间")
-    private String datetime = DateUtils.now();
+    private String datetime;
 
-    protected R(IResultCode resultCode) {
-        this(resultCode.getCode(), null, resultCode.getDescEn(), resultCode.getDescCh(), resultCode.isSuccess(), null);
+    private R(int code, T data, String msgEn, String msgCn, Boolean success) {
+        this.code = code;
+        this.data = data;
+        this.msgEn = msgEn;
+        this.msgCh = msgCn;
+        this.success = success;
+        this.datetime = DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm:ss");
     }
 
-    protected R(IResultCode resultCode, T data) {
-        this(resultCode.getCode(), data, resultCode.getDescEn(), resultCode.getDescCh(), resultCode.isSuccess(), null);
+    private R(IResultCode resultCode) {
+        this(resultCode.getCode(), null, resultCode.getDescEn(), resultCode.getDescCh(), resultCode.isSuccess());
     }
 
-    protected R(IResultCode resultCode, String msgEn, String msgCh) {
-        this(resultCode.getCode(), null, msgEn, msgCh, resultCode.isSuccess(), null);
+    private R(IResultCode resultCode, T data) {
+        this(resultCode.getCode(), data, resultCode.getDescEn(), resultCode.getDescCh(), resultCode.isSuccess());
+    }
+
+    private R(IResultCode resultCode, String msgEn, String msgCh) {
+        this(resultCode.getCode(), null, msgEn, msgCh, resultCode.isSuccess());
     }
 
     /** success */
@@ -97,4 +99,51 @@ public final class R<T> implements Serializable {
         return Optional.ofNullable(r).map(R::getSuccess).orElseGet(() -> Boolean.FALSE);
     }
 
+    public int getCode() {
+        return code;
+    }
+
+    private void setCode(int code) {
+        this.code = code;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    private void setData(T data) {
+        this.data = data;
+    }
+
+    public String getMsgEn() {
+        return msgEn;
+    }
+
+    private void setMsgEn(String msgEn) {
+        this.msgEn = msgEn;
+    }
+
+    public String getMsgCh() {
+        return msgCh;
+    }
+
+    private void setMsgCh(String msgCh) {
+        this.msgCh = msgCh;
+    }
+
+    public Boolean getSuccess() {
+        return success;
+    }
+
+    private void setSuccess(Boolean success) {
+        this.success = success;
+    }
+
+    public String getDatetime() {
+        return datetime;
+    }
+
+    private void setDatetime(String datetime) {
+        this.datetime = datetime;
+    }
 }

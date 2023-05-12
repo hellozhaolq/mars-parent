@@ -61,6 +61,7 @@ public class ArcheDSConfig {
     public SqlSessionFactory setSqlSessionFactory(@Qualifier("archeDataSource") DataSource dataSource) throws Exception {
         SqlSessionFactory sqlSessionFactory = null;
         try {
+            // 使用mybatis-plus时不能使用自带的 SqlSessionFactoryBean，要使用 MybatisSqlSessionFactoryBean
             SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
             factoryBean.setDataSource(dataSource);
             factoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(mapperLocation));

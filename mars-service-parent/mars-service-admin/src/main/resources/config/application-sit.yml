@@ -3,13 +3,13 @@
 # DataSource Config。整合多数据源时如果使用springboot默认的数据库连接池Hikari，指定连接数据使用的是jdbc-url而不是url属性
 jdbc:
   basedb:
-    driver: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://10.235.88.126:3306/basedb?useUnicode=true&characterEncoding=utf8&useSSL=false&autoReconnect=true&allowMultiQueries=true&noAccessToProcedureBodies=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    jdbc-url: jdbc:mysql://10.235.88.126:3306/basedb?useUnicode=true&characterEncoding=utf8&useSSL=false&autoReconnect=true&allowMultiQueries=true&noAccessToProcedureBodies=true
     username: base
     password: 123456789
   archedb:
-    driver: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://10.235.88.126:3306/archedb?useUnicode=true&characterEncoding=utf8&useSSL=false&autoReconnect=true&allowMultiQueries=true&noAccessToProcedureBodies=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    jdbc-url: jdbc:mysql://10.235.88.126:3306/archedb?useUnicode=true&characterEncoding=utf8&useSSL=false&autoReconnect=true&allowMultiQueries=true&noAccessToProcedureBodies=true
     username: arche
     password: 123456789
 logging:

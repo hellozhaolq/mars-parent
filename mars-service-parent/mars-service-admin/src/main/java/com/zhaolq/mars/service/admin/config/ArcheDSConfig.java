@@ -33,16 +33,16 @@ import lombok.extern.slf4j.Slf4j;
  * @since 1.0.0
  */
 @Configuration
-@MapperScan(basePackages = {"com.zhaolq.**.dao.arche", ""}, sqlSessionTemplateRef = "archeSqlSessionTemplate")
+@MapperScan(basePackages = {"com.zhaolq.**.dao.arche"}, sqlSessionTemplateRef = "archeSqlSessionTemplate")
 @Slf4j
 public class ArcheDSConfig {
     private String mapperLocation = "classpath*:**/mappers/arche/**/*.xml";
     private String typeAliasesPackage = "com.zhaolq.*.entity";
 
-    @Value("${jdbc.archedb.driver}")
+    @Value("${jdbc.archedb.driver-class-name}")
     private String driver;
 
-    @Value("${jdbc.archedb.url}")
+    @Value("${jdbc.archedb.jdbc-url}")
     private String url;
 
     @Value("${jdbc.archedb.username}")

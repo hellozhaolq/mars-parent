@@ -25,7 +25,9 @@ public final class Result extends HashMap<String, Object> {
     public static final String RESULT_KEY_SUCCESS = "success";
     public static final String RESULT_KEY_DATETIME = "datetime";
 
-    protected Result(IResultCode resultCode) {
+    private Result() {}
+
+    private Result(IResultCode resultCode) {
         setCode(resultCode.getCode());
         setData(null);
         setMsgEn(resultCode.getDescEn());
@@ -34,7 +36,7 @@ public final class Result extends HashMap<String, Object> {
         setDatetime();
     }
 
-    protected Result(IResultCode resultCode, Object data) {
+    private Result(IResultCode resultCode, Object data) {
         setCode(resultCode.getCode());
         setData(data);
         setMsgEn(resultCode.getDescEn());
@@ -43,7 +45,7 @@ public final class Result extends HashMap<String, Object> {
         setDatetime();
     }
 
-    protected Result(IResultCode resultCode, String msgEn, String msgCn) {
+    private Result(IResultCode resultCode, String msgEn, String msgCn) {
         setCode(resultCode.getCode());
         setData(null);
         setMsgEn(msgEn);
@@ -64,9 +66,17 @@ public final class Result extends HashMap<String, Object> {
         throw new UnsupportedOperationException();
     }
 
+    public int getCode() {
+        return (int) this.get(RESULT_KEY_CODE);
+    }
+
     private Result setCode(int code) {
         super.put(RESULT_KEY_CODE, code);
         return this;
+    }
+
+    public Object getData() {
+        return this.get(RESULT_KEY_DATA);
     }
 
     private Result setData(Object data) {
@@ -74,9 +84,17 @@ public final class Result extends HashMap<String, Object> {
         return this;
     }
 
+    public String getMsgEn() {
+        return (String) this.get(RESULT_KEY_MSG_EN);
+    }
+
     private Result setMsgEn(String msgEn) {
         super.put(RESULT_KEY_MSG_EN, msgEn);
         return this;
+    }
+
+    public String getMsgCn() {
+        return (String) this.get(RESULT_KEY_MSG_CN);
     }
 
     private Result setMsgCn(String msgCn) {
@@ -84,13 +102,17 @@ public final class Result extends HashMap<String, Object> {
         return this;
     }
 
-    private Result setSuccess(Boolean boo) {
-        super.put(RESULT_KEY_SUCCESS, boo);
+    public Boolean getSuccess() {
+        return (Boolean) this.get(RESULT_KEY_SUCCESS);
+    }
+
+    private Result setSuccess(Boolean success) {
+        super.put(RESULT_KEY_SUCCESS, success);
         return this;
     }
 
-    public Boolean getSuccess() {
-        return (Boolean) this.get(RESULT_KEY_SUCCESS);
+    public String getDatetime() {
+        return (String) this.get(RESULT_KEY_DATETIME);
     }
 
     private Result setDatetime() {
@@ -145,5 +167,4 @@ public final class Result extends HashMap<String, Object> {
     public static boolean isSuccess(@Nullable Result result) {
         return Optional.ofNullable(result).map(Result::getSuccess).orElseGet(() -> Boolean.FALSE);
     }
-
 }

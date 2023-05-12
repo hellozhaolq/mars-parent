@@ -58,7 +58,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @Tag(name = "用户模块", description = "用户模块")
-@RequestMapping(path = "/user", produces = {MediaType.ALL_VALUE})
+@RequestMapping(path = "/user", consumes = {MediaType.ALL_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
 @AllArgsConstructor
 public class UserController {
 

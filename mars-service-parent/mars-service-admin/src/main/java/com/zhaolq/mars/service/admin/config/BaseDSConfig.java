@@ -31,16 +31,16 @@ import lombok.extern.slf4j.Slf4j;
  * @date 2023/4/25 14:59:20
  */
 @Configuration
-@MapperScan(basePackages = {"com.zhaolq.**.dao.base", ""}, sqlSessionTemplateRef = "baseSqlSessionTemplate")
+@MapperScan(basePackages = {"com.zhaolq.**.dao.base"}, sqlSessionTemplateRef = "baseSqlSessionTemplate")
 @Slf4j
 public class BaseDSConfig {
     private String mapperLocation = "classpath*:**/mappers/base/**/*.xml";
     private String typeAliasesPackage = "com.zhaolq.*.entity";
 
-    @Value("${jdbc.basedb.driver}")
+    @Value("${jdbc.basedb.driver-class-name}")
     private String driver;
 
-    @Value("${jdbc.basedb.url}")
+    @Value("${jdbc.basedb.jdbc-url}")
     private String url;
 
     @Value("${jdbc.basedb.username}")
@@ -49,6 +49,10 @@ public class BaseDSConfig {
     @Value("${jdbc.basedb.password}")
     private String password;
 
+    /**
+     * @return javax.sql.DataSource
+     * @ConfigurationProperties 和 @Bean 一起使用
+     */
     @Bean(name = "baseDataSource")
     @ConfigurationProperties(prefix = "jdbc.basedb", ignoreInvalidFields = false)
     @Primary // 主数据源，若不添加启动时可能报错

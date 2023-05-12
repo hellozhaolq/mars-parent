@@ -45,7 +45,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  */
 @RestController
 @Tag(name = "角色模块", description = "角色模块")
-@RequestMapping(path = "/role", produces = {MediaType.ALL_VALUE})
+@RequestMapping(path = "/role", consumes = {MediaType.ALL_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
 public class RoleController {
 
     @Autowired

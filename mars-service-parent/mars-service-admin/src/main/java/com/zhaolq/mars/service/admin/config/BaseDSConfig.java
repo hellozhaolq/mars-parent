@@ -20,6 +20,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
+import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import com.github.pagehelper.PageInterceptor;
 
 import lombok.extern.slf4j.Slf4j;
@@ -86,7 +87,7 @@ public class BaseDSConfig {
         SqlSessionFactory sqlSessionFactory = null;
         try {
             // 使用mybatis-plus时不能使用自带的 SqlSessionFactoryBean，要使用 MybatisSqlSessionFactoryBean
-            SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
+            MybatisSqlSessionFactoryBean factoryBean = new MybatisSqlSessionFactoryBean();
             factoryBean.setDataSource(dataSource);
             // factoryBean.setConfigLocation(new ClassPathResource("mybatisConfigFilePath"));
             factoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(mapperLocation));

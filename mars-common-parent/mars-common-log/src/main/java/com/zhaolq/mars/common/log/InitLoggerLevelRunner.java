@@ -49,7 +49,7 @@ public class InitLoggerLevelRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        log.trace(">>>>>>>> Initialize the logger level start <<<<<<<<");
+        StringBuilder sb = new StringBuilder(">>>>>>>> Initialize the logger level. ");
         List<LoggerLevel> loggerLevelList = new ArrayList<>();
 
         // 根记录器级别
@@ -66,9 +66,8 @@ public class InitLoggerLevelRunner implements ApplicationRunner {
 
         Optional.ofNullable(loggerLevelList).orElse(Collections.emptyList()).forEach(loggerLevel -> {
             this.loggingSystem.setLogLevel(loggerLevel.getName(), LogLevel.valueOf(loggerLevel.getLevel()));
-            String msg = StringUtils.join("Logger Level >>>>>>>> ", loggerLevel.getName(), ": ", loggerLevel.getLevel(), " <<<<<<<<");
-            log.info(msg);
+            sb.append(StringUtils.join("[", loggerLevel.getName(), "==", loggerLevel.getLevel(), "]"));
         });
-        log.trace(">>>>>>>> Initialize the logger level end <<<<<<<<");
+        log.info(String.valueOf(sb));
     }
 }

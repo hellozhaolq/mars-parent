@@ -7,16 +7,15 @@ import javax.sql.DataSource;
 
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
@@ -43,7 +42,7 @@ public class ArcheDSConfig {
     @Value("${jdbc.archedb.driver-class-name}")
     private String driver;
 
-    @Value("${jdbc.archedb.jdbc-url}")
+    @Value("${jdbc.archedb.url}")
     private String url;
 
     @Value("${jdbc.archedb.username}")
@@ -52,18 +51,44 @@ public class ArcheDSConfig {
     @Value("${jdbc.archedb.password}")
     private String password;
 
-    @Bean(name = "archeDataSource")
+    /**
+     * 数据源属性
+     * 注解连用：@ConfigurationProperties 和 @Bean
+     *
+     * @return org.springframework.boot.autoconfigure.jdbc.DataSourceProperties
+     */
+    @Bean(name = "archeDataSourceProperties")
     @ConfigurationProperties(prefix = "jdbc.archedb")
-    public DataSource setDataSource() {
-        return DataSourceBuilder.create().build();
+    public DataSourceProperties setDataSourceProperties() {
+        return new DataSourceProperties();
+    }
+
+    /**
+     * 设置数据源
+     *
+     * @return javax.sql.DataSource
+     */
+    @Bean(name = "archeDataSource")
+    public DataSource setDataSource(@Qualifier("archeDataSourceProperties") DataSourceProperties dataSourceProperties) {
+        DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create()
+                .driverClassName(dataSourceProperties.getDriverClassName())
+                .url(dataSourceProperties.getUrl())
+                .username(dataSourceProperties.getUsername())
+                .password(dataSourceProperties.getPassword());
+        if (dataSourceProperties.getType() != null) {
+            dataSourceBuilder.type(dataSourceProperties.getType());
+        }
+        return dataSourceBuilder.build();
     }
 
     @Bean(name = "archeSqlSessionFactory")
     public SqlSessionFactory setSqlSessionFactory(@Qualifier("archeDataSource") DataSource dataSource) throws Exception {
         SqlSessionFactory sqlSessionFactory = null;
         try {
+            // 使用mybatis-plus时不能使用自带的 SqlSessionFactoryBean，要使用 MybatisSqlSessionFactoryBean
             MybatisSqlSessionFactoryBean factoryBean = new MybatisSqlSessionFactoryBean();
             factoryBean.setDataSource(dataSource);
+            // factoryBean.setConfigLocation(new ClassPathResource("mybatisConfigFilePath"));
             factoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(mapperLocation));
             factoryBean.setTypeAliasesPackage(typeAliasesPackage);
 

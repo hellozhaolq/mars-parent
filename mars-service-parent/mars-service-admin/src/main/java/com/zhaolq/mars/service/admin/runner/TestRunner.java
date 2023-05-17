@@ -39,18 +39,16 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class TestRunner implements ApplicationRunner {
-    @Resource
+    @Resource(name = "baseDataSource")
     private DataSource dataSource;
     @Resource
     private DataSourceProperties dataSourceProperties;
 
     @Override
     public void run(ApplicationArguments args) {
-        log.trace(">>>>>>>> TestRunner 开始 <<<<<<<<");
         conn();
         example1();
         example2();
-        log.trace(">>>>>>>> TestRunner 结束 <<<<<<<<");
     }
 
     private void conn() {
@@ -62,7 +60,7 @@ public class TestRunner implements ApplicationRunner {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        log.trace("\t ThreadLocal同一线程中多次获取的数据库连接相同: {}", conn1 == conn2);
+        log.debug(">>>>>>>> ThreadLocal同一线程中多次获取的数据库连接相同: {}", conn1 == conn2);
         DbUtil.close(conn1, conn2);
     }
 
@@ -77,11 +75,10 @@ public class TestRunner implements ApplicationRunner {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        log.trace("\t id为1的account={}", entity.get("account"));
     }
 
     /**
-     * https://zh.wikipedia.org/wiki/Java%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5
+     * https://zh.wikipedia.org/wiki/Java数据库连接
      */
     private void example2() {
         String sql = "select t.* from T_BASE_USER t where t.id = ? and t.account = ?";
@@ -101,7 +98,6 @@ public class TestRunner implements ApplicationRunner {
             while (rs.next()) {
                 int id_ = rs.getInt("id");
                 String account_ = rs.getString("account");
-                log.trace("\t id={}; account={}", id_, account);
             }
         } catch (Exception e) {
             e.printStackTrace();

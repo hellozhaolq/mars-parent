@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ServiceAdminApplication {
     public static void main(String[] args) {
-        // MyApplication.run("mars", ServiceAdminApplication.class, args);
-        SpringApplication.run(ServiceAdminApplication.class, args);
+        MyApplication.run("mars", ServiceAdminApplication.class, args);
+        // SpringApplication.run(ServiceAdminApplication.class, args);
     }
 }

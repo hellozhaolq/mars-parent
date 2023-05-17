@@ -7,11 +7,11 @@ import javax.sql.DataSource;
 
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -41,7 +41,7 @@ public class BaseDSConfig {
     @Value("${jdbc.basedb.driver-class-name}")
     private String driver;
 
-    @Value("${jdbc.basedb.jdbc-url}")
+    @Value("${jdbc.basedb.url}")
     private String url;
 
     @Value("${jdbc.basedb.username}")
@@ -51,34 +51,37 @@ public class BaseDSConfig {
     private String password;
 
     /**
+     * 数据源属性
+     * 注解连用：@ConfigurationProperties 和 @Bean
+     *
+     * @return org.springframework.boot.autoconfigure.jdbc.DataSourceProperties
+     */
+    @Bean(name = "baseDataSourceProperties")
+    @ConfigurationProperties(prefix = "jdbc.basedb")
+    @Primary
+    public DataSourceProperties setDataSourceProperties() {
+        return new DataSourceProperties();
+    }
+
+    /**
+     * 设置数据源
+     *
      * @return javax.sql.DataSource
-     * @ConfigurationProperties 和 @Bean 一起使用
      */
     @Bean(name = "baseDataSource")
-    @ConfigurationProperties(prefix = "jdbc.basedb", ignoreInvalidFields = false)
     @Primary // 主数据源，若不添加启动时可能报错
-    public DataSource setDataSource() {
-        DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
-        dataSourceBuilder.driverClassName(driver);
-        dataSourceBuilder.url(url);
-        dataSourceBuilder.username(username);
-        dataSourceBuilder.password(password);
-
+    public DataSource setDataSource(@Qualifier("baseDataSourceProperties") DataSourceProperties dataSourceProperties) {
         // ComboPooledDataSource dataSource = new ComboPooledDataSource();
-        // dataSource.setDriverClass(jdbcDriver);
-        // dataSource.setJdbcUrl(jdbcUrl);
-        // dataSource.setUser(jdbcUserName);
-        // dataSource.setPassword(jdbcPassWord);
-        // // 关闭连接后不自动commit
-        // dataSource.setAutoCommitOnClose(false);
-        // dataSource.setTestConnectionOnCheckin(true);
-        // dataSource.setTestConnectionOnCheckout(true);
-        // dataSource.setAutomaticTestTable("c3p0TestTable");
-        // dataSource.setIdleConnectionTestPeriod(300);
-        // dataSource.setMaxIdleTime(25000);
-        // dataSource.setPreferredTestQuery("SELECT 1 FROM dual");
-
-        return DataSourceBuilder.create().build();
+        // DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
+        DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create()
+                .driverClassName(dataSourceProperties.getDriverClassName())
+                .url(dataSourceProperties.getUrl())
+                .username(dataSourceProperties.getUsername())
+                .password(dataSourceProperties.getPassword());
+        if (dataSourceProperties.getType() != null) {
+            dataSourceBuilder.type(dataSourceProperties.getType());
+        }
+        return dataSourceBuilder.build();
     }
 
     @Bean(name = "baseSqlSessionFactory")

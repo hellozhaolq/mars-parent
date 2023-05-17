@@ -7,6 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,13 +40,29 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping(path = "/attendance", consumes = {MediaType.ALL_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
 public class AttendanceController {
+
+    /**
+     * @Value还能支持其他的加载协议，比如file:或url:。
+     */
+    @Value("classpath:config/time.properties")
+    private Resource timeProperties;
+
+    @Autowired
+    ResourceLoader resourceLoader;
+
+    @Autowired
+    ApplicationContext applicationContext;
+
     @RequestMapping(value = "/offWork", method = RequestMethod.POST)
     public R<Object> offWork(@RequestBody String jsonString) throws IOException {
+
         try {
             System.getProperties().load(Files.newInputStream(Paths.get("./time.properties")));
         } catch (IOException e) {
             // 项目目录没找到文件，从资源配置中获取
-            System.getProperties().load(ClassLoader.getSystemResourceAsStream("config/time.properties"));
+            System.getProperties().load(timeProperties.getInputStream());
+            resourceLoader.getResource("classpath:config/time.properties").getInputStream();
+            applicationContext.getResource("classpath:config/time.properties").getInputStream();
         }
 
         // 获取策略

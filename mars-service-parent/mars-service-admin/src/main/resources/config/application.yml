@@ -1,5 +1,18 @@
 # 外部应用属性优先级 https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-external-config-application-property-files
 
+# Oracle 19c，
+# https://docs.oracle.com/en/database/oracle/oracle-database/21/jjdbc/index.html
+# https://docs.oracle.com/en/database/oracle/oracle-database/21/books.html
+# MySQL 8.0
+# https://dev.mysql.com/doc/index-connectors.html
+# https://www.runoob.com/java/java-mysql-connect.html
+# PostgreSQL 15
+# 驱动程序不需要显示加载，详见 https://jdbc.postgresql.org/documentation/use/
+#
+#
+# jdbc:postgresql://192.168.0.5:5432/dbname?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false
+# MySQL连接url配置属性，https://dev.mysql.com/doc/connector-j/8.0/en/connector-j-reference-configuration-properties.html
+
 server:
   port: 60001
   servlet:

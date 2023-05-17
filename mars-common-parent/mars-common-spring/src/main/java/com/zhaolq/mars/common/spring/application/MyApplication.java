@@ -46,12 +46,12 @@ public class MyApplication {
     private static final String CUSTOMIZE_PROPERTIES = "customizeProperties";
 
     public static void run(String serviceName, Class<?> primarySource, String... args) {
-        log.info(">>>>>>> 系统启动中... <<<<<<<");
+        log.info(">>>>>>>> 系统启动中...");
         log.info("用户当前工作路径: " + System.getProperty("user.dir"));
         log.info("classpath路径: " + primarySource.getClassLoader().getResource("").getPath());
         SpringApplicationBuilder builder = new SpringApplicationBuilder(new Class<?>[]{primarySource});
         ConfigurableApplicationContext context = builder.headless(false).run(args);
-        log.info(">>>>>>> 系统启动成功 <<<<<<<");
+        log.info(">>>>>>>> 系统启动成功");
     }
 
     /**

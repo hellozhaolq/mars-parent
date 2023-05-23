@@ -4,7 +4,6 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -39,7 +38,7 @@ public class LoginController {
 
     private IUserService userService;
 
-    @PostMapping("/login")
+    @RequestMapping("/login")
     @Parameters({
             @Parameter(name = "account", description = "账号", style = ParameterStyle.FORM, required = true),
             @Parameter(name = "password", description = "密码", style = ParameterStyle.FORM, required = true)

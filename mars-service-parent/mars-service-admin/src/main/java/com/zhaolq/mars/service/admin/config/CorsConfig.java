@@ -48,5 +48,13 @@ public class CorsConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         WebMvcConfigurer.super.addCorsMappings(registry);
+        registry.addMapping("/**")
+                //是否发送Cookie
+                .allowCredentials(true)
+                //放行哪些原始域
+                .allowedOriginPatterns(new String[]{"*"})
+                .allowedMethods(new String[]{"GET", "POST", "PUT", "DELETE"})
+                .allowedHeaders("*")
+                .exposedHeaders("*");
     }
 }

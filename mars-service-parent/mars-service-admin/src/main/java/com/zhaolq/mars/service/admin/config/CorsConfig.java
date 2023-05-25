@@ -20,7 +20,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @since 1.0.0
  */
 @Configuration
-public class CorsConfig implements WebMvcConfigurer {
+public class CorsConfig {
     /**
      * 和CorsWebFilter有什么区别
      *
@@ -45,16 +45,18 @@ public class CorsConfig implements WebMvcConfigurer {
         return new CorsFilter(urlBasedCorsConfigurationSource);
     }
 
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        WebMvcConfigurer.super.addCorsMappings(registry);
-        registry.addMapping("/**")
-                //是否发送Cookie
-                .allowCredentials(true)
-                //放行哪些原始域
-                .allowedOriginPatterns(new String[]{"*"})
-                .allowedMethods(new String[]{"GET", "POST", "PUT", "DELETE"})
-                .allowedHeaders("*")
-                .exposedHeaders("*");
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**") // 允许跨域的接口，例如：/openApi/*
+                        .allowedOriginPatterns(new String[]{"*"}) // 放行哪些原始域
+                        .allowedMethods(new String[]{"GET", "POST", "PUT", "DELETE"}) // 接口调用方式，POST、GET等
+                        .allowedHeaders("*")
+                        .exposedHeaders("*")
+                        .allowCredentials(true); // 是否发送Cookie
+            }
+        };
     }
 }

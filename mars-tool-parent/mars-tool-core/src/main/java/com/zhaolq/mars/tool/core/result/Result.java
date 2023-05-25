@@ -1,7 +1,8 @@
 package com.zhaolq.mars.tool.core.result;
 
+import java.io.Serializable;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Optional;
 
 import org.apache.commons.lang3.time.DateFormatUtils;
@@ -17,7 +18,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
  * @since 1.0.0
  */
 @Schema(description = "返回信息")
-public final class Result extends HashMap<String, Object> {
+public final class Result extends LinkedHashMap<String, Object> implements Serializable {
+    private static final long serialVersionUID = 1L;    // 序列化版本号
+
     public static final String RESULT_KEY_CODE = "code";
     public static final String RESULT_KEY_DATA = "data";
     public static final String RESULT_KEY_MSG_EN = "msgEn";

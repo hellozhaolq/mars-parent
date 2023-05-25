@@ -1,4 +1,4 @@
-package com.zhaolq.mars.service.admin.controller;
+package com.zhaolq.mars.service.admin.controller.other;
 
 import java.io.IOException;
 import java.nio.file.Files;

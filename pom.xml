@@ -44,8 +44,8 @@
         <!-- 配置所有Maven插件输出的报告编码 -->
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <spring-cloud.version>2020.0.6</spring-cloud.version>
-        <spring-boot.version>2.5.11</spring-boot.version>
+        <spring-cloud-dependencies.version>2021.0.6</spring-cloud-dependencies.version>
+        <spring-boot-dependencies.version>2.7.9</spring-boot-dependencies.version>
         <spring-boot-maven-plugin.version>2.7.9</spring-boot-maven-plugin.version>
 
         <junit-bom.version>5.8.2</junit-bom.version>
@@ -149,14 +149,14 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring-boot.version}</version>
+                <version>${spring-boot-dependencies.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud.version}</version>
+                <version>${spring-cloud-dependencies.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

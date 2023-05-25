@@ -23,9 +23,11 @@
             <artifactId>mars-common-log</artifactId>
             <version>1.0.0-deluxe</version>
         </dependency>
+        <!-- SpringBoot 集成 Apache RocketMQ -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-amqp</artifactId>
+            <groupId>org.apache.rocketmq</groupId>
+            <artifactId>rocketmq-spring-boot-starter</artifactId>
+            <version>${rocketmq-spring-boot-starter.version}</version>
         </dependency>
     </dependencies>
 

@@ -44,8 +44,8 @@
         <!-- 配置所有Maven插件输出的报告编码 -->
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <spring-cloud.version>2021.0.6</spring-cloud.version>
-        <spring-boot.version>2.7.9</spring-boot.version>
+        <spring-cloud.version>2020.0.6</spring-cloud.version>
+        <spring-boot.version>2.5.11</spring-boot.version>
         <spring-boot-maven-plugin.version>2.7.9</spring-boot-maven-plugin.version>
 
         <junit-bom.version>5.8.2</junit-bom.version>
@@ -76,6 +76,7 @@
         <hutool-all.version>5.8.0</hutool-all.version>
 
         <springdoc-openapi-ui.version>1.7.0</springdoc-openapi-ui.version>
+        <rocketmq-spring-boot-starter.version>2.2.3</rocketmq-spring-boot-starter.version>
 
         <!-- MyBatis-Plus和boot-starter版本号对应 -->
         <mybatis-plus-boot-starter.version>3.5.1</mybatis-plus-boot-starter.version>

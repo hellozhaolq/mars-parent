@@ -17,6 +17,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
  */
 @Schema(description = "返回信息")
 public final class R<T> implements Serializable {
+    private static final long serialVersionUID = 1L;	// 序列化版本号
+
     @Schema(description = "状态码", example = "200")
     private int code;
     @Schema(description = "承载数据")

@@ -27,6 +27,11 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * MySQL DataSource Configuration
+ * <pre>
+ * 注解@Configuration和@Component的区别？
+ * 调用@Configuration类中的@Bean注解的方法，返回的是同一个实例，此方法会被动态代理。
+ * 调用@Component类中的Bean注解的方法，返回的是一个新的实例
+ * </pre>
  *
  * @author zhaolq
  * @date 2023/4/25 14:59:20

@@ -30,25 +30,30 @@ server:
 management:
   server:
     port: 50001
+    ssl:
+      enabled: false
   endpoint:
     health:
       show-details: always
     shutdown:
       enabled: true # 启用接口关闭 Spring Boot
   endpoints:
+    enabled-by-default: true # 默认情况下是启用还是禁用所有监控点
     web:
-      base-path: /actuator # 启用单独的url地址来监控 Spring Boot 应用，默认是 "/actuator"
+      base-path: /actuator # 启用单独的url地址来监控 Spring Boot 应用，默认是 "/actuator"。http://127.0.0.1:50001/actuator
       exposure:
         include: "*" # 打开所有的监控点
+    jmx:
+      exposure:
+        include: "*"
 
 spring:
   application:
     name: @project.name@
-  #  config:
-  #    activate:
-  #      on-profile: @profiles.active@
   profiles:
     active: @profiles.active@
+  jmx:
+    enabled: true
   mustache:
     view-names:
   servlet:

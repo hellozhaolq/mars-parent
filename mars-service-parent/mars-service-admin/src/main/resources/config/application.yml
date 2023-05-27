@@ -21,10 +21,17 @@ server:
       charset: UTF-8 # 默认UTF-8
       force: true
       enabled: true
-  tomcat:
+  tomcat: # Tomcat配置调优
     uri-encoding: UTF-8 # 默认UTF-8
     mbeanregistry:
-      enabled: true # 默认禁用 JMX Tomcat Bean 暴露
+      enabled: false # 默认禁用 JMX Tomcat Bean 暴露
+    threads:
+      min-spare: 100 # 初始化工作线程数
+      max: 500 # 最大工作线程数，有说是CUP核心数的200~250倍之间，但Linux对单个进程有最大线程数限制，
+    max-connections: 1600 # 最大链接数
+    accept-count: 0 # 当所有可能的请求处理线程都在使用时，传入连接请求的最大队列长度。（最大等待队列长度）
+    connection-timeout: 30s # 接受连接后，连接器将等待的时间，以显示请求 URI 行。
+
 
 ################ SpringBoot集成JMX配置：https://www.liaoxuefeng.com/wiki/1252599548343744/1282385687609378 ##############
 management:

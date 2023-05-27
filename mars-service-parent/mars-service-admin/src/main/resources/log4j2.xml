@@ -44,14 +44,14 @@
                   value="%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight{%5level}${LEVEL_COLOR} %magenta{%5pid} --- [%15.15threadName %5threadId %2threadPriority] %blue{%-45.45l} : %msg %n"/>
         <!-- 不记录位置信息 -->
         <Property name="CONSOLE_LOG_PATTERN_3"
-                  value="%black{%d{yyyy-MM-dd HH:mm:ss.SSS}} %highlight{%5level}${LEVEL_COLOR} %magenta{%5pid} --- [%15.15threadName %5threadId %2threadPriority] %blue{%-40.40logger{1.}} : %msg %n"/>
+                  value="%black{%d{yyyy-MM-dd HH:mm:ss.SSS}} %highlight{%5level}${LEVEL_COLOR} %magenta{%5pid} --- [%15.50threadName %5threadId %2threadPriority] %blue{%-40logger{1.}} : %msg %n"/>
         <Property name="FILE_LOG_PATTERN_1"
                   value="%d{yyyy-MM-dd HH:mm:ss.SSS} %5level %5pid --- [%15.15threadName %5threadId %2threadPriority] %-45.45logger{1.} %5line : %msg %n"/>
         <Property name="FILE_LOG_PATTERN_2"
                   value="%d{yyyy-MM-dd HH:mm:ss.SSS} %5level %5pid --- [%15.15threadName %5threadId %2threadPriority] %-45.45l : %msg %n"/>
         <!-- 不记录位置信息 -->
         <Property name="FILE_LOG_PATTERN_3"
-                  value="%d{yyyy-MM-dd HH:mm:ss.SSS} %5level %5pid --- [%15.50threadName %5threadId %2threadPriority] %-40.40logger{1.} : %msg %n"/>
+                  value="%d{yyyy-MM-dd HH:mm:ss.SSS} %5level %5pid --- [%15.50threadName %5threadId %2threadPriority] %-40logger{1.} : %msg %n"/>
     </Properties>
 
     <!-- 全部输出源。查看官网了解各种Appender属性含义 -->

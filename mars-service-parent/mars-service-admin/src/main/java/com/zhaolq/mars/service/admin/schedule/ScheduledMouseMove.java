@@ -1,4 +1,4 @@
-package com.zhaolq.mars.service.admin.schedule;
+package com.zhaolq.mars.service.admin.task;
 
 import java.awt.AWTException;
 import java.awt.MouseInfo;
@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Component
 @Slf4j
-public class MouseMoveSched {
+public class ScheduledMouseMove {
     public LocalDateTime mouseMoveEndTime = null;
 
     /**

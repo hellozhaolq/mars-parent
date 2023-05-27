@@ -1,4 +1,4 @@
-package com.zhaolq.mars.service.admin.controller.other;
+package com.zhaolq.mars.service.admin.controller.test;
 
 import java.util.Comparator;
 import java.util.Map;
@@ -33,7 +33,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @Tag(name = "测试模块", description = "测试模块")
-@RequestMapping(path = "/spring", consumes = {MediaType.ALL_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+@RequestMapping(path = "/testSpring", consumes = {MediaType.ALL_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
 public class TestSpringController {
 
     @Resource

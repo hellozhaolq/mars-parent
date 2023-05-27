@@ -1,7 +1,8 @@
-package com.zhaolq.mars.service.admin.schedule;
+package com.zhaolq.mars.service.admin.task;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -18,8 +19,8 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Component
 @Slf4j
-public class CpuCalcSched {
-    @Scheduled(fixedDelay = 30000)
+public class ScheduledCpuCalc {
+    @Scheduled(fixedDelay = 30, timeUnit = TimeUnit.SECONDS)
     public void cpuCalc() {
         if (NetUtil.ping("127.0.0.1")) {
             return;

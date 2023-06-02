@@ -42,7 +42,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Configuration
-public class HttpComponentsConfig {
+public class HttpClientConfig {
 
     /**
      * 连接池大小，最大连接数

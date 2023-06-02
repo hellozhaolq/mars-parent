@@ -13,24 +13,40 @@
 # jdbc:postgresql://192.168.0.5:5432/dbname?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false
 # MySQL连接url配置属性，https://dev.mysql.com/doc/connector-j/8.0/en/connector-j-reference-configuration-properties.html
 
+#3种网络编程的I/O模型，根据不同的业务场景和性能需求决定选择不同的I/O模型
+#  BIO(blocking I/O): 同步并阻塞，服务器实现模式为一个连接一个线程，即客户端有连接请求时服务器端就需要启动一个线程进行处理，如果这个连接不做任何事情会造成不必要的线程开销。
+#  NIO(Non-blocking I/O也称New I/O): 同步非阻塞，服务器实现模式为一个线程处理多个请求，即客户端发送的连接请求都会注册到多路复用器上，多路复用器轮询到连接有I/O请求就进行处理
+#  AIO(NIO 2): 异步非阻塞，服务器实现模式为一个有效请求一个线程，客户端的I/O请求都是先由操作系统完成后才通知服务端程序启动线程进行处理，一般适用于连接数较多且连接时间较长的应用
+
 server:
   port: 60001
-  servlet:
+  servlet: # servlet容器通用配置
     context-path: /@project.name@
     encoding:
       charset: UTF-8 # 默认UTF-8
       force: true
       enabled: true
-  tomcat: # Tomcat配置调优
+    session:
+      timeout: 30m
+  tomcat: # Tomcat特有配置，从jconsole的线程名字可以看到tomcat使用的是nio
     uri-encoding: UTF-8 # 默认UTF-8
-    mbeanregistry:
-      enabled: false # 默认禁用 JMX Tomcat Bean 暴露
     threads:
-      min-spare: 100 # 初始化工作线程数
-      max: 500 # 最大工作线程数，有说是CUP核心数的200~250倍之间，但Linux对单个进程有最大线程数限制，
-    max-connections: 1600 # 最大链接数
-    accept-count: 0 # 当所有可能的请求处理线程都在使用时，传入连接请求的最大队列长度。（最大等待队列长度）
-    connection-timeout: 30s # 接受连接后，连接器将等待的时间，以显示请求 URI 行。
+      min-spare: 10 # 初始线程数
+      max: 200 # 最大线程数。示例：1核2g内存为200。CPU越不密集值越大；更多的线程会带来更多的线程上下文切换成本；JVM中默认创建新线程时会分配大小为1M的线程栈，更多的线程异味着需要更多的内存；
+    accept-count: 1 # 最大等待数，当连接数达到最大值maxConnections后，新连接会放到等待队列中。当队列已满时，任何连接请求都将被拒绝(connection refused)
+    max-connections: 1 # 服务器最多能接受和处理的并发连接数(并发量=TomcatSocket连接数)。一般这个值大于(maxThreads)+(acceptCount)。在不改变硬件性能的情况下，并发量的提升必定以牺牲响应时间为代价。
+    connection-timeout: 60s # 网络连接超时时间
+    keep-alive-timeout: 60s # 长连接超时时间，从最后一个HTTP请求完开始算，默认使用connectionTimeout。相关请求头 Connection:keep-alive、Keep-Alive: timeout=60
+    max-keep-alive-requests: 100 # 一个长连接的最大请求数
+    # Tomcat最大连接数 = maxConnections + acceptCount
+    # 比如 maxThreads=200、maxConnections=1、accept-count=1，假设某一瞬间的并发是5，那么最终Tomcat的执行线程数将会是1个（同时处理1个请求），1个进入acceptor队列排队，另外3个被拒掉
+    mbeanregistry:
+      enabled: true # 默认禁用 JMX Tomcat Bean 暴露。MBean代表一个被管理的资源实例，通过MBean中暴露的方法和属性，外界可以获取被管理的资源的状态和操纵MBean的行为。
+    max-http-form-post-size: -1 # 任何 HTTP 发布请求中表单内容的最大大小。
+    max-swallow-size: 2 # 最大请求正文
+
+
+
 
 
 ################ SpringBoot集成JMX配置：https://www.liaoxuefeng.com/wiki/1252599548343744/1282385687609378 ##############

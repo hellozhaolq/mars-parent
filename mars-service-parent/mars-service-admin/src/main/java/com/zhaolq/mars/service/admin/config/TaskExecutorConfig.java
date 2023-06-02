@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -82,6 +83,7 @@ public class TaskExecutorConfig {
     @Bean
     @Primary
     public TaskExecutor taskExecutor() {
+        // 默认是ThreadPoolTaskExecutor，bean名称为applicationTaskExecutor
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.initialize(); // 此方法必须调用，否则会抛出ThreadPoolTaskExecutor未初始化异常
         executor.setThreadNamePrefix(threadNamePrefix);

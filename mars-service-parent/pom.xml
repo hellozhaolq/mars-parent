@@ -65,13 +65,16 @@
             <artifactId>httpclient</artifactId>
         </dependency>
 
-        <!-- 将导致项目启动时main函数SpringApplication.run()之前的代码执行两次，第二次的线程名为restartedMain -->
-        <!--<dependency>
+        <!--
+            spring-aop：AOP核心功能，例如代理工厂等
+            aspectjweaver：支持切入点表达式等，一般包含aspectjrt
+            aspectjrt：支持aop相关注解等
+            Spring AOP与AspectJ的对比及应用 https://www.cnblogs.com/larrydpk/p/17099706.html
+        -->
+        <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <optional>true</optional>
-        </dependency>-->
-
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
 
         <!--******************************** jdbc ********************************-->
         <dependency>

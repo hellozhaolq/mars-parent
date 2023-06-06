@@ -1,5 +1,6 @@
 package com.zhaolq.mars.service.admin.config;
 
+import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.http.HeaderElement;
@@ -11,6 +12,7 @@ import org.apache.http.config.SocketConfig;
 import org.apache.http.conn.ConnectionKeepAliveStrategy;
 import org.apache.http.conn.HttpClientConnectionManager;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.DefaultClientConnectionReuseStrategy;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.client.StandardHttpRequestRetryHandler;
@@ -137,10 +139,18 @@ public class HttpClientConfig {
             @Qualifier("requestConfig") RequestConfig requestConfig) {
         // HttpClientBuilder中的构造方法被protected修饰，所以这里不能直接使用new来实例化一个HttpClientBuilder，可以使用HttpClientBuilder提供的静态方法create()来获取HttpClientBuilder对象
         HttpClientBuilder httpClientBuilder = HttpClients.custom();
+
+        httpClientBuilder.setDefaultHeaders(Collections.EMPTY_LIST);
+        // httpClientBuilder.setUserAgent("");
+        // httpClientBuilder.setProxy();
+
         // 设置连接池
         httpClientBuilder.setConnectionManager(httpClientConnectionManager);
         // 请求配置
         httpClientBuilder.setDefaultRequestConfig(requestConfig);
+
+        // 默认连接重用策略
+        httpClientBuilder.setConnectionReuseStrategy(new DefaultClientConnectionReuseStrategy());
         /**
          * Keep-Alive策略，默认实现 {@link org.apache.http.impl.client.DefaultConnectionKeepAliveStrategy}，
          * 读取response中的keep-alive的timeout参数，若是没有读到，那么设置为-1，代表永不过期。
@@ -173,7 +183,7 @@ public class HttpClientConfig {
         // 禁止重试策略。在高并发场景下建议关闭。
         httpClientBuilder.disableAutomaticRetries();
 
-        // 为当前HttpClient实例配置定时任务，使用后台线程（线程名称见源码），定时从连接池中逐出过期、空闲连接。默认不开启
+        // 为当前HttpClient实例配置定时任务，使用后台线程（ThreadName见源码），定时从连接池中逐出过期、空闲连接。默认不开启
         httpClientBuilder.evictExpiredConnections();
         httpClientBuilder.evictIdleConnections(3, TimeUnit.SECONDS);
 

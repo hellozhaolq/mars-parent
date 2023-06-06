@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping(path = "/testThread", consumes = {MediaType.ALL_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
 public class TestThreadController {
 
-    @GetMapping("/concurrency/{sleepMilliSeconds}")
+    @GetMapping("/sleep/{sleepMilliSeconds}")
     @Operation(summary = "并发测试", description = "并发测试")
     public R<Object> sleep(@PathVariable long sleepMilliSeconds) throws InterruptedException {
         TimeUnit.MILLISECONDS.sleep(sleepMilliSeconds);

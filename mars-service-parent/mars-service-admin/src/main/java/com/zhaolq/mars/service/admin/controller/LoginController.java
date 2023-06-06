@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.zhaolq.mars.api.admin.entity.UserEntity;
 import com.zhaolq.mars.common.mybatis.pagination.WrapperBuilder;
 import com.zhaolq.mars.service.admin.service.IUserService;
+import com.zhaolq.mars.tool.core.result.R;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -44,16 +45,16 @@ public class LoginController {
             @Parameter(name = "password", description = "密码", style = ParameterStyle.FORM, required = true)
     })
     @Operation(summary = "登录", description = "登录")
-    public String login(
+    public R<String> login(
             Model model,
             @Parameter(name = "account", description = "账号", style = ParameterStyle.FORM, required = true) String account,
             @Parameter(name = "password", description = "密码", style = ParameterStyle.FORM, required = true) String password) {
         UserEntity userEntity = userService.getOne(WrapperBuilder.getQueryWrapper(new UserEntity().setAccount(account).setPassword(password)));
         if (userEntity == null) {
-            return "返回主页或提示用户名密码错误";
+            return R.failureCh("返回主页或提示用户名密码错误");
         }
 
-        return "";
+        return R.success("登录成功");
     }
 
 }

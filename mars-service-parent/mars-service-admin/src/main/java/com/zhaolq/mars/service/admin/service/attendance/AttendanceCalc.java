@@ -114,7 +114,6 @@ public class AttendanceCalc {
                 .append(System.lineSeparator())
                 .append("----------------------------------------------------------------")
                 .append("----------------------------------------------------------------");
-        ;
         log.info(sb.toString());
 
         // 远程打印

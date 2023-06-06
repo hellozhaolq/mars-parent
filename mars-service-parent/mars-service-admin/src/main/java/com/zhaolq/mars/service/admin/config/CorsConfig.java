@@ -33,7 +33,7 @@ public class CorsConfig {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         // 当allowCredentials设置为true时，CORS 规范不允许使用"*" ，并且从 5.3 开始，该组合被拒绝，转而使用allowedOriginPatterns 。
         // corsConfiguration.addAllowedOrigin("*");
-        corsConfiguration.setAllowedOriginPatterns(Collections.singletonList("*.com"));
+        corsConfiguration.setAllowedOriginPatterns(Collections.singletonList("*"));
         corsConfiguration.setAllowCredentials(true);
         corsConfiguration.addAllowedHeader("*");
         corsConfiguration.addAllowedMethod("*");

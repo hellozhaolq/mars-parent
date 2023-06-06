@@ -33,7 +33,7 @@ server:
     threads:
       min-spare: 10 # 初始线程数
       max: 200 # 最大线程数。示例：1核2g内存为200。CPU越不密集值越大；更多的线程会带来更多的线程上下文切换成本；JVM中默认创建新线程时会分配大小为1M的线程栈，更多的线程异味着需要更多的内存；
-    accept-count: 1 # 最大等待数，当连接数达到最大值maxConnections后，新连接会放到等待队列中。当队列已满时，任何连接请求都将被拒绝(connection refused)
+    accept-count: 1 # 最大等待数，当连接数达到最大值maxConnections后，新连接会放到等待队列acceptor中。当队列已满时，任何连接请求都将被拒绝(connection refused)
     max-connections: 1 # 服务器最多能接受和处理的并发连接数(并发量=TomcatSocket连接数)。一般这个值大于(maxThreads)+(acceptCount)。在不改变硬件性能的情况下，并发量的提升必定以牺牲响应时间为代价。
     connection-timeout: 60s # 网络连接超时时间
     keep-alive-timeout: 60s # 长连接超时时间，从最后一个HTTP请求完开始算，默认使用connectionTimeout。相关请求头 Connection:keep-alive、Keep-Alive: timeout=60
@@ -49,7 +49,7 @@ server:
 
 
 
-################ SpringBoot集成JMX配置：https://www.liaoxuefeng.com/wiki/1252599548343744/1282385687609378 ##############
+################ 集成JMX配置：https://www.liaoxuefeng.com/wiki/1252599548343744/1282385687609378 ##############
 management:
   server:
     port: 50001

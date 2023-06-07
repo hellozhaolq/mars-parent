@@ -18,32 +18,61 @@
     <description>Log组件</description>
 
     <dependencies>
-        <!-- 
-             使用 Log4j2 作为 SLF4J 实现 https://logging.apache.org/log4j/2.x/manual/api-separation.html
+        <dependency>
+            <groupId>com.zhaolq.mars.common</groupId>
+            <artifactId>mars-common-core</artifactId>
+            <version>1.0.0-deluxe</version>
+        </dependency>
+        <dependency>
+            <groupId>com.zhaolq.mars.common</groupId>
+            <artifactId>mars-common-apache</artifactId>
+            <version>1.0.0-deluxe</version>
+        </dependency>
 
-             org.slf4j.slf4j-api是slf4j核心包，提供日志相关接口。
-             log4j2 两个核心jar包 log4j-core、log4j-api，各实现已有依赖，故无需重复引入。普通项目只需要引入单个实现包log4j-slf4j-impl即可。
-             log4j2 包路径: org.apache.logging.log4j.log4j-core。
+        <!--
+            门面型日志框架
+                JCL：Apache基金会所属的项目，是一套Java日志接口，之前叫Jakarta Commons Logging，后更名为Commons Logging。
+                SLF4J：是一套简易Java日志门面，是对所有日志框架制定的一种规范、标准、接口，本身并无日志的实现。（Simple Logging Facade for Java，缩写Slf4j）
+
+            记录型日志框架
+                Jul (Java Util Logging)：JDK中的日志记录工具，也常称为JDKLog、jdk-logging，自Java1.4以来的官方日志实现。
+                Log4j：Apache Log4j是一个基于Java的日志记录工具。它是由Ceki Gülcü首创的，现在则是Apache软件基金会的一个项目。
+                Log4j2：一个具体的日志实现框架，是Log4j 1的下一个版本，与Log4j 1发生了很大的变化，Log4j 2不兼容Log4j 1。
+                Logback：一个具体的日志实现框架，好像和Slf4j是同一个作者，但其性能更好（推荐使用）。
+
+            log4j与log4j2的区别：
+                1.获取Logger的api不一样，log4j的api为org.apache.log4j.Logger，而log4j2的api为org.apache.logging.log4j.Logger
+                2.配置方式不一样，log4j2对properties的配置支持不是很好，它的格式一般为xml格式或者yaml格式，这种格式的可读性比较好，各种配置一目了然
+                3.Log4j2.0基于LMAX Disruptor的异步日志在多线程环境下性能会远远优于Log4j 1.x和logback（官方数据是10倍以上）。
+
+            slf4j+log4j
+                log4j.log4j                                     log4j的核心包
+                org.slf4j.slf4j-api                             slf4j的核心包
+                org.slf4j.slf4j-log4j12/slf4j-reload4j          slf4j与log4j的桥接包/驱动包，这个包的作用就是使用slf4j的api，但是底层实现是基于log4j.
+
+            slf4j+log4j2
+                org.slf4j.slf4j-api                             slf4j的核心包
+                org.apache.logging.log4j.log4j-core             log4j2的核心包
+                org.apache.logging.log4j.log4j-api              log4j2的核心包
+                org.apache.logging.log4j.log4j-slf4j-impl       slf4j与log4j2的桥接包/驱动包，这个包的作用就是使用slf4j的api，但是底层实现是基于log4j2
+                普通项目只需要引入单个包log4j-slf4j-impl即可。
+                使用 Log4j2 作为 SLF4J 实现 https://logging.apache.org/log4j/2.x/manual/api-separation.html
+
+            解决web项目log4j可能出现警告的jar包：log4j-web
         -->
-        <!-- <dependency>
+        <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j-impl</artifactId>
-        </dependency> -->
-        <!-- 使用log4j2时，web项目需要log4j-web模块，版本与log4j-core保持一致，删掉是否可以有待测试 -->
-        <!-- <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-web</artifactId>
-            <version>${log4j2.version}</version>
-        </dependency> -->
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-log4j2</artifactId>
         </dependency>
+        <!-- log4j2的异步日志功能包 -->
         <dependency>
             <groupId>com.lmax</groupId>
             <artifactId>disruptor</artifactId>
             <version>${disruptor.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>

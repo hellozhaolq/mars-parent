@@ -18,6 +18,17 @@
     <description>mybatis组件</description>
 
     <dependencies>
+        <dependency>
+            <groupId>com.zhaolq.mars.common</groupId>
+            <artifactId>mars-common-core</artifactId>
+            <version>1.0.0-deluxe</version>
+        </dependency>
+        <dependency>
+            <groupId>com.zhaolq.mars.common</groupId>
+            <artifactId>mars-common-apache</artifactId>
+            <version>1.0.0-deluxe</version>
+        </dependency>
+
         <!-- mybatis-plus只做增强不做改变，丝滑升级mybatis项目 -->
         <dependency>
             <groupId>com.baomidou</groupId>

@@ -10,7 +10,6 @@ import com.alibaba.fastjson2.JSONObject;
 
 import lombok.extern.slf4j.Slf4j;
 
-
 /**
  * IBEX Java 组件开发 Spark 应用基类
  *

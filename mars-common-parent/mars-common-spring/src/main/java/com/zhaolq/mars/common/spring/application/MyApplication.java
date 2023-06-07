@@ -19,8 +19,8 @@ import org.springframework.core.env.StandardEnvironment;
 import org.springframework.core.env.SystemEnvironmentPropertySource;
 import org.springframework.util.Assert;
 
-import com.zhaolq.mars.tool.core.enums.OS;
-import com.zhaolq.mars.tool.core.enums.Profile;
+import com.zhaolq.mars.common.core.enums.OS;
+import com.zhaolq.mars.common.core.enums.Profile;
 
 import lombok.extern.slf4j.Slf4j;
 

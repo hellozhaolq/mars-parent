@@ -24,8 +24,8 @@ import com.alibaba.fastjson2.JSONObject;
 import com.zhaolq.mars.service.admin.service.attendance.AttendanceCalc;
 import com.zhaolq.mars.service.admin.service.attendance.AttendanceInfo;
 import com.zhaolq.mars.service.admin.service.attendance.AttendancePolicy;
-import com.zhaolq.mars.tool.core.result.R;
-import com.zhaolq.mars.tool.core.result.ResultCode;
+import com.zhaolq.mars.common.core.result.R;
+import com.zhaolq.mars.common.core.result.ResultCode;
 
 import lombok.extern.slf4j.Slf4j;
 

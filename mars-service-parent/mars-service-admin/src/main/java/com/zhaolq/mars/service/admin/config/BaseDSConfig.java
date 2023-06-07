@@ -78,7 +78,7 @@ public class BaseDSConfig {
     public DataSource setDataSource(@Qualifier("baseDataSourceProperties") DataSourceProperties dataSourceProperties) {
         // ComboPooledDataSource dataSource = new ComboPooledDataSource();
         // DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
-        DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create()
+        DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create()
                 .driverClassName(dataSourceProperties.getDriverClassName())
                 .url(dataSourceProperties.getUrl())
                 .username(dataSourceProperties.getUsername())

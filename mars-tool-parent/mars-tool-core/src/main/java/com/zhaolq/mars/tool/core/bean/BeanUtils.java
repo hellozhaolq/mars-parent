@@ -1,5 +1,6 @@
 package com.zhaolq.mars.tool.core.bean;
 
+
 import cn.hutool.core.bean.BeanUtil;
 
 /**
@@ -10,4 +11,6 @@ import cn.hutool.core.bean.BeanUtil;
  * @date 2021/5/12 17:34
  */
 public final class BeanUtils extends BeanUtil {
+    public void asd(){
+    }
 }

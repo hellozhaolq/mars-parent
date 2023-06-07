@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zhaolq.mars.common.spring.utils.SpringContextUtils;
-import com.zhaolq.mars.tool.core.result.R;
+import com.zhaolq.mars.common.core.result.R;
 import com.zhaolq.mars.tool.core.utils.ObjectUtils;
 import com.zhaolq.mars.tool.core.utils.StringUtils;
 

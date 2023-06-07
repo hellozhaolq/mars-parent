@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.zhaolq.mars.api.admin.entity.UserEntity;
 import com.zhaolq.mars.common.mybatis.pagination.WrapperBuilder;
 import com.zhaolq.mars.service.admin.service.IUserService;
-import com.zhaolq.mars.tool.core.result.R;
+import com.zhaolq.mars.common.core.result.R;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

@@ -17,11 +17,25 @@
     <url>https://blog.zhaolq.com</url>
     <description>SparkDemo</description>
 
+    <properties>
+        <log4j2.version>2.17.2</log4j2.version>
+    </properties>
+
     <dependencies>
+        <dependency>
+            <groupId>com.zhaolq.mars.common</groupId>
+            <artifactId>mars-common-core</artifactId>
+            <version>1.0.0-deluxe</version>
+        </dependency>
         <dependency>
             <groupId>com.zhaolq.mars.common</groupId>
             <artifactId>mars-common-apache</artifactId>
             <version>1.0.0-deluxe</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>${log4j2.version}</version>
         </dependency>
 
         <!--spark依赖-->
@@ -30,6 +44,16 @@
             <artifactId>spark-core_2.12</artifactId>
             <version>3.0.2</version>
             <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>log4j</groupId>
+                    <artifactId>log4j</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.esotericsoftware</groupId>
+                    <artifactId>minlog</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.apache.spark</groupId>

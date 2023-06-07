@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zhaolq.mars.service.admin.task.ScheduledMouseMove;
-import com.zhaolq.mars.tool.core.result.R;
-import com.zhaolq.mars.tool.core.result.ResultCode;
+import com.zhaolq.mars.common.core.result.R;
+import com.zhaolq.mars.common.core.result.ResultCode;
 
 import lombok.extern.slf4j.Slf4j;
 

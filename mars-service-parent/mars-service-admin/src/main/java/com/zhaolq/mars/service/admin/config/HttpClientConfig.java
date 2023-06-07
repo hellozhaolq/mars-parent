@@ -37,6 +37,12 @@ import lombok.extern.slf4j.Slf4j;
  *   3、定时关闭连接，放回池中，还是真的关闭了呢？如何验证
  *   4、更好的处理返回结果。推荐定义一个ResponseHandler，不再自己catch异常和关闭流。由源码得，执行带有ResponseHandler参数execute方法，最终会调用EntityUtils.consume()方法关闭资源。不调用close，不归还连接。
  * </pre>
+ * <pre>
+ * http请求工具
+ *   Java：   HttpURLConnection 同步阻塞
+ *   spring： RestTemplate 同步阻塞（默认Http客户端类型是 JDK原生的URLConnection）、WebClient 异步非阻塞式客户端
+ *   apache： HttpComponents 官网：HttpCore 支持两种 I/O 模型：基于经典 Java I/O 的阻塞 I/O 模型和基于 Java NIO 的非阻塞、事件驱动 I/O 模型。
+ * </pre>
  *
  * @author zhaolq
  * @date 2023/5/30 17:58:06
@@ -126,11 +132,7 @@ public class HttpClientConfig {
     @Bean(name = "requestConfig")
     public RequestConfig requestConfig() {
         // Builder是RequestConfig的一个内部类，通过RequestConfig的custom方法来获取到一个Builder对象，设置builder的连接信息，也可以设置proxy，cookieSpec等属性
-        return RequestConfig.custom()
-                .setConnectionRequestTimeout(connectionRequestTimeout)
-                .setConnectTimeout(connectTimeout)
-                .setSocketTimeout(socketTimeout)
-                .build();
+        return RequestConfig.custom().setConnectionRequestTimeout(connectionRequestTimeout).setConnectTimeout(connectTimeout).setSocketTimeout(socketTimeout).build();
     }
 
     @Bean(name = "httpClientBuilder")
@@ -140,7 +142,7 @@ public class HttpClientConfig {
         // HttpClientBuilder中的构造方法被protected修饰，所以这里不能直接使用new来实例化一个HttpClientBuilder，可以使用HttpClientBuilder提供的静态方法create()来获取HttpClientBuilder对象
         HttpClientBuilder httpClientBuilder = HttpClients.custom();
 
-        httpClientBuilder.setDefaultHeaders(Collections.EMPTY_LIST);
+        httpClientBuilder.setDefaultHeaders(Collections.emptyList());
         // httpClientBuilder.setUserAgent("");
         // httpClientBuilder.setProxy();
 
@@ -159,8 +161,7 @@ public class HttpClientConfig {
             @Override
             public long getKeepAliveDuration(HttpResponse response, HttpContext context) {
                 Args.notNull(response, "HTTP response");
-                final HeaderElementIterator it = new BasicHeaderElementIterator(
-                        response.headerIterator(HTTP.CONN_KEEP_ALIVE));
+                final HeaderElementIterator it = new BasicHeaderElementIterator(response.headerIterator(HTTP.CONN_KEEP_ALIVE));
                 while (it.hasNext()) {
                     final HeaderElement he = it.nextElement();
                     final String param = he.getName();

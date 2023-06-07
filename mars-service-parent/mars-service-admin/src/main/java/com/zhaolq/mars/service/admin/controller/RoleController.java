@@ -25,8 +25,8 @@ import com.zhaolq.mars.common.valid.group.Add;
 import com.zhaolq.mars.common.valid.group.Edit;
 import com.zhaolq.mars.service.admin.service.IRoleService;
 import com.zhaolq.mars.tool.core.lang.Assert;
-import com.zhaolq.mars.tool.core.result.R;
-import com.zhaolq.mars.tool.core.result.ResultCode;
+import com.zhaolq.mars.common.core.result.R;
+import com.zhaolq.mars.common.core.result.ResultCode;
 import com.zhaolq.mars.tool.core.utils.ObjectUtils;
 import com.zhaolq.mars.tool.core.utils.StringUtils;
 

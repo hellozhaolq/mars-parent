@@ -70,7 +70,7 @@ public class ArcheDSConfig {
      */
     @Bean(name = "archeDataSource")
     public DataSource setDataSource(@Qualifier("archeDataSourceProperties") DataSourceProperties dataSourceProperties) {
-        DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create()
+        DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create()
                 .driverClassName(dataSourceProperties.getDriverClassName())
                 .url(dataSourceProperties.getUrl())
                 .username(dataSourceProperties.getUsername())

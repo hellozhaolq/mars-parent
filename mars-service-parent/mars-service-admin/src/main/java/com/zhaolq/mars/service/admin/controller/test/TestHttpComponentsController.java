@@ -24,8 +24,8 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.zhaolq.mars.tool.core.result.HttpStatus;
-import com.zhaolq.mars.tool.core.result.R;
+import com.zhaolq.mars.common.core.result.HttpStatus;
+import com.zhaolq.mars.common.core.result.R;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;

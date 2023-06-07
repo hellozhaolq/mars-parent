@@ -22,7 +22,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 
-import com.zhaolq.mars.tool.core.result.R;
+import com.zhaolq.mars.common.core.result.R;
 
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.http.ContentType;

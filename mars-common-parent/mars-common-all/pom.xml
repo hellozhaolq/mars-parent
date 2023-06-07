@@ -20,12 +20,17 @@
     <dependencies>
         <dependency>
             <groupId>com.zhaolq.mars.common</groupId>
+            <artifactId>mars-common-core</artifactId>
+            <version>1.0.0-deluxe</version>
+        </dependency>
+        <dependency>
+            <groupId>com.zhaolq.mars.common</groupId>
             <artifactId>mars-common-apache</artifactId>
             <version>1.0.0-deluxe</version>
         </dependency>
         <dependency>
             <groupId>com.zhaolq.mars.common</groupId>
-            <artifactId>mars-common-export</artifactId>
+            <artifactId>mars-common-poi</artifactId>
             <version>1.0.0-deluxe</version>
         </dependency>
         <dependency>

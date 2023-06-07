@@ -19,7 +19,8 @@
     <description>通用组件</description>
 
     <modules>
-        <module>mars-common-export</module>
+        <module>mars-common-apache</module>
+        <module>mars-common-poi</module>
         <module>mars-common-log</module>
         <module>mars-common-mybatis</module>
         <module>mars-common-valid</module>
@@ -29,6 +30,7 @@
         <module>mars-common-property</module>
         <module>mars-common-redis</module>
         <module>mars-common-spring</module>
+        <module>mars-common-core</module>
     </modules>
 
     <dependencies>

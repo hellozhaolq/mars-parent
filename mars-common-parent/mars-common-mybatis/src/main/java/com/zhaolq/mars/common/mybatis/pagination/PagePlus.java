@@ -1,18 +1,19 @@
 package com.zhaolq.mars.common.mybatis.pagination;
 
-import com.baomidou.mybatisplus.core.metadata.OrderItem;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.zhaolq.mars.tool.core.constant.StringPool;
-import com.zhaolq.mars.tool.core.db.PageUtils;
-import com.zhaolq.mars.tool.core.utils.StringUtils;
-
 import java.util.Arrays;
 import java.util.List;
 
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
+import com.zhaolq.mars.common.core.db.PageUtils;
+import com.zhaolq.mars.tool.core.constant.StringPool;
+import com.zhaolq.mars.tool.core.utils.StringUtils;
+
 /**
  * 封装分页模型：
- *     新增排序参数
- *     添加分页彩虹
+ * 新增排序参数
+ * 添加分页彩虹
  *
  * @author zhaolq
  * @date 2021/5/31 17:33

@@ -2,8 +2,9 @@ package com.zhaolq.mars.tool.core.utils;
 
 import java.util.regex.Pattern;
 
-import com.zhaolq.mars.tool.core.exception.ValidateException;
 import com.zhaolq.mars.tool.core.constant.RegexPool;
+
+import cn.hutool.core.exceptions.ValidateException;
 
 /**
  * IP工具类
@@ -45,6 +46,7 @@ public class Ipv4Utils {
      * @return long
      */
     public static long ipv4ToLong(String ipString) {
+
         if (ipString == null || ipString.trim().equals("")) {
             throw new ValidateException("Invalid IPv4 address!");
         }

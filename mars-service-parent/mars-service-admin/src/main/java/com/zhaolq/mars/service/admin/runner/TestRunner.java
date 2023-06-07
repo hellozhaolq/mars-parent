@@ -28,8 +28,6 @@ import cn.hutool.db.Entity;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * 推荐：https://bbs.huaweicloud.com/blogs/184825
- * <p>
  * 执行时机：参考org.springframework.boot.SpringApplication.run()方法的源码
  *
  * @author zhaolq

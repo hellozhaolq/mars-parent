@@ -22,6 +22,7 @@
         <module>mars-demo-a</module>
         <module>mars-demo-annotation</module>
         <module>mars-demo-jar</module>
+        <module>mars-demo-spark</module>
     </modules>
 
     <dependencies>

@@ -58,11 +58,11 @@ if [ ! -z ${application_pid} ];then
 fi
 
 if [ ${env_type} == "prod" ];then
-    echo "nohup java -jar ${xms} ${xmx} -javaagent:/usr/local/wiseapm-java-agent/wiseapm-javaagent.jar -Dluban_clusterName=EXP_ENGINE -Dluban_clusterId=2539787 -Dspring.profiles.active=prod -Dserver.port=${application_port} -Dsoa_innernet_domain=http://oauth2.huawei.com $application_jar >/dev/null 2>&1 &"
-    nohup java -jar ${xms} ${xmx} -javaagent:/usr/local/wiseapm-java-agent/wiseapm-javaagent.jar -Dluban_clusterName=EXP_ENGINE -Dluban_clusterId=2539787 -Dspring.profiles.active=prod -Dserver.port=${application_port} -Dsoa_innernet_domain=http://oauth2.huawei.com $application_jar >/dev/null 2>&1 &
+    echo "nohup java -jar ${xms} ${xmx} -javaagent:/usr/local/wiseapm-java-agent/wiseapm-javaagent.jar -Dluban_clusterName=EXP_ENGINE -Dluban_clusterId=2539787 -Dspring.profiles.active=prod -Dserver.port=${application_port} -Dsoa_innernet_domain=http://oauth2.zhaolq.com $application_jar >/dev/null 2>&1 &"
+    nohup java -jar ${xms} ${xmx} -javaagent:/usr/local/wiseapm-java-agent/wiseapm-javaagent.jar -Dluban_clusterName=EXP_ENGINE -Dluban_clusterId=2539787 -Dspring.profiles.active=prod -Dserver.port=${application_port} -Dsoa_innernet_domain=http://oauth2.zhaolq.com $application_jar >/dev/null 2>&1 &
 else
-    echo "nohup java -jar ${xms} ${xmx} -Dspring.profiles.active=${env_type} -Dserver.port=${application_port} -Dsoa_innernet_domain=http://oauth2.huawei.com $application_jar >/dev/null 2>&1 &"
-    nohup java -jar ${xms} ${xmx} -Dspring.profiles.active=${env_type} -Dserver.port=${application_port} -Dsoa_innernet_domain=http://oauth2-beta.huawei.com $application_jar >/dev/null 2>&1 &
+    echo "nohup java -jar ${xms} ${xmx} -Dspring.profiles.active=${env_type} -Dserver.port=${application_port} -Dsoa_innernet_domain=http://oauth2.zhaolq.com $application_jar >/dev/null 2>&1 &"
+    nohup java -jar ${xms} ${xmx} -Dspring.profiles.active=${env_type} -Dserver.port=${application_port} -Dsoa_innernet_domain=http://oauth2-beta.zhaolq.com $application_jar >/dev/null 2>&1 &
 fi
 
 

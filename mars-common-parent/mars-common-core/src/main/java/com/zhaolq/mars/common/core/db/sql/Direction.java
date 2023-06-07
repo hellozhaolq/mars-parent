@@ -4,8 +4,6 @@
 
 package com.zhaolq.mars.common.core.db.sql;
 
-import com.zhaolq.mars.tool.core.utils.StringUtils;
-
 /**
  * 排序方式（升序或者降序）
  *
@@ -31,7 +29,8 @@ public enum Direction {
         try {
             return Direction.valueOf(value.toUpperCase());
         } catch (Exception e) {
-            throw new IllegalArgumentException(StringUtils.format("Invalid value [{}] for orders given! Has to be " + "either 'desc' or 'asc' (case insensitive).", value), e);
+            throw new IllegalArgumentException(
+                    String.format("Invalid value [%s] for orders given! Has to be either 'desc' or 'asc' (case insensitive).", value), e);
         }
     }
 }

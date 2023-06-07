@@ -7,8 +7,9 @@ package com.zhaolq.mars.common.core.db;
 import java.io.Serializable;
 import java.util.Arrays;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import com.zhaolq.mars.common.core.db.sql.Order;
-import com.zhaolq.mars.tool.core.utils.ArrayUtils;
 
 /**
  * 分页对象
@@ -149,7 +150,7 @@ public class Page implements Serializable {
      * @param orders 排序
      */
     public void addOrder(Order... orders) {
-        this.orders = ArrayUtils.append(this.orders, orders);
+        this.orders = ArrayUtils.addAll(this.orders, orders);
     }
 
     // ---------------------------------------------------------- Getters and Setters end

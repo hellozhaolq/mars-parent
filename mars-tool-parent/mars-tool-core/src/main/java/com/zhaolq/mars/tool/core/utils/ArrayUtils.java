@@ -4,6 +4,9 @@
 
 package com.zhaolq.mars.tool.core.utils;
 
+import com.zhaolq.mars.tool.core.constant.StringPool;
+import com.zhaolq.mars.tool.core.date.LocalDateTimeUtils;
+
 import cn.hutool.core.util.ArrayUtil;
 
 /**
@@ -14,4 +17,7 @@ import cn.hutool.core.util.ArrayUtil;
  * @since 1.0.0
  */
 public class ArrayUtils extends ArrayUtil {
+    public void asf(){
+        LocalDateTimeUtils.now();
+    }
 }

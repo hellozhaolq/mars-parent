@@ -3,12 +3,13 @@ package com.zhaolq.mars.common.mybatis.pagination;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
+import com.zhaolq.mars.common.core.constant.StringPool;
 import com.zhaolq.mars.common.core.db.PageUtils;
-import com.zhaolq.mars.tool.core.constant.StringPool;
-import com.zhaolq.mars.tool.core.utils.StringUtils;
 
 /**
  * 封装分页模型：
@@ -59,7 +60,7 @@ public class PagePlus<T> extends Page<T> {
     }
 
     public void setAscColumns(String ascColumns) {
-        String[] columns = StringUtils.split(ascColumns, StringPool.C_COMMA, 0, true, true).toArray(new String[0]);
+        String[] columns = StringUtils.split(ascColumns, StringPool.COMMA, 0);
         List<OrderItem> list = OrderItem.ascs(columns);
         addOrder(list);
         this.ascColumns = Arrays.toString(columns);
@@ -70,7 +71,7 @@ public class PagePlus<T> extends Page<T> {
     }
 
     public void setDescColumns(String descColumns) {
-        String[] columns = StringUtils.split(descColumns, StringPool.C_COMMA, 0, true, true).toArray(new String[0]);
+        String[] columns = StringUtils.split(descColumns, StringPool.COMMA, 0);
         List<OrderItem> list = OrderItem.descs(columns);
         addOrder(list);
         this.descColumns = Arrays.toString(columns);

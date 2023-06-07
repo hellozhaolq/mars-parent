@@ -5,7 +5,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
 
-import com.zhaolq.mars.tool.core.utils.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * 摘要算法工具类

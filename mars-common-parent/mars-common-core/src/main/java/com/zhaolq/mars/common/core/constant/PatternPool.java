@@ -2,14 +2,11 @@
  * Copyright (c) Zhaolq Technologies Co., Ltd. 大约40亿年前-9999. All rights reserved.
  */
 
-package com.zhaolq.mars.tool.core.constant;
+package com.zhaolq.mars.common.core.constant;
 
 import java.util.regex.Pattern;
 
-import com.zhaolq.mars.tool.core.cache.SimpleCache;
-import com.zhaolq.mars.tool.core.utils.RegexUtils;
-
-import cn.hutool.core.lang.RegexPool;
+import com.zhaolq.mars.common.core.cache.SimpleCache;
 
 /**
  * 常用正则表达式集合，更多正则见:https://any86.github.io/any-rule/
@@ -33,7 +30,7 @@ public class PatternPool {
     /**
      * 单个中文汉字
      */
-    public final static Pattern CHINESE = Pattern.compile(RegexUtils.RE_CHINESE);
+    public final static Pattern CHINESE = Pattern.compile(RegexPool.CHINESE);
     /**
      * 中文汉字
      */

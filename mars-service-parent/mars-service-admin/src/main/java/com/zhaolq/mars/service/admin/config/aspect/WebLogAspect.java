@@ -6,6 +6,7 @@ import java.util.Optional;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.After;
@@ -25,7 +26,6 @@ import com.zhaolq.mars.api.admin.entity.UserEntity;
 import com.zhaolq.mars.service.admin.config.StrFormat;
 import com.zhaolq.mars.service.admin.service.IUserService;
 
-import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -172,7 +172,7 @@ public class WebLogAspect {
     }
 
     private boolean isUnknown(String checkString) {
-        return StrUtil.isBlank(checkString) || "unknown".equalsIgnoreCase(checkString);
+        return StringUtils.isBlank(checkString) || "unknown".equalsIgnoreCase(checkString);
     }
 
 }

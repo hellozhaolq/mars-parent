@@ -26,10 +26,5 @@
     </modules>
 
     <dependencies>
-        <dependency>
-            <groupId>com.zhaolq.mars.tool</groupId>
-            <artifactId>mars-tool-all</artifactId>
-            <version>1.0.0-deluxe</version>
-        </dependency>
     </dependencies>
 </project>

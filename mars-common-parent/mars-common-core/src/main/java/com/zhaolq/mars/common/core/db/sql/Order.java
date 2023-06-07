@@ -6,7 +6,7 @@ package com.zhaolq.mars.common.core.db.sql;
 
 import java.io.Serializable;
 
-import com.zhaolq.mars.tool.core.utils.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import lombok.Data;
 
@@ -89,8 +89,8 @@ public class Order implements Serializable {
 
     @Override
     public String toString() {
-        return StringUtils.builder().append(this.field).append(StringUtils.SPACE).append(null == direction ?
-                StringUtils.EMPTY :
-                direction).toString();
+        return new StringBuilder().append(this.field).append(StringUtils.SPACE).append(null == direction ?
+                                                                                       StringUtils.EMPTY :
+                                                                                       direction).toString();
     }
 }

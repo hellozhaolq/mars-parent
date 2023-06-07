@@ -1,16 +1,20 @@
 package com.zhaolq.mars.common.mybatis.pagination;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
+
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.zhaolq.mars.tool.core.constant.StringPool;
-import com.zhaolq.mars.tool.core.utils.NumberUtils;
-import com.zhaolq.mars.tool.core.utils.StringUtils;
+
+import com.zhaolq.mars.common.core.constant.StringPool;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
  * 分页转换
@@ -52,8 +56,8 @@ public class PageConvert<T> {
     }
 
     public static <T> Page<T> getPage(HttpServletRequest request) {
-        long size = NumberUtils.parseLong(request.getParameter("size"));
-        long current = NumberUtils.parseLong(request.getParameter("current"));
+        long size = NumberUtils.createLong(request.getParameter("size"));
+        long current = NumberUtils.createLong(request.getParameter("current"));
         String ascColumns = request.getParameter("ascColumns");
         String descColumns = request.getParameter("descColumns");
         return getPage(size, current, ascColumns, descColumns);
@@ -69,15 +73,13 @@ public class PageConvert<T> {
         page.setCurrent(current == ZERO ? DEFAULT_CURRENT : current);
 
         if (StringUtils.isNotBlank(ascColumns)) {
-            StringUtils.split(ascColumns, StringPool.C_COMMA, 0, true, true).toArray(new String[0]);
-
-            String[] ascColumnArray = StringUtils.split(ascColumns, StringPool.C_COMMA, 0, true, true).toArray(new String[0]);
+            String[] ascColumnArray = StringUtils.split(ascColumns, StringPool.COMMA, 0);
             List<OrderItem> ascList = OrderItem.ascs(ascColumnArray);
             page.addOrder(ascList);
         }
 
         if (StringUtils.isNotBlank(descColumns)) {
-            String[] descColumnArray = StringUtils.split(descColumns, StringPool.C_COMMA, 0, true, true).toArray(new String[0]);
+            String[] descColumnArray = StringUtils.split(descColumns, StringPool.COMMA, 0);
             List<OrderItem> descList = OrderItem.descs(descColumnArray);
             page.addOrder(descList);
         }
@@ -90,8 +92,8 @@ public class PageConvert<T> {
     }
 
     public static <T> PagePlus<T> getPagePlus(HttpServletRequest request) {
-        long size = NumberUtils.parseLong(request.getParameter("size"));
-        long current = NumberUtils.parseLong(request.getParameter("current"));
+        long size = NumberUtils.createLong(request.getParameter("size"));
+        long current = NumberUtils.createLong(request.getParameter("current"));
         String ascColumns = request.getParameter("ascColumns");
         String descColumns = request.getParameter("descColumns");
         return getPagePlus(size, current, ascColumns, descColumns);

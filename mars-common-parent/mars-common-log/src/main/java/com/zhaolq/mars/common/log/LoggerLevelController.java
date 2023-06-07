@@ -13,9 +13,11 @@ import java.util.TreeSet;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.logging.LogLevel;
 import org.springframework.boot.logging.LoggerConfiguration;
 import org.springframework.boot.logging.LoggingSystem;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,7 +26,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.zhaolq.mars.common.core.result.R;
 import com.zhaolq.mars.common.core.result.ResultCode;
-import com.zhaolq.mars.tool.core.lang.Assert;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -91,7 +92,9 @@ public class LoggerLevelController {
     @PostMapping("/setLoggerLevel")
     public void setLoggerLevel(@RequestBody(required = false) LoggerLevel loggerLevel) {
         Assert.notNull(loggerLevel, ResultCode.PARAM_NOT_COMPLETE.getDescCh());
-        Assert.notBlank(loggerLevel.getName(), "Name must not be empty");
+        if (StringUtils.isBlank(loggerLevel.getName())) {
+            new IllegalArgumentException("Name must not be empty");
+        }
         this.loggingSystem.setLogLevel(loggerLevel.getName(), LogLevel.valueOf(loggerLevel.getLevel()));
     }
 

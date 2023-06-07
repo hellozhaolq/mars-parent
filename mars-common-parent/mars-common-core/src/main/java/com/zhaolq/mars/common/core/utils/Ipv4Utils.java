@@ -2,7 +2,7 @@ package com.zhaolq.mars.common.core.utils;
 
 import java.util.regex.Pattern;
 
-import com.zhaolq.mars.tool.core.constant.RegexPool;
+import com.zhaolq.mars.common.core.constant.RegexPool;
 import com.zhaolq.mars.common.core.exception.ValidateException;
 
 /**
@@ -48,6 +48,7 @@ public class Ipv4Utils {
         if (ipString == null || ipString.trim().equals("")) {
             throw new ValidateException("Invalid IPv4 address!");
         }
+
         Pattern pattern = Pattern.compile(RegexPool.IPV4);
         if (!pattern.matcher(ipString).matches()) {
             throw new ValidateException("Invalid IPv4 address!");

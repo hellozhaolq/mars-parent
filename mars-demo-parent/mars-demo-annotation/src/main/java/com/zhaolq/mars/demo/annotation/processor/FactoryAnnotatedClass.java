@@ -1,11 +1,12 @@
 package com.zhaolq.mars.demo.annotation.processor;
 
-import com.zhaolq.mars.demo.annotation.annotation.Factory;
-import com.zhaolq.mars.tool.core.utils.StringUtils;
-
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.MirroredTypeException;
+
+import org.springframework.util.StringUtils;
+
+import com.zhaolq.mars.demo.annotation.annotation.Factory;
 
 /**
  * 包含有关用{@link Factory}注解标注的类的信息
@@ -42,7 +43,8 @@ public class FactoryAnnotatedClass {
 
         if (StringUtils.isEmpty(id)) {
             // 注解@Factory中类的id()不允许为null或空
-            throw new ProcessingException(classElement, "id() in @%s for class %s is null or empty! that's not allowed", Factory.class.getSimpleName(), classElement.getQualifiedName().toString());
+            throw new ProcessingException(classElement, "id() in @%s for class %s is null or empty! that's not allowed",
+                    Factory.class.getSimpleName(), classElement.getQualifiedName().toString());
         }
 
         // 获取完整的QualifiedTypeName
@@ -68,6 +70,7 @@ public class FactoryAnnotatedClass {
 
     /**
      * 获取 {@link Factory#type()} 中指定的类型的全限定名称。
+     *
      * @return qualified name
      */
     public String getQualifiedFactoryGroupName() {

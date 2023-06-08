@@ -1,7 +1,5 @@
 package com.zhaolq.mars.service.admin.config;
 
-import cn.hutool.core.text.StrFormatter;
-
 /**
  * 字符串构造工具
  *

@@ -25,11 +25,6 @@
         </dependency>
         <dependency>
             <groupId>com.zhaolq.mars.common</groupId>
-            <artifactId>mars-common-apache</artifactId>
-            <version>1.0.0-deluxe</version>
-        </dependency>
-        <dependency>
-            <groupId>com.zhaolq.mars.common</groupId>
             <artifactId>mars-common-log</artifactId>
             <version>1.0.0-deluxe</version>
         </dependency>

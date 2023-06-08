@@ -22,9 +22,6 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import cn.hutool.db.Db;
-import cn.hutool.db.DbUtil;
-import cn.hutool.db.Entity;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -44,41 +41,13 @@ public class TestRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        conn();
-        example1();
-        example2();
-    }
-
-    private void conn() {
-        Connection conn1 = null;
-        Connection conn2 = null;
-        try {
-            conn1 = Db.use(dataSource).getConnection();
-            conn2 = Db.use(dataSource).getConnection();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        log.debug(">>>>>>>> ThreadLocal同一线程中多次获取的数据库连接相同: {}", conn1 == conn2);
-        DbUtil.close(conn1, conn2);
-    }
-
-    private void example1() {
-        String sql = "select t.* from T_BASE_USER t where t.id = ? and t.account = ?";
-        int id = 1;
-        String account = "admin";
-
-        Entity entity = null;
-        try {
-            entity = Db.use(dataSource).queryOne(sql, id, account);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        example();
     }
 
     /**
      * https://zh.wikipedia.org/wiki/Java数据库连接
      */
-    private void example2() {
+    private void example() {
         String sql = "select t.* from T_BASE_USER t where t.id = ? and t.account = ?";
         int id = 1;
         String account = "admin";

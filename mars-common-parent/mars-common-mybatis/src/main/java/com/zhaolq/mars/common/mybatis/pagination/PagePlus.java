@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import com.zhaolq.mars.common.core.constant.StringPool;
-import com.zhaolq.mars.common.core.db.PageUtils;
+import com.zhaolq.mars.common.core.db.PageUtil;
 
 /**
  * 封装分页模型：
@@ -89,8 +89,8 @@ public class PagePlus<T> extends Page<T> {
     public Page<T> setTotal(long total) {
         this.total = total;
         // 总页数
-        int totalPage = PageUtils.totalPage((int) total, (int) getSize());
-        this.rainbow = PageUtils.rainbow((int) getCurrent(), totalPage, 7);
+        int totalPage = PageUtil.totalPage((int) total, (int) getSize());
+        this.rainbow = PageUtil.rainbow((int) getCurrent(), totalPage, 7);
         return this;
     }
 

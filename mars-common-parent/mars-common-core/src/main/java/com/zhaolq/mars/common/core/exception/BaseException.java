@@ -50,7 +50,7 @@ import com.zhaolq.mars.common.core.result.IResultCode;
  * @date 2022/1/30 8:31
  */
 public abstract class BaseException extends RuntimeException {
-    private IResultCode resultCode = this.setExceptionResultCode();
+    private static final long serialVersionUID = 1L;
 
     public BaseException() {
         super();
@@ -58,10 +58,6 @@ public abstract class BaseException extends RuntimeException {
 
     public BaseException(String message) {
         super(message);
-    }
-
-    public BaseException(String message, Object... params) {
-        super(String.format(message, params));
     }
 
     public BaseException(String message, Throwable cause) {
@@ -75,10 +71,4 @@ public abstract class BaseException extends RuntimeException {
     public BaseException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
-
-    public IResultCode getResultCode() {
-        return this.resultCode;
-    }
-
-    protected abstract IResultCode setExceptionResultCode();
 }

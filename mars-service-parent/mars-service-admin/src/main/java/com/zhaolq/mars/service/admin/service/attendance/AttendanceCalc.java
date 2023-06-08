@@ -20,13 +20,12 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.client.methods.HttpPost;
 import org.springframework.beans.factory.annotation.Value;
 
+import com.zhaolq.mars.common.core.date.DatePattern;
 import com.zhaolq.mars.common.core.result.R;
 
-import cn.hutool.core.date.DatePattern;
-import cn.hutool.http.ContentType;
-import cn.hutool.http.HttpUtil;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -66,20 +65,14 @@ public class AttendanceCalc {
         // 打卡天数
         BigDecimal punchCardDays = new BigDecimal(attendanceInfoList.size());
         // 出勤天数
-        BigDecimal attendanceDays = attendanceInfoList.stream()
-                .map(ele -> ele.getAttendanceDay())
-                .reduce(BigDecimal.ZERO, BigDecimal::add)
-                .setScale(6, RoundingMode.DOWN);
+        BigDecimal attendanceDays =
+                attendanceInfoList.stream().map(ele -> ele.getAttendanceDay()).reduce(BigDecimal.ZERO, BigDecimal::add).setScale(6,
+                        RoundingMode.DOWN);
         // 最低工时
         BigDecimal minimumWorkHours = attendanceDays.multiply(new BigDecimal(8));
         // 实际工时
-        BigDecimal actualWorkHours = attendanceInfoList.stream()
-                .map(ele -> ele.getMorningWorkingHours()
-                        .add(ele.getAmWorkingHours())
-                        .add(ele.getPmWorkingHours())
-                        .add(ele.getEveningWorkingHours()))
-                .reduce(BigDecimal.ZERO, BigDecimal::add)
-                .setScale(6, RoundingMode.DOWN);
+        BigDecimal actualWorkHours =
+                attendanceInfoList.stream().map(ele -> ele.getMorningWorkingHours().add(ele.getAmWorkingHours()).add(ele.getPmWorkingHours()).add(ele.getEveningWorkingHours())).reduce(BigDecimal.ZERO, BigDecimal::add).setScale(6, RoundingMode.DOWN);
         // 溢出工时
         BigDecimal overflowWorkHours = actualWorkHours.subtract(minimumWorkHours).setScale(6, RoundingMode.DOWN);
         // 日均工时
@@ -99,21 +92,15 @@ public class AttendanceCalc {
         resultMap.put("溢出工时", overflowWorkHours);
         resultMap.put("日均工时", averageDailyWorkingHours);
 
-        StringBuilder sb = new StringBuilder()
-                .append(System.lineSeparator())
-                .append("----------------------------------------------------------------")
-                .append("----------------------------------------------------------------")
-                .append(System.lineSeparator());
+        StringBuilder sb = new StringBuilder().append(System.lineSeparator()).append(
+                "----------------------------------------------------------------").append(
+                        "----------------------------------------------------------------").append(System.lineSeparator());
         attendanceInfoList.forEach(ele -> {
-            sb.append("| ")
-                    .append(ele.getStartWorkDatetime() + "        " + ele.getEndWorkDatetime())
-                    .append(System.lineSeparator());
+            sb.append("| ").append(ele.getStartWorkDatetime() + "        " + ele.getEndWorkDatetime()).append(System.lineSeparator());
         });
-        sb.append("| ")
-                .append(resultMap.toString())
-                .append(System.lineSeparator())
-                .append("----------------------------------------------------------------")
-                .append("----------------------------------------------------------------");
+        sb.append("| ").append(resultMap.toString()).append(System.lineSeparator()).append(
+                "----------------------------------------------------------------").append(
+                        "----------------------------------------------------------------");
         log.info(sb.toString());
 
         // 远程打印
@@ -132,8 +119,7 @@ public class AttendanceCalc {
             // 考勤日期，决定该条考勤数据归属哪一天，注意，5点之前算前一天的考勤。或者说，两天的考勤临界点是每日5点
             String today = ele.getAttendanceTime().substring(0, 10);
             String yesterday = LocalDate.parse(today).minusDays(1).toString();
-            if (ele.getAttendanceTime().compareTo(today + " 00:00:00") >= 0 &&
-                ele.getAttendanceTime().compareTo(today + policy.getBoundaryLine()) < 0) {
+            if (ele.getAttendanceTime().compareTo(today + " 00:00:00") >= 0 && ele.getAttendanceTime().compareTo(today + policy.getBoundaryLine()) < 0) {
                 ele.setAttendanceDate(yesterday);
             } else {
                 ele.setAttendanceDate(today);
@@ -222,9 +208,7 @@ public class AttendanceCalc {
             String today = ele.getAttendanceDate();
 
             // 开始打卡时间不在要求范围内的处理
-            if (ele.getStartWorkDatetime() != null &&
-                ele.getStartWorkDatetime().compareTo(today + policy.getFlexiTimeEnd()) > 0 &&
-                ele.getStartWorkDatetime().compareTo(today + policy.getDinnerTimeStart()) < 0) {
+            if (ele.getStartWorkDatetime() != null && ele.getStartWorkDatetime().compareTo(today + policy.getFlexiTimeEnd()) > 0 && ele.getStartWorkDatetime().compareTo(today + policy.getDinnerTimeStart()) < 0) {
 
                 LocalDateTime startTime = LocalDateTime.parse(ele.getStartWorkDatetime(), DatePattern.NORM_DATETIME_FORMATTER);
                 int hour = startTime.getHour();
@@ -242,9 +226,7 @@ public class AttendanceCalc {
             }
 
             // 结束打卡时间不在要求范围内的处理
-            if (ele.getEndWorkDatetime() != null &&
-                ele.getEndWorkDatetime().compareTo(today + policy.getFlexiTimeEnd()) > 0 &&
-                ele.getEndWorkDatetime().compareTo(today + policy.getDinnerTimeStart()) < 0) {
+            if (ele.getEndWorkDatetime() != null && ele.getEndWorkDatetime().compareTo(today + policy.getFlexiTimeEnd()) > 0 && ele.getEndWorkDatetime().compareTo(today + policy.getDinnerTimeStart()) < 0) {
 
                 LocalDateTime endTime = LocalDateTime.parse(ele.getEndWorkDatetime(), DatePattern.NORM_DATETIME_FORMATTER);
                 int minute = endTime.getMinute();
@@ -270,8 +252,7 @@ public class AttendanceCalc {
         // 工时计算
         attendanceInfoList.forEach(ele -> {
             // 早晨工时计算，不考虑其他特殊情况
-            if (ele.getStartWorkDatetime().compareTo(ele.getAttendanceDate() + policy.getBoundaryLine()) >= 0 &&
-                ele.getStartWorkDatetime().compareTo(ele.getAttendanceDate() + policy.getFlexiTimeStart()) <= 0) {
+            if (ele.getStartWorkDatetime().compareTo(ele.getAttendanceDate() + policy.getBoundaryLine()) >= 0 && ele.getStartWorkDatetime().compareTo(ele.getAttendanceDate() + policy.getFlexiTimeStart()) <= 0) {
                 LocalDateTime end = null;
                 if (ele.getEndWorkDatetime().compareTo(ele.getAttendanceDate() + policy.getFlexiTimeStart()) < 0) {
                     end = LocalDateTime.parse(ele.getEndWorkDatetime(), DatePattern.NORM_DATETIME_FORMATTER);
@@ -286,28 +267,27 @@ public class AttendanceCalc {
 
             // 上午工时计算
             if (ele.getEndWorkDatetime().compareTo(ele.getAttendanceDate() + policy.getLunchBreakStart()) >= 0) {
-                if (ele.getStartWorkDatetime().compareTo(ele.getAttendanceDate() + policy.getBoundaryLine()) >= 0 &&
-                    ele.getStartWorkDatetime().compareTo(ele.getAttendanceDate() + policy.getFlexiTimeStart()) <= 0) {
-                    LocalDateTime end = LocalDateTime.parse(ele.getAttendanceDate() + policy.getLunchBreakStart(), DatePattern.NORM_DATETIME_FORMATTER);
-                    LocalDateTime start = LocalDateTime.parse(ele.getAttendanceDate() + policy.getFlexiTimeStart(), DatePattern.NORM_DATETIME_FORMATTER);
+                if (ele.getStartWorkDatetime().compareTo(ele.getAttendanceDate() + policy.getBoundaryLine()) >= 0 && ele.getStartWorkDatetime().compareTo(ele.getAttendanceDate() + policy.getFlexiTimeStart()) <= 0) {
+                    LocalDateTime end = LocalDateTime.parse(ele.getAttendanceDate() + policy.getLunchBreakStart(),
+                            DatePattern.NORM_DATETIME_FORMATTER);
+                    LocalDateTime start = LocalDateTime.parse(ele.getAttendanceDate() + policy.getFlexiTimeStart(),
+                            DatePattern.NORM_DATETIME_FORMATTER);
                     ele.setAmWorkingHours(getWorkingHours(start, end));
-                } else if (ele.getStartWorkDatetime().compareTo(ele.getAttendanceDate() + policy.getFlexiTimeStart()) >= 0 &&
-                           ele.getStartWorkDatetime().compareTo(ele.getAttendanceDate() + policy.getLunchBreakStart()) <= 0) {
-                    LocalDateTime end = LocalDateTime.parse(ele.getAttendanceDate() + policy.getLunchBreakStart(), DatePattern.NORM_DATETIME_FORMATTER);
+                } else if (ele.getStartWorkDatetime().compareTo(ele.getAttendanceDate() + policy.getFlexiTimeStart()) >= 0 && ele.getStartWorkDatetime().compareTo(ele.getAttendanceDate() + policy.getLunchBreakStart()) <= 0) {
+                    LocalDateTime end = LocalDateTime.parse(ele.getAttendanceDate() + policy.getLunchBreakStart(),
+                            DatePattern.NORM_DATETIME_FORMATTER);
                     LocalDateTime start = LocalDateTime.parse(ele.getStartWorkDatetime(), DatePattern.NORM_DATETIME_FORMATTER);
                     ele.setAmWorkingHours(getWorkingHours(start, end));
                 } else {
                     ele.setAmWorkingHours(new BigDecimal(0));
                 }
-            } else if (ele.getEndWorkDatetime().compareTo(ele.getAttendanceDate() + policy.getLunchBreakStart()) < 0 &&
-                       ele.getEndWorkDatetime().compareTo(ele.getAttendanceDate() + policy.getFlexiTimeStart()) > 0) {
-                if (ele.getStartWorkDatetime().compareTo(ele.getAttendanceDate() + policy.getBoundaryLine()) >= 0 &&
-                    ele.getStartWorkDatetime().compareTo(ele.getAttendanceDate() + policy.getFlexiTimeStart()) <= 0) {
+            } else if (ele.getEndWorkDatetime().compareTo(ele.getAttendanceDate() + policy.getLunchBreakStart()) < 0 && ele.getEndWorkDatetime().compareTo(ele.getAttendanceDate() + policy.getFlexiTimeStart()) > 0) {
+                if (ele.getStartWorkDatetime().compareTo(ele.getAttendanceDate() + policy.getBoundaryLine()) >= 0 && ele.getStartWorkDatetime().compareTo(ele.getAttendanceDate() + policy.getFlexiTimeStart()) <= 0) {
                     LocalDateTime end = LocalDateTime.parse(ele.getEndWorkDatetime(), DatePattern.NORM_DATETIME_FORMATTER);
-                    LocalDateTime start = LocalDateTime.parse(ele.getAttendanceDate() + policy.getFlexiTimeStart(), DatePattern.NORM_DATETIME_FORMATTER);
+                    LocalDateTime start = LocalDateTime.parse(ele.getAttendanceDate() + policy.getFlexiTimeStart(),
+                            DatePattern.NORM_DATETIME_FORMATTER);
                     ele.setAmWorkingHours(getWorkingHours(start, end));
-                } else if (ele.getStartWorkDatetime().compareTo(ele.getAttendanceDate() + policy.getFlexiTimeStart()) >= 0 &&
-                           ele.getStartWorkDatetime().compareTo(ele.getAttendanceDate() + policy.getLunchBreakStart()) <= 0) {
+                } else if (ele.getStartWorkDatetime().compareTo(ele.getAttendanceDate() + policy.getFlexiTimeStart()) >= 0 && ele.getStartWorkDatetime().compareTo(ele.getAttendanceDate() + policy.getLunchBreakStart()) <= 0) {
                     LocalDateTime end = LocalDateTime.parse(ele.getEndWorkDatetime(), DatePattern.NORM_DATETIME_FORMATTER);
                     LocalDateTime start = LocalDateTime.parse(ele.getStartWorkDatetime(), DatePattern.NORM_DATETIME_FORMATTER);
                     ele.setAmWorkingHours(getWorkingHours(start, end));
@@ -320,27 +300,28 @@ public class AttendanceCalc {
 
             // 下午工时计算
             if (ele.getStartWorkDatetime().compareTo(ele.getAttendanceDate() + policy.getLunchBreakEnd()) <= 0) {
-                if (ele.getEndWorkDatetime().compareTo(ele.getAttendanceDate() + policy.getLunchBreakEnd()) >= 0 &&
-                    ele.getEndWorkDatetime().compareTo(ele.getAttendanceDate() + policy.getDinnerTimeStart()) <= 0) {
+                if (ele.getEndWorkDatetime().compareTo(ele.getAttendanceDate() + policy.getLunchBreakEnd()) >= 0 && ele.getEndWorkDatetime().compareTo(ele.getAttendanceDate() + policy.getDinnerTimeStart()) <= 0) {
                     LocalDateTime end = LocalDateTime.parse(ele.getEndWorkDatetime(), DatePattern.NORM_DATETIME_FORMATTER);
-                    LocalDateTime start = LocalDateTime.parse(ele.getAttendanceDate() + policy.getLunchBreakEnd(), DatePattern.NORM_DATETIME_FORMATTER);
+                    LocalDateTime start = LocalDateTime.parse(ele.getAttendanceDate() + policy.getLunchBreakEnd(),
+                            DatePattern.NORM_DATETIME_FORMATTER);
                     ele.setPmWorkingHours(getWorkingHours(start, end));
                 } else if (ele.getEndWorkDatetime().compareTo(ele.getAttendanceDate() + policy.getDinnerTimeStart()) >= 0) {
-                    LocalDateTime end = LocalDateTime.parse(ele.getAttendanceDate() + policy.getDinnerTimeStart(), DatePattern.NORM_DATETIME_FORMATTER);
-                    LocalDateTime start = LocalDateTime.parse(ele.getAttendanceDate() + policy.getLunchBreakEnd(), DatePattern.NORM_DATETIME_FORMATTER);
+                    LocalDateTime end = LocalDateTime.parse(ele.getAttendanceDate() + policy.getDinnerTimeStart(),
+                            DatePattern.NORM_DATETIME_FORMATTER);
+                    LocalDateTime start = LocalDateTime.parse(ele.getAttendanceDate() + policy.getLunchBreakEnd(),
+                            DatePattern.NORM_DATETIME_FORMATTER);
                     ele.setPmWorkingHours(getWorkingHours(start, end));
                 } else {
                     ele.setPmWorkingHours(new BigDecimal(0));
                 }
-            } else if (ele.getStartWorkDatetime().compareTo(ele.getAttendanceDate() + policy.getLunchBreakEnd()) >= 0 &&
-                       ele.getStartWorkDatetime().compareTo(ele.getAttendanceDate() + policy.getDinnerTimeStart()) <= 0) {
-                if (ele.getEndWorkDatetime().compareTo(ele.getAttendanceDate() + policy.getLunchBreakEnd()) >= 0 &&
-                    ele.getEndWorkDatetime().compareTo(ele.getAttendanceDate() + policy.getDinnerTimeStart()) <= 0) {
+            } else if (ele.getStartWorkDatetime().compareTo(ele.getAttendanceDate() + policy.getLunchBreakEnd()) >= 0 && ele.getStartWorkDatetime().compareTo(ele.getAttendanceDate() + policy.getDinnerTimeStart()) <= 0) {
+                if (ele.getEndWorkDatetime().compareTo(ele.getAttendanceDate() + policy.getLunchBreakEnd()) >= 0 && ele.getEndWorkDatetime().compareTo(ele.getAttendanceDate() + policy.getDinnerTimeStart()) <= 0) {
                     LocalDateTime end = LocalDateTime.parse(ele.getEndWorkDatetime(), DatePattern.NORM_DATETIME_FORMATTER);
                     LocalDateTime start = LocalDateTime.parse(ele.getStartWorkDatetime(), DatePattern.NORM_DATETIME_FORMATTER);
                     ele.setPmWorkingHours(getWorkingHours(start, end));
                 } else if (ele.getEndWorkDatetime().compareTo(ele.getAttendanceDate() + policy.getDinnerTimeStart()) >= 0) {
-                    LocalDateTime end = LocalDateTime.parse(ele.getAttendanceDate() + policy.getDinnerTimeStart(), DatePattern.NORM_DATETIME_FORMATTER);
+                    LocalDateTime end = LocalDateTime.parse(ele.getAttendanceDate() + policy.getDinnerTimeStart(),
+                            DatePattern.NORM_DATETIME_FORMATTER);
                     LocalDateTime start = LocalDateTime.parse(ele.getStartWorkDatetime(), DatePattern.NORM_DATETIME_FORMATTER);
                     ele.setPmWorkingHours(getWorkingHours(start, end));
                 } else {
@@ -351,8 +332,7 @@ public class AttendanceCalc {
             }
 
             // 晚上工时计算，不考虑其他特殊情况
-            if (ele.getEndWorkDatetime().compareTo(ele.getAttendanceDate() + policy.getDinnerTimeEnd()) >= 0 &&
-                ele.getEndWorkDatetime().compareTo(LocalDate.parse(ele.getAttendanceDate(), DatePattern.NORM_DATE_FORMATTER).plusDays(1) + policy.getBoundaryLine()) < 0) {
+            if (ele.getEndWorkDatetime().compareTo(ele.getAttendanceDate() + policy.getDinnerTimeEnd()) >= 0 && ele.getEndWorkDatetime().compareTo(LocalDate.parse(ele.getAttendanceDate(), DatePattern.NORM_DATE_FORMATTER).plusDays(1) + policy.getBoundaryLine()) < 0) {
                 LocalDateTime end = LocalDateTime.parse(ele.getEndWorkDatetime(), DatePattern.NORM_DATETIME_FORMATTER);
                 LocalDateTime start = LocalDateTime.parse(ele.getAttendanceDate() + policy.getDinnerTimeEnd(), DatePattern.NORM_DATETIME_FORMATTER);
                 ele.setEveningWorkingHours(getWorkingHours(start, end));
@@ -379,35 +359,23 @@ public class AttendanceCalc {
             String today = ele.getAttendanceDate();
             String tomorrow = LocalDate.parse(today).plusDays(1).toString();
 
-            if (ele.getStartWorkDatetime().compareTo(today + policy.getBoundaryLine()) >= 0 &&
-                ele.getStartWorkDatetime().compareTo(today + policy.getFlexiTimeEnd()) <= 0 &&
-                ele.getEndWorkDatetime().compareTo(today + policy.getDinnerTimeStart()) >= 0 &&
-                ele.getEndWorkDatetime().compareTo(tomorrow + policy.getBoundaryLine()) < 0) {
+            if (ele.getStartWorkDatetime().compareTo(today + policy.getBoundaryLine()) >= 0 && ele.getStartWorkDatetime().compareTo(today + policy.getFlexiTimeEnd()) <= 0 && ele.getEndWorkDatetime().compareTo(today + policy.getDinnerTimeStart()) >= 0 && ele.getEndWorkDatetime().compareTo(tomorrow + policy.getBoundaryLine()) < 0) {
                 // 开始打卡在9:00前，结束打卡在18:00后，正常-----出勤记1天
                 ele.setAttendanceDay(new BigDecimal(1));
-            } else if (ele.getStartWorkDatetime().compareTo(today + policy.getFlexiTimeEnd()) > 0 &&
-                       ele.getEndWorkDatetime().compareTo(today + policy.getDinnerTimeStart()) >= 0) {
+            } else if (ele.getStartWorkDatetime().compareTo(today + policy.getFlexiTimeEnd()) > 0 && ele.getEndWorkDatetime().compareTo(today + policy.getDinnerTimeStart()) >= 0) {
                 // 仅上午请假，且请假时间包含弹性工作时间
-                BigDecimal attendanceDay = ele.getAmWorkingHours()
-                        .add(ele.getPmWorkingHours())
-                        .divide(_8Hour, 6, RoundingMode.DOWN);
+                BigDecimal attendanceDay = ele.getAmWorkingHours().add(ele.getPmWorkingHours()).divide(_8Hour, 6, RoundingMode.DOWN);
                 ele.setAttendanceDay(attendanceDay);
-            } else if (ele.getStartWorkDatetime().compareTo(today + policy.getFlexiTimeEnd()) <= 0 &&
-                       ele.getEndWorkDatetime().compareTo(today + policy.getLunchBreakStart()) >= 0 &&
-                       ele.getEndWorkDatetime().compareTo(today + policy.getDinnerTimeStart()) < 0) {
+            } else if (ele.getStartWorkDatetime().compareTo(today + policy.getFlexiTimeEnd()) <= 0 && ele.getEndWorkDatetime().compareTo(today + policy.getLunchBreakStart()) >= 0 && ele.getEndWorkDatetime().compareTo(today + policy.getDinnerTimeStart()) < 0) {
                 // 仅下午请假
                 LocalDateTime end = LocalDateTime.parse(today + policy.getLunchBreakStart(), DatePattern.NORM_DATETIME_FORMATTER);
                 LocalDateTime start = LocalDateTime.parse(today + policy.getFlexiTimeStart(), DatePattern.NORM_DATETIME_FORMATTER);
                 BigDecimal amHours = getWorkingHours(start, end);
-                BigDecimal attendanceDay = amHours
-                        .add(ele.getPmWorkingHours())
-                        .divide(_8Hour, 6, RoundingMode.DOWN);
+                BigDecimal attendanceDay = amHours.add(ele.getPmWorkingHours()).divide(_8Hour, 6, RoundingMode.DOWN);
                 ele.setAttendanceDay(attendanceDay);
             } else {
                 // 上下午都有请假-----太复杂，暂时与【仅上午请假】计算方式相同
-                BigDecimal attendanceDay = ele.getAmWorkingHours()
-                        .add(ele.getPmWorkingHours())
-                        .divide(_8Hour, 6, RoundingMode.DOWN);
+                BigDecimal attendanceDay = ele.getAmWorkingHours().add(ele.getPmWorkingHours()).divide(_8Hour, 6, RoundingMode.DOWN);
                 ele.setAttendanceDay(attendanceDay);
             }
         });
@@ -436,11 +404,13 @@ public class AttendanceCalc {
             return;
         }
         try {
-            HttpUtil.createPost("127.0.0.1:" + port + contextPath + "/attendance/print")
-                    .contentType(ContentType.TEXT_PLAIN.getValue())
-                    .body(str.toString())
-                    .timeout(100)
-                    .execute();
+            HttpPost httpPost = new HttpPost("127.0.0.1:" + port + contextPath + "/attendance/print");
+
+            // HttpUtil.createPost("127.0.0.1:" + port + contextPath + "/attendance/print")
+            //         .contentType(ContentType.TEXT_PLAIN.getValue())
+            //         .body(str.toString())
+            //         .timeout(100)
+            //         .execute();
         } catch (Exception e) {
         }
     }

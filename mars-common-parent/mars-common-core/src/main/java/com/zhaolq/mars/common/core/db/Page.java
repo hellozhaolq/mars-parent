@@ -159,14 +159,14 @@ public class Page implements Serializable {
      * @return 开始位置
      */
     public int getStartPosition() {
-        return PageUtils.getStart(this.pageNum, this.pageSize);
+        return PageUtil.getStart(this.pageNum, this.pageSize);
     }
 
     /**
      * @return 结束位置
      */
     public int getEndPosition() {
-        return PageUtils.getEnd(this.pageNum, this.pageSize);
+        return PageUtil.getEnd(this.pageNum, this.pageSize);
     }
 
     /**
@@ -183,7 +183,7 @@ public class Page implements Serializable {
      * @return 第一个数为开始位置，第二个数为结束位置
      */
     public int[] getStartEnd() {
-        return PageUtils.transToStartEnd(pageNum, pageSize);
+        return PageUtil.transToStartEnd(pageNum, pageSize);
     }
 
     @Override

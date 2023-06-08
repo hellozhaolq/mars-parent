@@ -14,7 +14,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import com.zhaolq.mars.common.core.func.Func0;
+import com.zhaolq.mars.common.core.lang.Func0;
 
 
 /**

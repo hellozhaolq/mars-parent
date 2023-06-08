@@ -8,6 +8,9 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Validate;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,20 +28,14 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhaolq.mars.api.admin.entity.MenuEntity;
 import com.zhaolq.mars.api.admin.entity.RoleEntity;
 import com.zhaolq.mars.api.admin.entity.UserEntity;
+import com.zhaolq.mars.common.core.io.IoUtil;
 import com.zhaolq.mars.common.core.result.R;
 import com.zhaolq.mars.common.core.result.ResultCode;
 import com.zhaolq.mars.common.mybatis.pagination.PageConvert;
 import com.zhaolq.mars.common.valid.group.Add;
 import com.zhaolq.mars.common.valid.group.Edit;
 import com.zhaolq.mars.service.admin.service.IUserService;
-import com.zhaolq.mars.tool.core.io.IoUtils;
-import com.zhaolq.mars.tool.core.lang.Assert;
-import com.zhaolq.mars.tool.core.utils.ObjectUtils;
-import com.zhaolq.mars.tool.core.utils.StringUtils;
 
-import cn.hutool.core.lang.tree.Tree;
-import cn.hutool.poi.excel.ExcelUtil;
-import cn.hutool.poi.excel.ExcelWriter;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterStyle;
@@ -77,7 +74,7 @@ public class UserController {
         // 检查用户是否存在
         QueryWrapper<UserEntity> wrapper = new QueryWrapper<>(new UserEntity().setAccount(userEntity.getAccount()));
         UserEntity result = userService.getOne(wrapper);
-        if (ObjectUtils.isNotNull(result)) {
+        if (ObjectUtils.isNotEmpty(result)) {
             return R.failure(ResultCode.USER_HAS_EXISTED);
         }
         // 不存在，则新增
@@ -133,7 +130,7 @@ public class UserController {
     @Operation(summary = "单个查询", description = "单个查询")
     public R<UserEntity> get(UserEntity userEntity) {
         // 这里永远断言成功，即使请求没有参数userEntity也不是null。
-        Assert.notNull(userEntity, ResultCode.PARAM_NOT_COMPLETE.getDescCh());
+        Validate.notNull(userEntity, ResultCode.PARAM_NOT_COMPLETE.getDescCh());
         boolean condition =
                 userEntity == null || (StringUtils.isEmpty(userEntity.getId()) && StringUtils.isEmpty(userEntity.getAccount()));
         if (condition) {
@@ -318,16 +315,10 @@ public class UserController {
             e.printStackTrace();
         }
 
-        // 通过工具类创建writer，默认创建xls格式
-        ExcelWriter writer = ExcelUtil.getWriter(true);
-        // 一次性写出内容，使用默认样式，强制输出标题
-        writer.write(list, true);
-        writer.flush(out, true);
+        // out.write();
 
-        // 关闭writer，释放内存
-        writer.close();
         //此处记得关闭输出Servlet流
-        IoUtils.close(out);
+        IoUtil.close(out);
     }
 
     @PostMapping("/postImportExcel")
@@ -346,19 +337,6 @@ public class UserController {
     @Operation(summary = "获取权限下菜单树", description = "获取权限下菜单树")
     public R<List<MenuEntity>> getAuthorityMenuTree(UserEntity userEntity) {
         List<MenuEntity> menuTreeList = userService.getAuthorityMenuTree(userEntity);
-        return R.success(menuTreeList);
-    }
-
-    /**
-     * 获取权限下菜单树
-     *
-     * @param userEntity
-     * @return com.zhaolq.mars.tool.core.result.R<java.util.List < com.zhaolq.mars.api.sys.entity.MenuEntity>>
-     */
-    @GetMapping("/getAuthorityMenuTree2")
-    @Operation(summary = "获取权限下菜单树", description = "获取权限下菜单树")
-    public R<List<Tree<String>>> getAuthorityMenuTree2(UserEntity userEntity) {
-        List<Tree<String>> menuTreeList = userService.getAuthorityMenuTree2(userEntity);
         return R.success(menuTreeList);
     }
 

@@ -7,7 +7,8 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import cn.hutool.core.net.NetUtil;
+import com.zhaolq.mars.common.core.net.NetUtil;
+
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -22,6 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ScheduledCpuCalc {
     @Scheduled(fixedDelay = 30, timeUnit = TimeUnit.SECONDS)
     public void cpuCalc() {
+
         if (NetUtil.ping("127.0.0.1")) {
             return;
         }

@@ -1,13 +1,13 @@
 package com.zhaolq.mars.service.admin.service;
 
-import cn.hutool.core.lang.tree.Tree;
+import java.util.List;
+
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+
 import com.zhaolq.mars.api.admin.entity.MenuEntity;
 import com.zhaolq.mars.api.admin.entity.RoleEntity;
 import com.zhaolq.mars.api.admin.entity.UserEntity;
-
-import java.util.List;
 
 /**
  * <p>
@@ -70,13 +70,5 @@ public interface IUserService extends IService<UserEntity> {
      * @return java.util.Set<com.zhaolq.mars.api.sys.entity.MenuEntity>
      */
     List<MenuEntity> getAuthorityMenuTree(UserEntity userEntity);
-
-    /**
-     * 获取权限下菜单树
-     *
-     * @param userEntity
-     * @return java.util.List<com.zhaolq.mars.api.sys.entity.MenuEntity>
-     */
-    List<Tree<String>> getAuthorityMenuTree2(UserEntity userEntity);
 
 }

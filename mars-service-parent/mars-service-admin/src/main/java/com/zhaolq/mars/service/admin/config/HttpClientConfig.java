@@ -132,7 +132,11 @@ public class HttpClientConfig {
     @Bean(name = "requestConfig")
     public RequestConfig requestConfig() {
         // Builder是RequestConfig的一个内部类，通过RequestConfig的custom方法来获取到一个Builder对象，设置builder的连接信息，也可以设置proxy，cookieSpec等属性
-        return RequestConfig.custom().setConnectionRequestTimeout(connectionRequestTimeout).setConnectTimeout(connectTimeout).setSocketTimeout(socketTimeout).build();
+        return RequestConfig.custom()
+                .setConnectionRequestTimeout(connectionRequestTimeout)
+                .setConnectTimeout(connectTimeout)
+                .setSocketTimeout(socketTimeout)
+                .build();
     }
 
     @Bean(name = "httpClientBuilder")

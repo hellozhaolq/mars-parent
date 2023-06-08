@@ -23,11 +23,6 @@
             <artifactId>mars-common-core</artifactId>
             <version>1.0.0-deluxe</version>
         </dependency>
-        <dependency>
-            <groupId>com.zhaolq.mars.common</groupId>
-            <artifactId>mars-common-apache</artifactId>
-            <version>1.0.0-deluxe</version>
-        </dependency>
 
         <!--
             门面型日志框架

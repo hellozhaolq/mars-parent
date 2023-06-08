@@ -9,6 +9,8 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,14 +26,10 @@ import com.zhaolq.mars.api.admin.entity.RoleEntity;
 import com.zhaolq.mars.api.admin.entity.UserEntity;
 import com.zhaolq.mars.common.mybatis.pagination.PagePlus;
 import com.zhaolq.mars.service.admin.dao.base.UserMapper;
-import com.zhaolq.mars.tool.core.utils.ObjectUtils;
-import com.zhaolq.mars.tool.core.utils.StringUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
 /**
- *
- *
  * @author zhaolq
  * @date 2020/10/20 21:12
  */
@@ -73,8 +71,8 @@ public class UserMapperTest {
     /**
      * selectMaps：返回List<Map<String, Object>>
      * 应用场景：
-     *  1、当表字段很多且只需要查询几列时，没必要返回泛型为实体的list。若泛型为实体类则大部分字段都是null，这样做不优雅
-     *  2、返回统计结果时常用
+     * 1、当表字段很多且只需要查询几列时，没必要返回泛型为实体的list。若泛型为实体类则大部分字段都是null，这样做不优雅
+     * 2、返回统计结果时常用
      */
     @Test
     public void selectMaps() {
@@ -86,8 +84,7 @@ public class UserMapperTest {
 
         // 场景2
         QueryWrapper<UserEntity> queryWrapper2 = new QueryWrapper<>();
-        queryWrapper2.select("DEPT_ID", "avg(age)", "min(age)", "max(age)")
-                .groupBy("DEPT_ID").having("avg(age) < {0}", 30);
+        queryWrapper2.select("DEPT_ID", "avg(age)", "min(age)", "max(age)").groupBy("DEPT_ID").having("avg(age) < {0}", 30);
         List<Map<String, Object>> userList2 = userMapper.selectMaps(queryWrapper2);
         userList2.forEach(System.out::println);
     }
@@ -128,7 +125,7 @@ public class UserMapperTest {
 
     /**
      * 昵称中包含超，并且年龄小于30
-     *  where nick_name like '%超%' and age < 30
+     * where nick_name like '%超%' and age < 30
      */
     @Test
     public void selectList01() {
@@ -141,7 +138,7 @@ public class UserMapperTest {
 
     /**
      * 昵称中包含超，并且年龄大于等于20且小于等于30，并且邮箱不为空
-     *  where nick_name like '%超%' and age between 20 and 30 and email is not null
+     * where nick_name like '%超%' and age between 20 and 30 and email is not null
      */
     @Test
     public void selectList02() {
@@ -153,7 +150,7 @@ public class UserMapperTest {
 
     /**
      * 名字为赵姓或者年龄大于等于40，按照年龄降序排序，年龄相同按照id升序
-     *  where name like '赵%' or age >= 40 order by age desc, id asc
+     * where name like '赵%' or age >= 40 order by age desc, id asc
      */
     @Test
     public void selectList03() {
@@ -165,8 +162,8 @@ public class UserMapperTest {
 
     /**
      * 创建日期为2020年1月1日并且机构名称为蜀开头
-     *  where to_char(create_time, 'yyyy-mm-dd hh24:mi:ss') = '2020-01-01 10:00:00'
-     *    and dept_id in (select id from tab_earth_dept where name like '蜀%')
+     * where to_char(create_time, 'yyyy-mm-dd hh24:mi:ss') = '2020-01-01 10:00:00'
+     * and dept_id in (select id from tab_earth_dept where name like '蜀%')
      */
     @Test
     public void selectList04() {
@@ -175,14 +172,14 @@ public class UserMapperTest {
         // queryWrapper.apply("to_char(create_time, 'yyyy-mm-dd hh24:mi:ss') = " + "'2020-01-01 10:00:00' or 1=1").inSql("DEPT_ID", "select id from
         // tab_earth_dept where name like '蜀%'");
         queryWrapper.apply("to_char(create_time, 'yyyy-mm-dd hh24:mi:ss') = {0}", "2020-01-01 10:00:00").inSql("DEPT_ID", "select id from " +
-                "t_base_dept where name like '蜀%'");
+                                                                                                                          "t_base_dept where name " + "like '蜀%'");
         List<UserEntity> userList = userMapper.selectList(queryWrapper);
         userList.forEach(System.out::println);
     }
 
     /**
      * 名字为赵姓并且 (年龄小于40或邮箱不为空)
-     *  where name like '赵%' and (age < 40 or email is not null)
+     * where name like '赵%' and (age < 40 or email is not null)
      */
     @Test
     public void selectList05() {
@@ -194,7 +191,7 @@ public class UserMapperTest {
 
     /**
      * 名字为赵姓或者 (年龄小于40并且年龄大于20并且邮箱不为空)
-     *   where name like '赵%' or (age < 30 and age > 25 and email is not null)
+     * where name like '赵%' or (age < 30 and age > 25 and email is not null)
      */
     @Test
     public void selectList06() {
@@ -206,7 +203,7 @@ public class UserMapperTest {
 
     /**
      * (年龄小于40或邮箱不为空) 并且名字为孙姓
-     *  where (age < 40 or email is not null) and name like '孙%'
+     * where (age < 40 or email is not null) and name like '孙%'
      */
     @Test
     public void selectList07() {
@@ -218,7 +215,7 @@ public class UserMapperTest {
 
     /**
      * 年龄为30、31、34、35
-     *  where age in (30, 31, 34, 35)
+     * where age in (30, 31, 34, 35)
      */
     @Test
     public void selectList08() {
@@ -230,7 +227,7 @@ public class UserMapperTest {
 
     /**
      * 只返回满足条件的其中一条语句即可
-     *  where age in (30, 31, 34, 35) and rownum = 1
+     * where age in (30, 31, 34, 35) and rownum = 1
      * last只能调用一次,多次调用以最后一次为准 有sql注入的风险，请谨慎使用。https://baomidou.com/guide/wrapper.html#last
      */
     @Test
@@ -329,8 +326,8 @@ public class UserMapperTest {
         userList.forEach(System.out::println);
 
         // 第4种比较特殊
-        List<UserEntity> userList4 = new LambdaQueryChainWrapper<UserEntity>(userMapper)
-                .like(UserEntity::getName, "赵").ge(UserEntity::getAge, 30).list();
+        List<UserEntity> userList4 =
+                new LambdaQueryChainWrapper<UserEntity>(userMapper).like(UserEntity::getName, "赵").ge(UserEntity::getAge, 30).list();
         userList4.forEach(System.out::println);
     }
 

@@ -17,4 +17,11 @@
     <url>https://blog.zhaolq.com</url>
     <description>用做测试Java程序</description>
 
+    <dependencies>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>${hutool-all.version}</version>
+        </dependency>
+    </dependencies>
 </project>

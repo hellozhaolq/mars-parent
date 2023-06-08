@@ -1,8 +1,10 @@
 工具
     ArrayUtil
+    BeanUtils
     BeanUtil
     CharSequenceUtil
     ConvertUtil
+    EntityUtils
     HexUtil
     JsonUtil
     Ipv4Util
@@ -14,11 +16,17 @@
     ReflectUtil
     ServletUtil
     StringUtils
+    StringEscapeUtils
     TypeUtil
     UnicodeUtil
     URLUtil
+    URLEncodedUtils
     XmlUtil
     StrPool
+
+
+随机数
+    ThreadLocalRandom
 缓存
     CacheUtil
     SimpleCache
@@ -47,13 +55,19 @@ crypto
     ExceptionUtil
 io
     FileUtil
+    FileUtils
+    FilenameUtils
     IoUtil
+    IOUtils
     ResourceUtil
 lang
     Assert
+数组
+    Arrays
+    ArrayUtils
 集合
+    CollectionUtils
     MapUtil
-    CollectionUtil
     IterUtil
     ListUtil
 设置

@@ -110,7 +110,6 @@ public final class PageUtils {
      * @param pageNo 页码（从0计数）
      * @param pageSize 每页条目数
      * @return 开始位置
-     * @since 5.2.5
      */
     public static int getEnd(int pageNo, int pageSize) {
         final int start = getStart(pageNo, pageSize);

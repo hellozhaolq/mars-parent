@@ -34,6 +34,10 @@ crypto
     SecureUtil
     SmUtil
 日期
+    CalendarUtils
+    FastDateFormat
+    DateUtils
+    DateFormatUtils
     DatePattern
     DateUtil
     LocalDateTimeUtil

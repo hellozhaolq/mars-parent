@@ -20,12 +20,12 @@
     <dependencies>
         <dependency>
             <groupId>com.zhaolq.mars.common</groupId>
-            <artifactId>mars-common-core</artifactId>
+            <artifactId>mars-common-apache</artifactId>
             <version>1.0.0-deluxe</version>
         </dependency>
         <dependency>
             <groupId>com.zhaolq.mars.common</groupId>
-            <artifactId>mars-common-poi</artifactId>
+            <artifactId>mars-common-core</artifactId>
             <version>1.0.0-deluxe</version>
         </dependency>
         <dependency>
@@ -41,6 +41,11 @@
         <dependency>
             <groupId>com.zhaolq.mars.common</groupId>
             <artifactId>mars-common-mybatis</artifactId>
+            <version>1.0.0-deluxe</version>
+        </dependency>
+        <dependency>
+            <groupId>com.zhaolq.mars.common</groupId>
+            <artifactId>mars-common-poi</artifactId>
             <version>1.0.0-deluxe</version>
         </dependency>
         <dependency>
@@ -69,5 +74,4 @@
             <version>1.0.0-deluxe</version>
         </dependency>
     </dependencies>
-
 </project>

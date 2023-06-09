@@ -3,7 +3,6 @@ package com.zhaolq.mars.service.admin.config.aspect;
 import java.util.Enumeration;
 import java.util.Optional;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
@@ -19,12 +18,10 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.gson.Gson;
 
 import com.zhaolq.mars.api.admin.entity.UserEntity;
 import com.zhaolq.mars.service.admin.config.StrFormat;
-import com.zhaolq.mars.service.admin.service.IUserService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -40,9 +37,6 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @Slf4j
 public class WebLogAspect {
-
-    @Resource
-    private IUserService userService;
 
     /**
      * 以 controller 包下定义的所有请求为切入点
@@ -104,8 +98,6 @@ public class WebLogAspect {
      */
     @After("webLog()")
     public void doAfter() {
-        // 每个请求之间空一行
-        log.debug(StrFormat.init().addHead().format());
     }
 
     /**
@@ -129,9 +121,8 @@ public class WebLogAspect {
 
     private UserEntity getUserBean(HttpServletRequest request) {
         UserEntity userEntity = new UserEntity();
-        userEntity.setId("1");
-        QueryWrapper<UserEntity> wrapper = new QueryWrapper<>(userEntity);
-        userEntity = userService.getOne(wrapper);
+        userEntity.setAccount("未知账号");
+        userEntity.setName("未知姓名");
         return userEntity;
     }
 

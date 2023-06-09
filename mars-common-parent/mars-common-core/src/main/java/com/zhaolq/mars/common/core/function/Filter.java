@@ -1,4 +1,4 @@
-package com.zhaolq.mars.common.core.lang;
+package com.zhaolq.mars.common.core.function;
 
 /**
  * 过滤器接口

@@ -28,7 +28,7 @@ public class ConsoleTable {
      * 半角字符：占用一个字节。half-width character。single-byte character(SBC)
      * 全角字符：占用两个字节。full-width character。double-byte character(DBC)
      */
-    private boolean isDBCMode = true;
+    private boolean isDBCMode = false;
 
     /**
      * 创建ConsoleTable对象
@@ -153,7 +153,7 @@ public class ConsoleTable {
     }
 
     /**
-     * 填充一行数据
+     * 填充一行数据，半角
      *
      * @param sb 内容
      * @param row 一行数据
@@ -171,7 +171,7 @@ public class ConsoleTable {
     }
 
     /**
-     * 填充一行数据
+     * 填充一行数据，全角
      *
      * @param sb 内容
      * @param row 一行数据

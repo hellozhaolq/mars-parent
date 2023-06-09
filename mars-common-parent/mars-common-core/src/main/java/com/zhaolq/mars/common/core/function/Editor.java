@@ -1,4 +1,4 @@
-package com.zhaolq.mars.common.core.lang;
+package com.zhaolq.mars.common.core.function;
 
 /**
  * 编辑器接口，常用于对于集合中的元素做统一编辑<br>

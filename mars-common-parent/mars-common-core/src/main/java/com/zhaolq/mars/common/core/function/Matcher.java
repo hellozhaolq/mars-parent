@@ -1,4 +1,4 @@
-package com.zhaolq.mars.common.core.lang;
+package com.zhaolq.mars.common.core.function;
 
 /**
  * 匹配接口

@@ -12,7 +12,7 @@ import com.zhaolq.mars.common.core.constant.CharPool;
  * @author zhaolq
  * @date 2023/6/9 15:53:47
  */
-public class Convert {
+public class ConvertUtil {
 
     // ---------------- 全角半角转换，来源hutool
 

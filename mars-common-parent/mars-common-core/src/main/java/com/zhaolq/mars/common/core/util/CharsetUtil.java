@@ -17,7 +17,6 @@ import com.zhaolq.mars.common.core.constant.StringPool;
  * @since 1.0.0
  */
 public class CharsetUtil {
-
     /**
      * ISO-8859-1
      */

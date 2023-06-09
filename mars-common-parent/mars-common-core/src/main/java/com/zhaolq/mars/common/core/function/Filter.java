@@ -15,4 +15,17 @@ public interface Filter<T> {
      * @return 是否接受对象
      */
     boolean accept(T t);
+
+    /**
+     * 执行函数，吃掉异常
+     *
+     * @return 是否接受对象
+     */
+    default boolean callNoThrowable(T t) {
+        try {
+            return accept(t);
+        } catch (Throwable throwable) {
+            return false;
+        }
+    }
 }

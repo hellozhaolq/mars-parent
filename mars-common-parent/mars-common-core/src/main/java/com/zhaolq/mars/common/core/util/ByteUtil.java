@@ -26,7 +26,6 @@ import java.util.concurrent.atomic.LongAdder;
  * @date 2023/6/8 23:08
  */
 public class ByteUtil {
-
     public static final ByteOrder DEFAULT_ORDER = ByteOrder.LITTLE_ENDIAN;
     /**
      * CPU的字节序

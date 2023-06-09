@@ -7,7 +7,7 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 
 import com.zhaolq.mars.common.core.constant.CharPool;
-import com.zhaolq.mars.common.core.util.Convert;
+import com.zhaolq.mars.common.core.util.ConvertUtil;
 
 /**
  * 控制台打印表格工具
@@ -106,7 +106,7 @@ public class ConsoleTable {
         for (int i = 0; i < columns.length; i++) {
             String column = columns[i];
             if (isDBCMode) {
-                column = Convert.toDBC(column);
+                column = ConvertUtil.toDBC(column);
             }
             l.add(column);
             int width = column.length();
@@ -162,7 +162,7 @@ public class ConsoleTable {
         final int size = row.size();
         String value;
         for (int i = 0; i < size; i++) {
-            sb.append(StringUtils.repeat(" ", 2));
+            sb.append(StringUtils.repeat(SPACE_SBC, 2));
             value = row.get(i);
             int length = columnCharNumber.get(i) + 2;
             sb.append(String.format("%-" + length + "s", value));
@@ -180,8 +180,8 @@ public class ConsoleTable {
         final int size = row.size();
         String value;
         for (int i = 0; i < size; i++) {
-            value = row.get(i);
             sb.append(SPACE_DBC);
+            value = row.get(i);
             sb.append(value);
             final int length = value.length();
             final int sbcCount = sbcCount(value);
@@ -235,7 +235,6 @@ public class ConsoleTable {
                 count++;
             }
         }
-
         return count;
     }
 }

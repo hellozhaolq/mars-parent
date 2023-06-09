@@ -40,7 +40,6 @@ import com.zhaolq.mars.common.core.exception.UtilException;
  * @date 2023/6/8 23:09
  */
 public class NumberUtil {
-
     /**
      * 默认除法运算精度
      */

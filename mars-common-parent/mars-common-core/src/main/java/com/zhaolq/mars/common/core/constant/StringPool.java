@@ -262,4 +262,17 @@ public interface StringPool {
      * 字符串常量：空 JSON {@code "{}"}
      */
     String EMPTY_JSON = "{}";
+
+    /**
+     * .java文件扩展名
+     */
+    public static final String EXT_JAVA = ".java";
+    /**
+     * .class文件扩展名
+     */
+    public static final String EXT_CLASS = ".class";
+    /**
+     * .jar文件扩展名
+     */
+    public static final String EXT_JAR = ".jar";
 }

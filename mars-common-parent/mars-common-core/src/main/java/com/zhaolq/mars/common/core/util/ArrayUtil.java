@@ -19,6 +19,7 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 
+import com.zhaolq.mars.common.core.constant.StringPool;
 import com.zhaolq.mars.common.core.exception.UtilException;
 import com.zhaolq.mars.common.core.function.Editor;
 import com.zhaolq.mars.common.core.function.Filter;
@@ -704,7 +705,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 新数组
      */
     public static String[] nullToEmpty(String[] array) {
-        return edit(array, t -> null == t ? StringUtils.EMPTY : t);
+        return edit(array, t -> null == t ? StringPool.EMPTY : t);
     }
 
     /**

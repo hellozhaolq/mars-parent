@@ -8,6 +8,8 @@ import java.io.Serializable;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.zhaolq.mars.common.core.constant.StringPool;
+
 import lombok.Data;
 
 /**
@@ -90,7 +92,7 @@ public class Order implements Serializable {
     @Override
     public String toString() {
         return new StringBuilder().append(this.field).append(StringUtils.SPACE).append(null == direction ?
-                                                                                       StringUtils.EMPTY :
+                                                                                       StringPool.EMPTY :
                                                                                        direction).toString();
     }
 }

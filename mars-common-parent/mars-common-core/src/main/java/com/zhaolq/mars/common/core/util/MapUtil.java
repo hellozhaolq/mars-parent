@@ -24,7 +24,6 @@ import java.util.stream.Collectors;
  * @date 2023/6/8 23:32
  */
 public class MapUtil {
-
     /**
      * 默认初始大小
      */

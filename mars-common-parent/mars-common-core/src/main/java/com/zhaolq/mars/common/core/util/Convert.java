@@ -20,10 +20,10 @@ public class Convert {
      * 半角转全角
      *
      * @param input String.
-     * @return 全角字符串.
+     * @return 全角字符串
      */
-    public static String toSBC(String input) {
-        return toSBC(input, null);
+    public static String toDBC(String input) {
+        return toDBC(input, null);
     }
 
     /**
@@ -31,9 +31,9 @@ public class Convert {
      *
      * @param input String
      * @param notConvertSet 不替换的字符集合
-     * @return 全角字符串.
+     * @return 全角字符串
      */
-    public static String toSBC(String input, Set<Character> notConvertSet) {
+    public static String toDBC(String input, Set<Character> notConvertSet) {
         final char[] c = input.toCharArray();
         for (int i = 0; i < c.length; i++) {
             if (null != notConvertSet && notConvertSet.contains(c[i])) {
@@ -56,18 +56,18 @@ public class Convert {
      * @param input String.
      * @return 半角字符串
      */
-    public static String toDBC(String input) {
-        return toDBC(input, null);
+    public static String toSBC(String input) {
+        return toSBC(input, null);
     }
 
     /**
-     * 替换全角为半角
+     * 全角转半角
      *
      * @param text 文本
      * @param notConvertSet 不替换的字符集合
      * @return 替换后的字符
      */
-    public static String toDBC(String text, Set<Character> notConvertSet) {
+    public static String toSBC(String text, Set<Character> notConvertSet) {
         if (StringUtils.isBlank(text)) {
             return text;
         }

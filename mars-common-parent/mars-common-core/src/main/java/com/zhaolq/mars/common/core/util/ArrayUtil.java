@@ -20,9 +20,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 
 import com.zhaolq.mars.common.core.exception.UtilException;
-import com.zhaolq.mars.common.core.lang.Editor;
-import com.zhaolq.mars.common.core.lang.Filter;
-import com.zhaolq.mars.common.core.lang.Matcher;
+import com.zhaolq.mars.common.core.function.Editor;
+import com.zhaolq.mars.common.core.function.Filter;
+import com.zhaolq.mars.common.core.function.Matcher;
 
 /**
  * 数组工具类

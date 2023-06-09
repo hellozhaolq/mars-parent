@@ -16,14 +16,19 @@ import com.zhaolq.mars.common.core.util.Convert;
  * @date 2023/6/9 15:36:28
  */
 public class ConsoleTable {
-
-    private static final char ROW_LINE = '－';
-    private static final char COLUMN_LINE = '|';
     private static final char CORNER = '+';
-    private static final char SPACE = '\u3000';
+    private static final char ROW_LINE_SBC = '-';
+    private static final char ROW_LINE_DBC = '－';
+    private static final char COLUMN_LINE = '|';
+    private static final char SPACE_SBC = CharPool.SPACE;
+    private static final char SPACE_DBC = '\u3000';
     private static final char LF = CharPool.LF;
 
-    private boolean isSBCMode = true;
+    /**
+     * 半角字符：占用一个字节。half-width character。single-byte character(SBC)
+     * 全角字符：占用两个字节。full-width character。double-byte character(DBC)
+     */
+    private boolean isDBCMode = true;
 
     /**
      * 创建ConsoleTable对象
@@ -51,11 +56,11 @@ public class ConsoleTable {
      * 设置是否使用全角模式<br>
      * 当包含中文字符时，输出的表格可能无法对齐，因此当设置为全角模式时，全部字符转为全角。
      *
-     * @param isSBCMode 是否全角模式
+     * @param isDBCMode 是否全角模式
      * @return this
      */
-    public ConsoleTable setSBCMode(boolean isSBCMode) {
-        this.isSBCMode = isSBCMode;
+    public ConsoleTable setDBCMode(boolean isDBCMode) {
+        this.isDBCMode = isDBCMode;
         return this;
     }
 
@@ -82,6 +87,9 @@ public class ConsoleTable {
      * @return 自身对象
      */
     public ConsoleTable addBody(String... values) {
+        if (columnCharNumber == null) {
+            columnCharNumber = new ArrayList<>(Collections.nCopies(values.length, 0));
+        }
         List<String> l = new ArrayList<>();
         bodyList.add(l);
         fillColumns(l, values);
@@ -97,8 +105,8 @@ public class ConsoleTable {
     private void fillColumns(List<String> l, String[] columns) {
         for (int i = 0; i < columns.length; i++) {
             String column = columns[i];
-            if (isSBCMode) {
-                column = Convert.toSBC(column);
+            if (isDBCMode) {
+                column = Convert.toDBC(column);
             }
             l.add(column);
             int width = column.length();
@@ -117,8 +125,10 @@ public class ConsoleTable {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         fillBorder(sb);
-        fillRows(sb, headerList);
-        fillBorder(sb);
+        if (!(headerList == null || headerList.isEmpty())) {
+            fillRows(sb, headerList);
+            fillBorder(sb);
+        }
         fillRows(sb, bodyList);
         fillBorder(sb);
         return sb.toString();
@@ -133,7 +143,11 @@ public class ConsoleTable {
     private void fillRows(StringBuilder sb, List<List<String>> list) {
         for (List<String> row : list) {
             sb.append(COLUMN_LINE);
-            fillRow(sb, row);
+            if (isDBCMode) {
+                fillRowDBC(sb, row);
+            } else {
+                fillRowSBC(sb, row);
+            }
             sb.append(LF);
         }
     }
@@ -144,22 +158,40 @@ public class ConsoleTable {
      * @param sb 内容
      * @param row 一行数据
      */
-    private void fillRow(StringBuilder sb, List<String> row) {
+    private void fillRowSBC(StringBuilder sb, List<String> row) {
+        final int size = row.size();
+        String value;
+        for (int i = 0; i < size; i++) {
+            sb.append(StringUtils.repeat(" ", 2));
+            value = row.get(i);
+            int length = columnCharNumber.get(i) + 2;
+            sb.append(String.format("%-" + length + "s", value));
+            sb.append(COLUMN_LINE);
+        }
+    }
+
+    /**
+     * 填充一行数据
+     *
+     * @param sb 内容
+     * @param row 一行数据
+     */
+    private void fillRowDBC(StringBuilder sb, List<String> row) {
         final int size = row.size();
         String value;
         for (int i = 0; i < size; i++) {
             value = row.get(i);
-            sb.append(SPACE);
+            sb.append(SPACE_DBC);
             sb.append(value);
             final int length = value.length();
             final int sbcCount = sbcCount(value);
             if (sbcCount % 2 == 1) {
                 sb.append(CharPool.SPACE);
             }
-            sb.append(SPACE);
+            sb.append(SPACE_DBC);
             int maxLength = columnCharNumber.get(i);
             for (int j = 0; j < (maxLength - length + (sbcCount / 2)); j++) {
-                sb.append(SPACE);
+                sb.append(SPACE_DBC);
             }
             sb.append(COLUMN_LINE);
         }
@@ -173,7 +205,11 @@ public class ConsoleTable {
     private void fillBorder(StringBuilder sb) {
         sb.append(CORNER);
         for (Integer width : columnCharNumber) {
-            sb.append(StringUtils.repeat(ROW_LINE, width + 2));
+            if (isDBCMode) {
+                sb.append(StringUtils.repeat(ROW_LINE_DBC, width + 2));
+            } else {
+                sb.append(StringUtils.repeat(ROW_LINE_SBC, width + 4));
+            }
             sb.append(CORNER);
         }
         sb.append(LF);
@@ -183,7 +219,7 @@ public class ConsoleTable {
      * 打印到控制台
      */
     public void print() {
-        System.out.println(toString());
+        System.out.println(this);
     }
 
     /**

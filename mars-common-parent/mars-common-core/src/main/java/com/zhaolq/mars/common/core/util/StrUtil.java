@@ -1,8 +1,5 @@
 package com.zhaolq.mars.common.core.util;
 
-import org.apache.commons.compress.compressors.FileNameUtil;
-import org.apache.commons.compress.utils.FileNameUtils;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import com.zhaolq.mars.common.core.constant.StringPool;
@@ -138,9 +135,9 @@ public class StrUtil {
      * StrUtil.subBetween("yabczyabcz", "y", "z")   = "abc"
      * </pre>
      *
-     * @param str    被切割的字符串
+     * @param str 被切割的字符串
      * @param before 截取开始的字符串标识
-     * @param after  截取到的字符串标识
+     * @param after 截取到的字符串标识
      * @return 截取后的字符串
      */
     public static String subBetween(CharSequence str, CharSequence before, CharSequence after) {

@@ -1,11 +1,9 @@
 package com.zhaolq.mars.service.admin.config.aspect;
 
-import java.util.Enumeration;
-import java.util.Optional;
+import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.After;
@@ -21,7 +19,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import com.google.gson.Gson;
 
 import com.zhaolq.mars.api.admin.entity.UserEntity;
-import com.zhaolq.mars.service.admin.config.StrFormat;
+import com.zhaolq.mars.common.core.console.ConsoleKeyValue;
+import com.zhaolq.mars.common.core.util.ServletUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -55,40 +54,28 @@ public class WebLogAspect {
         // 开始打印请求日志
         HttpServletRequest request = getHttpServletRequest();
 
-        UserEntity userBean = null;
-        if (request != null) {
-            userBean = getUserBean(request);
-        }
-        String account = Optional.ofNullable(userBean).orElse(new UserEntity()).getAccount();
-        String name = Optional.ofNullable(userBean).orElse(new UserEntity()).getName();
-
-        StrFormat str = StrFormat.init().addHead();
-        str.addTitle("ThreadName");
-        str.addContent("ThreadName", Thread.currentThread().getName());
+        ConsoleKeyValue content = ConsoleKeyValue.create().setDBCMode(false);
+        // 线程信息
+        content.addTitle("ThreadName");
+        content.addKeyValue("ThreadName", Thread.currentThread().getName());
         // 用户信息
-        str.addTitle("User Information");
-        str.addContent("account", account);
-        str.addContent("name", name);
+        content.addTitle("User Information");
+        content.addKeyValue("account", getUserBean(request).getAccount());
+        content.addKeyValue("name", getUserBean(request).getName());
         // 请求头
-        str.addTitle("RequestHeaders");
-        Enumeration<String> headerNames = request.getHeaderNames();
-        while (headerNames.hasMoreElements()) {
-            String headerName = headerNames.nextElement();
-            String headerValue = request.getHeader(headerName);
-            str.addContent(headerName, headerValue);
-        }
+        content.addTitle("RequestHeaders");
+        content.addKeyValues(new TreeMap<>(ServletUtil.getHeaderMap(request)));
         // 请求相关参数
-        str.addTitle("Request Info");
-        str.addContent("URL", request.getRequestURL().toString());
-        str.addContent("URI", request.getRequestURI().toString());
-        str.addContent("HTTP Method", request.getMethod());
-        str.addContent("Class Method", joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
-        str.addContent("IP", request.getRemoteAddr());
-        str.addContent("Client IP", getClientIP(request));
-        str.addContent("Request Args", new Gson().toJson(joinPoint.getArgs()));
+        content.addTitle("Request Info");
+        content.addKeyValue("URL", request.getRequestURL().toString());
+        content.addKeyValue("URI", request.getRequestURI().toString());
+        content.addKeyValue("HTTP Method", request.getMethod());
+        content.addKeyValue("Class Method", joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
+        content.addKeyValue("IP", request.getRemoteAddr());
+        content.addKeyValue("Client IP", ServletUtil.getClientIP(request));
+        content.addKeyValue("Request Args", new Gson().toJson(joinPoint.getArgs()));
 
-        str.addTail();
-        log.debug(str.format());
+        log.debug("\n" + content);
     }
 
     /**
@@ -115,7 +102,7 @@ public class WebLogAspect {
         Object result = proceedingJoinPoint.proceed();
         long endTime = System.currentTimeMillis();
 
-        log.debug("接口耗时: {}ms, 响应结果: {}", endTime - startTime, new Gson().toJson(result));
+        log.debug("\n接口耗时: {}ms, 响应结果: {}", endTime - startTime, new Gson().toJson(result));
         return result;
     }
 
@@ -133,37 +120,6 @@ public class WebLogAspect {
             return ((ServletRequestAttributes) requestAttributes).getRequest();
         }
         return null;
-    }
-
-    private String getClientIP(HttpServletRequest request) {
-        String[] headers = {"X-Forwarded-For", "X-Real-IP", "Proxy-Client-IP", "WL-Proxy-Client-IP", "HTTP_CLIENT_IP", "HTTP_X_FORWARDED_FOR"};
-        String ip;
-        for (String header : headers) {
-            ip = request.getHeader(header);
-            if (false == isUnknown(ip)) {
-                return getMultistageReverseProxyIp(ip);
-            }
-        }
-        ip = request.getRemoteAddr();
-        return getMultistageReverseProxyIp(ip);
-    }
-
-    private String getMultistageReverseProxyIp(String ip) {
-        // 多级反向代理检测
-        if (ip != null && ip.indexOf(",") > 0) {
-            final String[] ips = ip.trim().split(",");
-            for (String subIp : ips) {
-                if (false == isUnknown(subIp)) {
-                    ip = subIp;
-                    break;
-                }
-            }
-        }
-        return ip;
-    }
-
-    private boolean isUnknown(String checkString) {
-        return StringUtils.isBlank(checkString) || "unknown".equalsIgnoreCase(checkString);
     }
 
 }

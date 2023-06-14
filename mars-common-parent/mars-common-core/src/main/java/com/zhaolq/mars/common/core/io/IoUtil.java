@@ -23,11 +23,12 @@ import java.io.Reader;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.nio.CharBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
-import org.springframework.util.Assert;
+import org.apache.commons.lang3.Validate;
 
 import com.zhaolq.mars.common.core.exception.IORuntimeException;
 import com.zhaolq.mars.common.core.util.CharsetUtil;
@@ -159,6 +160,66 @@ public class IoUtil extends NioUtil {
     }
     // -------------------------------------------------------------------------------------- getReader and getWriter end
 
+    // -------------------------------------------------------------------------------------- read start
+
+    /**
+     * 从流中读取bytes
+     *
+     * @param in {@link InputStream}
+     * @param isClose 是否关闭输入流
+     * @return bytes
+     * @throws IORuntimeException IO异常
+     */
+    public static byte[] readBytes(InputStream in, boolean isClose) throws IORuntimeException {
+        if (in instanceof FileInputStream) {
+            // 文件流的长度是可预见的，此时直接读取效率更高
+            final byte[] result;
+            try {
+                final int available = in.available();
+                result = new byte[available];
+                final int readLength = in.read(result);
+                if (readLength != available) {
+                    throw new IOException(String.format("File length is [%d] but read [%d]!", available, readLength));
+                }
+            } catch (IOException e) {
+                throw new IORuntimeException(e);
+            } finally {
+                if (isClose) {
+                    close(in);
+                }
+            }
+            return result;
+        }
+        return null;
+    }
+
+    /**
+     * 从{@link Reader}中读取String
+     *
+     * @param reader {@link Reader}
+     * @param isClose 是否关闭{@link Reader}
+     * @return String
+     * @throws IORuntimeException IO异常
+     */
+    public static String read(Reader reader, boolean isClose) throws IORuntimeException {
+        final StringBuilder builder = new StringBuilder();
+        final CharBuffer buffer = CharBuffer.allocate(DEFAULT_BUFFER_SIZE);
+        try {
+            while (-1 != reader.read(buffer)) {
+                builder.append(buffer.flip());
+            }
+        } catch (IOException e) {
+            throw new IORuntimeException(e);
+        } finally {
+            if (isClose) {
+                IoUtil.close(reader);
+            }
+        }
+        return builder.toString();
+    }
+
+    // -------------------------------------------------------------------------------------- read end
+
     /**
      * String 转为流
      *
@@ -246,7 +307,7 @@ public class IoUtil extends NioUtil {
      * @return {@link BufferedInputStream}
      */
     public static BufferedInputStream toBuffered(InputStream in) {
-        Assert.notNull(in, "InputStream must be not null!");
+        Validate.notNull(in, "InputStream must be not null!");
         return (in instanceof BufferedInputStream) ? (BufferedInputStream) in : new BufferedInputStream(in);
     }
 
@@ -258,7 +319,7 @@ public class IoUtil extends NioUtil {
      * @return {@link BufferedInputStream}
      */
     public static BufferedInputStream toBuffered(InputStream in, int bufferSize) {
-        Assert.notNull(in, "InputStream must be not null!");
+        Validate.notNull(in, "InputStream must be not null!");
         return (in instanceof BufferedInputStream) ? (BufferedInputStream) in : new BufferedInputStream(in, bufferSize);
     }
 
@@ -269,7 +330,7 @@ public class IoUtil extends NioUtil {
      * @return {@link BufferedOutputStream}
      */
     public static BufferedOutputStream toBuffered(OutputStream out) {
-        Assert.notNull(out, "OutputStream must be not null!");
+        Validate.notNull(out, "OutputStream must be not null!");
         return (out instanceof BufferedOutputStream) ? (BufferedOutputStream) out : new BufferedOutputStream(out);
     }
 
@@ -281,7 +342,7 @@ public class IoUtil extends NioUtil {
      * @return {@link BufferedOutputStream}
      */
     public static BufferedOutputStream toBuffered(OutputStream out, int bufferSize) {
-        Assert.notNull(out, "OutputStream must be not null!");
+        Validate.notNull(out, "OutputStream must be not null!");
         return (out instanceof BufferedOutputStream) ? (BufferedOutputStream) out : new BufferedOutputStream(out, bufferSize);
     }
 
@@ -292,7 +353,7 @@ public class IoUtil extends NioUtil {
      * @return {@link BufferedReader}
      */
     public static BufferedReader toBuffered(Reader reader) {
-        Assert.notNull(reader, "Reader must be not null!");
+        Validate.notNull(reader, "Reader must be not null!");
         return (reader instanceof BufferedReader) ? (BufferedReader) reader : new BufferedReader(reader);
     }
 
@@ -304,7 +365,7 @@ public class IoUtil extends NioUtil {
      * @return {@link BufferedReader}
      */
     public static BufferedReader toBuffered(Reader reader, int bufferSize) {
-        Assert.notNull(reader, "Reader must be not null!");
+        Validate.notNull(reader, "Reader must be not null!");
         return (reader instanceof BufferedReader) ? (BufferedReader) reader : new BufferedReader(reader, bufferSize);
     }
 
@@ -315,7 +376,7 @@ public class IoUtil extends NioUtil {
      * @return {@link BufferedWriter}
      */
     public static BufferedWriter toBuffered(Writer writer) {
-        Assert.notNull(writer, "Writer must be not null!");
+        Validate.notNull(writer, "Writer must be not null!");
         return (writer instanceof BufferedWriter) ? (BufferedWriter) writer : new BufferedWriter(writer);
     }
 
@@ -327,7 +388,7 @@ public class IoUtil extends NioUtil {
      * @return {@link BufferedWriter}
      */
     public static BufferedWriter toBuffered(Writer writer, int bufferSize) {
-        Assert.notNull(writer, "Writer must be not null!");
+        Validate.notNull(writer, "Writer must be not null!");
         return (writer instanceof BufferedWriter) ? (BufferedWriter) writer : new BufferedWriter(writer, bufferSize);
     }
 

@@ -3,8 +3,6 @@ package com.zhaolq.mars.common.core.util;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 
-import com.zhaolq.mars.common.core.constant.StringPool;
-
 /**
  * {@link ClassLoader}工具类
  *

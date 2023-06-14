@@ -91,6 +91,7 @@
         <commons-statistics-distribution.version>1.0</commons-statistics-distribution.version>
         <commons-text.version>1.10.0</commons-text.version>
         <commons-vfs2.version>2.9.0</commons-vfs2.version>
+        <tika-core.version>2.8.0</tika-core.version>
 
         <springdoc-openapi-ui.version>1.7.0</springdoc-openapi-ui.version>
         <rocketmq-spring-boot-starter.version>2.2.3</rocketmq-spring-boot-starter.version>

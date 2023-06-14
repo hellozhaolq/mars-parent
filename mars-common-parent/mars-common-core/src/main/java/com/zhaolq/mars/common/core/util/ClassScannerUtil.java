@@ -10,6 +10,7 @@ import java.nio.charset.Charset;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -20,7 +21,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.zhaolq.mars.common.core.constant.CharPool;
 import com.zhaolq.mars.common.core.constant.StringPool;
 import com.zhaolq.mars.common.core.function.Filter;
-import com.zhaolq.mars.common.core.lang.ConsoleTable;
+import com.zhaolq.mars.common.core.console.ConsoleTable;
 
 /**
  * 类扫描器
@@ -34,7 +35,7 @@ public class ClassScannerUtil {
     /**
      * 包名
      */
-    private final String packageName;
+    private final String scanPackageName;
     /**
      * 包名，最后跟一个点，表示包名，避免在检查前缀时的歧义<br>
      * 如果包名指定为空，不跟点
@@ -43,11 +44,11 @@ public class ClassScannerUtil {
     /**
      * 包路径，用于文件中对路径操作
      */
-    private final String packageDirName;
+    private final String scanPackageDirName;
     /**
      * 包路径，用于jar中对路径操作，在Linux下与packageDirName一致
      */
-    private final String packagePath;
+    private final String scanPackagePath;
     /**
      * 过滤器
      */
@@ -88,62 +89,42 @@ public class ClassScannerUtil {
     /**
      * 构造，默认UTF-8编码
      *
-     * @param packageName 包名，所有包传入""或者null
+     * @param scanPackageName 包名，所有包传入""或者null
      * @param classFilter 过滤器，无需传入null
      */
-    public ClassScannerUtil(String packageName, Filter<Class<?>> classFilter) {
-        this(packageName, classFilter, CharsetUtil.CHARSET_UTF_8);
+    public ClassScannerUtil(String scanPackageName, Filter<Class<?>> classFilter) {
+        this(scanPackageName, classFilter, CharsetUtil.CHARSET_UTF_8);
     }
 
     /**
      * 构造
      *
-     * @param packageName 包名，所有包传入""或者null
+     * @param scanPackageName 包名，所有包传入""或者null
      * @param classFilter 过滤器，无需传入null
      * @param charset 编码
      */
-    public ClassScannerUtil(String packageName, Filter<Class<?>> classFilter, Charset charset) {
-        packageName = StrUtil.nullToEmpty(packageName);
-        this.packageName = packageName;
-        this.packageNameWithDot = packageName.endsWith(StringPool.DOT) ? packageName : packageName.concat(StringPool.DOT);
-        this.packageDirName = packageName.replace(CharPool.DOT, File.separatorChar);
-        this.packagePath = packageName.replace(CharPool.DOT, CharPool.SLASH);
+    public ClassScannerUtil(String scanPackageName, Filter<Class<?>> classFilter, Charset charset) {
+        scanPackageName = StrUtil.nullToEmpty(scanPackageName);
+        this.scanPackageName = scanPackageName;
+        this.packageNameWithDot = scanPackageName.endsWith(StringPool.DOT) ? scanPackageName : scanPackageName.concat(StringPool.DOT);
+        this.scanPackageDirName = scanPackageName.replace(CharPool.DOT, File.separatorChar);
+        this.scanPackagePath = scanPackageName.replace(CharPool.DOT, CharPool.SLASH);
         this.classFilter = classFilter;
         this.charset = charset;
-    }
-
-    /**
-     * 扫描指定包路径下所有包含指定注解的类，包括其他加载的jar或者类
-     *
-     * @param packageName 包路径
-     * @param annotationClass 注解类
-     * @return 类集合
-     */
-    public static Set<Class<?>> scanAllPackageByAnnotation(String packageName, Class<? extends Annotation> annotationClass) throws IOException {
-        return scanAllPackage(packageName, clazz -> clazz.isAnnotationPresent(annotationClass));
     }
 
     /**
      * 扫描指定包路径下所有包含指定注解的类<br>
      * 如果classpath下已经有类，不再扫描其他加载的jar或者类
      *
-     * @param packageName 包路径
+     * @param scanPackageName 包路径
      * @param annotationClass 注解类
      * @return 类集合
      */
-    public static Set<Class<?>> scanPackageByAnnotation(String packageName, Class<? extends Annotation> annotationClass) throws IOException {
-        return scanPackage(packageName, clazz -> clazz.isAnnotationPresent(annotationClass));
-    }
-
-    /**
-     * 扫描指定包路径下所有指定类或接口的子类或实现类，不包括指定父类本身，包括其他加载的jar或者类
-     *
-     * @param packageName 包路径
-     * @param superClass 父类或接口（不包括）
-     * @return 类集合
-     */
-    public static Set<Class<?>> scanAllPackageBySuper(String packageName, Class<?> superClass) throws IOException {
-        return scanAllPackage(packageName, clazz -> superClass.isAssignableFrom(clazz) && !superClass.equals(clazz));
+    public static Set<Class<?>> scanPackageByAnnotation(
+            String scanPackageName, Class<? extends Annotation> annotationClass, boolean forceScanJavaClassPaths)
+            throws IOException {
+        return scanPackage(scanPackageName, clazz -> clazz.isAnnotationPresent(annotationClass), forceScanJavaClassPaths);
     }
 
     /**
@@ -154,82 +135,37 @@ public class ClassScannerUtil {
      * @param superClass 父类或接口（不包括）
      * @return 类集合
      */
-    public static Set<Class<?>> scanPackageBySuper(String packageName, Class<?> superClass) throws IOException {
-        return scanPackage(packageName, clazz -> superClass.isAssignableFrom(clazz) && !superClass.equals(clazz));
+    public static Set<Class<?>> scanPackageBySuper(
+            String packageName, Class<?> superClass, boolean forceScanJavaClassPaths)
+            throws IOException {
+        return scanPackage(packageName, clazz -> superClass.isAssignableFrom(clazz) && !superClass.equals(clazz), forceScanJavaClassPaths);
     }
 
     /**
-     * 扫描该包路径下所有class文件，包括其他加载的jar或者类
-     *
-     * @return 类集合
-     */
-    public static Set<Class<?>> scanAllPackage() throws IOException {
-        return scanAllPackage(StringPool.EMPTY, null);
-    }
-
-    /**
-     * 扫描classpath下所有class文件，如果classpath下已经有类，不再扫描其他加载的jar或者类
-     *
-     * @return 类集合
-     */
-    public static Set<Class<?>> scanPackage() throws IOException {
-        return scanPackage(StringPool.EMPTY, null);
-    }
-
-    /**
-     * 扫描该包路径下所有class文件
-     *
-     * @param packageName 包路径 com | com. | com.abs | com.abs.
-     * @return 类集合
-     */
-    public static Set<Class<?>> scanPackage(String packageName) throws IOException {
-        return scanPackage(packageName, null);
-    }
-
-    /**
-     * 扫描包路径下和所有在classpath中加载的类，满足class过滤器条件的所有class文件，<br>
+     * 扫描满足class过滤器条件的所有class文件，<br>
      * 如果包路径为 com.abs + A.class 但是输入 abs会产生classNotFoundException<br>
      * 因为className 应该为 com.abs.A 现在却成为abs.A,此工具类对该异常进行忽略处理<br>
+     * <p>
+     * packageName为空时，扫描该包路径下所有class文件，包括其他加载的jar或者类
      *
-     * @param packageName 包路径 com | com. | com.abs | com.abs.
+     * @param scanPackageName 包路径 com | com. | com.abs | com.abs.
      * @param classFilter class过滤器，过滤掉不需要的class
+     * @param forceScanJavaClassPaths 是否强制扫描其他位于classpath关联jar中的类
      * @return 类集合
      */
-    public static Set<Class<?>> scanAllPackage(String packageName, Filter<Class<?>> classFilter) throws IOException {
-        return new ClassScannerUtil(packageName, classFilter).scan(true);
+    public static Set<Class<?>> scanPackage(String scanPackageName, Filter<Class<?>> classFilter, boolean forceScanJavaClassPaths) throws IOException {
+        return new ClassScannerUtil(scanPackageName, classFilter).scan(forceScanJavaClassPaths);
     }
 
     /**
-     * 扫描包路径下满足class过滤器条件的所有class文件，<br>
-     * 如果包路径为 com.abs + A.class 但是输入 abs会产生classNotFoundException<br>
-     * 因为className 应该为 com.abs.A 现在却成为abs.A,此工具类对该异常进行忽略处理<br>
-     *
-     * @param packageName 包路径 com | com. | com.abs | com.abs.
-     * @param classFilter class过滤器，过滤掉不需要的class
-     * @return 类集合
-     */
-    public static Set<Class<?>> scanPackage(String packageName, Filter<Class<?>> classFilter) throws IOException {
-        return new ClassScannerUtil(packageName, classFilter).scan();
-    }
-
-    /**
-     * 扫描包路径下满足class过滤器条件的所有class文件<br>
-     * 此方法首先扫描指定包名下的资源目录，如果未扫描到，则扫描整个classpath中所有加载的类
-     *
-     * @return 类集合
-     */
-    public Set<Class<?>> scan() throws IOException {
-        return scan(false);
-    }
-
-    /**
-     * 扫描包路径下满足class过滤器条件的所有class文件
+     * 扫描包路径下满足class过滤器条件的所有class文件。
+     * forceScanJavaClassPaths为false时，首先扫描指定包名下的资源目录，如果未扫描到，则扫描整个classpath中所有加载的类
      *
      * @param forceScanJavaClassPaths 是否强制扫描其他位于classpath关联jar中的类
      * @return 类集合
      */
     public Set<Class<?>> scan(boolean forceScanJavaClassPaths) throws IOException {
-        final Enumeration<URL> resources = ClassLoaderUtil.getClassLoader().getResources(this.packagePath);
+        final Enumeration<URL> resources = ClassLoaderUtil.getClassLoader().getResources(this.scanPackagePath);
         while (resources.hasMoreElements()) {
             URL url = resources.nextElement();
             switch (url.getProtocol()) {
@@ -244,6 +180,7 @@ public class ClassScannerUtil {
         }
         // classpath下未找到，则扫描其他jar包下的类
         if (forceScanJavaClassPaths || CollectionUtils.isEmpty(this.classes)) {
+            // 好像和上面的扫描结果并没有区别
             scanJavaClassPaths();
         }
 
@@ -271,7 +208,7 @@ public class ClassScannerUtil {
     // --------------------------------------------------------------------------------------------------- Private method start
 
     /**
-     * 扫描Java指定的ClassPath路径
+     * 扫描JavaClassPath路径
      */
     private void scanJavaClassPaths() throws IOException {
         final String[] javaClassPaths = System.getProperty("java.class.path").split(System.getProperty("path.separator"));
@@ -295,7 +232,7 @@ public class ClassScannerUtil {
                         // 8为classes长度，fileName.length() - 6为".class"的长度
                         .substring(rootDir.length(), fileName.length() - 6)//
                         .replace(File.separatorChar, CharPool.DOT);//
-                //加入满足条件的类
+                // 加入满足条件的类
                 addIfAccept(className);
             } else if (fileName.endsWith(StringPool.EXT_JAR)) {
                 scanJar(new JarFile(file));
@@ -321,7 +258,7 @@ public class ClassScannerUtil {
         while (resources.hasMoreElements()) {
             JarEntry entry = resources.nextElement();
             name = StringUtils.removeStart(entry.getName(), StringPool.SLASH);
-            if (StringUtils.isEmpty(packagePath) || name.startsWith(this.packagePath)) {
+            if (StringUtils.isEmpty(scanPackagePath) || name.startsWith(this.scanPackagePath)) {
                 if (name.endsWith(StringPool.EXT_CLASS) && false == entry.isDirectory()) {
                     final String className = name//
                             .substring(0, name.length() - 6)//
@@ -368,14 +305,14 @@ public class ClassScannerUtil {
             return;
         }
         int classLen = className.length();
-        int packageLen = this.packageName.length();
+        int packageLen = this.scanPackageName.length();
         if (classLen == packageLen) {
-            //类名和包名长度一致，用户可能传入的包名是类名
-            if (className.equals(this.packageName)) {
+            // 类名和包名长度一致，用户可能传入的包名是类名
+            if (className.equals(this.scanPackageName)) {
                 addIfAccept(loadClass(className));
             }
         } else if (classLen > packageLen) {
-            //检查类名是否以指定包名为前缀，包名后加.（避免类似于cn.hutool.A和cn.hutool.ATest这类类名引起的歧义）
+            // 检查类名是否以指定包名为前缀，包名后加.（避免类似于cn.zhaolq.A和cn.zhaolq.ATest这类类名引起的歧义）
             if (".".equals(this.packageNameWithDot) || className.startsWith(this.packageNameWithDot)) {
                 addIfAccept(loadClass(className));
             }
@@ -404,21 +341,25 @@ public class ClassScannerUtil {
      */
     private String subPathBeforePackage(File file) {
         String filePath = file.getAbsolutePath();
-        if (StringUtils.isNotEmpty(this.packageDirName)) {
-            filePath = StrUtil.subBefore(filePath, this.packageDirName, true);
+        if (StringUtils.isNotEmpty(this.scanPackageDirName)) {
+            filePath = StrUtil.subBefore(filePath, this.scanPackageDirName, true);
         }
-        return packageName.endsWith(File.separator) ? filePath : filePath.concat(File.separator);
+        return scanPackageName.endsWith(File.separator) ? filePath : filePath.concat(File.separator);
     }
     // --------------------------------------------------------------------------------------------------- Private method end
 
     public static void main(String[] args) throws IOException {
-        Set<Class<?>> allUtils = ClassScannerUtil.scanPackageByAnnotation("org.apache", FunctionalInterface.class);
+        Set<Class<?>> allUtils = ClassScannerUtil.scanPackage("org.apache.commons.lang3", clazz -> {
+            if (clazz.getName().toLowerCase(Locale.ROOT).contains("exception")) {
+                return true;
+            }
+            return false;
+        }, false);
         ConsoleTable consoleTable = ConsoleTable.create().setDBCMode(false).addHeader("className", "packageName");
         for (Class<?> clazz : allUtils) {
             try {
                 clazz.getSimpleName();
             } catch (Throwable throwable) {
-                System.out.println(clazz.getName());
                 continue;
             }
             consoleTable.addBody(clazz.getSimpleName(), clazz.getPackage().getName());

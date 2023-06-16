@@ -28,6 +28,7 @@
             门面型日志框架
                 JCL：Apache基金会所属的项目，是一套Java日志接口，之前叫Jakarta Commons Logging，后更名为Commons Logging。
                 SLF4J：是一套简易Java日志门面，是对所有日志框架制定的一种规范、标准、接口，本身并无日志的实现。（Simple Logging Facade for Java，缩写Slf4j）
+                jboss-logging：使用的场景太少了，普通的业务开发很少用，都是特定的框架在用，eg：hibernate框架
 
             记录型日志框架
                 Jul (Java Util Logging)：JDK中的日志记录工具，也常称为JDKLog、jdk-logging，自Java1.4以来的官方日志实现。

@@ -207,7 +207,7 @@
 
             AppenderRef：Root的子节点，用来指定该日志输出到哪个Appender.
         -->
-        <Root level="trace" includeLocation="false">
+        <Root level="info" includeLocation="false">
             <AppenderRef ref="console"/>
             <AppenderRef ref="errorFileRolling"/>
             <AppenderRef ref="warnFileRolling"/>

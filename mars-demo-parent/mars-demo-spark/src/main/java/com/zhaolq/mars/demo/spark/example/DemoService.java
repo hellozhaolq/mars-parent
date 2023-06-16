@@ -15,6 +15,7 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SaveMode;
 
 import com.zhaolq.mars.demo.spark.common.BaseSparkApplication;
+import com.zhaolq.mars.demo.spark.common.SparkUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -94,6 +95,6 @@ public class DemoService extends BaseSparkApplication {
     public void after() throws Exception {
         // 两种方式都可以，可能有些报告需要用sql方式吧
         // SparkUtils.invalidateMetadataWithSql(outputTable, impalaURL);
-        // SparkUtils.invalidateMetadataWithProcess(outputTable, impalaURL);
+        SparkUtils.invalidateMetadataWithProcess(outputTable, impalaURL);
     }
 }

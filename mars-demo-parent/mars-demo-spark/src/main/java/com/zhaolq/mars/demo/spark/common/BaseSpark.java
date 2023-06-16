@@ -86,6 +86,7 @@ public abstract class BaseSpark {
                 .config("spark.kryoserializer.buffer", "50m") // Kryo序列化缓冲区的初始大小
                 .config("spark.kryoserializer.buffer.max", "100m") // Kryo序列化缓冲区的最大大小，必须小于2048MiB
                 .config("spark.debug.maxToStringFields", "1000") // spark2.4.0有效
+                .config("spark.sql.debug.maxToStringFields", "1000")
                 .enableHiveSupport() // 增加支持 hive Support
                 .getOrCreate(); // 获取或者新建一个 sparkSession
     }

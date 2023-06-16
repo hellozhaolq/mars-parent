@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import org.apache.spark.SparkContext;
+import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.SparkSession;
 
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +27,8 @@ public abstract class BaseSpark {
 
     public String master;
     public SparkSession sparkSession;
+    public SparkContext sparkContext;
+    public JavaSparkContext javaSparkContext;
 
     public final void execute(String[] args) throws Exception {
         // 1.Parameter initialization
@@ -89,6 +93,9 @@ public abstract class BaseSpark {
                 .config("spark.sql.debug.maxToStringFields", "1000")
                 .enableHiveSupport() // 增加支持 hive Support
                 .getOrCreate(); // 获取或者新建一个 sparkSession
+
+        sparkContext = sparkSession.sparkContext();
+        javaSparkContext= JavaSparkContext.fromSparkContext(sparkContext);
     }
 
     public abstract void before() throws Exception;

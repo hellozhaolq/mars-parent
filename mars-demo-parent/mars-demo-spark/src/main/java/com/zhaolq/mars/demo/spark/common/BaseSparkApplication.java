@@ -1,11 +1,13 @@
 package com.zhaolq.mars.demo.spark.common;
 
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Map;
 import java.util.Properties;
 
 import org.apache.spark.sql.SparkSession;
 
+import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 
 import lombok.extern.slf4j.Slf4j;
@@ -43,16 +45,24 @@ public abstract class BaseSparkApplication {
     }
 
     private void init(String[] args) {
-        log.info("args param: " + Arrays.toString(args));
+        log.info(">>>>>>>> args param: " + Arrays.toString(args));
+        log.info(">>>>>>>> args param: " + JSONArray.toJSONString(args));
+        log.info(">>>>>>>> args param: " + SparkUtils.array2Map(args));
+        log.info(">>>>>>>> args param: " + JSONObject.parseObject(args[0]).toString());
 
         JSONObject json = JSONObject.parseObject(args[0]);
         hdfsPath = json.getString("hdfs");
+        log.info(">>>>>>>> hdfsPath: " + hdfsPath);
         serverIP = json.getString("cscloud-position-server");
+        log.info(">>>>>>>> serverIP: " + serverIP);
         impalaURL = json.getString("impalaURL");
+        log.info(">>>>>>>> impalaURL: " + impalaURL);
+        log.info(">>>>>>>> base64: " + new String(Base64.getEncoder().encode(impalaURL.getBytes())));
 
         argsMap = SparkUtils.array2Map(args);
 
         isLocal = argsMap.get("local") != null && "local".equalsIgnoreCase(argsMap.get("local")) ? "local[2]" : "yarn";
+        log.info(">>>>>>>> local: " + argsMap.get("local"));
 
         properties = new Properties();
         properties.setProperty("driver", "impala.jdbc.driverName"); // 这个驱动找不到，不清楚是哪个依赖

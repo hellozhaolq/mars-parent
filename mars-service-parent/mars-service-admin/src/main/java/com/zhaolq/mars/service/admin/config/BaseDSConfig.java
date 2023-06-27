@@ -16,7 +16,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Scope;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
@@ -36,6 +38,8 @@ import lombok.extern.slf4j.Slf4j;
  * @author zhaolq
  * @date 2023/4/25 14:59:20
  */
+@Scope("singleton")
+@Lazy(true)
 @Configuration
 @MapperScan(basePackages = {"com.zhaolq.**.dao.base"}, sqlSessionTemplateRef = "baseSqlSessionTemplate")
 @Slf4j

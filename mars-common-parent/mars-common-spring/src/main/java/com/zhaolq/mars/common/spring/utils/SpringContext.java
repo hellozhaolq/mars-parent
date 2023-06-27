@@ -21,12 +21,12 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Component
-public class SpringContextUtils implements ApplicationContextAware {
+public class SpringContext implements ApplicationContextAware {
 
-    private volatile static SpringContextUtils springContextUtils;
-    private static ApplicationContext applicationContext;
+    private volatile static SpringContext springContext;
+    private ApplicationContext applicationContext;
 
-    private SpringContextUtils() {
+    private SpringContext() {
     }
 
     /**
@@ -38,12 +38,12 @@ public class SpringContextUtils implements ApplicationContextAware {
      * 描述：这种方式能达到双检锁方式一样的功效，但实现更简单。对静态域使用延迟初始化，应使用这种方式而不是双检锁方式。
      * 这种方式只适用于静态域的情况，双检锁方式可在实例域需要延迟初始化时使用。
      */
-    public static SpringContextUtils getInstance() {
+    public static SpringContext getInstance() {
         return SingletonHolder.INSTANCE;
     }
 
     private static class SingletonHolder {
-        private static final SpringContextUtils INSTANCE = new SpringContextUtils();
+        private static final SpringContext INSTANCE = new SpringContext();
     }
 
     /**
@@ -55,15 +55,15 @@ public class SpringContextUtils implements ApplicationContextAware {
      * 描述：这种方式采用双锁机制，安全且在多线程情况下能保持高性能。
      * getInstance() 的性能对应用程序很关键。
      */
-    protected static SpringContextUtils getSingleton() {
-        if (springContextUtils == null) {
-            synchronized (SpringContextUtils.class) {
-                if (springContextUtils == null) {
-                    springContextUtils = new SpringContextUtils();
+    protected static SpringContext getSingleton() {
+        if (springContext == null) {
+            synchronized (SpringContext.class) {
+                if (springContext == null) {
+                    springContext = new SpringContext();
                 }
             }
         }
-        return springContextUtils;
+        return springContext;
     }
 
     public <T> T getBean(String beanName) {
@@ -104,7 +104,7 @@ public class SpringContextUtils implements ApplicationContextAware {
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        SpringContextUtils.applicationContext = applicationContext;
+        this.applicationContext = applicationContext;
     }
 
 }

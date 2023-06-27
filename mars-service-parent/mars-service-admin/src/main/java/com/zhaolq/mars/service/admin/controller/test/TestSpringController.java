@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zhaolq.mars.common.core.result.R;
-import com.zhaolq.mars.common.spring.utils.SpringContextUtils;
+import com.zhaolq.mars.common.spring.utils.SpringContext;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -66,12 +66,12 @@ public class TestSpringController {
         if (StringUtils.isEmpty(beanName)) {
             beanName = "userServiceImpl";
             /*
-            IUserService bean = SpringContextUtils.getInstance().getBean(beanName);
+            IUserService bean = SpringContext.getInstance().getBean(beanName);
             UserEntity user = bean.getById(1);
             return R.success(user);
             */
         }
-        Object bean = SpringContextUtils.getInstance().getBean(beanName);
+        Object bean = SpringContext.getInstance().getBean(beanName);
         if (ObjectUtils.isEmpty(bean)) {
             return R.failure("No bean named '" + beanName + "' available ", "没有可用的名为 '" + beanName + "' 的bean");
         }

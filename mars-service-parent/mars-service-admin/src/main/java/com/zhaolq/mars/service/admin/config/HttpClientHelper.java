@@ -26,7 +26,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
-import com.zhaolq.mars.common.spring.utils.SpringContextUtils;
+import com.zhaolq.mars.common.spring.utils.SpringContext;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -37,8 +37,8 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class HttpClientHelper {
-    private final CloseableHttpClient httpClient = SpringContextUtils.getInstance().getBean("closeableHttpClient");
-    private final RequestConfig requestConfig = SpringContextUtils.getInstance().getBean("requestConfig");
+    private final CloseableHttpClient httpClient = SpringContext.getInstance().getBean("closeableHttpClient");
+    private final RequestConfig requestConfig = SpringContext.getInstance().getBean("requestConfig");
 
     public String get(String url, HashMap<String, Object> paramMap, HashMap<String, Object> header) {
         String result = null;

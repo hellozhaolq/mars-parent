@@ -88,8 +88,22 @@ public class ConsoleTable extends FillContent {
 
     /**
      * 打印到控制台
+     *
+     * @param isSort 是否排序
+     * @return void
      */
-    public void print() {
+    public void print(Boolean isSort) {
+        if (isSort) {
+            Collections.sort(bodyList, (o1, o2) -> {
+                int result = 0;
+                int i = 0;
+                while (i < o1.size() && result == 0) {
+                    result = o1.get(i).compareToIgnoreCase(o2.get(i));
+                    i++;
+                }
+                return result;
+            });
+        }
         System.out.println(this);
     }
 
@@ -123,6 +137,6 @@ public class ConsoleTable extends FillContent {
             String column5 = RandomStringUtils.randomAlphanumeric(i + 1);
             consoleTable.addBody(column1, column2, column3, column4, column5);
         }
-        consoleTable.print();
+        consoleTable.print(true);
     }
 }

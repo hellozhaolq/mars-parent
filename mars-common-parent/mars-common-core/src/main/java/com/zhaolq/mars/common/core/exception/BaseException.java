@@ -42,7 +42,7 @@ import com.zhaolq.mars.common.core.result.IResultCode;
  *      打印异常msg。
  *      throw上抛，但尽量是BaseException的子类。
  * 3、捕获多种具体异常时，如果处理逻辑相同，必须用并语法(ExceptionType| ...| ExceptionType 变量）来减少重复代码。
- * 4、工具方法中不可捕获异常，上抛给业务层处理。
+ * 4、工具方法中可以捕获异常，也可以上抛给业务层处理。
  * 5、业务代码可通过抛出异常的方式响应API请求，web框架拦截处理 基类Exception、BaseException
  * </pre>
  *

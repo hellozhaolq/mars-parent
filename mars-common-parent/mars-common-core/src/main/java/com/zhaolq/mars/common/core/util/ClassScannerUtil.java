@@ -14,14 +14,15 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import com.zhaolq.mars.common.core.console.ConsoleTable;
 import com.zhaolq.mars.common.core.constant.CharPool;
 import com.zhaolq.mars.common.core.constant.StringPool;
 import com.zhaolq.mars.common.core.function.Filter;
-import com.zhaolq.mars.common.core.console.ConsoleTable;
 
 /**
  * 类扫描器
@@ -179,10 +180,9 @@ public class ClassScannerUtil {
             }
         }
         // classpath下未找到，则扫描其他jar包下的类
-        if (forceScanJavaClassPaths || CollectionUtils.isEmpty(this.classes)) {
-            // 好像和上面的扫描结果并没有区别
-            scanJavaClassPaths();
-        }
+        scanJavaClassPaths();
+        // 扫描JDK
+        scanJavaHomePaths();
 
         return Collections.unmodifiableSet(this.classes);
     }
@@ -219,6 +219,17 @@ public class ClassScannerUtil {
     }
 
     /**
+     * 扫描JavaHome路径
+     */
+    private void scanJavaHomePaths() throws IOException {
+        final String[] javaHomePaths = System.getProperty("java.home").split(System.getProperty("path.separator"));
+        for (String classPath : javaHomePaths) {
+            classPath = URLDecoder.decode(classPath, CharsetUtil.systemCharsetName());
+            scanFile(new File(classPath), null);
+        }
+    }
+
+    /**
      * 扫描文件或目录中的类
      *
      * @param file 文件或目录
@@ -236,6 +247,8 @@ public class ClassScannerUtil {
                 addIfAccept(className);
             } else if (fileName.endsWith(StringPool.EXT_JAR)) {
                 scanJar(new JarFile(file));
+            } else if (fileName.endsWith(StringPool.EXT_ZIP)) {
+                scanZip(new ZipFile(file));
             }
         } else if (file.isDirectory()) {
             final File[] files = file.listFiles();
@@ -262,6 +275,28 @@ public class ClassScannerUtil {
                 if (name.endsWith(StringPool.EXT_CLASS) && false == entry.isDirectory()) {
                     final String className = name//
                             .substring(0, name.length() - 6)//
+                            .replace(CharPool.SLASH, CharPool.DOT);//
+                    addIfAccept(loadClass(className));
+                }
+            }
+        }
+    }
+
+    /**
+     * 扫描zip包
+     *
+     * @param zip zip包
+     */
+    private void scanZip(ZipFile zip) {
+        String name;
+        Enumeration<ZipEntry> resources = (Enumeration<ZipEntry>) zip.entries();
+        while (resources.hasMoreElements()) {
+            ZipEntry entry = resources.nextElement();
+            name = StringUtils.substringAfter(entry.getName(), StringPool.SLASH);
+            if (StringUtils.isEmpty(scanPackagePath) || name.startsWith(this.scanPackagePath)) {
+                if (name.endsWith(StringPool.EXT_JAVA) && false == entry.isDirectory()) {
+                    final String className = name//
+                            .substring(0, name.length() - 5)//
                             .replace(CharPool.SLASH, CharPool.DOT);//
                     addIfAccept(loadClass(className));
                 }
@@ -349,21 +384,22 @@ public class ClassScannerUtil {
     // --------------------------------------------------------------------------------------------------- Private method end
 
     public static void main(String[] args) throws IOException {
-        Set<Class<?>> allUtils = ClassScannerUtil.scanPackage("org.apache.commons.lang3", clazz -> {
+        Set<Class<?>> allUtils = ClassScannerUtil.scanPackage("", clazz -> {
             if (clazz.getName().toLowerCase(Locale.ROOT).contains("exception")) {
                 return true;
             }
             return false;
         }, false);
-        ConsoleTable consoleTable = ConsoleTable.create().setDBCMode(false).addHeader("className", "packageName");
+        ConsoleTable consoleTable = ConsoleTable.create().setDBCMode(false).addHeader("PackageName", "SimpleName", "TypeName");
         for (Class<?> clazz : allUtils) {
             try {
+                // 什么都没做，为了发生异常时能继续
                 clazz.getSimpleName();
             } catch (Throwable throwable) {
                 continue;
             }
-            consoleTable.addBody(clazz.getSimpleName(), clazz.getPackage().getName());
+            consoleTable.addBody(clazz.getPackageName(), clazz.getSimpleName(), clazz.getTypeName());
         }
-        consoleTable.print();
+        consoleTable.print(true);
     }
 }

@@ -11,8 +11,7 @@ import org.apache.commons.lang3.SystemUtils;
  *
  * @author zhaolq
  * @date 2022/3/12 17:25
- * @see
- * <a href="https://github.com/baomidou/mybatis-plus/blob/3.0/mybatis-plus-core/src/main/java/com/baomidou/mybatisplus/core/toolkit/StringPool.java">StringPool</a>
+ * @see <a href="https://github.com/baomidou/mybatis-plus/blob/3.0/mybatis-plus-core/src/main/java/com/baomidou/mybatisplus/core/toolkit/StringPool.java">StringPool</a>
  * @since 1.0.0
  */
 public interface StringPool {
@@ -275,6 +274,10 @@ public interface StringPool {
      * .jar文件扩展名
      */
     public static final String EXT_JAR = ".jar";
+    /**
+     * .zip文件扩展名
+     */
+    public static final String EXT_ZIP = ".zip";
 
     /**
      * 针对ClassPath路径的伪协议前缀（兼容Spring）: "classpath:"

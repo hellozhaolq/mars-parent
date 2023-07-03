@@ -126,6 +126,8 @@ public class HttpClientConfig {
     /**
      * 请求配置
      * 这里仅设置了超时时间
+     * <p>
+     * {@link RequestConfig} 使用了建造者模式
      *
      * @return org.apache.http.client.config.RequestConfig
      */
@@ -139,6 +141,16 @@ public class HttpClientConfig {
                 .build();
     }
 
+    /**
+     * http客户端生成器对象
+     * <p>
+     * {@link HttpClients} 使用了工厂模式；
+     * {@link HttpClientBuilder} 使用了建造者模式
+     *
+     * @param httpClientConnectionManager httpClientConnectionManager
+     * @param requestConfig requestConfig
+     * @return org.apache.http.impl.client.HttpClientBuilder
+     */
     @Bean(name = "httpClientBuilder")
     public HttpClientBuilder httpClientBuilder(
             @Qualifier("httpClientConnectionManager") HttpClientConnectionManager httpClientConnectionManager,

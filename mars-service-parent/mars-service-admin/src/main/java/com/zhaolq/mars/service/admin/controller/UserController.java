@@ -1,6 +1,7 @@
 package com.zhaolq.mars.service.admin.controller;
 
 import java.io.IOException;
+import java.lang.reflect.Proxy;
 import java.util.Collections;
 import java.util.List;
 
@@ -137,6 +138,7 @@ public class UserController {
             return R.failure(ResultCode.PARAM_NOT_COMPLETE);
         }
         QueryWrapper<UserEntity> wrapper = new QueryWrapper<>(userEntity);
+        Class<?> clazz = Proxy.getProxyClass(Thread.currentThread().getContextClassLoader(), userService.getClass().getInterfaces());
         userEntity = userService.getOne(wrapper);
         if (userEntity == null) {
             return R.failure(ResultCode.USER_NOT_EXISTED);

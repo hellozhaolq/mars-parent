@@ -16,6 +16,8 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONWriter;
 import com.google.gson.Gson;
 
 import com.zhaolq.mars.api.admin.entity.UserEntity;
@@ -102,7 +104,9 @@ public class WebLogAspect {
         Object result = proceedingJoinPoint.proceed();
         long endTime = System.currentTimeMillis();
 
-        log.debug("\n接口耗时: {}ms, 响应结果: {}", endTime - startTime, new Gson().toJson(result));
+        log.debug("接口耗时: {}ms", endTime - startTime);
+        log.debug("响应结果: \n{}", JSON.toJSONString(result, JSONWriter.Feature.PrettyFormat, JSONWriter.Feature.WriteMapNullValue));
+
         return result;
     }
 

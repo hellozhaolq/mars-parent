@@ -18,10 +18,6 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public abstract class BaseSpark {
-    public String userTable;
-    public String countryTable;
-    public String outputTable;
-    public String outputPath;
     public Properties properties;
     public Map<String, String> propertiesMap;
 
@@ -47,11 +43,6 @@ public abstract class BaseSpark {
 
 
     private void init(String[] args) {
-        userTable = "t_base_user";
-        countryTable = "t_base_country";
-        outputTable = "t_result";
-        outputPath = "D:\\temp\\";
-
         String driver = "com.mysql.cj.jdbc.Driver";
         String url = "jdbc:mysql://127.0.0.1:3306/basedb?useUnicode=true&characterEncoding=utf8&useSSL=true" +
                      "&autoReconnect=true&failOverReadOnly=false&allowMultiQueries=true" +
@@ -71,13 +62,13 @@ public abstract class BaseSpark {
         propertiesMap.put("user", user);
         propertiesMap.put("password", password);
 
-        master = "local[*]";
+        master = "local[*]"; // 按照Cpu最多Cores来设置线程数
     }
 
     private void create() {
         sparkSession = SparkSession
                 .builder()
-                .master("local[*]") // 按照Cpu最多Cores来设置线程数
+                .master(master)
                 .appName(new Object() {}.getClass().getEnclosingClass().getSimpleName()) // 设置application名字
                 /*
                     Spark属性主要分为两种：
@@ -93,13 +84,11 @@ public abstract class BaseSpark {
                 .config("spark.sql.debug.maxToStringFields", "1000")
                 .config("spark.default.parallelism", "200")
                 .config("spark.sql.shuffle.partitions", "200")
-                .config("spark.memory.fraction", "1024m")
-                .config("spark.memory.storageFraction", "1024m")
                 .enableHiveSupport() // 增加支持 hive Support
                 .getOrCreate(); // 获取或者新建一个 sparkSession
 
         sparkContext = sparkSession.sparkContext();
-        javaSparkContext= JavaSparkContext.fromSparkContext(sparkContext);
+        javaSparkContext = JavaSparkContext.fromSparkContext(sparkContext);
     }
 
     public abstract void before() throws Exception;

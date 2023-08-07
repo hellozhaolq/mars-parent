@@ -5,6 +5,7 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SaveMode;
 
+import com.zhaolq.mars.common.core.util.ClassLoaderUtil;
 import com.zhaolq.mars.demo.spark.common.BaseSpark;
 
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +16,10 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class Example001 extends BaseSpark {
+    public String userTable;
+    public String countryTable;
+    public String outputTable;
+    public String outputPath;
 
     public static void main(String[] args) throws Exception {
         new Example001().execute(args);
@@ -22,6 +27,14 @@ public class Example001 extends BaseSpark {
 
     @Override
     public void before() throws Exception {
+        System.getProperties().load(ClassLoaderUtil.getContextClassLoader().getResourceAsStream("application.properties"));
+
+        userTable = "t_base_user";
+        countryTable = "t_base_country";
+        outputTable = "t_result";
+        outputPath = "D:\\temp\\";
+
+        sparkSession.sql("drop table if exists " + outputTable);
     }
 
     @Override

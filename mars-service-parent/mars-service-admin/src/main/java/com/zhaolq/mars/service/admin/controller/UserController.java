@@ -32,6 +32,7 @@ import com.zhaolq.mars.api.admin.entity.UserEntity;
 import com.zhaolq.mars.common.core.io.IoUtil;
 import com.zhaolq.mars.common.core.result.R;
 import com.zhaolq.mars.common.core.result.ResultCode;
+import com.zhaolq.mars.common.core.util.ClassLoaderUtil;
 import com.zhaolq.mars.common.mybatis.pagination.PageConvert;
 import com.zhaolq.mars.common.valid.group.Add;
 import com.zhaolq.mars.common.valid.group.Edit;
@@ -138,7 +139,7 @@ public class UserController {
             return R.failure(ResultCode.PARAM_NOT_COMPLETE);
         }
         QueryWrapper<UserEntity> wrapper = new QueryWrapper<>(userEntity);
-        Class<?> clazz = Proxy.getProxyClass(Thread.currentThread().getContextClassLoader(), userService.getClass().getInterfaces());
+        Class<?> clazz = Proxy.getProxyClass(ClassLoaderUtil.getContextClassLoader(), userService.getClass().getInterfaces());
         userEntity = userService.getOne(wrapper);
         if (userEntity == null) {
             return R.failure(ResultCode.USER_NOT_EXISTED);

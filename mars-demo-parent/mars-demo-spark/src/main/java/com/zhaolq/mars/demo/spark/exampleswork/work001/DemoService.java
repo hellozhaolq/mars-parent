@@ -17,6 +17,7 @@ import org.apache.spark.sql.SaveMode;
 import com.zhaolq.mars.common.core.util.ClassLoaderUtil;
 import com.zhaolq.mars.demo.spark.common.BaseSparkApplication;
 import com.zhaolq.mars.demo.spark.common.SparkUtils;
+import com.zhaolq.mars.demo.spark.exampleswork.util.JARParserAnnotion;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,6 +35,10 @@ public class DemoService extends BaseSparkApplication {
     private String inputTable3;
     private String outputTable;
 
+    @JARParserAnnotion(value = "inputDbName1,inputTableName1," +
+                               "inputDbName2,inputTableName2," +
+                               "param1,param2," +
+                               "outputDbName,outputTableName")
     public static void main(String[] args) throws Exception {
         new DemoService().execute(args);
     }

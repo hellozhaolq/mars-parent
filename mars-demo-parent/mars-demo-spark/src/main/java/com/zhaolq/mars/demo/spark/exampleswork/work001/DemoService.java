@@ -14,6 +14,7 @@ import org.apache.spark.sql.Encoders;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SaveMode;
 
+import com.zhaolq.mars.common.core.util.ClassLoaderUtil;
 import com.zhaolq.mars.demo.spark.common.BaseSparkApplication;
 import com.zhaolq.mars.demo.spark.common.SparkUtils;
 
@@ -41,7 +42,7 @@ public class DemoService extends BaseSparkApplication {
     public void before() {
         try {
             String resourceFile = StringUtils.replace(new Object() {}.getClass().getPackage().getName(), ".", "/");
-            System.getProperties().load(Thread.currentThread().getContextClassLoader().getResourceAsStream(resourceFile + "/demo.properties"));
+            System.getProperties().load(ClassLoaderUtil.getContextClassLoader().getResourceAsStream(resourceFile + "/demo.properties"));
         } catch (IOException e) {
             log.error("Properties file failed to load");
             throw new RuntimeException(e);

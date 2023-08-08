@@ -10,8 +10,9 @@
 
     <groupId>com.zhaolq.mars</groupId>
     <artifactId>mars-parent</artifactId>
-    <packaging>pom</packaging>
     <version>1.0.0-deluxe</version>
+
+    <packaging>pom</packaging>
 
     <name>${project.artifactId}</name>
     <url>https://blog.zhaolq.com</url>
@@ -26,7 +27,7 @@
 
     <properties>
         <!-- 升级JDK11需要合适的Maven版本用于构建 -->
-        <java.version>11</java.version>
+        <java.version>17</java.version>
 
         <!-- UTC时间！覆盖 ${maven.build.timestamp} 的默认格式 yyyy-MM-dd'T'HH:mm:ss'Z' -->
         <maven.build.timestamp.format>yyMMdd</maven.build.timestamp.format>
@@ -109,9 +110,6 @@
         <selenium-java.version>4.1.4</selenium-java.version>
         <jsoup.version>1.15.1</jsoup.version>
         <webdrivermanager.version>5.1.1</webdrivermanager.version>
-
-        <spark.version>3.4.0</spark.version>
-
     </properties>
 
     <dependencies>
@@ -293,14 +291,16 @@
                     <executions>
                         <execution>
                             <id>attach-sources</id>
-                            <!-- 绑定到声明周期阶段deploy，默认是package。避免在package时执行此插件目标 -->
-                            <phase>package</phase>
+                            <!-- 可以绑定到声明周期阶段deploy，默认是package。避免在package时执行此插件目标 -->
+                            <phase>install</phase>
                             <goals>
                                 <goal>jar-no-fork</goal>
                             </goals>
                         </execution>
                     </executions>
                 </plugin>
+
+                <!-- 生成javadoc文档 -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
@@ -315,8 +315,8 @@
                     <executions>
                         <execution>
                             <id>attach-javadocs</id> <!-- 唯一标识，运行maven时会在控制台输出 -->
-                            <!-- 绑定到声明周期阶段deploy，默认是package。避免在package时执行此插件目标 -->
-                            <phase>package</phase>
+                            <!-- 可以绑定到声明周期阶段deploy，默认是package。避免在package时执行此插件目标 -->
+                            <phase>install</phase>
                             <goals>
                                 <!-- 绑定到此插件的jar目标。jar和javadoc-no-fork区别：
                                         jar目标默认绑定到生命周期阶段package，会生成JavaDoc文档并捆绑到jar文件中。
@@ -326,6 +326,7 @@
                         </execution>
                     </executions>
                 </plugin>
+
                 <!-- default声明周期的test阶段默认绑定了maven-surefire-plugin -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>

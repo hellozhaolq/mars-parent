@@ -23,6 +23,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.methods.HttpPost;
 import org.springframework.beans.factory.annotation.Value;
 
+import com.zhaolq.mars.common.core.console.ConsoleTable;
 import com.zhaolq.mars.common.core.date.DatePattern;
 import com.zhaolq.mars.common.core.result.R;
 
@@ -65,14 +66,20 @@ public class AttendanceCalc {
         // 打卡天数
         BigDecimal punchCardDays = new BigDecimal(attendanceInfoList.size());
         // 出勤天数
-        BigDecimal attendanceDays =
-                attendanceInfoList.stream().map(ele -> ele.getAttendanceDay()).reduce(BigDecimal.ZERO, BigDecimal::add).setScale(6,
-                        RoundingMode.DOWN);
+        BigDecimal attendanceDays = attendanceInfoList.stream()
+                .map(ele -> ele.getAttendanceDay())
+                .reduce(BigDecimal.ZERO, BigDecimal::add)
+                .setScale(6, RoundingMode.DOWN);
         // 最低工时
         BigDecimal minimumWorkHours = attendanceDays.multiply(new BigDecimal(8));
         // 实际工时
-        BigDecimal actualWorkHours =
-                attendanceInfoList.stream().map(ele -> ele.getMorningWorkingHours().add(ele.getAmWorkingHours()).add(ele.getPmWorkingHours()).add(ele.getEveningWorkingHours())).reduce(BigDecimal.ZERO, BigDecimal::add).setScale(6, RoundingMode.DOWN);
+        BigDecimal actualWorkHours = attendanceInfoList.stream()
+                .map(ele -> ele.getMorningWorkingHours()
+                        .add(ele.getAmWorkingHours())
+                        .add(ele.getPmWorkingHours())
+                        .add(ele.getEveningWorkingHours()))
+                .reduce(BigDecimal.ZERO, BigDecimal::add)
+                .setScale(6, RoundingMode.DOWN);
         // 溢出工时
         BigDecimal overflowWorkHours = actualWorkHours.subtract(minimumWorkHours).setScale(6, RoundingMode.DOWN);
         // 日均工时
@@ -92,19 +99,29 @@ public class AttendanceCalc {
         resultMap.put("溢出工时", overflowWorkHours);
         resultMap.put("日均工时", averageDailyWorkingHours);
 
-        StringBuilder sb = new StringBuilder().append(System.lineSeparator()).append(
-                "----------------------------------------------------------------").append(
-                        "----------------------------------------------------------------").append(System.lineSeparator());
+        ConsoleTable consoleTable = ConsoleTable.create().setDBCMode(false);
+        consoleTable.addHeader("Start Time", "End Time", "Days of Attendance", "Daily Working Hours");
         attendanceInfoList.forEach(ele -> {
-            sb.append("| ").append(ele.getStartWorkDatetime() + "        " + ele.getEndWorkDatetime()).append(System.lineSeparator());
-        });
-        sb.append("| ").append(resultMap.toString()).append(System.lineSeparator()).append(
-                "----------------------------------------------------------------").append(
-                        "----------------------------------------------------------------");
-        log.info(sb.toString());
+            String startTime = ele.getStartWorkDatetime();
+            String endTime = ele.getEndWorkDatetime();
+            String daysOfAttendance = String.valueOf(ele.getAttendanceDay());
+            BigDecimal dailyWorkingHours = ele.getMorningWorkingHours()
+                    .add(ele.getAmWorkingHours())
+                    .add(ele.getPmWorkingHours())
+                    .add(ele.getEveningWorkingHours());
 
+            consoleTable.addBody(startTime, endTime, daysOfAttendance, String.valueOf(dailyWorkingHours));
+        });
+
+        StringBuilder printStr = new StringBuilder()
+                .append(System.lineSeparator())
+                .append(resultMap.toString())
+                .append(System.lineSeparator())
+                .append(consoleTable.toString());
+
+        log.info(printStr.toString());
         // 远程打印
-        remotePrinting(sb.toString());
+        remotePrinting(printStr.toString());
 
         return R.success(resultMap);
     }
@@ -332,7 +349,8 @@ public class AttendanceCalc {
             }
 
             // 晚上工时计算，不考虑其他特殊情况
-            if (ele.getEndWorkDatetime().compareTo(ele.getAttendanceDate() + policy.getDinnerTimeEnd()) >= 0 && ele.getEndWorkDatetime().compareTo(LocalDate.parse(ele.getAttendanceDate(), DatePattern.NORM_DATE_FORMATTER).plusDays(1) + policy.getBoundaryLine()) < 0) {
+            if (ele.getEndWorkDatetime().compareTo(ele.getAttendanceDate() + policy.getDinnerTimeEnd()) >= 0 && ele.getEndWorkDatetime().compareTo(LocalDate.parse(ele.getAttendanceDate(),
+                    DatePattern.NORM_DATE_FORMATTER).plusDays(1) + policy.getBoundaryLine()) < 0) {
                 LocalDateTime end = LocalDateTime.parse(ele.getEndWorkDatetime(), DatePattern.NORM_DATETIME_FORMATTER);
                 LocalDateTime start = LocalDateTime.parse(ele.getAttendanceDate() + policy.getDinnerTimeEnd(), DatePattern.NORM_DATETIME_FORMATTER);
                 ele.setEveningWorkingHours(getWorkingHours(start, end));

@@ -115,9 +115,8 @@ public class AttendanceCalc {
 
         StringBuilder printStr = new StringBuilder()
                 .append(System.lineSeparator())
-                .append(resultMap.toString())
-                .append(System.lineSeparator())
-                .append(consoleTable.toString());
+                .append(consoleTable.toString())
+                .append(resultMap.toString());
 
         log.info(printStr.toString());
         // 远程打印

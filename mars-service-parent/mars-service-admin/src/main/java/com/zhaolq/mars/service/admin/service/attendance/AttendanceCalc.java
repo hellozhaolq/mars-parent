@@ -9,6 +9,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -99,6 +100,18 @@ public class AttendanceCalc {
         resultMap.put("溢出工时", overflowWorkHours);
         resultMap.put("日均工时", averageDailyWorkingHours);
 
+        List<Map> dailyList = new ArrayList<>(); // 每日工时
+        attendanceInfoList.forEach(ele -> {
+            String attendanceDate = ele.getAttendanceDate();
+            BigDecimal workHours = ele.getMorningWorkingHours()
+                    .add(ele.getAmWorkingHours())
+                    .add(ele.getPmWorkingHours())
+                    .add(ele.getEveningWorkingHours());
+            Map map = new HashMap();
+            map.put(attendanceDate, workHours);
+            dailyList.add(map);
+        });
+
         ConsoleTable consoleTable = ConsoleTable.create().setDBCMode(false);
         consoleTable.addHeader("Start Time", "End Time", "Days of Attendance", "Daily Working Hours");
         attendanceInfoList.forEach(ele -> {
@@ -122,6 +135,7 @@ public class AttendanceCalc {
         // 远程打印
         remotePrinting(printStr.toString());
 
+        resultMap.put("每日工时", dailyList);
         return R.success(resultMap);
     }
 

@@ -111,6 +111,7 @@ public class AttendanceCalc {
             map.put(attendanceDate, workHours);
             dailyList.add(map);
         });
+        Collections.reverse(dailyList);
 
         ConsoleTable consoleTable = ConsoleTable.create().setDBCMode(false);
         consoleTable.addHeader("Start Time", "End Time", "Days of Attendance", "Daily Working Hours");
@@ -136,7 +137,7 @@ public class AttendanceCalc {
         remotePrinting(printStr.toString());
 
         resultMap.put("每日工时", dailyList);
-        return R.success(resultMap);
+        return R.resultOK(resultMap);
     }
 
     /**

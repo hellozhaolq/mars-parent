@@ -2,11 +2,22 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <!--**********************************************************-->
-    <!--********* https://maven.apache.org/pom.html      *********-->
-    <!--********* https://maven.apache.org/settings.html *********-->
-    <!--**********************************************************-->
+    <!--*********************************************************************************************-->
+    <!--********* https://maven.apache.org/pom.html                                             *****-->
+    <!--********* https://maven.apache.org/guides/introduction/introduction-to-the-pom.html     *****-->
+    <!--********* https://maven.apache.org/settings.html                                        *****-->
+    <!--*********************************************************************************************-->
     <modelVersion>4.0.0</modelVersion>
+
+    <!--
+        为了避免环境不兼容导致莫名问题，建议不要手动更新maven插件版本，而是使用spring-boot-dependencies中的版本。
+        其他依赖版本可以在properties中自定义。
+     -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>2.7.9</version> <!-- springboot版本 -->
+    </parent>
 
     <groupId>com.zhaolq.mars</groupId>
     <artifactId>mars-parent</artifactId>
@@ -26,44 +37,17 @@
     </modules>
 
     <properties>
-        <!-- 升级JDK11需要合适的Maven版本用于构建 -->
-        <java.version>17</java.version>
+        <java.version>17</java.version> <!-- 对应的Maven版本 https://maven.apache.org/docs/history.html -->
 
-        <!-- UTC时间！覆盖 ${maven.build.timestamp} 的默认格式 yyyy-MM-dd'T'HH:mm:ss'Z' -->
+        <!-- 自定义构建时间戳的格式。${maven.build.timestamp}的默认格式 yyyy-MM-dd'T'HH:mm:ss'Z'。UTC时间非UTC+8。 -->
         <maven.build.timestamp.format>yyMMdd</maven.build.timestamp.format>
 
-        <!-- 优先级低于maven-compiler-plugin插件中的配置 -->
-        <!-- 新的release选项需要JDK版本支持(详见源码since标签) -->
-        <!-- 这里的配置不知道什么时候有效，建议在plugin中配置，后期需要将这里的配置删除，提取全局java版本和编码变量 -->
-        <maven.compiler.release>${java.version}</maven.compiler.release>
+        <maven.compiler.release>${java.version}</maven.compiler.release>  <!-- 优先级低于maven-compiler-plugin插件中的配置 -->
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
-        <maven.resources.encoding>UTF-8</maven.resources.encoding>
-
-        <!-- maven-resources-plugin将自动使用此编码 -->
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <!-- 配置所有Maven插件输出的报告编码 -->
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> <!-- maven-resources-plugin将自动使用此编码 -->
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding> <!-- 配置所有Maven插件输出的报告编码 -->
 
         <spring-cloud-dependencies.version>2021.0.6</spring-cloud-dependencies.version>
-        <spring-boot-dependencies.version>2.7.9</spring-boot-dependencies.version>
-        <spring-boot-maven-plugin.version>2.7.9</spring-boot-maven-plugin.version>
-
-        <junit-bom.version>5.8.2</junit-bom.version>
-
-        <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
-        <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
-        <maven-jar-plugin.version>3.3.0</maven-jar-plugin.version>
-        <maven-dependency-plugin.version>3.6.0</maven-dependency-plugin.version>
-        <maven-javadoc-plugin.version>3.5.0</maven-javadoc-plugin.version>
-        <maven-source-plugin.version>3.3.0</maven-source-plugin.version>
-        <maven-war-plugin.version>3.4.0</maven-war-plugin.version>
-        <maven-surefire-plugin.version>3.1.2</maven-surefire-plugin.version>
-        <maven-shade-plugin.version>3.5.0</maven-shade-plugin.version>
-        <maven-assembly-plugin.version>3.6.0</maven-assembly-plugin.version>
-
-        <!--<suiteXmlFile>testing.xml</suiteXmlFile>-->
-
-        <fastjson.version>2.0.32</fastjson.version>
 
         <bcel.version>6.7.0</bcel.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
@@ -92,6 +76,8 @@
         <commons-vfs2.version>2.9.0</commons-vfs2.version>
         <tika-core.version>2.8.0</tika-core.version>
 
+        <fastjson.version>2.0.32</fastjson.version>
+
         <springdoc-openapi-ui.version>1.7.0</springdoc-openapi-ui.version>
         <rocketmq-spring-boot-starter.version>2.2.3</rocketmq-spring-boot-starter.version>
 
@@ -108,7 +94,7 @@
         <poi.version>4.1.2</poi.version>
 
         <selenium-java.version>4.1.4</selenium-java.version>
-        <jsoup.version>1.15.1</jsoup.version>
+        <jsoup.version>1.15.1</jsoup.version> <!-- jsoup是一个用于解析、提取、操作HTML的开源Java函式库。 -->
         <webdrivermanager.version>5.1.1</webdrivermanager.version>
     </properties>
 
@@ -162,13 +148,13 @@
             </dependency>
 
             <!-- 覆盖应写在上面 -->
-            <dependency>
+            <!--<dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
                 <version>${spring-boot-dependencies.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
+            </dependency>-->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
@@ -252,9 +238,8 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin.version}</version>
                 <configuration>
-                    <!-- release选项从JDK9开始支持(详见源码since标签)，该选项替换了三个标志：-source，-target和-bootclasspath -->
+                    <!-- 新的release选项从JDK9开始支持(详见源码since标签)，该选项替换了三个标志：-source，-target和-bootclasspath -->
                     <release>${maven.compiler.release}</release>
                     <encoding>${maven.compiler.encoding}</encoding>
                     <fork>true</fork>
@@ -268,9 +253,8 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
-                <version>${maven-resources-plugin.version}</version>
                 <configuration>
-                    <encoding>${maven.resources.encoding}</encoding>
+                    <encoding>${project.build.sourceEncoding}</encoding>
                     <useDefaultDelimiters>true</useDefaultDelimiters>
                 </configuration>
             </plugin>
@@ -282,7 +266,6 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>
-                    <version>${maven-source-plugin.version}</version>
                     <configuration>
                         <outputDirectory>${project.build.directory}</outputDirectory>
                         <finalName>${project.build.finalName}</finalName>
@@ -304,7 +287,6 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>${maven-javadoc-plugin.version}</version>
                     <configuration>
                         <release>${java.version}</release>
                         <charset>UTF-8</charset>
@@ -331,7 +313,6 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>${maven-surefire-plugin.version}</version>
                     <configuration>
                         <skipTests>true</skipTests>
                         <argLine>-Dfile.encoding=UTF-8</argLine>
@@ -407,7 +388,8 @@
             <repositories>
                 <!-- 按顺序搜索jar包，最后找默认的中央仓库。若将id=central的仓库放在最前就直接去中央仓库搜索 -->
                 <repository>
-                    <id>central</id> <!-- repository的唯一标识。可用其创建镜像引用，用作备用下载站点。maven把id=central的仓库做为中央仓库，修改central的url是无效的 -->
+                    <id>central
+                    </id> <!-- repository的唯一标识。可用其创建镜像引用，用作备用下载站点。maven把id=central的仓库做为中央仓库，修改central的url是无效的 -->
                     <name>Central Repository</name> <!-- 仓库的名称，为了方便人阅读，无其他作用 -->
                     <url>https://repo.maven.apache.org/maven2/</url> <!-- 仓库的地址 -->
                     <layout>default</layout> <!-- default:Maven2/3的布局，legacy:Maven 1.x的布局 -->

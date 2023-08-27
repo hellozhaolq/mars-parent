@@ -9,6 +9,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -137,7 +138,7 @@ public class AttendanceCalc {
         remotePrinting(printStr.toString());
 
         resultMap.put("每日工时", dailyList);
-        return R.resultOK(resultMap);
+        return R.success(resultMap);
     }
 
     /**

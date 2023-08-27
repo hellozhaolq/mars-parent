@@ -84,12 +84,10 @@
                     <!-- 官方配置文档：https://docs.spring.io/spring-boot/docs/current/maven-plugin/reference/html/ -->
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
-                    <version>${spring-boot-maven-plugin.version}</version>
                     <configuration>
                         <outputFile>${project.build.outputDirectory}/META-INF/build-info.properties</outputFile>
                         <!-- 跳过执行：设置true时，打成普通jar包(不可执行)，和使用maven-jar-plugin打的jar包相同。 -->
                         <skip>false</skip>
-                        <fork>true</fork>
                         <!-- repackage的包名 = finalName-classifier -->
                         <finalName>${project.build.finalName}</finalName>
                         <classifier>springboot</classifier> <!-- 分类器 -->
@@ -114,7 +112,6 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-assembly-plugin</artifactId>
-                    <version>${maven-assembly-plugin.version}</version>
                     <configuration>
                         <finalName>${project.build.finalName}-assembly</finalName>
                         <appendAssemblyId>false</appendAssemblyId>

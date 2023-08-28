@@ -388,20 +388,17 @@
             <repositories>
                 <!-- 按顺序搜索jar包，最后找默认的中央仓库。若将id=central的仓库放在最前就直接去中央仓库搜索 -->
                 <repository>
-                    <id>central
-                    </id> <!-- repository的唯一标识。可用其创建镜像引用，用作备用下载站点。maven把id=central的仓库做为中央仓库，修改central的url是无效的 -->
+                    <id>central</id> <!-- repository的唯一标识。可用其创建镜像引用，用作备用下载站点。maven把id=central的仓库做为中央仓库，修改central的url是无效的 -->
                     <name>Central Repository</name> <!-- 仓库的名称，为了方便人阅读，无其他作用 -->
                     <url>https://repo.maven.apache.org/maven2/</url> <!-- 仓库的地址 -->
                     <layout>default</layout> <!-- default:Maven2/3的布局，legacy:Maven 1.x的布局 -->
                     <releases> <!-- 控制Maven对于发布版构件的下载 -->
                         <enabled>true</enabled> <!-- 开启nexus-releases仓库的发布版本下载支持 -->
                         <updatePolicy>daily</updatePolicy> <!-- 检查更新的频率，默认值是daily，表示Maven每天检查一次 -->
-                        <checksumPolicy>warn</checksumPolicy> <!-- 配置Maven检查校验和文件的策略 -->
                     </releases>
                     <snapshots> <!-- 控制Maven对于快照版构件的下载 -->
                         <enabled>false</enabled> <!-- 关闭nexus-releases仓库的快照版本下载支持 -->
                         <updatePolicy>daily</updatePolicy>
-                        <checksumPolicy>warn</checksumPolicy>
                     </snapshots>
                 </repository>
 
@@ -413,12 +410,10 @@
                     <releases>
                         <enabled>true</enabled>
                         <updatePolicy>daily</updatePolicy>
-                        <checksumPolicy>warn</checksumPolicy>
                     </releases>
                     <snapshots>
                         <enabled>false</enabled>
                         <updatePolicy>daily</updatePolicy>
-                        <checksumPolicy>warn</checksumPolicy>
                     </snapshots>
                 </repository>
             </repositories>
@@ -472,11 +467,18 @@
         </profile>
 
         <profile>
+            <!--
+                https://cmc.centralrepo.rnd.huawei.com/maven/       传输成功，东莞-通用区-Maven中心仓库
+                https://mirrors.tools.huawei.com/maven/             传输成功，内网仓库
+                https://mirrors.huaweicloud.com/repository/maven/   传输失败，huawei外网仓库
+                https://repo.huaweicloud.com/repository/maven/      传输失败，外网仓库
+                https://repo.maven.apache.org/maven2/               传输失败，apache中央仓库
+            -->
             <id>repo-company</id>
             <repositories>
                 <repository>
-                    <id>huawei</id>
-                    <name>Huawei Repository</name>
+                    <id>company</id>
+                    <name>Company Repository</name>
                     <url>https://mirrors.tools.huawei.com/maven/</url>
                     <layout>default</layout>
                     <releases>
@@ -490,8 +492,8 @@
 
             <pluginRepositories>
                 <pluginRepository>
-                    <id>huawei-plugin</id>
-                    <name>Huawei Plugin</name>
+                    <id>company-plugin</id>
+                    <name>Company Plugin</name>
                     <url>https://mirrors.tools.huawei.com/maven/</url>
                     <layout>default</layout>
                     <releases>

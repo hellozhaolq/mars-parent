@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
  * @since 1.0.0
  */
 @Slf4j
-@Order(2)
+@Order(0)
 @Component("MarsCorsFilter")
 public class CorsFilter extends GenericFilter {
     @Override

@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
  * @since 1.0.0
  */
 @Slf4j
-@Order(1)
+@Order(Ordered.HIGHEST_PRECEDENCE)
 @Component
 public class HttpFilter extends GenericFilter {
 
@@ -47,13 +47,11 @@ public class HttpFilter extends GenericFilter {
      */
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        if (!(request instanceof HttpServletRequest)) {
-            throw new ServletException(request + " not HttpServletRequest");
+        // Class.isInstance 是Java语言 instanceof 运算符的动态等效项。
+        if (!(request instanceof HttpServletRequest && response instanceof HttpServletResponse)) {
+            throw new ServletException("non-HTTP request or response");
         }
-        // 此方法是 Java 语言instanceof运算符的动态等效项。
-        if (!(HttpServletResponse.class.isInstance(response))) {
-            throw new ServletException(request + " not HttpServletResponse");
-        }
+        
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 

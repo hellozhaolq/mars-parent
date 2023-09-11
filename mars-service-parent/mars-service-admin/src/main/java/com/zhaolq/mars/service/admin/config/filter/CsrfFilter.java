@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
  * @date 2023/8/16 14:08:29
  */
 @Slf4j
-@Order(Ordered.HIGHEST_PRECEDENCE)
+@Order(100)
 @Component
 public class CsrfFilter {
 }

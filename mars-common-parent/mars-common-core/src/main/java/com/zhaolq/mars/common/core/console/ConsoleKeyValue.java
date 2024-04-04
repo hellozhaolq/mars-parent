@@ -10,8 +10,8 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * 控制台打印键值对工具
  *
- * @author zhaolq
- * @date 2023/6/13 9:42:43
+ * @Author zhaolq
+ * @Date 2023/6/13 9:42:43
  */
 public class ConsoleKeyValue extends FillContent {
 

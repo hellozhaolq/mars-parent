@@ -7,8 +7,8 @@ import com.zhaolq.mars.common.core.constant.StringPool;
 /**
  * 字符串工具类
  *
- * @author zhaolq
- * @date 2023/6/9 20:47
+ * @Author zhaolq
+ * @Date 2023/6/9 20:47
  */
 public class StrUtil {
     /**

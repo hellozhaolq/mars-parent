@@ -3,8 +3,8 @@ package com.zhaolq.mars.common.core.exception;
 /**
  * IO运行时异常，常用于对IOException的包装
  *
- * @author zhaolq
- * @date 2022/1/30 10:00
+ * @Author zhaolq
+ * @Date 2022/1/30 10:00
  */
 public class IORuntimeException extends BaseException {
     private static final long serialVersionUID = 1L;

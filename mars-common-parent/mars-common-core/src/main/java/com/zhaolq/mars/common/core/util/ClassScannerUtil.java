@@ -27,8 +27,8 @@ import com.zhaolq.mars.common.core.function.Filter;
 /**
  * 类扫描器
  *
- * @author zhaolq
- * @date 2023/6/9 20:41
+ * @Author zhaolq
+ * @Date 2023/6/9 20:41
  */
 public class ClassScannerUtil {
     private static final long serialVersionUID = 1L;

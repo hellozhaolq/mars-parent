@@ -39,8 +39,8 @@ import com.zhaolq.mars.common.core.util.CharsetUtil;
 /**
  * NIO中Path对象操作封装
  *
- * @author zhaolq
- * @date 2023/6/13 16:00:40
+ * @Author zhaolq
+ * @Date 2023/6/13 16:00:40
  */
 public class PathUtil {
     /**

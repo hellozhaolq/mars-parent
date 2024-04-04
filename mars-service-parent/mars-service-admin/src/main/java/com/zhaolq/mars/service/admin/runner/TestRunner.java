@@ -27,8 +27,8 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 执行时机：参考org.springframework.boot.SpringApplication.run()方法的源码
  *
- * @author zhaolq
- * @date 2021/5/20 16:34
+ * @Author zhaolq
+ * @Date 2021/5/20 16:34
  */
 @Component
 @Slf4j

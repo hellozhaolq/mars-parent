@@ -14,9 +14,9 @@ import com.zhaolq.mars.common.core.db.sql.Order;
 /**
  * 分页对象
  *
- * @author zhaolq
- * @date 2022/3/12 18:50
- * @since 1.0.0
+ * @Author zhaolq
+ * @Date 2022/3/12 18:50
+ * @Since 1.0.0
  */
 public class Page implements Serializable {
     private static final long serialVersionUID = 1L;

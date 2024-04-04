@@ -5,9 +5,9 @@ import java.util.Map;
 /**
  * 鉴权token相关
  *
- * @author zhaolq
- * @date 2023/4/13 17:39:45
- * @since 1.0.0
+ * @Author zhaolq
+ * @Date 2023/4/13 17:39:45
+ * @Since 1.0.0
  */
 public class AuthToken {
     private static final long DEFAULT_EXPIRED_TIME_INTERVAL_SECOND = 1 * 60 * 1000;

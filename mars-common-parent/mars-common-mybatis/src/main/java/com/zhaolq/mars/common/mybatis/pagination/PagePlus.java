@@ -16,8 +16,8 @@ import com.zhaolq.mars.common.core.db.PageUtil;
  * 新增排序参数
  * 添加分页彩虹
  *
- * @author zhaolq
- * @date 2021/5/31 17:33
+ * @Author zhaolq
+ * @Date 2021/5/31 17:33
  */
 public class PagePlus<T> extends Page<T> {
 

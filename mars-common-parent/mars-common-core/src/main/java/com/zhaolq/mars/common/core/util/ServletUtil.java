@@ -37,8 +37,8 @@ import com.zhaolq.mars.common.core.net.NetUtil;
 /**
  * Servlet相关工具类封装
  *
- * @author zhaolq
- * @date 2023/6/13 14:16:56
+ * @Author zhaolq
+ * @Date 2023/6/13 14:16:56
  */
 public class ServletUtil {
     public static final String METHOD_POST = "POST";

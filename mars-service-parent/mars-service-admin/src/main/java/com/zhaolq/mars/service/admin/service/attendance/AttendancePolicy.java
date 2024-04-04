@@ -5,9 +5,9 @@ import lombok.Data;
 /**
  * 考勤策略
  *
- * @author zhaolq
- * @date 2023/4/7 9:35
- * @since 1.0.0
+ * @Author zhaolq
+ * @Date 2023/4/7 9:35
+ * @Since 1.0.0
  */
 @Data
 public class AttendancePolicy {

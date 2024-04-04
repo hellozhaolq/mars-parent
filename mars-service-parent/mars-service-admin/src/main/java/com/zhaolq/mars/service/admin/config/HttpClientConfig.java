@@ -44,9 +44,9 @@ import lombok.extern.slf4j.Slf4j;
  *   apache： HttpComponents 官网：HttpCore 支持两种 I/O 模型：基于经典 Java I/O 的阻塞 I/O 模型和基于 Java NIO 的非阻塞、事件驱动 I/O 模型。
  * </pre>
  *
- * @author zhaolq
- * @date 2023/5/30 17:58:06
- * @since 1.0.0
+ * @Author zhaolq
+ * @Date 2023/5/30 17:58:06
+ * @Since 1.0.0
  */
 @Slf4j
 @Configuration

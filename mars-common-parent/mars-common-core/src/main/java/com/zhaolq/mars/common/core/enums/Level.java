@@ -3,8 +3,8 @@ package com.zhaolq.mars.common.core.enums;
 /**
  * 日志等级
  *
- * @author zhaolq
- * @date 2021/7/16 19:14
+ * @Author zhaolq
+ * @Date 2021/7/16 19:14
  */
 public enum Level{
     /**

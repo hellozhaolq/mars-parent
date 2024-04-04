@@ -3,9 +3,9 @@ package com.zhaolq.mars.common.core.constant;
 /**
  * 常用字符常量
  *
- * @author zhaolq
- * @date 2023/6/8 0:44
- * @since 1.0.0
+ * @Author zhaolq
+ * @Date 2023/6/8 0:44
+ * @Since 1.0.0
  */
 public interface CharPool {
     /**

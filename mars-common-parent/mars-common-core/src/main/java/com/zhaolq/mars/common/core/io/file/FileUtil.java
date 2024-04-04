@@ -46,8 +46,8 @@ import com.zhaolq.mars.common.core.util.ClassLoaderUtil;
 /**
  * 文件工具类
  *
- * @author zhaolq
- * @date 2023/6/13 17:13:16
+ * @Author zhaolq
+ * @Date 2023/6/13 17:13:16
  */
 public class FileUtil extends PathUtil {
 
@@ -806,7 +806,7 @@ public class FileUtil extends PathUtil {
      * @param tryCount 最大尝试次数
      * @param sleepMillis 线程等待的毫秒数
      * @return true表示创建成功，false表示创建失败
-     * @author z8g
+     * @Author z8g
      */
     public static boolean mkdirsSafely(File dir, int tryCount, long sleepMillis) {
         if (dir == null) {

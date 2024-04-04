@@ -8,8 +8,8 @@ import com.zhaolq.mars.api.admin.entity.PoliticalStatusEntity;
  * 政治面貌 服务类
  * </p>
  *
- * @author zhaolq
- * @date 2020-10-29
+ * @Author zhaolq
+ * @Date 2020-10-29
  */
 public interface IPoliticalStatusService extends IService<PoliticalStatusEntity> {
 

@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
  * 民族 GB 3304-91 服务实现类
  * </p>
  *
- * @author zhaolq
- * @date 2020-10-29
+ * @Author zhaolq
+ * @Date 2020-10-29
  */
 @Service
 public class NationServiceImpl extends ServiceImpl<NationMapper, NationEntity> implements INationService {

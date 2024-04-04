@@ -9,8 +9,8 @@ import java.util.concurrent.ThreadPoolExecutor;
  * <p>
  * 如果设置了maxSize, 当总线程数达到上限, 会调用RejectedExecutionHandler进行处理，此枚举为JDK预定义的几种策略枚举表示
  *
- * @author zhaolq
- * @date 2023/6/14 11:29:39
+ * @Author zhaolq
+ * @Date 2023/6/14 11:29:39
  */
 public enum RejectPolicy {
 

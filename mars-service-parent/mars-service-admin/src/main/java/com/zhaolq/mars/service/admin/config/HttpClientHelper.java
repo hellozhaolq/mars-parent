@@ -31,9 +31,9 @@ import com.zhaolq.mars.common.spring.utils.SpringContext;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @author zhaolq
- * @date 2023/6/2 16:15:41
- * @since 1.0.0
+ * @Author zhaolq
+ * @Date 2023/6/2 16:15:41
+ * @Since 1.0.0
  */
 @Slf4j
 public class HttpClientHelper {
@@ -180,8 +180,8 @@ public class HttpClientHelper {
      * @param response
      * @return
      * @description
-     * @author tangjingjing
-     * @date 2018年10月12日
+     * @Author tangjingjing
+     * @Date 2018年10月12日
      */
     private String parseResponse(CloseableHttpResponse response) {
         String result = "";

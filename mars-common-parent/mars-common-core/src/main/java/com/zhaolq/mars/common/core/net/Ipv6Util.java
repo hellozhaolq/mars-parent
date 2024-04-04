@@ -8,9 +8,9 @@ import java.net.UnknownHostException;
 /**
  * Ipv6工具类
  *
- * @author zhaolq
- * @date 2023/6/8 20:20
- * @since 1.0.0
+ * @Author zhaolq
+ * @Date 2023/6/8 20:20
+ * @Since 1.0.0
  */
 public class Ipv6Util {
 

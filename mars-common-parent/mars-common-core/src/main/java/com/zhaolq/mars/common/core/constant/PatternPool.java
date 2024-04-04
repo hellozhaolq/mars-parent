@@ -9,8 +9,8 @@ import java.util.regex.Pattern;
 /**
  * 常用正则表达式集合，更多正则见:https://any86.github.io/any-rule/
  *
- * @author zhaolq
- * @date 2022/2/6 19:45
+ * @Author zhaolq
+ * @Date 2022/2/6 19:45
  */
 public class PatternPool {
     /**

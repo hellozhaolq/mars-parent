@@ -30,8 +30,8 @@ import com.zhaolq.mars.service.admin.dao.base.UserMapper;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @author zhaolq
- * @date 2020/10/20 21:12
+ * @Author zhaolq
+ * @Date 2020/10/20 21:12
  */
 @Slf4j
 @SpringBootTest

@@ -11,8 +11,8 @@ import com.zhaolq.mars.demo.annotation.annotation.Factory;
 /**
  * 包含有关用{@link Factory}注解标注的类的信息
  *
- * @author zhaolq
- * @date 2020/7/10 10:54
+ * @Author zhaolq
+ * @Date 2020/7/10 10:54
  */
 public class FactoryAnnotatedClass {
 

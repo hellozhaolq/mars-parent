@@ -16,8 +16,8 @@ import lombok.extern.slf4j.Slf4j;
  * <p>
  * 单例模式
  *
- * @author zhaolq
- * @date 2021/6/17 15:45
+ * @Author zhaolq
+ * @Date 2021/6/17 15:45
  */
 @Slf4j
 @Component

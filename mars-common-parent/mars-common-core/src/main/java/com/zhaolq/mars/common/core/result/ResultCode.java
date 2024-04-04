@@ -3,8 +3,8 @@ package com.zhaolq.mars.common.core.result;
 /**
  * API状态码枚举
  *
- * @author zhaolq
- * @date 2020/11/3 19:56
+ * @Author zhaolq
+ * @Date 2020/11/3 19:56
  */
 public enum ResultCode implements IResultCode {
 

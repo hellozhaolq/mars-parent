@@ -8,8 +8,8 @@ import com.zhaolq.mars.api.admin.entity.MediaFileEntity;
  * 图片、文件、音乐等媒体文件 服务类
  * </p>
  *
- * @author zhaolq
- * @date 2020-10-29
+ * @Author zhaolq
+ * @Date 2020-10-29
  */
 public interface IMediaFileService extends IService<MediaFileEntity> {
 

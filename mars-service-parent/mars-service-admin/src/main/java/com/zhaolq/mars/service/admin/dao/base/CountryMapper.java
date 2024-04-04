@@ -8,8 +8,8 @@ import com.zhaolq.mars.api.admin.entity.CountryEntity;
  * 国家 ISO 3166-1 Mapper 接口
  * </p>
  *
- * @author zhaolq
- * @date 2020-10-29
+ * @Author zhaolq
+ * @Date 2020-10-29
  */
 public interface CountryMapper extends BaseMapper<CountryEntity> {
 

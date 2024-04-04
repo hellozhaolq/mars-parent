@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test;
 /**
  *
  *
- * @author zhaolq
- * @date 2021/5/12 17:02
+ * @Author zhaolq
+ * @Date 2021/5/12 17:02
  */
 public class DigestUtilTest {
 

@@ -17,8 +17,8 @@ import java.util.function.Supplier;
 /**
  * 线程工具
  *
- * @author zhaolq
- * @date 2023/6/13 17:34:59
+ * @Author zhaolq
+ * @Date 2023/6/13 17:34:59
  */
 public class ThreadUtil {
 
@@ -141,7 +141,7 @@ public class ThreadUtil {
      * @param threadNamePrefix 线程名称前缀
      * @param isBlocked 是否使用{@link BlockPolicy}策略
      * @return ExecutorService
-     * @author luozongle
+     * @Author luozongle
      */
     public static ExecutorService newFixedExecutor(int nThreads, String threadNamePrefix, boolean isBlocked) {
         return newFixedExecutor(nThreads, 1024, threadNamePrefix, isBlocked);
@@ -160,7 +160,7 @@ public class ThreadUtil {
      * @param threadNamePrefix 线程名称前缀
      * @param isBlocked 是否使用{@link BlockPolicy}策略
      * @return ExecutorService
-     * @author luozongle
+     * @Author luozongle
      */
     public static ExecutorService newFixedExecutor(int nThreads, int maximumQueueSize, String threadNamePrefix, boolean isBlocked) {
         return newFixedExecutor(nThreads, maximumQueueSize, threadNamePrefix,
@@ -179,7 +179,7 @@ public class ThreadUtil {
      * @param threadNamePrefix 线程名称前缀
      * @param handler 拒绝策略
      * @return ExecutorService
-     * @author luozongle
+     * @Author luozongle
      */
     public static ExecutorService newFixedExecutor(
             int nThreads,

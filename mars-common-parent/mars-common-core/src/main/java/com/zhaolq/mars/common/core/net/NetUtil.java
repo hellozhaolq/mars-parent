@@ -39,8 +39,8 @@ import com.zhaolq.mars.common.core.io.IoUtil;
 /**
  * 网络相关工具
  *
- * @author zhaolq
- * @date 2023/6/8 19:49
+ * @Author zhaolq
+ * @Date 2023/6/8 19:49
  */
 public class NetUtil {
 

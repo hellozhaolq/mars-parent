@@ -8,9 +8,9 @@ import java.util.regex.Pattern;
 /**
  * 日期格式化类，提供常用的日期格式化对象
  *
- * @author zhaolq
- * @date 2023/6/8 10:02:13
- * @since 1.0.0
+ * @Author zhaolq
+ * @Date 2023/6/8 10:02:13
+ * @Since 1.0.0
  */
 public class DatePattern {
 

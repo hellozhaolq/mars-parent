@@ -10,8 +10,8 @@ package com.zhaolq.mars.common.core.function;
  * </pre>
  *
  * @param <T> 被编辑对象类型
- * @author zhaolq
- * @date 2023/6/8 23:26
+ * @Author zhaolq
+ * @Date 2023/6/8 23:26
  */
 @FunctionalInterface
 public interface Editor<T> {

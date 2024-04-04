@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test;
 /**
  *
  *
- * @author zhaolq
- * @date 2021/6/18 10:39
+ * @Author zhaolq
+ * @Date 2021/6/18 10:39
  */
 public class QuarterTest {
 

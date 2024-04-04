@@ -20,8 +20,8 @@ import lombok.extern.slf4j.Slf4j;
  * 特点：一个模型类对应关系型数据库中的一个表，模型类的一个实例对应表中的一行记录。
  * 简言之，就是通过实体类对象直接进行表的CURD操作。
  *
- * @author zhaolq
- * @date 2021/5/19 14:01
+ * @Author zhaolq
+ * @Date 2021/5/19 14:01
  */
 @Slf4j
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)

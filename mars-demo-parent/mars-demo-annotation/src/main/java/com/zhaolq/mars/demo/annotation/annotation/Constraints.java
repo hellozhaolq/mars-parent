@@ -9,8 +9,8 @@ import java.lang.annotation.Target;
 /**
  * 约束条件
  *
- * @author zhaolq
- * @date 2020/7/10 11:47
+ * @Author zhaolq
+ * @Date 2020/7/10 11:47
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

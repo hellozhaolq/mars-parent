@@ -18,8 +18,8 @@ import org.apache.commons.io.file.PathUtils;
 /**
  * 将源目录移动到目标目录。与 {@link CopyDirectoryVisitor} 的唯一不同是 copy 方法改成 move 方法
  *
- * @author zhaolq
- * @date 2023/6/13 16:46:14
+ * @Author zhaolq
+ * @Date 2023/6/13 16:46:14
  */
 public class MoveDirectoryVisitor extends CountingPathVisitor {
 

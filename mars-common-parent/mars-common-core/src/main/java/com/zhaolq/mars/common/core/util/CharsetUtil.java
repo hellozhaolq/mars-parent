@@ -12,9 +12,9 @@ import com.zhaolq.mars.common.core.constant.StringPool;
 /**
  * 字符集工具类
  *
- * @author zhaolq
- * @date 2023/6/8 22:54
- * @since 1.0.0
+ * @Author zhaolq
+ * @Date 2023/6/8 22:54
+ * @Since 1.0.0
  */
 public class CharsetUtil {
     /**

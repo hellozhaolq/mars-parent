@@ -32,9 +32,9 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 考勤
  *
- * @author zhaolq
- * @date 2023/5/17 11:03:14
- * @since 1.0.0
+ * @Author zhaolq
+ * @Date 2023/5/17 11:03:14
+ * @Since 1.0.0
  */
 @Slf4j
 @RestController

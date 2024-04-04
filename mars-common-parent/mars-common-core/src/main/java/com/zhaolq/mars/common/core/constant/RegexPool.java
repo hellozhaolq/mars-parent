@@ -7,8 +7,8 @@ package com.zhaolq.mars.common.core.constant;
 /**
  * 常用正则表达式字符串池
  *
- * @author looly
- * @date 5.7.3
+ * @Author looly
+ * @Date 5.7.3
  */
 public interface RegexPool {
 	/**

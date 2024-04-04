@@ -35,8 +35,8 @@ import lombok.extern.slf4j.Slf4j;
  * 调用@Component类中的Bean注解的方法，返回的是一个新的实例
  * </pre>
  *
- * @author zhaolq
- * @date 2023/4/25 14:59:20
+ * @Author zhaolq
+ * @Date 2023/4/25 14:59:20
  */
 @Scope("singleton")
 @Lazy(true)

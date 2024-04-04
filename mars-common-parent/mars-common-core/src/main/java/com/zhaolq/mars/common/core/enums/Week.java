@@ -14,8 +14,8 @@ import java.util.Calendar;
  * @see #FRIDAY
  * @see #SATURDAY
  *
- * @author zhaolq
- * @date 2021/6/18 11:17
+ * @Author zhaolq
+ * @Date 2021/6/18 11:17
  */
 public enum Week {
 
@@ -61,7 +61,7 @@ public enum Week {
      * 转换为中文名
      *
      * @return 星期的中文名
-     * @date 3.3.0
+     * @Date 3.3.0
      */
     public String toChinese() {
         return toChinese("星期");
@@ -72,7 +72,7 @@ public enum Week {
      *
      * @param weekNamePre 表示星期的前缀，例如前缀为“星期”，则返回结果为“星期一”；前缀为”周“，结果为“周一”
      * @return 星期的中文名
-     * @date 4.0.11
+     * @Date 4.0.11
      */
     public String toChinese(String weekNamePre) {
         switch (this) {

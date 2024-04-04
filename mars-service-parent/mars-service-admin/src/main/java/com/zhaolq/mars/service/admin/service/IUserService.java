@@ -14,8 +14,8 @@ import com.zhaolq.mars.api.admin.entity.UserEntity;
  * 用户管理 服务类
  * </p>
  *
- * @author zhaolq
- * @date 2020-10-29
+ * @Author zhaolq
+ * @Date 2020-10-29
  */
 public interface IUserService extends IService<UserEntity> {
 

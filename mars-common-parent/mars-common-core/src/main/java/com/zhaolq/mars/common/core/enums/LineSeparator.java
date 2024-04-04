@@ -13,9 +13,9 @@ package com.zhaolq.mars.common.core.enums;
  * Windows系统换行符："\r\n"
  * </pre>
  *
- * @author zhaolq
- * @date 2022/3/12 17:24
- * @since 1.0.0
+ * @Author zhaolq
+ * @Date 2022/3/12 17:24
+ * @Since 1.0.0
  */
 public enum LineSeparator {
     /** Mac系统换行符："\r" */

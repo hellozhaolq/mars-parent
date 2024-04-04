@@ -12,8 +12,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * ApiResult
  *
- * @author zhaolq
- * @date 2020/10/16 11:30
+ * @Author zhaolq
+ * @Date 2020/10/16 11:30
  */
 @Schema(description = "返回信息")
 public final class R<T> implements Serializable {

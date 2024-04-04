@@ -3,8 +3,8 @@ package com.zhaolq.mars.common.core.function;
 /**
  * 过滤器接口
  *
- * @author zhaolq
- * @date 2023/6/8 21:34
+ * @Author zhaolq
+ * @Date 2023/6/8 21:34
  */
 @FunctionalInterface
 public interface Filter<T> {

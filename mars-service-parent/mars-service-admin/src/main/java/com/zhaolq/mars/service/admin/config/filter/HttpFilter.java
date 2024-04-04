@@ -21,9 +21,9 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * Http Header 过滤器
  *
- * @author zhaolq
- * @date 2023/5/30 18:10:55
- * @since 1.0.0
+ * @Author zhaolq
+ * @Date 2023/5/30 18:10:55
+ * @Since 1.0.0
  */
 @Slf4j
 @Order(Ordered.HIGHEST_PRECEDENCE)

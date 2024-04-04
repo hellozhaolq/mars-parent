@@ -7,9 +7,9 @@ package com.zhaolq.mars.common.core.enums;
 /**
  * 操作系统枚举
  *
- * @author zhaolq
- * @date 2022/8/22 20:52
- * @since 1.0.0
+ * @Author zhaolq
+ * @Date 2022/8/22 20:52
+ * @Since 1.0.0
  */
 public enum OS {
 

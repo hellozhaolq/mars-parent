@@ -20,9 +20,9 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 测试控制器
  *
- * @author zhaolq
- * @date 2023/5/27 9:14:18
- * @since 1.0.0
+ * @Author zhaolq
+ * @Date 2023/5/27 9:14:18
+ * @Since 1.0.0
  */
 @Slf4j
 @RestController

@@ -10,9 +10,9 @@ import java.util.List;
 /**
  * 各类开发生产环境枚举
  *
- * @author zhaolq
- * @date 2022/8/22 19:27
- * @since 1.0.0
+ * @Author zhaolq
+ * @Date 2022/8/22 19:27
+ * @Since 1.0.0
  */
 public enum Profile {
 

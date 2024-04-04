@@ -19,8 +19,8 @@ import lombok.experimental.Accessors;
  * 用户角色
  * </p>
  *
- * @author zhaolq
- * @date 2020-10-29
+ * @Author zhaolq
+ * @Date 2020-10-29
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

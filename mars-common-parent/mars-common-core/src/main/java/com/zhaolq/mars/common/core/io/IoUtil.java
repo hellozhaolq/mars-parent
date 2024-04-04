@@ -38,8 +38,8 @@ import com.zhaolq.mars.common.core.util.CharsetUtil;
  * IO工具类<br>
  * IO工具类只是辅助流的读写，并不负责关闭流。原因是流可能被多次读写，读写关闭后容易造成问题。
  *
- * @author zhaolq
- * @date 2023/6/8 22:42
+ * @Author zhaolq
+ * @Date 2023/6/8 22:42
  */
 public class IoUtil extends NioUtil {
 

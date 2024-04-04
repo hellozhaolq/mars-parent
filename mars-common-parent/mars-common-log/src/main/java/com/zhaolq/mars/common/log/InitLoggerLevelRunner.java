@@ -25,8 +25,8 @@ import static org.springframework.boot.logging.LoggingSystem.ROOT_LOGGER_NAME;
 /**
  * 初始化记录器级别
  *
- * @author zhaolq
- * @date 2021/6/23 14:29
+ * @Author zhaolq
+ * @Date 2021/6/23 14:29
  */
 @Component
 @Slf4j

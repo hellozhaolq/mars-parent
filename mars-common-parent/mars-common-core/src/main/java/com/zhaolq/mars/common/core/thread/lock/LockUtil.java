@@ -6,8 +6,8 @@ import java.util.concurrent.locks.StampedLock;
 /**
  * 锁相关工具
  *
- * @author zhaolq
- * @date 2023/6/14 11:22:18
+ * @Author zhaolq
+ * @Date 2023/6/14 11:22:18
  */
 public class LockUtil {
 

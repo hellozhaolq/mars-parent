@@ -19,8 +19,8 @@ import java.util.Map;
  * 此类包含属于同一个工厂的所有{@link FactoryAnnotatedClass}。
  * 换句话说，此类包含所有用@Factory注解标注的，{@link Factory#type()}相同的，类的列表。还检查每个类的{@link Factory#id()}是否唯一。
  *
- * @author zhaolq
- * @date 2020/7/10 10:56
+ * @Author zhaolq
+ * @Date 2020/7/10 10:56
  */
 public class FactoryGroupedClasses {
 

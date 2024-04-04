@@ -14,9 +14,9 @@ import lombok.extern.slf4j.Slf4j;
  * 使用@Async注解的异步方法的返回值只能为void或者Future。
  * 使用经过spring容器管理的bean(代理对象)调用@Async方法才会触发异步执行，
  *
- * @author zhaolq
- * @date 2023/5/27 9:07:08
- * @since 1.0.0
+ * @Author zhaolq
+ * @Date 2023/5/27 9:07:08
+ * @Since 1.0.0
  */
 @Component
 @Slf4j

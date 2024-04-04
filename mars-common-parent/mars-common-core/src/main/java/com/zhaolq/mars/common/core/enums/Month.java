@@ -6,7 +6,7 @@ import java.util.Calendar;
  * 月份枚举<br>
  * 与Calendar中的月份int值对应
  *
- * @author Looly
+ * @Author Looly
  * @see Calendar#JANUARY
  * @see Calendar#FEBRUARY
  * @see Calendar#MARCH
@@ -21,8 +21,8 @@ import java.util.Calendar;
  * @see Calendar#DECEMBER
  * @see Calendar#UNDECIMBER
  *
- * @author zhaolq
- * @date 2021/6/18 11:16
+ * @Author zhaolq
+ * @Date 2021/6/18 11:16
  */
 public enum Month {
     /**
@@ -172,7 +172,7 @@ public enum Month {
      * @param month 月份，从0开始
      * @param isLeapYear 是否为闰年，闰年只对二月有影响
      * @return 最后一天，可能为28,29,30,31
-     * @date 5.4.7
+     * @Date 5.4.7
      */
     public static int getLastDay(int month, boolean isLeapYear){
         int lastDay = DAYS_OF_MONTH[month];

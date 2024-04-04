@@ -20,8 +20,8 @@ import java.util.stream.Collectors;
 /**
  * Map相关工具类
  *
- * @author zhaolq
- * @date 2023/6/8 23:32
+ * @Author zhaolq
+ * @Date 2023/6/8 23:32
  */
 public class MapUtil {
     /**

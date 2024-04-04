@@ -17,9 +17,9 @@ import lombok.extern.slf4j.Slf4j;
  * 自定义任务调度线程池
  * TaskScheduler配置（开启@EnableScheduling注解）TaskSchedulingProperties
  *
- * @author zhaolq
- * @date 2023/5/26 17:29:00
- * @since 1.0.0
+ * @Author zhaolq
+ * @Date 2023/5/26 17:29:00
+ * @Since 1.0.0
  */
 @Slf4j
 @EnableScheduling

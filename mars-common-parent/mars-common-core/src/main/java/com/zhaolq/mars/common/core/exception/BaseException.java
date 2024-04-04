@@ -46,8 +46,8 @@ import com.zhaolq.mars.common.core.result.IResultCode;
  * 5、业务代码可通过抛出异常的方式响应API请求，web框架拦截处理 基类Exception、BaseException
  * </pre>
  *
- * @author zhaolq
- * @date 2022/1/30 8:31
+ * @Author zhaolq
+ * @Date 2022/1/30 8:31
  */
 public abstract class BaseException extends RuntimeException {
     private static final long serialVersionUID = 1L;

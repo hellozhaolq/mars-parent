@@ -24,8 +24,8 @@ import lombok.Data;
  *     JSR303数据校验	    支持	                                    不支持
  *     复杂类型封装           各种复杂类型属性(Map、List、内部类)         支持简单属性(Map、List)
  *
- * @author zhaolq
- * @date 2021/6/10 13:53
+ * @Author zhaolq
+ * @Date 2021/6/10 13:53
  */
 @Data
 @Configuration

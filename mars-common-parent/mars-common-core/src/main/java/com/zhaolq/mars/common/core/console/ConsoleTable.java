@@ -10,8 +10,8 @@ import org.apache.commons.lang3.RandomStringUtils;
 /**
  * 控制台打印表格工具
  *
- * @author zhaolq
- * @date 2023/6/9 15:36:28
+ * @Author zhaolq
+ * @Date 2023/6/9 15:36:28
  */
 public class ConsoleTable extends FillContent {
     /**

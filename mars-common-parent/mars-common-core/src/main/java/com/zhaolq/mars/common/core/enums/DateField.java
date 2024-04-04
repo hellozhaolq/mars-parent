@@ -6,8 +6,8 @@ import java.util.Calendar;
  * 日期各个部分的枚举<br>
  * 与Calendar相应值对应
  *
- * @author zhaolq
- * @date 2021/6/18 11:10
+ * @Author zhaolq
+ * @Date 2021/6/18 11:10
  */
 public enum DateField {
 

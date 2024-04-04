@@ -8,8 +8,8 @@ import com.zhaolq.mars.api.admin.entity.MenuEntity;
  * 菜单管理 Mapper 接口
  * </p>
  *
- * @author zhaolq
- * @date 2020-10-29
+ * @Author zhaolq
+ * @Date 2020-10-29
  */
 public interface MenuMapper extends BaseMapper<MenuEntity> {
 

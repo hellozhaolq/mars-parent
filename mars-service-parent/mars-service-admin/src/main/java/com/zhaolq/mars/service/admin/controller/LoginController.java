@@ -23,8 +23,8 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 登录控制器
  *
- * @author zhaolq
- * @date 2021/6/9 23:49
+ * @Author zhaolq
+ * @Date 2021/6/9 23:49
  */
 @Slf4j
 @RestController

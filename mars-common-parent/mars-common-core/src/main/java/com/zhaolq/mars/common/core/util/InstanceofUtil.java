@@ -7,8 +7,8 @@ package com.zhaolq.mars.common.core.util;
 /**
  * 向下转型工具类
  *
- * @author zhaolq
- * @date 2021/9/25 16:16
+ * @Author zhaolq
+ * @Date 2021/9/25 16:16
  */
 public class InstanceofUtil {
     /**

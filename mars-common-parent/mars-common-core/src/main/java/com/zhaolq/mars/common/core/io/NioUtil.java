@@ -14,8 +14,8 @@ import com.zhaolq.mars.common.core.util.CharsetUtil;
 /**
  * NIO相关工具封装，主要针对Channel读写、拷贝等封装
  *
- * @author zhaolq
- * @date 2023/6/8 22:04
+ * @Author zhaolq
+ * @Date 2023/6/8 22:04
  */
 public class NioUtil {
 
@@ -80,7 +80,7 @@ public class NioUtil {
      * @link http://androidxref.com/6.0.1_r10/xref/libcore/luni/src/main/java/java/nio/FileChannelImpl.java
      * @link http://androidxref.com/7.0.0_r1/xref/libcore/ojluni/src/main/java/sun/nio/ch/FileChannelImpl.java
      * @link http://androidxref.com/7.0.0_r1/xref/libcore/ojluni/src/main/native/FileChannelImpl.c
-     * @author z8g
+     * @Author z8g
      */
     private static long copySafely(FileChannel inChannel, FileChannel outChannel) throws IOException {
         final long totalBytes = inChannel.size();

@@ -30,9 +30,9 @@ import lombok.extern.slf4j.Slf4j;
  * 网络日志切面
  * 记录每个接口的入参，部分返回值
  *
- * @author zhaolq
- * @date 2023/6/6 14:26:05
- * @since 1.0.0
+ * @Author zhaolq
+ * @Date 2023/6/6 14:26:05
+ * @Since 1.0.0
  */
 @Aspect
 @Component

@@ -41,8 +41,8 @@ import lombok.extern.slf4j.Slf4j;
  * 菜单管理 前端控制器
  * </p>
  *
- * @author zhaolq
- * @date 2020-10-29
+ * @Author zhaolq
+ * @Date 2020-10-29
  */
 @Validated
 @Slf4j

@@ -32,8 +32,8 @@ import lombok.experimental.Accessors;
  * 菜单管理
  * </p>
  *
- * @author zhaolq
- * @date 2020-10-29
+ * @Author zhaolq
+ * @Date 2020-10-29
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

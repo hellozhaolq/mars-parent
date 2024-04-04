@@ -3,8 +3,8 @@ package com.zhaolq.mars.common.core.exception;
 /**
  * 资源文件或资源不存在异常
  *
- * @author zhaolq
- * @date 2022/1/30 10:00
+ * @Author zhaolq
+ * @Date 2022/1/30 10:00
  */
 public class NoResourceException extends IORuntimeException {
     private static final long serialVersionUID = 1L;

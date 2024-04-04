@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
  * 民族 GB 3304-91 前端控制器
  * </p>
  *
- * @author zhaolq
- * @date 2020-10-29
+ * @Author zhaolq
+ * @Date 2020-10-29
  */
 @RestController
 @RequestMapping("/nation-entity")

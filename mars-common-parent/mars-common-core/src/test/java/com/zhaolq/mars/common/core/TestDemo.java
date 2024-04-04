@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Test;
 /**
  * 多次运行观察输出时机
  *
- * @author zhaolq
- * @date 2021/6/18 10:44
+ * @Author zhaolq
+ * @Date 2021/6/18 10:44
  */
 public class TestDemo {
 

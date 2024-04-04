@@ -12,9 +12,9 @@ import lombok.Data;
 /**
  * swagger属性配置
  *
- * @author zhaolq
- * @date 2022/2/28 20:27
- * @since 1.0.0
+ * @Author zhaolq
+ * @Date 2022/2/28 20:27
+ * @Since 1.0.0
  */
 @Component
 @ConfigurationProperties(prefix = SwaggerProperties.PREFIX, ignoreInvalidFields = true)

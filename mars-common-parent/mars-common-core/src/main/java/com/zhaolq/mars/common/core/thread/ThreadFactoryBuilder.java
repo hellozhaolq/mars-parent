@@ -11,8 +11,8 @@ import org.apache.commons.lang3.builder.Builder;
  * ThreadFactory创建器<br>
  * 参考：Guava的ThreadFactoryBuilder
  *
- * @author zhaolq
- * @date 2023/6/14 11:32:21
+ * @Author zhaolq
+ * @Date 2023/6/14 11:32:21
  */
 public class ThreadFactoryBuilder implements Builder<ThreadFactory> {
     private static final long serialVersionUID = 1L;

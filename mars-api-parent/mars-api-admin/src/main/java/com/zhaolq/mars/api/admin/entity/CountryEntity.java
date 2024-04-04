@@ -19,8 +19,8 @@ import lombok.experimental.Accessors;
  * https://zh.wikipedia.org/wiki/ISO_3166-1
  * </p>
  *
- * @author zhaolq
- * @date 2020-10-29
+ * @Author zhaolq
+ * @Date 2020-10-29
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

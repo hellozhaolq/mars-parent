@@ -13,8 +13,8 @@ package com.zhaolq.mars.common.core.db;
  * select * from persons limit 5 offset 0; 起点0开始查询，返回5条数据(1、2、3、4、5)。
  * select * from persons limit 5 offset 5; 起点5开始查询，返回5条数据(6、7、8、9、10)。
  *
- * @author zhaolq
- * @date 2021/7/16 11:19
+ * @Author zhaolq
+ * @Date 2021/7/16 11:19
  */
 public final class PageUtil {
     private static int firstPageNo = 0;

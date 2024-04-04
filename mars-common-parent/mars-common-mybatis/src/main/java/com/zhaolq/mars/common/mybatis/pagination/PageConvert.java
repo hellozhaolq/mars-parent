@@ -19,8 +19,8 @@ import lombok.experimental.Accessors;
 /**
  * 分页转换
  *
- * @author zhaolq
- * @date 2021/6/1 13:57
+ * @Author zhaolq
+ * @Date 2021/6/1 13:57
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

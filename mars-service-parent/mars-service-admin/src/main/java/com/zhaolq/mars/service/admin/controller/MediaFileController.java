@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
  * 图片、文件、音乐等媒体文件 前端控制器
  * </p>
  *
- * @author zhaolq
- * @date 2020-10-29
+ * @Author zhaolq
+ * @Date 2020-10-29
  */
 @RestController
 @RequestMapping("/media-file-entity")

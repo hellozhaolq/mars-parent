@@ -9,10 +9,10 @@ import org.apache.commons.lang3.SystemUtils;
 /**
  * 常用字符串常量定义
  *
- * @author zhaolq
- * @date 2022/3/12 17:25
+ * @Author zhaolq
+ * @Date 2022/3/12 17:25
  * @see <a href="https://github.com/baomidou/mybatis-plus/blob/3.0/mybatis-plus-core/src/main/java/com/baomidou/mybatisplus/core/toolkit/StringPool.java">StringPool</a>
- * @since 1.0.0
+ * @Since 1.0.0
  */
 public interface StringPool {
 

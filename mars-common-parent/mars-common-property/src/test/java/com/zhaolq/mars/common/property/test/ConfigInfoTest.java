@@ -10,8 +10,8 @@ import org.springframework.core.env.Environment;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @author zhaolq
- * @date 2021/3/28 12:58
+ * @Author zhaolq
+ * @Date 2021/3/28 12:58
  */
 @Slf4j
 @SpringBootTest

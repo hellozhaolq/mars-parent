@@ -7,9 +7,9 @@ import lombok.Data;
 /**
  * 考勤信息
  *
- * @author zhaolq
- * @date 2023/4/7 9:39
- * @since 1.0.0
+ * @Author zhaolq
+ * @Date 2023/4/7 9:39
+ * @Since 1.0.0
  */
 @Data
 public class AttendanceInfo {

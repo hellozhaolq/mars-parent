@@ -16,8 +16,8 @@ import com.baomidou.mybatisplus.extension.conditions.update.UpdateChainWrapper;
  *
  * https://baomidou.com/guide/wrapper.html
  *
- * @author zhaolq
- * @date 2021/6/1 17:07
+ * @Author zhaolq
+ * @Date 2021/6/1 17:07
  */
 public class WrapperBuilder {
 

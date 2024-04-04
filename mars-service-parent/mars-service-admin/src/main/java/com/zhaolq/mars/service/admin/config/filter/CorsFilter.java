@@ -22,9 +22,9 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 跨域过滤器 通用解决方案
  *
- * @author zhaolq
- * @date 2023/6/6 8:36:04
- * @since 1.0.0
+ * @Author zhaolq
+ * @Date 2023/6/6 8:36:04
+ * @Since 1.0.0
  */
 @Slf4j
 @Order(0)

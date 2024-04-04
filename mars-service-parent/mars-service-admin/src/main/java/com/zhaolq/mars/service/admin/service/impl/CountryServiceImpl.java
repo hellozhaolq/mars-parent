@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
  * 国家 ISO 3166-1 服务实现类
  * </p>
  *
- * @author zhaolq
- * @date 2020-10-29
+ * @Author zhaolq
+ * @Date 2020-10-29
  */
 @Service
 public class CountryServiceImpl extends ServiceImpl<CountryMapper, CountryEntity> implements ICountryService {

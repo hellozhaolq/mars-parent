@@ -19,8 +19,8 @@ import java.io.Serializable;
  *      https://docs.spring.io/spring-data/redis/docs/
  *      https://docs.spring.io/spring-data/redis/docs/2.3.9.RELEASE/reference/html/#reference
  *
- * @author zhaolq
- * @date 2021/6/15 21:14
+ * @Author zhaolq
+ * @Date 2021/6/15 21:14
  */
 @Configuration
 public class RedisConfig {

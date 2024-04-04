@@ -3,8 +3,8 @@ package com.zhaolq.mars.common.core.result;
 /**
  * 状态码枚举抽象
  *
- * @author zhaolq
- * @date 2020/11/3 20:54
+ * @Author zhaolq
+ * @Date 2020/11/3 20:54
  */
 public interface IResultCode {
 

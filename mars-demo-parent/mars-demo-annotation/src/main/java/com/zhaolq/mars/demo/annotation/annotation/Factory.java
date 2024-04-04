@@ -8,8 +8,8 @@ import java.lang.annotation.Target;
 /**
  * 指明此类属于某个工厂类的注解
  *
- * @author zhaolq
- * @date 2020/7/10 10:25
+ * @Author zhaolq
+ * @Date 2020/7/10 10:25
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.CLASS)

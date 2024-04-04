@@ -36,8 +36,8 @@ import com.zhaolq.mars.common.core.exception.UtilException;
  * <li>https://github.com/venusdrogon/feilong-core/wiki/one-jdk7-bug-thinking</li>
  * </ul>
  *
- * @author zhaolq
- * @date 2023/6/8 23:09
+ * @Author zhaolq
+ * @Date 2023/6/8 23:09
  */
 public class NumberUtil {
     /**
@@ -2572,7 +2572,7 @@ public class NumberUtil {
      *
      * @param num 被判断的数值
      * @return 是否是奇数
-     * @author GuoZG
+     * @Author GuoZG
      */
     public static boolean isOdd(int num) {
         return (num & 1) == 1;
@@ -2583,7 +2583,7 @@ public class NumberUtil {
      *
      * @param num 被判断的数值
      * @return 是否是偶数
-     * @author GuoZG
+     * @Author GuoZG
      */
     public static boolean isEven(int num) {
         return false == isOdd(num);

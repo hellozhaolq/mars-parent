@@ -17,8 +17,8 @@ import java.util.List;
  * 用户管理 Mapper 接口
  * </p>
  *
- * @author zhaolq
- * @date 2020-10-29
+ * @Author zhaolq
+ * @Date 2020-10-29
  */
 @Transactional(rollbackFor = Exception.class)
 public interface UserMapper extends BaseMapper<UserEntity> {

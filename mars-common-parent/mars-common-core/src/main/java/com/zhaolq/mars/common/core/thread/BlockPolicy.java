@@ -9,8 +9,8 @@ import java.util.concurrent.ThreadPoolExecutor;
  * 如果阻塞过程中被中断，就会抛出{@link InterruptedException}异常<br>
  * 有时候在线程池内访问第三方接口，只希望固定并发数去访问，并且不希望丢弃任务时使用此策略，队列满的时候会处于阻塞状态(例如刷库的场景)
  *
- * @author zhaolq
- * @date 2023/6/14 11:31:01
+ * @Author zhaolq
+ * @Date 2023/6/14 11:31:01
  */
 public class BlockPolicy implements RejectedExecutionHandler {
 

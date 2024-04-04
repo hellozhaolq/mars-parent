@@ -5,8 +5,8 @@ package com.zhaolq.mars.common.core.function;
  *
  * @param <T> 匹配的对象类型
  *
- * @author zhaolq
- * @date 2023/6/8 23:24
+ * @Author zhaolq
+ * @Date 2023/6/8 23:24
  */
 @FunctionalInterface
 public interface Matcher<T> {

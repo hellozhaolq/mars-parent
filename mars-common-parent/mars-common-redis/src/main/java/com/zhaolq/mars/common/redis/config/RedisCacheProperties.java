@@ -8,8 +8,8 @@ import java.time.Duration;
 /**
  * Redis缓存有效期配置属性
  *
- * @author zhaolq
- * @date 2021/6/15 16:10
+ * @Author zhaolq
+ * @Date 2021/6/15 16:10
  */
 @Data
 @Configuration

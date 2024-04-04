@@ -5,8 +5,8 @@ import java.time.temporal.ChronoUnit;
 /**
  * 日期时间单位，每个单位都是以毫秒为基数
  *
- * @author zhaolq
- * @date 2021/6/18 11:14
+ * @Author zhaolq
+ * @Date 2021/6/18 11:14
  */
 public enum DateUnit {
     /**
@@ -53,7 +53,7 @@ public enum DateUnit {
      * 单位兼容转换，将DateUnit转换为对应的{@link ChronoUnit}
      *
      * @return {@link ChronoUnit}
-     * @date 5.4.5
+     * @Date 5.4.5
      */
     public ChronoUnit toChronoUnit() {
         return DateUnit.toChronoUnit(this);
@@ -64,7 +64,7 @@ public enum DateUnit {
      *
      * @param unit {@link ChronoUnit}
      * @return DateUnit，null表示不支持此单位
-     * @date 5.4.5
+     * @Date 5.4.5
      */
     public static DateUnit of(ChronoUnit unit) {
         switch (unit) {
@@ -89,7 +89,7 @@ public enum DateUnit {
      *
      * @param unit DateUnit
      * @return {@link ChronoUnit}
-     * @date 5.4.5
+     * @Date 5.4.5
      */
     public static ChronoUnit toChronoUnit(DateUnit unit) {
         switch (unit) {

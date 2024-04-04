@@ -22,8 +22,8 @@ import java.util.concurrent.atomic.LongAdder;
  * </ul>
  * 注：注释来自Hanlp，代码提供来自pr#1492@Github
  *
- * @author zhaolq
- * @date 2023/6/8 23:08
+ * @Author zhaolq
+ * @Date 2023/6/8 23:08
  */
 public class ByteUtil {
     public static final ByteOrder DEFAULT_ORDER = ByteOrder.LITTLE_ENDIAN;

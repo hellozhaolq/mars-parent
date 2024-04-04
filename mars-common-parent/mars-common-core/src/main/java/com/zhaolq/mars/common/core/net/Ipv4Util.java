@@ -12,8 +12,8 @@ import com.zhaolq.mars.common.core.exception.ValidateException;
 /**
  * Ipv4工具类
  *
- * @author zhaolq
- * @date 2022/1/29 11:20
+ * @Author zhaolq
+ * @Date 2022/1/29 11:20
  */
 public class Ipv4Util {
 

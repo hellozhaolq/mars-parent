@@ -27,8 +27,8 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 测试
  *
- * @author zhaolq
- * @date 2021/6/17 17:47
+ * @Author zhaolq
+ * @Date 2021/6/17 17:47
  */
 @Slf4j
 @RestController

@@ -10,8 +10,8 @@ import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @author zhaolq
- * @date 2020/10/18 15:23
+ * @Author zhaolq
+ * @Date 2020/10/18 15:23
  */
 @Component
 @Slf4j

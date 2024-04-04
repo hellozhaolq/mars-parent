@@ -7,9 +7,9 @@ package com.zhaolq.mars.common.core.db.sql;
 /**
  * 排序方式（升序或者降序）
  *
- * @author zhaolq
- * @date 2022/2/28 19:32
- * @since 1.0.0
+ * @Author zhaolq
+ * @Date 2022/2/28 19:32
+ * @Since 1.0.0
  */
 public enum Direction {
     /** 升序 */

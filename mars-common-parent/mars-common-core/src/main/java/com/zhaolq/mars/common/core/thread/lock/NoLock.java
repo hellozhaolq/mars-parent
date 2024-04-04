@@ -7,8 +7,8 @@ import java.util.concurrent.locks.Lock;
 /**
  * 无锁实现
  *
- * @author zhaolq
- * @date 2023/6/14 11:24:03
+ * @Author zhaolq
+ * @Date 2023/6/14 11:24:03
  */
 public class NoLock implements Lock {
 

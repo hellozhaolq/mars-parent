@@ -18,9 +18,9 @@ import lombok.extern.slf4j.Slf4j;
  * 自定义异步任务线程池
  * TaskExecutor配置（开启@EnableAsync注解）TaskExecutionProperties
  *
- * @author zhaolq
- * @date 2023/5/26 14:26:27
- * @since 1.0.0
+ * @Author zhaolq
+ * @Date 2023/5/26 14:26:27
+ * @Since 1.0.0
  */
 @Slf4j
 @EnableAsync

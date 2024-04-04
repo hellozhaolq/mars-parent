@@ -8,8 +8,8 @@ import static org.springframework.boot.logging.LoggingSystem.ROOT_LOGGER_NAME;
 /**
  * 记录器级别
  *
- * @author zhaolq
- * @date 2021/6/21 21:10
+ * @Author zhaolq
+ * @Date 2021/6/21 21:10
  */
 public class LoggerLevel {
     /**

@@ -8,8 +8,8 @@ package com.zhaolq.mars.common.core.enums;
  * @see #Q3
  * @see #Q4
  *
- * @author zhaolq
- * @date 2021/6/18 10:54
+ * @Author zhaolq
+ * @Date 2021/6/18 10:54
  */
 public enum Quarter {
 

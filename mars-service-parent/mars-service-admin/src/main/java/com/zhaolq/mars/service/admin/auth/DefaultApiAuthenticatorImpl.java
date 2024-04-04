@@ -7,9 +7,9 @@ import com.zhaolq.mars.service.admin.auth.storage.MysqlCredentialStorage;
 /**
  * API鉴权的默认实现
  *
- * @author zhaolq
- * @date 2023/4/13 17:37:24
- * @since 1.0.0
+ * @Author zhaolq
+ * @Date 2023/4/13 17:37:24
+ * @Since 1.0.0
  */
 public class DefaultApiAuthenticatorImpl implements ApiAuthenticator {
     private CredentialStorage credentialStorage;

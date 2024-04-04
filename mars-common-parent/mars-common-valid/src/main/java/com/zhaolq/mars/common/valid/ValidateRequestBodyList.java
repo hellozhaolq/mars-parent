@@ -9,8 +9,8 @@ import java.util.List;
 /**
  * 集合参数的校验
  *
- * @author zhaolq
- * @date 2020年8月5日 下午5:13:06
+ * @Author zhaolq
+ * @Date 2020年8月5日 下午5:13:06
  */
 public class ValidateRequestBodyList<T> {
 

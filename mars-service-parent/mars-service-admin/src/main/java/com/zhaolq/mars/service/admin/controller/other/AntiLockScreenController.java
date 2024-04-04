@@ -15,9 +15,9 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 防锁屏
  *
- * @author zhaolq
- * @date 2023/5/17 10:49:07
- * @since 1.0.0
+ * @Author zhaolq
+ * @Date 2023/5/17 10:49:07
+ * @Since 1.0.0
  */
 @Slf4j
 @RestController

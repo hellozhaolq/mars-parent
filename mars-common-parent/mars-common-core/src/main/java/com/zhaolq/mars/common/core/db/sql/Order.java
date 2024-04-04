@@ -15,9 +15,9 @@ import lombok.Data;
 /**
  * SQL排序对象
  *
- * @author zhaolq
- * @date 2022/2/28 19:29
- * @since 1.0.0
+ * @Author zhaolq
+ * @Date 2022/2/28 19:29
+ * @Since 1.0.0
  */
 @Data
 public class Order implements Serializable {

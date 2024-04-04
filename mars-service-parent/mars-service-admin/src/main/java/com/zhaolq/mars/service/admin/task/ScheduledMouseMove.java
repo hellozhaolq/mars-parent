@@ -17,9 +17,9 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 光标移动计划
  *
- * @author zhaolq
- * @date 2023/5/17 10:18:09
- * @since 1.0.0
+ * @Author zhaolq
+ * @Date 2023/5/17 10:18:09
+ * @Since 1.0.0
  */
 @Component
 @Slf4j

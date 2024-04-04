@@ -3,8 +3,8 @@ package com.zhaolq.mars.common.core.exception;
 /**
  * 验证异常
  *
- * @author zhaolq
- * @date 2022/1/30 10:00
+ * @Author zhaolq
+ * @Date 2022/1/30 10:00
  */
 public class ValidateException extends BaseException {
     private static final long serialVersionUID = 1L;

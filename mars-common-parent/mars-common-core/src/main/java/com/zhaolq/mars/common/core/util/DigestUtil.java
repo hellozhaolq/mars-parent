@@ -10,8 +10,8 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * 摘要算法工具类
  *
- * @author zhaolq
- * @date 2021/5/12 17:00
+ * @Author zhaolq
+ * @Date 2021/5/12 17:00
  */
 public final class DigestUtil {
 

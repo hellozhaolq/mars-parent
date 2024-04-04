@@ -3,9 +3,9 @@ package com.zhaolq.mars.service.admin.auth;
 /**
  * 封装API请求的相关属性
  *
- * @author zhaolq
- * @date 2023/4/13 17:38:59
- * @since 1.0.0
+ * @Author zhaolq
+ * @Date 2023/4/13 17:38:59
+ * @Since 1.0.0
  */
 public class ApiRequest {
     private String originalUrl;

@@ -37,3 +37,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Spark ###
+metastore_db
+derby.log

@@ -76,7 +76,7 @@
         <commons-vfs2.version>2.9.0</commons-vfs2.version>
         <tika-core.version>2.8.0</tika-core.version>
 
-        <fastjson.version>2.0.32</fastjson.version>
+        <fastjson2.version>2.0.51</fastjson2.version>
 
         <springdoc-openapi-ui.version>1.7.0</springdoc-openapi-ui.version>
         <rocketmq-spring-boot-starter.version>2.2.3</rocketmq-spring-boot-starter.version>
@@ -357,7 +357,7 @@
     -->
     <profiles>
         <profile>
-            <id>dev</id>
+            <id>dev-home</id>
             <properties>
                 <profiles.active>dev</profiles.active>
                 <mars.java.home>${env.JAVA_HOME}</mars.java.home>
@@ -369,7 +369,7 @@
         </profile>
 
         <profile>
-            <id>sit</id>
+            <id>sit-company</id>
             <properties>
                 <profiles.active>sit</profiles.active>
             </properties>

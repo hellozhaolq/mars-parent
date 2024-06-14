@@ -1,7 +1,9 @@
 package com.zhaolq.mars.service.admin.config.aspect;
 
+import java.util.Map;
 import java.util.TreeMap;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.aspectj.lang.JoinPoint;
@@ -18,7 +20,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONWriter;
-import com.google.gson.Gson;
 
 import com.zhaolq.mars.api.admin.entity.UserEntity;
 import com.zhaolq.mars.common.core.console.ConsoleKeyValue;
@@ -43,7 +44,9 @@ public class WebLogAspect {
      * 以 controller 包下定义的所有请求为切入点
      */
     @Pointcut("execution(public * com.zhaolq..*..controller..*.*(..))")
-    public void webLog() {}
+    public void webLog() {
+        log.debug(">>>>>>>> WebLogAspect webLog");
+    }
 
     /**
      * 在切点之前织入
@@ -53,29 +56,52 @@ public class WebLogAspect {
      */
     @Before("webLog()")
     public void doBefore(JoinPoint joinPoint) {
-        // 开始打印请求日志
-        HttpServletRequest request = getHttpServletRequest();
+        log.debug(">>>>>>>> WebLogAspect doBefore");
+
+        // 开始记录请求日志....
+        // 开始记录请求日志....
+        // 开始记录请求日志....
 
         ConsoleKeyValue content = ConsoleKeyValue.create().setDBCMode(false);
+
+        // 切入点信息
+        content.addKeyValue("Class Method", joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
+        content.addKeyValue("Request Args", JSON.toJSONString(joinPoint.getArgs()));
+
         // 线程信息
         content.addTitle("ThreadName");
         content.addKeyValue("ThreadName", Thread.currentThread().getName());
+
+        HttpServletRequest request = getHttpServletRequest();
         // 用户信息
         content.addTitle("User Information");
         content.addKeyValue("account", getUserBean(request).getAccount());
         content.addKeyValue("name", getUserBean(request).getName());
-        // 请求头
+        // 请求头，包含Cookie和session
         content.addTitle("RequestHeaders");
         content.addKeyValues(new TreeMap<>(ServletUtil.getHeaderMap(request)));
-        // 请求相关参数
-        content.addTitle("Request Info");
+        // 浏览器Cookies
+        TreeMap<String, String> treeMap = new TreeMap<>();
+        Map<String, Cookie> cookieMap = ServletUtil.readCookieMap(request);
+        cookieMap.forEach((k, v) -> {
+            treeMap.put(k, v.getValue());
+        });
+        content.addTitle("Request Cookies");
+        content.addKeyValues(treeMap);
+        // 请求体
+        content.addTitle("RequestBody");
+        content.addKeyValue("Body String", ServletUtil.getBody(request));
+        content.addKeyValue("Body Bytes", String.valueOf(ServletUtil.getBodyBytes(request)));
+        // 请求参数
+        System.out.println(ServletUtil.getParamMap(request));
+        System.out.println(ServletUtil.getParams(request));
+        // 请求相关的其他参数
+        content.addTitle("Request Other Info");
+        content.addKeyValue("HTTP Method", request.getMethod());
         content.addKeyValue("URL", request.getRequestURL().toString());
         content.addKeyValue("URI", request.getRequestURI().toString());
-        content.addKeyValue("HTTP Method", request.getMethod());
-        content.addKeyValue("Class Method", joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
         content.addKeyValue("IP", request.getRemoteAddr());
         content.addKeyValue("Client IP", ServletUtil.getClientIP(request));
-        content.addKeyValue("Request Args", new Gson().toJson(joinPoint.getArgs()));
 
         log.debug("\n" + content);
     }
@@ -87,6 +113,7 @@ public class WebLogAspect {
      */
     @After("webLog()")
     public void doAfter() {
+        log.debug(">>>>>>>> WebLogAspect doAfter");
     }
 
     /**
@@ -97,6 +124,7 @@ public class WebLogAspect {
      */
     @Around("webLog()")
     public Object doAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+        log.debug(">>>>>>>> WebLogAspect doAround");
         // 自定义了setter函数，代码中修改入参都会导致这里不是原始入参
         Object[] args = proceedingJoinPoint.getArgs();
 

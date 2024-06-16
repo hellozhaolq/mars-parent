@@ -55,8 +55,6 @@ public class HttpFilter extends GenericFilter {
         HttpServletResponse responseWrapper = new ResponseWrapper((HttpServletResponse) response);
 
         requestWrapper.getSession();
-        // 构造假Cookie
-        responseWrapper.addCookie(new Cookie("access_token", "21218cca77804d2ba1922c33e0151105"));
 
         // 当前会话完成后是否仍然保持打开状态。如果发送的值是 keep-alive，则连接是持久的，不会关闭，允许对同一服务器进行后续请求。
         responseWrapper.setHeader(HttpHeaders.CONNECTION, "close");

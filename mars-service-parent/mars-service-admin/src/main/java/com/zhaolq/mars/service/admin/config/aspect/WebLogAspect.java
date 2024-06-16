@@ -99,8 +99,8 @@ public class WebLogAspect {
         content.addKeyValue("Body String", ServletUtil.getBody(request));
         content.addKeyValue("Body Bytes", String.valueOf(ServletUtil.getBodyBytes(request)));
         // 请求参数
-        System.out.println(ServletUtil.getParamMap(request));
-        System.out.println(ServletUtil.getParams(request));
+        content.addTitle("RequestParams");
+        content.addKeyValues(ServletUtil.getParamMap(request));
         // 请求相关的其他参数
         content.addTitle("Request Other Info");
         content.addKeyValue("HTTP Method", request.getMethod());

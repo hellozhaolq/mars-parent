@@ -1,17 +1,6 @@
 package com.zhaolq.mars.common.core.thread;
 
-import java.util.concurrent.Callable;
-import java.util.concurrent.CompletionService;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorCompletionService;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.RejectedExecutionHandler;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 import java.util.function.Supplier;
 
 /**
@@ -548,8 +537,7 @@ public class ThreadUtil {
      * @return 线程组
      */
     public static ThreadGroup currentThreadGroup() {
-        final SecurityManager s = System.getSecurityManager();
-        return (null != s) ? s.getThreadGroup() : Thread.currentThread().getThreadGroup();
+        return Thread.currentThread().getThreadGroup();
     }
 
     /**

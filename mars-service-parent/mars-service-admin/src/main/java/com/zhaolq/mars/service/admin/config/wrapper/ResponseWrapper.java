@@ -1,7 +1,7 @@
 package com.zhaolq.mars.service.admin.config.wrapper;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponseWrapper;
 
 /**
  * @Author zhaolq

@@ -1,8 +1,5 @@
 package com.zhaolq.mars.common.core.util;
 
-import java.security.AccessController;
-import java.security.PrivilegedAction;
-
 /**
  * {@link ClassLoader}工具类
  *
@@ -18,13 +15,7 @@ public class ClassLoaderUtil {
      * @see Thread#getContextClassLoader()
      */
     public static ClassLoader getContextClassLoader() {
-        if (System.getSecurityManager() == null) {
-            return Thread.currentThread().getContextClassLoader();
-        } else {
-            // 绕开权限检查
-            return AccessController.doPrivileged(
-                    (PrivilegedAction<ClassLoader>) () -> Thread.currentThread().getContextClassLoader());
-        }
+        return Thread.currentThread().getContextClassLoader();
     }
 
     /**
@@ -34,13 +25,7 @@ public class ClassLoaderUtil {
      * @see ClassLoader#getSystemClassLoader()
      */
     public static ClassLoader getSystemClassLoader() {
-        if (System.getSecurityManager() == null) {
-            return ClassLoader.getSystemClassLoader();
-        } else {
-            // 绕开权限检查
-            return AccessController.doPrivileged(
-                    (PrivilegedAction<ClassLoader>) ClassLoader::getSystemClassLoader);
-        }
+        return ClassLoader.getSystemClassLoader();
     }
 
     /**

@@ -27,7 +27,7 @@
         <!-- mybatis-plus只做增强不做改变，丝滑升级mybatis项目 -->
         <dependency>
             <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
             <version>${mybatis-plus-boot-starter.version}</version>
             <exclusions>
                 <exclusion>

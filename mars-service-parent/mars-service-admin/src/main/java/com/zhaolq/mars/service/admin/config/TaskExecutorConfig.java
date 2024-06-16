@@ -1,18 +1,16 @@
 package com.zhaolq.mars.service.admin.config;
 
-import java.time.Duration;
-import java.util.concurrent.ThreadPoolExecutor;
-
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
-import lombok.extern.slf4j.Slf4j;
+import java.time.Duration;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * 自定义异步任务线程池

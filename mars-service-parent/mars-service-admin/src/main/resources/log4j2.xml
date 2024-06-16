@@ -101,7 +101,7 @@
                                 <!-- 满足删除条件的文件，按文件大小，保留最近文件大小总和不超过指定大小的文件 -->
                                 <!--<IfAccumulatedFileSize exceeds="${ACCUMULATED_FILE_SIZE}"/>-->
                                 <!-- 满足删除条件的文件，按文件数量，保留最近指定数量的文件 -->
-                                <!--<IfAccumulatedFileCount exceeds="${ACCUMULATED_FILE_COUNT}"/>-->
+                                <IfAccumulatedFileCount exceeds="${ACCUMULATED_FILE_COUNT}"/>
                             </IfAny>
                         </IfLastModified>
                     </IfFileName>

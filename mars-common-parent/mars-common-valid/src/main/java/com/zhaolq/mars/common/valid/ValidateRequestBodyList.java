@@ -3,7 +3,8 @@
  */
 package com.zhaolq.mars.common.valid;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
+
 import java.util.List;
 
 /**

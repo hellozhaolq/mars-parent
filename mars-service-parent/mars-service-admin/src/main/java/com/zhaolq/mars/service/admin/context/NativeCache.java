@@ -1,17 +1,15 @@
 package com.zhaolq.mars.service.admin.context;
 
+import com.zhaolq.mars.api.admin.entity.MenuEntity;
+import com.zhaolq.mars.api.admin.entity.RoleEntity;
+import com.zhaolq.mars.service.admin.service.IMenuService;
+import jakarta.annotation.PostConstruct;
+import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.annotation.PostConstruct;
-
-import org.springframework.stereotype.Service;
-
-import com.zhaolq.mars.api.admin.entity.MenuEntity;
-import com.zhaolq.mars.api.admin.entity.RoleEntity;
-import com.zhaolq.mars.service.admin.service.IMenuService;
 
 /**
  * 本地缓存

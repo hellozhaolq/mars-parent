@@ -1,19 +1,11 @@
 package com.zhaolq.mars.service.admin.entity;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.web.server.LocalServerPort;
-
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-
 import com.zhaolq.mars.api.admin.entity.UserEntity;
-
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.*;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.server.LocalServerPort;
 
 /**
  * AR模式：活动记录，一种领域模型模式。

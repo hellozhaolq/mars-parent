@@ -16,7 +16,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-dependencies</artifactId>
-        <version>2.7.9</version> <!-- springboot版本 -->
+        <version>3.3.0</version> <!-- springboot版本 -->
     </parent>
 
     <groupId>com.zhaolq.mars</groupId>
@@ -47,7 +47,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> <!-- maven-resources-plugin将自动使用此编码 -->
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding> <!-- 配置所有Maven插件输出的报告编码 -->
 
-        <spring-cloud-dependencies.version>2021.0.6</spring-cloud-dependencies.version>
+        <spring-cloud-dependencies.version>2023.0.2</spring-cloud-dependencies.version>
 
         <bcel.version>6.7.0</bcel.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
@@ -76,16 +76,20 @@
         <commons-vfs2.version>2.9.0</commons-vfs2.version>
         <tika-core.version>2.8.0</tika-core.version>
 
+        <!-- 需要切换至httpclient5 -->
+        <httpclient.version>4.5.14</httpclient.version>
+        <httpclient5.version>5.3.1</httpclient5.version>
+
         <fastjson2.version>2.0.51</fastjson2.version>
 
         <springdoc-openapi-ui.version>1.7.0</springdoc-openapi-ui.version>
         <rocketmq-spring-boot-starter.version>2.2.3</rocketmq-spring-boot-starter.version>
 
         <!-- MyBatis-Plus和boot-starter版本号对应 -->
-        <mybatis-plus-boot-starter.version>3.5.1</mybatis-plus-boot-starter.version>
-        <mybatis-plus-generator.version>3.5.1</mybatis-plus-generator.version>
+        <mybatis-plus-boot-starter.version>3.5.7</mybatis-plus-boot-starter.version>
+        <mybatis-plus-generator.version>3.5.7</mybatis-plus-generator.version>
         <!-- MyBatis分页插件PageHelper -->
-        <pagehelper-spring-boot-starter.version>1.4.1</pagehelper-spring-boot-starter.version>
+        <pagehelper-spring-boot-starter.version>2.1.0</pagehelper-spring-boot-starter.version>
 
         <auto-service.version>1.0.1</auto-service.version>
         <javapoet.version>1.13.0</javapoet.version>

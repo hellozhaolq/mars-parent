@@ -4,12 +4,12 @@
 jdbc:
   basedb:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.31.5:3306/basedb?useUnicode=true&characterEncoding=utf8&useSSL=true&autoReconnect=true&failOverReadOnly=false&allowMultiQueries=true&noAccessToProcedureBodies=true
+    url: jdbc:mysql://192.168.0.5:3306/basedb?useUnicode=true&characterEncoding=utf8&useSSL=true&autoReconnect=true&failOverReadOnly=false&allowMultiQueries=true&noAccessToProcedureBodies=true
     username: base
     password: 123456789
   archedb:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.31.5:3306/archedb?useUnicode=true&characterEncoding=utf8&useSSL=true&autoReconnect=true&failOverReadOnly=false&allowMultiQueries=true&noAccessToProcedureBodies=true
+    url: jdbc:mysql://192.168.0.5:3306/archedb?useUnicode=true&characterEncoding=utf8&useSSL=true&autoReconnect=true&failOverReadOnly=false&allowMultiQueries=true&noAccessToProcedureBodies=true
     username: arche
     password: 123456789
 logging:
@@ -21,7 +21,7 @@ logging:
 spring:
   redis:
     ################ Redis 基础配置 ##############
-    host: 192.168.31.5 # Redis服务器地址
+    host: 192.168.0.5 # Redis服务器地址
     port: 6379 # Redis服务器连接端口
     database: 0 # Redis数据库索引（默认为0）
     password: 123456789 # Redis服务器连接密码（默认为空）
@@ -35,11 +35,11 @@ spring:
         min-idle: 0 # 连接池中的最小空闲连接 默认 0
 
 ########## 安装目录不能含有空格 ##########
-rocketmq:
-  name-server: 192.168.31.5:9876
-  producer:
-    group: producer_group
-  consumer:
-    topic: consumer_topic
-    group: consumer_group
+#rocketmq:
+#  name-server: 192.168.0.5:9876
+#  producer:
+#    group: producer_group
+#  consumer:
+#    topic: consumer_topic
+#    group: consumer_group
 

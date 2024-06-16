@@ -1,7 +1,7 @@
 package com.zhaolq.mars.service.admin.dao.base;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.zhaolq.mars.api.admin.entity.RoleMenuEntity;
+import com.zhaolq.mars.service.admin.entity.RoleMenuEntity;
+import io.mybatis.mapper.BaseMapper;
 
 /**
  * <p>
@@ -11,6 +11,6 @@ import com.zhaolq.mars.api.admin.entity.RoleMenuEntity;
  * @Author zhaolq
  * @Date 2020-10-29
  */
-public interface RoleMenuMapper extends BaseMapper<RoleMenuEntity> {
+public interface RoleMenuMapper extends BaseMapper<RoleMenuEntity, Long> {
 
 }

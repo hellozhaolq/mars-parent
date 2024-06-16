@@ -1,14 +1,10 @@
 package com.zhaolq.mars.service.admin.controller;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
-import com.zhaolq.mars.api.admin.entity.RoleEntity;
 import com.zhaolq.mars.common.core.result.R;
 import com.zhaolq.mars.common.core.result.ResultCode;
-import com.zhaolq.mars.common.mybatis.pagination.PageConvert;
-import com.zhaolq.mars.common.mybatis.pagination.WrapperBuilder;
 import com.zhaolq.mars.common.valid.group.Add;
 import com.zhaolq.mars.common.valid.group.Edit;
+import com.zhaolq.mars.service.admin.entity.RoleEntity;
 import com.zhaolq.mars.service.admin.service.IRoleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -36,10 +32,9 @@ import java.util.List;
 @Tag(name = "角色模块", description = "角色模块")
 @RequestMapping(path = "/role", consumes = {MediaType.ALL_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
 public class RoleController {
-
     @Autowired
     private IRoleService roleService;
-
+/*
     @PostMapping("/post")
     @Operation(summary = "单个新增", description = "单个新增")
     public R<Boolean> post(@Validated({Add.class}) @RequestBody(required = true) RoleEntity roleEntity) {
@@ -104,6 +99,6 @@ public class RoleController {
     public R<IPage<RoleEntity>> getPage(PageConvert<RoleEntity> pageConvert, RoleEntity roleEntity) {
         return R.success(roleService.page(pageConvert.getPagePlus(), WrapperBuilder.getQueryWrapper(roleEntity)));
     }
-
+*/
 }
 

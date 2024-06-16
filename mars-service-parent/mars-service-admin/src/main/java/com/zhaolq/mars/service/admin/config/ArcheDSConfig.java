@@ -1,12 +1,10 @@
 package com.zhaolq.mars.service.admin.config;
 
-import java.io.IOException;
-import java.util.Properties;
-
-import javax.sql.DataSource;
-
+import com.github.pagehelper.PageInterceptor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,10 +17,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
-import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
-import com.github.pagehelper.PageInterceptor;
-
-import lombok.extern.slf4j.Slf4j;
+import javax.sql.DataSource;
+import java.io.IOException;
+import java.util.Properties;
 
 /**
  * Arche是希腊文，英文是principle，字面意义是开始、太初、起源。
@@ -86,22 +83,22 @@ public class ArcheDSConfig {
         SqlSessionFactory sqlSessionFactory = null;
         try {
             // 使用mybatis-plus时不能使用自带的 SqlSessionFactoryBean，要使用 MybatisSqlSessionFactoryBean
-            MybatisSqlSessionFactoryBean factoryBean = new MybatisSqlSessionFactoryBean();
+            SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
             factoryBean.setDataSource(dataSource);
             // factoryBean.setConfigLocation(new ClassPathResource("mybatisConfigFilePath"));
             factoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(mapperLocation));
             factoryBean.setTypeAliasesPackage(typeAliasesPackage);
 
-            Properties properties = new Properties();
-            properties.setProperty("helperDialect", "mysql");
-            properties.setProperty("offsetAsPageNum", "true");
-            properties.setProperty("rowBoundsWithCount", "true");
-            properties.setProperty("reasonable", "true");
-            properties.setProperty("supportMethodsArguments", "true");
-            properties.setProperty("params", "pageNum=pageNumKey;pageSize=pageSizeKey;");
+            Properties archeProperties = new Properties();
+            archeProperties.setProperty("helperDialect", "mysql");
+            archeProperties.setProperty("offsetAsPageNum", "true");
+            archeProperties.setProperty("rowBoundsWithCount", "true");
+            archeProperties.setProperty("reasonable", "true");
+            archeProperties.setProperty("supportMethodsArguments", "true");
+            archeProperties.setProperty("params", "pageNum=pageNumKey;pageSize=pageSizeKey;");
             // 分页插件
             Interceptor interceptor = new PageInterceptor();
-            interceptor.setProperties(properties);
+            interceptor.setProperties(archeProperties);
             factoryBean.setPlugins(new Interceptor[]{interceptor});
             // 支持驼峰
             factoryBean.getObject().getConfiguration().setMapUnderscoreToCamelCase(true);

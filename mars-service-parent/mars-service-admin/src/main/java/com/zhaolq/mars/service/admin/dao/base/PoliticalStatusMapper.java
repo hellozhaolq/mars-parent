@@ -1,7 +1,7 @@
 package com.zhaolq.mars.service.admin.dao.base;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.zhaolq.mars.api.admin.entity.PoliticalStatusEntity;
+import com.zhaolq.mars.service.admin.entity.PoliticalStatusEntity;
+import io.mybatis.mapper.BaseMapper;
 
 /**
  * <p>
@@ -11,6 +11,6 @@ import com.zhaolq.mars.api.admin.entity.PoliticalStatusEntity;
  * @Author zhaolq
  * @Date 2020-10-29
  */
-public interface PoliticalStatusMapper extends BaseMapper<PoliticalStatusEntity> {
+public interface PoliticalStatusMapper extends BaseMapper<PoliticalStatusEntity, Long> {
 
 }

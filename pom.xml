@@ -13,11 +13,11 @@
         为了避免环境不兼容导致莫名问题，建议不要手动更新maven插件版本，而是使用spring-boot-dependencies中的版本。
         其他依赖版本可在properties中重新定义。
      -->
-    <parent>
+    <!--<parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-dependencies</artifactId>
-        <version>3.3.0</version> <!-- springboot版本 -->
-    </parent>
+        <version>3.3.0</version> &lt;!&ndash; springboot版本 &ndash;&gt;
+    </parent>-->
 
     <groupId>com.zhaolq.mars</groupId>
     <artifactId>mars-parent</artifactId>
@@ -33,7 +33,6 @@
         <module>mars-common-parent</module>
         <module>mars-demo-parent</module>
         <module>mars-service-parent</module>
-        <module>mars-api-parent</module>
     </modules>
 
     <properties>
@@ -41,40 +40,16 @@
 
         <!-- 自定义构建时间戳的格式。${maven.build.timestamp}的默认格式 yyyy-MM-dd'T'HH:mm:ss'Z'。UTC时间非UTC+8。 -->
         <maven.build.timestamp.format>yyMMdd</maven.build.timestamp.format>
-
-        <maven.compiler.release>${java.version}</maven.compiler.release>  <!-- 优先级低于maven-compiler-plugin插件中的配置 -->
+        <maven.compiler.release>${java.version}</maven.compiler.release>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <maven.compiler.compilerVersion>${java.version}</maven.compiler.compilerVersion>
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> <!-- maven-resources-plugin将自动使用此编码 -->
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding> <!-- 配置所有Maven插件输出的报告编码 -->
 
+        <spring-boot-dependencies.version>3.3.0</spring-boot-dependencies.version>
         <spring-cloud-dependencies.version>2023.0.2</spring-cloud-dependencies.version>
-
-        <bcel.version>6.7.0</bcel.version>
-        <commons-beanutils.version>1.9.4</commons-beanutils.version>
-        <commons-cli.version>1.5.0</commons-cli.version>
-        <commons-codec.version>1.15</commons-codec.version>
-        <commons-collections4.version>4.4</commons-collections4.version>
-        <commons-compress.version>1.23.0</commons-compress.version>
-        <commons-configuration2.version>2.9.0</commons-configuration2.version>
-        <commons-crypto.version>1.2.0</commons-crypto.version>
-        <commons-csv.version>1.10.0</commons-csv.version>
-        <commons-dbcp2.version>2.9.0</commons-dbcp2.version>
-        <commons-dbutils.version>1.7</commons-dbutils.version>
-        <commons-email.version>1.5</commons-email.version>
-        <commons-exec.version>1.3</commons-exec.version>
-        <commons-fileupload.version>1.5</commons-fileupload.version>
-        <commons-io.version>2.13.0</commons-io.version>
-        <commons-jcs3.version>3.1</commons-jcs3.version>
-        <commons-lang3.version>3.12.0</commons-lang3.version>
-        <commons-math3.version>3.6.1</commons-math3.version>
-        <commons-net.version>3.9.0</commons-net.version>
-        <commons-numbers-bom.version>1.1</commons-numbers-bom.version>
-        <commons-pool2.version>2.11.1</commons-pool2.version>
-        <commons-proxy.version>1.0</commons-proxy.version>
-        <commons-statistics-distribution.version>1.0</commons-statistics-distribution.version>
-        <commons-text.version>1.10.0</commons-text.version>
-        <commons-vfs2.version>2.9.0</commons-vfs2.version>
-        <tika-core.version>2.8.0</tika-core.version>
 
         <!-- 需要切换至httpclient5 -->
         <httpclient.version>4.5.14</httpclient.version>
@@ -85,10 +60,7 @@
         <springdoc-openapi-ui.version>1.7.0</springdoc-openapi-ui.version>
         <rocketmq-spring-boot-starter.version>2.2.3</rocketmq-spring-boot-starter.version>
 
-        <!-- MyBatis-Plus和boot-starter版本号对应 -->
-        <mybatis-plus-boot-starter.version>3.5.7</mybatis-plus-boot-starter.version>
-        <mybatis-plus-generator.version>3.5.7</mybatis-plus-generator.version>
-        <!-- MyBatis分页插件PageHelper -->
+        <mybatis-spring-boot-starter.version>3.0.3</mybatis-spring-boot-starter.version>
         <pagehelper-spring-boot-starter.version>2.1.0</pagehelper-spring-boot-starter.version>
 
         <auto-service.version>1.0.1</auto-service.version>
@@ -152,13 +124,13 @@
             </dependency>
 
             <!-- 覆盖应写在上面 -->
-            <!--<dependency>
+            <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
                 <version>${spring-boot-dependencies.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>-->
+            </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
@@ -230,117 +202,8 @@
             </resource>
         </resources>
 
-        <plugins>
-            <!--
-                为了使项目结构更为清晰，Maven区别对待Java代码文件和资源文件：
-                    maven-compiler-plugin用来编译Java代码
-                    maven-resources-plugin资源插件处理项目资源到输出目录的复制。有两种不同的资源：主资源和测试资源。区别在于，主要资源是与主要源代码关联的资源，而测试资源是与测试源代码关联的资源。
-                    参考链接：https://blog.csdn.net/u011781521/article/details/79052725
-                idea中maven-compiler-plugin插件编译时控制台乱码问题参考链接：
-                    https://blog.csdn.net/qq_37823003/article/details/109480305
-            -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin.version}</version>
-                <configuration>
-                    <!-- 新的release选项从JDK9开始支持(详见源码since标签)，该选项替换了三个标志：-source，-target和-bootclasspath -->
-                    <release>${maven.compiler.release}</release>
-                    <encoding>${maven.compiler.encoding}</encoding>
-                    <fork>true</fork>
-                    <!-- 跳过编译的文件 -->
-                    <excludes>
-                        <exclude>**/ExcludeClassesName.java</exclude> <!-- 排除应用程序编译类 -->
-                    </excludes>
-                </configuration>
-            </plugin>
-            <!-- 解决资源文件的编码问题 -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>${maven-resources-plugin.version}</version>
-                <configuration>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                    <useDefaultDelimiters>true</useDefaultDelimiters>
-                </configuration>
-            </plugin>
-        </plugins>
-
         <pluginManagement>
             <plugins>
-                <!-- 打源码包 -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-source-plugin</artifactId>
-                    <version>${maven-source-plugin.version}</version>
-                    <configuration>
-                        <outputDirectory>${project.build.directory}</outputDirectory>
-                        <finalName>${project.build.finalName}</finalName>
-                        <attach>true</attach>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <id>attach-sources</id>
-                            <!-- 可以绑定到声明周期阶段deploy，默认是package。避免在package时执行此插件目标 -->
-                            <phase>install</phase>
-                            <goals>
-                                <goal>jar-no-fork</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-
-                <!-- 生成javadoc文档 -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>${maven-javadoc-plugin.version}</version>
-                    <configuration>
-                        <release>${java.version}</release>
-                        <charset>UTF-8</charset>
-                        <encoding>UTF-8</encoding>
-                        <docencoding>UTF-8</docencoding>
-                        <doclint>none</doclint>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <id>attach-javadocs</id> <!-- 唯一标识，运行maven时会在控制台输出 -->
-                            <!-- 可以绑定到声明周期阶段deploy，默认是package。避免在package时执行此插件目标 -->
-                            <phase>install</phase>
-                            <goals>
-                                <!-- 绑定到此插件的jar目标。jar和javadoc-no-fork区别：
-                                        jar目标默认绑定到生命周期阶段package，会生成JavaDoc文档并捆绑到jar文件中。
-                                        javadoc-no-fork目标需要在站点生成之前生成源，例如，通过调用mvn clean deploy site。生成的JavaDoc文档在target/site下，不会捆绑到jar文件中。 -->
-                                <goal>jar</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-
-                <!-- default声明周期的test阶段默认绑定了maven-surefire-plugin -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <version>${maven-surefire-plugin.version}</version>
-                    <configuration>
-                        <skipTests>true</skipTests>
-                        <argLine>-Dfile.encoding=UTF-8</argLine>
-                        <parallel>all</parallel>
-                        <threadCount>10</threadCount> <!-- 与parallel参数结合使用 -->
-                        <!-- 设置为错误/失败计数以跳过其余测试 -->
-                        <skipAfterFailureCount>1</skipAfterFailureCount> <!-- 当有一个测试用例发生错误或失败时，跳过后续其他测试 -->
-                        <!-- 测试失败后的重试次数。当测试含有远程服务时，在某些情况下可能由于环境问题(比如网络)导致测试用例执行失败，但这并不是程序问题。换句话说,当一个测试用例执行N次,有一次执行成功就认为成功. -->
-                        <rerunFailingTestsCount>2</rerunFailingTestsCount> <!-- 两次重试机会 -->
-                        <includes>
-                            <include>*</include>
-                        </includes>
-                        <excludes>
-                            <exclude>**/mapper/*</exclude>
-                            <exclude>**/controller/*</exclude>
-                            <exclude>**/service/*</exclude>
-                        </excludes>
-                    </configuration>
-                </plugin>
             </plugins>
         </pluginManagement>
     </build>

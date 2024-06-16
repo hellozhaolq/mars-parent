@@ -18,11 +18,7 @@
     <description>Sys project for Spring Boot</description>
 
     <dependencies>
-        <dependency>
-            <groupId>com.zhaolq.mars.api</groupId>
-            <artifactId>mars-api-admin</artifactId>
-            <version>1.0.0-deluxe</version>
-        </dependency>
+        
     </dependencies>
 
     <build>

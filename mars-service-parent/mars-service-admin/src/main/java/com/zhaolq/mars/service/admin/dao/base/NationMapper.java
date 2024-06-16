@@ -1,7 +1,7 @@
 package com.zhaolq.mars.service.admin.dao.base;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.zhaolq.mars.api.admin.entity.NationEntity;
+import com.zhaolq.mars.service.admin.entity.NationEntity;
+import io.mybatis.mapper.BaseMapper;
 
 /**
  * <p>
@@ -11,6 +11,6 @@ import com.zhaolq.mars.api.admin.entity.NationEntity;
  * @Author zhaolq
  * @Date 2020-10-29
  */
-public interface NationMapper extends BaseMapper<NationEntity> {
+public interface NationMapper extends BaseMapper<NationEntity, Long> {
 
 }

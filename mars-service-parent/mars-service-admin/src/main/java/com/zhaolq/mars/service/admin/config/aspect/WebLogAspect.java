@@ -2,9 +2,9 @@ package com.zhaolq.mars.service.admin.config.aspect;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONWriter;
-import com.zhaolq.mars.api.admin.entity.UserEntity;
 import com.zhaolq.mars.common.core.console.ConsoleKeyValue;
 import com.zhaolq.mars.common.core.util.ServletUtil;
+import com.zhaolq.mars.service.admin.entity.UserEntity;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.Cookie;

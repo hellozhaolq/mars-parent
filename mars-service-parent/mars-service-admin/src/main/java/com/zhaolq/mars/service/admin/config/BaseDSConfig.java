@@ -1,12 +1,10 @@
 package com.zhaolq.mars.service.admin.config;
 
-import java.io.IOException;
-import java.util.Properties;
-
-import javax.sql.DataSource;
-
+import com.github.pagehelper.PageInterceptor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,18 +12,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.context.annotation.Primary;
-import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.*;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
-import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
-import com.github.pagehelper.PageInterceptor;
-
-import lombok.extern.slf4j.Slf4j;
+import javax.sql.DataSource;
+import java.io.IOException;
+import java.util.Properties;
 
 /**
  * MySQL DataSource Configuration
@@ -99,22 +92,22 @@ public class BaseDSConfig {
         SqlSessionFactory sqlSessionFactory = null;
         try {
             // 使用mybatis-plus时不能使用自带的 SqlSessionFactoryBean，要使用 MybatisSqlSessionFactoryBean
-            MybatisSqlSessionFactoryBean factoryBean = new MybatisSqlSessionFactoryBean();
+            SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
             factoryBean.setDataSource(dataSource);
             // factoryBean.setConfigLocation(new ClassPathResource("mybatisConfigFilePath"));
             factoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(mapperLocation));
             factoryBean.setTypeAliasesPackage(typeAliasesPackage);
 
-            Properties properties = new Properties();
-            properties.setProperty("helperDialect", "mysql");
-            properties.setProperty("offsetAsPageNum", "true");
-            properties.setProperty("rowBoundsWithCount", "true");
-            properties.setProperty("reasonable", "true");
-            properties.setProperty("supportMethodsArguments", "true");
-            properties.setProperty("params", "pageNum=pageNumKey;pageSize=pageSizeKey;");
+            Properties baseProperties = new Properties();
+            baseProperties.setProperty("helperDialect", "mysql");
+            baseProperties.setProperty("offsetAsPageNum", "true");
+            baseProperties.setProperty("rowBoundsWithCount", "true");
+            baseProperties.setProperty("reasonable", "true");
+            baseProperties.setProperty("supportMethodsArguments", "true");
+            baseProperties.setProperty("params", "pageNum=pageNumKey;pageSize=pageSizeKey;");
             // 分页插件
             Interceptor interceptor = new PageInterceptor();
-            interceptor.setProperties(properties);
+            interceptor.setProperties(baseProperties);
             factoryBean.setPlugins(new Interceptor[]{interceptor});
             // 支持驼峰
             factoryBean.getObject().getConfiguration().setMapUnderscoreToCamelCase(true);

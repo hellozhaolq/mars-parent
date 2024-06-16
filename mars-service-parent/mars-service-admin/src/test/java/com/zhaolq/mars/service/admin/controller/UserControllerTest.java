@@ -1,7 +1,7 @@
 package com.zhaolq.mars.service.admin.controller;
 
 import com.alibaba.fastjson2.JSON;
-import com.zhaolq.mars.api.admin.entity.UserEntity;
+import com.zhaolq.mars.service.admin.entity.UserEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;

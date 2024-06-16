@@ -1,31 +1,26 @@
 package com.zhaolq.mars.service.admin.config.aspect;
 
-import java.util.Map;
-import java.util.TreeMap;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONWriter;
+import com.zhaolq.mars.api.admin.entity.UserEntity;
+import com.zhaolq.mars.common.core.console.ConsoleKeyValue;
+import com.zhaolq.mars.common.core.util.ServletUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
-import com.alibaba.fastjson2.JSON;
-import com.alibaba.fastjson2.JSONWriter;
-
-import com.zhaolq.mars.api.admin.entity.UserEntity;
-import com.zhaolq.mars.common.core.console.ConsoleKeyValue;
-import com.zhaolq.mars.common.core.util.ServletUtil;
-
-import lombok.extern.slf4j.Slf4j;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * 网络日志切面
@@ -65,8 +60,19 @@ public class WebLogAspect {
         ConsoleKeyValue content = ConsoleKeyValue.create().setDBCMode(false);
 
         // 切入点信息
+        content.addTitle("JoinPoint");
         content.addKeyValue("Class Method", joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
-        content.addKeyValue("Request Args", JSON.toJSONString(joinPoint.getArgs()));
+        Object[] args = joinPoint.getArgs();
+        Object[] arguments = new Object[args.length];
+        for (int i = 0; i < args.length; i++) {
+            if (args[i] instanceof ServletRequest || args[i] instanceof ServletResponse || args[i] instanceof MultipartFile) {
+                //ServletRequest不能序列化，从入参里排除，否则报异常：java.lang.IllegalStateException: It is illegal to call this method if the current request is not in asynchronous mode (i.e. isAsyncStarted() returns false)
+                //ServletResponse不能序列化，从入参里排除，否则报异常：java.lang.IllegalStateException: getOutputStream() has already been called for this response
+                continue;
+            }
+            arguments[i] = args[i];
+        }
+        content.addKeyValue("Request Args", JSON.toJSONString(arguments));
 
         // 线程信息
         content.addTitle("ThreadName");

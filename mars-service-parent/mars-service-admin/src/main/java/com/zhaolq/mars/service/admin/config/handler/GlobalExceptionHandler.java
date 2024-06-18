@@ -1,12 +1,12 @@
 package com.zhaolq.mars.service.admin.config.handler;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.zhaolq.mars.common.core.exception.BaseRuntimeException;
+import com.zhaolq.mars.common.core.result.ErrorEnum;
 import com.zhaolq.mars.common.core.result.R;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,22 +24,28 @@ import lombok.extern.slf4j.Slf4j;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @Autowired
     private HttpServletRequest httpServletRequest;
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public GlobalExceptionHandler(HttpServletRequest httpServletRequest) {this.httpServletRequest = httpServletRequest;}
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     public R<?> exceptionHandler(Exception e) {
         log.error("请求地址'{}',请求体缺失'{}'", httpServletRequest.getRequestURI(), e.getMessage());
         return R.failure(e.getMessage());
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(BaseRuntimeException.class)
-    public R<?> baseRuntimeExceptionHandler(BaseRuntimeException e) {
-        e.printStackTrace();
-        return R.failure(e.getMessage());
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(RuntimeException.class)
+    public R<?> runtimeExceptionHandler(RuntimeException e) {
+        log.error("请求地址'{}',捕获运行时异常'{}'", httpServletRequest.getRequestURI(), e.getMessage());
+        return R.failure(ErrorEnum.SYSTEM_ERROR);
     }
 
-
+    @ResponseStatus(HttpStatus.OK)
+    @ExceptionHandler(BaseRuntimeException.class)
+    public R<?> baseRuntimeExceptionHandler(BaseRuntimeException e) {
+        log.error("请求地址'{}',请求体缺失'{}'", httpServletRequest.getRequestURI(), e.getMessage());
+        return R.failure(e.getErrorInfo());
+    }
 }

@@ -1,10 +1,11 @@
 package com.zhaolq.mars.service.admin.controller.test;
 
-import com.zhaolq.mars.common.core.result.HttpStatus;
-import com.zhaolq.mars.common.core.result.R;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.config.RequestConfig;
@@ -17,15 +18,16 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import com.zhaolq.mars.common.core.result.R;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 测试httpclient
@@ -120,8 +122,8 @@ public class TestHttpComponentsController {
         String result = EntityUtils.toString(closeableHttpResponse.getEntity(), "UTF-8");
         int responseCode = closeableHttpResponse.getStatusLine().getStatusCode();
         EntityUtils.consume(closeableHttpResponse.getEntity());
-        if (responseCode != HttpStatus.OK.getCode()) {
-            return R.failure(HttpStatus.valueOf(responseCode));
+        if (responseCode != HttpStatus.OK.value()) {
+            return R.failure(HttpStatus.valueOf(responseCode).getReasonPhrase());
         }
         return R.success(result);
     }

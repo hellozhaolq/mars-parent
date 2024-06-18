@@ -12,6 +12,6 @@ import io.mybatis.mapper.BaseMapper;
  * @Author zhaolq
  * @Date 2020-10-29
  */
-public interface MenuMapper extends BaseMapper<MenuEntity, Long> {
+public interface MenuMapper extends BaseMapper<MenuEntity, String> {
 
 }

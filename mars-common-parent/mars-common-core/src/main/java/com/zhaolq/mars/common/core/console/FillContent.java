@@ -1,10 +1,10 @@
 package com.zhaolq.mars.common.core.console;
 
-import java.util.List;
-
 import cn.hutool.core.text.CharPool;
 import com.zhaolq.mars.common.core.util.ConvertUtil;
 import org.apache.commons.lang3.StringUtils;
+
+import java.util.List;
 
 /**
  * 填充内容
@@ -24,10 +24,10 @@ public class FillContent {
     /**
      * 填充表格头或者体
      *
-     * @param l 被填充列表
-     * @param columns 填充内容
+     * @param l                被填充列表
+     * @param columns          填充内容
      * @param columnCharNumber 每列最大字符个数
-     * @param isDBCMode 是否使用全角模式
+     * @param isDBCMode        是否使用全角模式
      */
     void fillColumns(List<String> l, String[] columns, List<Integer> columnCharNumber, boolean isDBCMode) {
         for (int i = 0; i < columns.length; i++) {
@@ -46,10 +46,10 @@ public class FillContent {
     /**
      * 填充表头或者表体信息（多行）
      *
-     * @param sb 内容
-     * @param list 表头列表或者表体列表
+     * @param sb               内容
+     * @param list             表头列表或者表体列表
      * @param columnCharNumber 每列最大字符个数
-     * @param isDBCMode 是否使用全角模式
+     * @param isDBCMode        是否使用全角模式
      */
     void fillRows(StringBuilder sb, List<List<String>> list, List<Integer> columnCharNumber, boolean isDBCMode) {
         for (List<String> row : list) {
@@ -66,8 +66,8 @@ public class FillContent {
     /**
      * 填充一行数据，半角
      *
-     * @param sb 内容
-     * @param row 一行数据
+     * @param sb               内容
+     * @param row              一行数据
      * @param columnCharNumber 每列最大字符个数
      */
     void fillRowSBC(StringBuilder sb, List<String> row, List<Integer> columnCharNumber) {
@@ -83,8 +83,8 @@ public class FillContent {
     /**
      * 填充一行数据，全角
      *
-     * @param sb 内容
-     * @param row 一行数据
+     * @param sb               内容
+     * @param row              一行数据
      * @param columnCharNumber 每列最大字符个数
      */
     void fillRowDBC(StringBuilder sb, List<String> row, List<Integer> columnCharNumber) {
@@ -111,9 +111,9 @@ public class FillContent {
     /**
      * 拼装边框
      *
-     * @param sb StringBuilder
+     * @param sb               StringBuilder
      * @param columnCharNumber 每列最大字符个数
-     * @param isDBCMode 是否使用全角模式
+     * @param isDBCMode        是否使用全角模式
      */
     void fillBorder(StringBuilder sb, List<Integer> columnCharNumber, boolean isDBCMode) {
         sb.append(CORNER);

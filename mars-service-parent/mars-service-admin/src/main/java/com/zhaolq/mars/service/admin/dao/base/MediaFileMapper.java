@@ -11,6 +11,6 @@ import io.mybatis.mapper.BaseMapper;
  * @Author zhaolq
  * @Date 2020-10-29
  */
-public interface MediaFileMapper extends BaseMapper<MediaFileEntity, Long> {
+public interface MediaFileMapper extends BaseMapper<MediaFileEntity, String> {
 
 }

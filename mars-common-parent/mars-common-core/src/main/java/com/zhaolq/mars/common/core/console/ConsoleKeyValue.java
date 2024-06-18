@@ -1,11 +1,11 @@
 package com.zhaolq.mars.common.core.console;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * 控制台打印键值对工具
@@ -40,6 +40,16 @@ public class ConsoleKeyValue extends FillContent {
         return new ConsoleKeyValue();
     }
 
+    public static void main(String[] args) {
+        ConsoleKeyValue.create()
+                .setDBCMode(false)
+                .addTitle("ThreadName")
+                .addKeyValue("ThreadName", "http-nio-60001-exec-1")
+                .addTitle("RequestHeaders")
+                .addKeyValue("content-type", "multipart/form-data; boundary=--------------------------592397919336676994762912")
+                .print();
+    }
+
     /**
      * 设置是否使用全角模式<br>
      * 当包含中文字符时，输出的表格可能无法对齐，因此当设置为全角模式时，全部字符转为全角。
@@ -69,7 +79,7 @@ public class ConsoleKeyValue extends FillContent {
     /**
      * 添加键值信息
      *
-     * @param key key
+     * @param key   key
      * @param value value
      * @return com.zhaolq.mars.common.core.console.ConsoleKeyValue
      */
@@ -141,15 +151,5 @@ public class ConsoleKeyValue extends FillContent {
         int valueColumnWidth = columnCharNumber.get(2) + 4;
         sb.append(String.format("%-" + valueColumnWidth + "s", row.get(2)));
         sb.append(COLUMN_LINE);
-    }
-
-    public static void main(String[] args) {
-        ConsoleKeyValue.create()
-                .setDBCMode(false)
-                .addTitle("ThreadName")
-                .addKeyValue("ThreadName", "http-nio-60001-exec-1")
-                .addTitle("RequestHeaders")
-                .addKeyValue("content-type", "multipart/form-data; boundary=--------------------------592397919336676994762912")
-                .print();
     }
 }

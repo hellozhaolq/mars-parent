@@ -1,9 +1,9 @@
 package com.zhaolq.mars.common.core.util;
 
-import java.util.Set;
-
 import cn.hutool.core.text.CharPool;
 import org.apache.commons.lang3.StringUtils;
+
+import java.util.Set;
 
 
 /**
@@ -29,7 +29,7 @@ public class ConvertUtil {
     /**
      * 半角转全角
      *
-     * @param input String
+     * @param input         String
      * @param notConvertSet 不替换的字符集合
      * @return 全角字符串
      */
@@ -63,7 +63,7 @@ public class ConvertUtil {
     /**
      * 全角转半角
      *
-     * @param text 文本
+     * @param text          文本
      * @param notConvertSet 不替换的字符集合
      * @return 替换后的字符
      */

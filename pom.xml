@@ -58,7 +58,7 @@
         <hutool-all.version>5.8.28</hutool-all.version>
         <fastjson2.version>2.0.51</fastjson2.version>
 
-        <springdoc-openapi-ui.version>1.7.0</springdoc-openapi-ui.version>
+        <springdoc-openapi-ui.version>1.8.0</springdoc-openapi-ui.version>
         <rocketmq-spring-boot-starter.version>2.2.3</rocketmq-spring-boot-starter.version>
 
         <mybatis-spring-boot-starter.version>3.0.3</mybatis-spring-boot-starter.version>

@@ -4,6 +4,7 @@ import com.zhaolq.mars.service.admin.dao.base.UserMapper;
 import com.zhaolq.mars.service.admin.entity.RoleEntity;
 import com.zhaolq.mars.service.admin.entity.UserEntity;
 import com.zhaolq.mars.service.admin.service.IUserService;
+import io.mybatis.service.AbstractService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +22,7 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 @Transactional(rollbackFor = Exception.class)
-public class UserServiceImpl implements IUserService {
+public class UserServiceImpl extends AbstractService<UserEntity, String, UserMapper> implements IUserService {
     private UserMapper userMapper;
 
     @Override

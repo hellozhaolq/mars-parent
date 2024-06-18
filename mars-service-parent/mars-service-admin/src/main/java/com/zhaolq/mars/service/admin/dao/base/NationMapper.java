@@ -11,6 +11,6 @@ import io.mybatis.mapper.BaseMapper;
  * @Author zhaolq
  * @Date 2020-10-29
  */
-public interface NationMapper extends BaseMapper<NationEntity, Long> {
+public interface NationMapper extends BaseMapper<NationEntity, String> {
 
 }

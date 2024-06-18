@@ -1,11 +1,11 @@
 package com.zhaolq.mars.common.core.console;
 
+import org.apache.commons.lang3.RandomStringUtils;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import org.apache.commons.lang3.RandomStringUtils;
 
 /**
  * 控制台打印表格工具
@@ -40,6 +40,21 @@ public class ConsoleTable extends FillContent {
      */
     public static ConsoleTable create() {
         return new ConsoleTable();
+    }
+
+    public static void main(String[] args) throws IOException {
+        ConsoleTable consoleTable = ConsoleTable.create()
+                .setDBCMode(false)
+                .addHeader("column1", "column2", "column3", "column4", "column5");
+        for (int i = 0; i < 10; i++) {
+            String column1 = RandomStringUtils.randomNumeric(i + 1);
+            String column2 = RandomStringUtils.randomGraph(i + 1);
+            String column3 = RandomStringUtils.randomAscii(i + 1);
+            String column4 = RandomStringUtils.randomAlphabetic(i + 1);
+            String column5 = RandomStringUtils.randomAlphanumeric(i + 1);
+            consoleTable.addBody(column1, column2, column3, column4, column5);
+        }
+        consoleTable.print(true);
     }
 
     /**
@@ -123,20 +138,5 @@ public class ConsoleTable extends FillContent {
         fillRows(sb, bodyList, columnCharNumber, isDBCMode);
         fillBorder(sb, columnCharNumber, isDBCMode);
         return sb.toString();
-    }
-
-    public static void main(String[] args) throws IOException {
-        ConsoleTable consoleTable = ConsoleTable.create()
-                .setDBCMode(false)
-                .addHeader("column1", "column2", "column3", "column4", "column5");
-        for (int i = 0; i < 10; i++) {
-            String column1 = RandomStringUtils.randomNumeric(i + 1);
-            String column2 = RandomStringUtils.randomGraph(i + 1);
-            String column3 = RandomStringUtils.randomAscii(i + 1);
-            String column4 = RandomStringUtils.randomAlphabetic(i + 1);
-            String column5 = RandomStringUtils.randomAlphanumeric(i + 1);
-            consoleTable.addBody(column1, column2, column3, column4, column5);
-        }
-        consoleTable.print(true);
     }
 }

@@ -2,6 +2,7 @@ package com.zhaolq.mars.service.admin.service;
 
 import com.zhaolq.mars.service.admin.entity.RoleEntity;
 import com.zhaolq.mars.service.admin.entity.UserEntity;
+import io.mybatis.service.BaseService;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
  * @Author zhaolq
  * @Date 2020-10-29
  */
-public interface IUserService {
+public interface IUserService extends BaseService<UserEntity, String> {
     /**
      * 单个查询，携带角色列表
      *

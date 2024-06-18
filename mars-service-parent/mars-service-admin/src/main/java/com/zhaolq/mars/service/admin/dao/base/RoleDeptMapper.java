@@ -11,6 +11,6 @@ import io.mybatis.mapper.BaseMapper;
  * @Author zhaolq
  * @Date 2020-10-29
  */
-public interface RoleDeptMapper extends BaseMapper<RoleDeptEntity, Long> {
+public interface RoleDeptMapper extends BaseMapper<RoleDeptEntity, String> {
 
 }

@@ -17,7 +17,7 @@ import java.util.List;
  * @Date 2020-10-29
  */
 @Transactional(rollbackFor = Exception.class)
-public interface UserMapper extends BaseMapper<UserEntity, Long> {
+public interface UserMapper extends BaseMapper<UserEntity, String> {
     /**
      * 单个查询，携带角色列表
      *

@@ -4,24 +4,29 @@ import com.zhaolq.mars.common.core.exception.BaseRuntimeException;
 import com.zhaolq.mars.common.core.result.ErrorEnum;
 import com.zhaolq.mars.common.core.result.R;
 import com.zhaolq.mars.common.valid.group.Add;
-import com.zhaolq.mars.service.admin.dao.base.UserMapper;
+import com.zhaolq.mars.common.valid.group.Edit;
 import com.zhaolq.mars.service.admin.entity.UserEntity;
 import com.zhaolq.mars.service.admin.service.IUserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterStyle;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Optional;
 
 /**
  * <p>
@@ -39,8 +44,6 @@ import java.util.Optional;
 @AllArgsConstructor
 public class UserController {
     private IUserService userService;
-    private UserMapper userMapper;
-
 
     /**
      * 单个查询
@@ -58,12 +61,11 @@ public class UserController {
         if (condition) {
             throw new BaseRuntimeException(ErrorEnum.PARAM_ERROR);
         }
-
-        Optional<UserEntity> optionalUserEntity = userMapper.selectOne(userEntity);
-        if (optionalUserEntity.isEmpty()) {
+        UserEntity entity = userService.findOne(userEntity);
+        if (ObjectUtils.isEmpty(entity)) {
             throw new BaseRuntimeException(ErrorEnum.USER_NOT_EXISTED);
         }
-        return R.success(optionalUserEntity.get());
+        return R.success(entity);
     }
 
     /**
@@ -73,55 +75,58 @@ public class UserController {
      * @return com.zhaolq.mars.api.sys.entity.UserEntity
      * @throws
      */
+
+    /**
+     * @param userEntity
+     * @return
+     */
     @PostMapping("/post")
     @Operation(summary = "单个新增", description = "单个新增")
-    public R<Boolean> post(@Validated({Add.class}) @RequestBody(required = true) UserEntity userEntity) {
+    public R<UserEntity> post(@Validated({Add.class}) @RequestBody(required = true) UserEntity userEntity) {
         // 检查用户是否存在
-        Optional<UserEntity> optionalUserEntity = userMapper.selectOne(userEntity);
-        if (!optionalUserEntity.isEmpty()) {
-            return R.failure(ErrorEnum.USER_HAS_EXISTED);
+        UserEntity entity = userService.findOne(userEntity);
+        if (!ObjectUtils.isEmpty(entity)) {
+            throw new BaseRuntimeException(ErrorEnum.USER_HAS_EXISTED);
         }
         // 不存在，则新增
-        int res = userMapper.insert(userEntity);
-        return R.boo(res == 1 ? Boolean.TRUE : Boolean.FALSE);
+        UserEntity savedEntity = userService.save(userEntity);
+        return R.success(ObjectUtils.isNotEmpty(savedEntity) ? savedEntity : null);
     }
-//
-//    /**
-//     * 单个删除
-//     *
-//     * @param id
-//     * @return com.zhaolq.mars.api.sys.entity.UserEntity
-//     * @throws
-//     */
-//    @DeleteMapping("/delete/{id}")
-//    @Parameter(name = "id", description = "用户id", required = true, style = ParameterStyle.SIMPLE)
-//    @Operation(summary = "单个删除", description = "单个删除")
-//    public R<Boolean> delete(@PathVariable("id") @NotNull(message = "缺少id") String id) {
-//        UserEntity userEntity = userService.getById(id);
-//        if (userEntity == null) {
-//            return R.failure(iError.USER_NOT_EXISTED);
-//        }
-//        boolean boo = userService.removeById(id);
-//        return R.boo(boo);
-//    }
-//
-//    /**
-//     * 单个修改
-//     *
-//     * @param userEntity
-//     * @return com.zhaolq.mars.api.sys.entity.UserEntity
-//     * @throws
-//     */
-//    @PutMapping("/put")
-//    @Operation(summary = "单个修改", description = "单个修改")
-//    public R<Boolean> put(@Validated({Edit.class}) @RequestBody UserEntity userEntity) {
-//        UserEntity userEntityTemp = userService.getById(userEntity.getId());
-//        if (userEntityTemp == null) {
-//            return R.failure(iError.USER_NOT_EXISTED);
-//        }
-//        boolean boo = userService.updateById(userEntity);
-//        return R.boo(boo);
-//    }
+
+    /**
+     * 单个删除
+     *
+     * @param id
+     * @return
+     */
+    @DeleteMapping("/delete/{id}")
+    @Parameter(name = "id", description = "用户id", required = true, style = ParameterStyle.SIMPLE)
+    @Operation(summary = "单个删除", description = "单个删除")
+    public R<Boolean> delete(@PathVariable("id") @NotNull(message = "缺少id") String id) {
+        UserEntity userEntity = userService.findById(id);
+        if (userEntity == null) {
+            throw new BaseRuntimeException(ErrorEnum.USER_NOT_EXISTED);
+        }
+        int result = userService.deleteById(id);
+        return R.boo(result == 1 ? Boolean.TRUE : Boolean.FALSE);
+    }
+
+    /**
+     * 单个修改
+     *
+     * @param userEntity
+     * @return com.zhaolq.mars.api.sys.entity.UserEntity
+     * @throws
+     */
+    @PutMapping("/put")
+    @Operation(summary = "单个修改", description = "单个修改")
+    public R<UserEntity> put(@Validated({Edit.class}) @RequestBody UserEntity userEntity) {
+        UserEntity entity = userService.update(userEntity);
+        if (ObjectUtils.isEmpty(entity)) {
+            throw new BaseRuntimeException(ErrorEnum.USER_NOT_EXISTED);
+        }
+        return R.success(entity);
+    }
 //
 //
 //    /**

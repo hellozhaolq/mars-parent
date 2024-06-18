@@ -6,7 +6,7 @@ package com.zhaolq.mars.common.core.result;
  * @Author zhaolq
  * @Date 2020/11/3 19:56
  */
-public enum ErrorCode implements ICode {
+public enum ErrorEnum implements IError {
 
     /* 成功 */
     SUCCESS(1, "success", "操作成功"),
@@ -50,7 +50,7 @@ public enum ErrorCode implements ICode {
      */
     private final String descCh;
 
-    private ErrorCode(int code, String descEn, String descCh) {
+    private ErrorEnum(int code, String descEn, String descCh) {
         this.code = code;
         this.descEn = descEn;
         this.descCh = descCh;
@@ -69,7 +69,7 @@ public enum ErrorCode implements ICode {
 
     @Override
     public Boolean isSuccess() {
-        return this.code == ErrorCode.SUCCESS.getCode();
+        return this.code == ErrorEnum.SUCCESS.getCode();
     }
 
 }

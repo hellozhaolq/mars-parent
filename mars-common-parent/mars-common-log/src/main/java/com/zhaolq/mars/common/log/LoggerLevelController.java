@@ -1,15 +1,10 @@
 package com.zhaolq.mars.common.log;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.NavigableSet;
-import java.util.Optional;
-import java.util.Set;
-import java.util.TreeSet;
-
+import com.zhaolq.mars.common.core.result.ErrorEnum;
+import com.zhaolq.mars.common.core.result.R;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.logging.LogLevel;
 import org.springframework.boot.logging.LoggerConfiguration;
@@ -21,12 +16,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.zhaolq.mars.common.core.result.ErrorCode;
-import com.zhaolq.mars.common.core.result.R;
-
-import jakarta.annotation.PostConstruct;
-import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.NavigableSet;
+import java.util.Optional;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * 日志级别设置控制器
@@ -90,7 +88,7 @@ public class LoggerLevelController {
 
     @PostMapping("/setLoggerLevel")
     public void setLoggerLevel(@RequestBody(required = false) LoggerLevel loggerLevel) {
-        Assert.notNull(loggerLevel, ErrorCode.PARAM_NOT_COMPLETE.getMsg());
+        Assert.notNull(loggerLevel, ErrorEnum.PARAM_NOT_COMPLETE.getMsg());
         if (StringUtils.isBlank(loggerLevel.getName())) {
             new IllegalArgumentException("Name must not be empty");
         }

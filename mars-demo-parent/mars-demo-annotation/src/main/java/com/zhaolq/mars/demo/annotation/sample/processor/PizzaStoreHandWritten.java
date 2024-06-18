@@ -5,12 +5,23 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
- *
- *
  * @Author zhaolq
  * @Date 2020/7/10 11:24
  */
 public class PizzaStoreHandWritten {
+
+    private static String readConsole() throws IOException {
+        System.out.println("What do you like?");
+        BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
+        String input = bufferRead.readLine();
+        return input;
+    }
+
+    public static void main(String[] args) throws IOException {
+        PizzaStoreHandWritten pizzaStore = new PizzaStoreHandWritten();
+        Meal meal = pizzaStore.order(readConsole());
+        System.out.println("Bill: $" + meal.getPrice());
+    }
 
     public Meal order(String mealName) {
 
@@ -31,18 +42,5 @@ public class PizzaStoreHandWritten {
         }
 
         throw new IllegalArgumentException("Unknown meal '" + mealName + "'");
-    }
-
-    private static String readConsole() throws IOException {
-        System.out.println("What do you like?");
-        BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
-        String input = bufferRead.readLine();
-        return input;
-    }
-
-    public static void main(String[] args) throws IOException {
-        PizzaStoreHandWritten pizzaStore = new PizzaStoreHandWritten();
-        Meal meal = pizzaStore.order(readConsole());
-        System.out.println("Bill: $" + meal.getPrice());
     }
 }

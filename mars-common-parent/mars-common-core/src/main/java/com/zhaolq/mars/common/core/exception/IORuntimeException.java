@@ -1,6 +1,6 @@
 package com.zhaolq.mars.common.core.exception;
 
-import com.zhaolq.mars.common.core.result.ICode;
+import com.zhaolq.mars.common.core.result.IError;
 
 /**
  * IO运行时异常，其超类是RuntimeException，而非Exception，与IOException完全不同。
@@ -30,23 +30,23 @@ public class IORuntimeException extends BaseRuntimeException {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 
-    public IORuntimeException(ICode code) {
-        super(code);
+    public IORuntimeException(IError error) {
+        super(error);
     }
 
-    public IORuntimeException(String message, ICode code) {
-        super(message, code);
+    public IORuntimeException(String message, IError error) {
+        super(message, error);
     }
 
-    public IORuntimeException(String message, Throwable cause, ICode code) {
-        super(message, cause, code);
+    public IORuntimeException(String message, Throwable cause, IError error) {
+        super(message, cause, error);
     }
 
-    public IORuntimeException(Throwable cause, ICode code) {
-        super(cause, code);
+    public IORuntimeException(Throwable cause, IError error) {
+        super(cause, error);
     }
 
-    public IORuntimeException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace, ICode code) {
-        super(message, cause, enableSuppression, writableStackTrace, code);
+    public IORuntimeException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace, IError error) {
+        super(message, cause, enableSuppression, writableStackTrace, error);
     }
 }

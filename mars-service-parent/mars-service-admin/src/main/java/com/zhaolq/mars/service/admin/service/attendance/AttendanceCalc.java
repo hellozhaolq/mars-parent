@@ -1,5 +1,16 @@
 package com.zhaolq.mars.service.admin.service.attendance;
 
+import cn.hutool.core.date.DatePattern;
+import cn.hutool.core.lang.ConsoleTable;
+import com.zhaolq.mars.common.core.result.R;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.http.client.methods.HttpPost;
+import org.springframework.beans.factory.annotation.Value;
+
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -17,19 +28,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.http.client.methods.HttpPost;
-import org.springframework.beans.factory.annotation.Value;
-
-import com.zhaolq.mars.common.core.console.ConsoleTable;
-import com.zhaolq.mars.common.core.date.DatePattern;
-import com.zhaolq.mars.common.core.result.R;
-
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * 考勤计算
@@ -113,8 +111,7 @@ public class AttendanceCalc {
             dailyList.add(map);
         });
         Collections.reverse(dailyList);
-
-        ConsoleTable consoleTable = ConsoleTable.create().setDBCMode(false);
+        ConsoleTable consoleTable = ConsoleTable.create().setSBCMode(false);
         consoleTable.addHeader("Start Time", "End Time", "Days of Attendance", "Daily Working Hours");
         attendanceInfoList.forEach(ele -> {
             String startTime = ele.getStartWorkDatetime();
@@ -418,7 +415,7 @@ public class AttendanceCalc {
      * 计算相差的小时数
      *
      * @param start start
-     * @param end end
+     * @param end   end
      * @return java.math.BigDecimal
      */
     private BigDecimal getWorkingHours(LocalDateTime start, LocalDateTime end) {

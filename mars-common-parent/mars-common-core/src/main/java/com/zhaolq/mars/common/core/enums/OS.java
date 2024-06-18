@@ -13,11 +13,17 @@ package com.zhaolq.mars.common.core.enums;
  */
 public enum OS {
 
-    /** unix */
+    /**
+     * unix
+     */
     UNIX("unix"),
-    /** linux */
+    /**
+     * linux
+     */
     LINUX("linux"),
-    /** windows */
+    /**
+     * windows
+     */
     WINDOWS("windows");
 
     // ---------------------------------------------------------------

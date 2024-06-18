@@ -4,10 +4,9 @@
 
 package com.zhaolq.mars.common.swagger;
 
+import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
-
-import lombok.Data;
 
 /**
  * swagger属性配置

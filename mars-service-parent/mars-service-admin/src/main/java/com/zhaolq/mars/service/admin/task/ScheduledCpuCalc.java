@@ -1,15 +1,13 @@
 package com.zhaolq.mars.service.admin.task;
 
-import java.util.concurrent.Callable;
-import java.util.concurrent.FutureTask;
-import java.util.concurrent.TimeUnit;
-
+import cn.hutool.core.net.NetUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.zhaolq.mars.common.core.net.NetUtil;
-
-import lombok.extern.slf4j.Slf4j;
+import java.util.concurrent.Callable;
+import java.util.concurrent.FutureTask;
+import java.util.concurrent.TimeUnit;
 
 /**
  * cpu计算计划

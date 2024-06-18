@@ -1,13 +1,12 @@
 package com.zhaolq.mars.common.core.result;
 
-import java.io.Serializable;
-import java.util.Date;
-import java.util.Optional;
-
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.lang.Nullable;
 
-import io.swagger.v3.oas.annotations.media.Schema;
+import java.io.Serializable;
+import java.util.Date;
+import java.util.Optional;
 
 /**
  * ApiResult
@@ -38,43 +37,49 @@ public final class R<T> implements Serializable {
         this.datetime = DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm:ss");
     }
 
-    private R(ICode resultCode) {
-        this(resultCode.getCode(), null, resultCode.getMsg(), resultCode.isSuccess());
+    private R(IError iError) {
+        this(iError.getCode(), null, iError.getMsg(), iError.isSuccess());
     }
 
-    private R(ICode resultCode, T data) {
-        this(resultCode.getCode(), data, resultCode.getMsg(), resultCode.isSuccess());
+    private R(IError iError, T data) {
+        this(iError.getCode(), data, iError.getMsg(), iError.isSuccess());
     }
 
-    private R(ICode resultCode, String msg) {
-        this(resultCode.getCode(), null, msg, resultCode.isSuccess());
+    private R(IError iError, String msg) {
+        this(iError.getCode(), null, msg, iError.isSuccess());
     }
 
-    /** success */
+    /**
+     * success
+     */
 
     public static <T> R<T> success() {
-        return new R<>(ErrorCode.SUCCESS);
+        return new R<>(ErrorEnum.SUCCESS);
     }
 
     public static <T> R<T> success(T data) {
-        return new R<>(ErrorCode.SUCCESS, data);
+        return new R<>(ErrorEnum.SUCCESS, data);
     }
 
-    /** failure */
+    /**
+     * failure
+     */
 
     public static <T> R<T> failure() {
-        return new R<>(ErrorCode.FAILURE);
+        return new R<>(ErrorEnum.FAILURE);
     }
 
-    public static <T> R<T> failure(ICode resultCode) {
-        return new R<>(resultCode);
+    public static <T> R<T> failure(IError iError) {
+        return new R<>(iError);
     }
 
     public static <T> R<T> failure(String msg) {
-        return new R<>(ErrorCode.FAILURE, msg);
+        return new R<>(ErrorEnum.FAILURE, msg);
     }
 
-    /** boo */
+    /**
+     * boo
+     */
 
     public static <T> R<T> boo(boolean flag) {
         return flag ? success() : failure();

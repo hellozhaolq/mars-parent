@@ -1,12 +1,12 @@
 package com.zhaolq.mars.common.property.test;
 
-import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.support.DefaultPropertySourceFactory;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * 获取自定义配置方式一：可以读取父模块配置文件

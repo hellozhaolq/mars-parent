@@ -1,7 +1,16 @@
 package com.zhaolq.mars.service.admin.controller;
 
-import java.util.Optional;
-
+import com.zhaolq.mars.common.core.exception.BaseRuntimeException;
+import com.zhaolq.mars.common.core.result.ErrorEnum;
+import com.zhaolq.mars.common.core.result.R;
+import com.zhaolq.mars.common.valid.group.Add;
+import com.zhaolq.mars.service.admin.dao.base.UserMapper;
+import com.zhaolq.mars.service.admin.entity.UserEntity;
+import com.zhaolq.mars.service.admin.service.IUserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 import org.springframework.http.MediaType;
@@ -12,18 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.zhaolq.mars.common.core.exception.BaseRuntimeException;
-import com.zhaolq.mars.common.core.result.ErrorCode;
-import com.zhaolq.mars.common.core.result.R;
-import com.zhaolq.mars.common.valid.group.Add;
-import com.zhaolq.mars.service.admin.dao.base.UserMapper;
-import com.zhaolq.mars.service.admin.entity.UserEntity;
-import com.zhaolq.mars.service.admin.service.IUserService;
-
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.util.Optional;
 
 /**
  * <p>
@@ -55,15 +53,15 @@ public class UserController {
     @Operation(summary = "单个查询", description = "单个查询")
     public R<UserEntity> get(UserEntity userEntity) {
         // 这里永远断言成功，即使请求没有参数userEntity也不是null。
-        Validate.notNull(userEntity, ErrorCode.PARAM_NOT_COMPLETE.getMsg());
+        Validate.notNull(userEntity, ErrorEnum.PARAM_NOT_COMPLETE.getMsg());
         boolean condition = userEntity == null || (StringUtils.isEmpty(userEntity.getId()) && StringUtils.isEmpty(userEntity.getAccount()));
         if (condition) {
-            throw new BaseRuntimeException(ErrorCode.PARAM_ERROR);
+            throw new BaseRuntimeException(ErrorEnum.PARAM_ERROR);
         }
 
         Optional<UserEntity> optionalUserEntity = userMapper.selectOne(userEntity);
         if (optionalUserEntity.isEmpty()) {
-            throw new BaseRuntimeException(ErrorCode.USER_NOT_EXISTED);
+            throw new BaseRuntimeException(ErrorEnum.USER_NOT_EXISTED);
         }
         return R.success(optionalUserEntity.get());
     }
@@ -81,7 +79,7 @@ public class UserController {
         // 检查用户是否存在
         Optional<UserEntity> optionalUserEntity = userMapper.selectOne(userEntity);
         if (!optionalUserEntity.isEmpty()) {
-            return R.failure(ErrorCode.USER_HAS_EXISTED);
+            return R.failure(ErrorEnum.USER_HAS_EXISTED);
         }
         // 不存在，则新增
         int res = userMapper.insert(userEntity);
@@ -101,7 +99,7 @@ public class UserController {
 //    public R<Boolean> delete(@PathVariable("id") @NotNull(message = "缺少id") String id) {
 //        UserEntity userEntity = userService.getById(id);
 //        if (userEntity == null) {
-//            return R.failure(ResultCode.USER_NOT_EXISTED);
+//            return R.failure(iError.USER_NOT_EXISTED);
 //        }
 //        boolean boo = userService.removeById(id);
 //        return R.boo(boo);
@@ -119,7 +117,7 @@ public class UserController {
 //    public R<Boolean> put(@Validated({Edit.class}) @RequestBody UserEntity userEntity) {
 //        UserEntity userEntityTemp = userService.getById(userEntity.getId());
 //        if (userEntityTemp == null) {
-//            return R.failure(ResultCode.USER_NOT_EXISTED);
+//            return R.failure(iError.USER_NOT_EXISTED);
 //        }
 //        boolean boo = userService.updateById(userEntity);
 //        return R.boo(boo);
@@ -181,11 +179,11 @@ public class UserController {
 //        boolean condition =
 //                userEntity == null || (StringUtils.isEmpty(userEntity.getId()) && StringUtils.isEmpty(userEntity.getAccount()));
 //        if (condition) {
-//            return R.failure(ResultCode.PARAM_NOT_COMPLETE);
+//            return R.failure(iError.PARAM_NOT_COMPLETE);
 //        }
 //        userEntity = userService.getWithRole(userEntity, null);
 //        if (userEntity == null) {
-//            return R.failure(ResultCode.USER_NOT_EXISTED);
+//            return R.failure(iError.USER_NOT_EXISTED);
 //        }
 //        // 角色根据ID排序
 //        Collections.sort(userEntity.getRoleList(),
@@ -205,11 +203,11 @@ public class UserController {
 //        boolean condition =
 //                userEntity == null || (StringUtils.isEmpty(userEntity.getId()) && StringUtils.isEmpty(userEntity.getAccount()));
 //        if (condition) {
-//            return R.failure(ResultCode.PARAM_NOT_COMPLETE);
+//            return R.failure(iError.PARAM_NOT_COMPLETE);
 //        }
 //        userEntity = userService.getWithRoleNestedSelectTest(userEntity);
 //        if (userEntity == null) {
-//            return R.failure(ResultCode.USER_NOT_EXISTED);
+//            return R.failure(iError.USER_NOT_EXISTED);
 //        }
 //        // 角色根据ID排序
 //        Collections.sort(userEntity.getRoleList(),

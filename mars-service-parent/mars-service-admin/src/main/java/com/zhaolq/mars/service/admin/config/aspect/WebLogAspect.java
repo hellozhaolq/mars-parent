@@ -2,6 +2,8 @@ package com.zhaolq.mars.service.admin.config.aspect;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONWriter;
+import com.google.common.base.Charsets;
+import com.google.common.base.Utf8;
 import com.zhaolq.mars.common.core.console.ConsoleKeyValue;
 import com.zhaolq.mars.common.core.util.ServletUtil;
 import com.zhaolq.mars.service.admin.entity.UserEntity;
@@ -10,15 +12,23 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.CharSet;
+import org.apache.commons.lang3.CharSetUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -97,7 +107,8 @@ public class WebLogAspect {
         // 请求体
         content.addTitle("RequestBody");
         content.addKeyValue("Body String", ServletUtil.getBody(request));
-        content.addKeyValue("Body Bytes", String.valueOf(ServletUtil.getBodyBytes(request)));
+
+        content.addKeyValue("Body Bytes", new String(ServletUtil.getBodyBytes(request), StandardCharsets.UTF_8));
         // 请求参数
         content.addTitle("RequestParams");
         content.addKeyValues(ServletUtil.getParamMap(request));

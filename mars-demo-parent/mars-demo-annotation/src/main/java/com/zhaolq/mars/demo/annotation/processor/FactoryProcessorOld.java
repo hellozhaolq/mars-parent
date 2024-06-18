@@ -1,10 +1,7 @@
 package com.zhaolq.mars.demo.annotation.processor;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.Writer;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import com.google.auto.service.AutoService;
+import com.zhaolq.mars.demo.annotation.annotation.Factory;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Filer;
@@ -21,10 +18,11 @@ import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
 import javax.tools.JavaFileObject;
-
-import com.google.auto.service.AutoService;
-
-import com.zhaolq.mars.demo.annotation.annotation.Factory;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.Writer;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 /**
  * 继承AbstractProcessor类实现自定义注解处理器 -- 工厂注解处理器
@@ -77,9 +75,9 @@ public class FactoryProcessorOld extends AbstractProcessor {
      * 在这里，您可以编写代码来扫描、评估和处理注解，以及生成java文件。使用RoundEnvironment参数，可以查询被特定注解标注的元素。
      *
      * @param annotations 已扫描到的要求处理的注释类型
-     * @param roundEnv 使用此参数可以查询被特定注解标注的元素
+     * @param roundEnv    使用此参数可以查询被特定注解标注的元素
      * @return boolean 如果返回{@code true}，则会声明注释类型，并且不会要求后续处理器对其进行处理；
-     *                 如果返回{@code false}，则将取消声明注释类型，并可能要求后续处理器(其他注解处理器)对其进行处理。
+     * 如果返回{@code false}，则将取消声明注释类型，并可能要求后续处理器(其他注解处理器)对其进行处理。
      */
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
@@ -145,7 +143,6 @@ public class FactoryProcessorOld extends AbstractProcessor {
      *
      * @param
      * @return java.util.Set<java.lang.String> 返回类型是String集合，其中包含要使用此注解处理器处理的注解类型的全限定名称。
-     *
      */
     @Override
     public Set<String> getSupportedAnnotationTypes() {

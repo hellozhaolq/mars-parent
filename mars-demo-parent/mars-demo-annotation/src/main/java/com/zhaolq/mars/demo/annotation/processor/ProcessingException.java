@@ -1,6 +1,7 @@
 package com.zhaolq.mars.demo.annotation.processor;
 
 import com.zhaolq.mars.demo.annotation.annotation.Factory;
+
 import javax.lang.model.element.Element;
 
 /**

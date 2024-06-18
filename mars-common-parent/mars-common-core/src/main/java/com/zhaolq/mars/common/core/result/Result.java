@@ -1,14 +1,13 @@
 package com.zhaolq.mars.common.core.result;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import org.apache.commons.lang3.time.DateFormatUtils;
+import org.springframework.lang.Nullable;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Optional;
-
-import org.apache.commons.lang3.time.DateFormatUtils;
-import org.springframework.lang.Nullable;
-
-import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * ApiResult
@@ -26,57 +25,64 @@ public final class Result extends LinkedHashMap<String, Object> implements Seria
     public static final String RESULT_KEY_DATETIME = "datetime";
     private static final long serialVersionUID = 1L;    // 序列化版本号
 
-    private Result() {}
+    private Result() {
+    }
 
-    private Result(ICode resultCode) {
-        setCode(resultCode.getCode());
+    private Result(IError iError) {
+        setCode(iError.getCode());
         setData(null);
-        setMsg(resultCode.getMsg());
-        setSuccess(resultCode.isSuccess());
+        setMsg(iError.getMsg());
+        setSuccess(iError.isSuccess());
         setDatetime();
     }
 
-    private Result(ICode resultCode, Object data) {
-        setCode(resultCode.getCode());
+    private Result(IError iError, Object data) {
+        setCode(iError.getCode());
         setData(data);
-        setMsg(resultCode.getMsg());
-        setSuccess(resultCode.isSuccess());
+        setMsg(iError.getMsg());
+        setSuccess(iError.isSuccess());
         setDatetime();
     }
 
-    private Result(ICode resultCode, String msg) {
-        setCode(resultCode.getCode());
+    private Result(IError iError, String msg) {
+        setCode(iError.getCode());
         setData(null);
         setMsg(msg);
-        setSuccess(resultCode.isSuccess());
+        setSuccess(iError.isSuccess());
         setDatetime();
     }
 
-    /** success */
+    /**
+     * success
+     */
 
     public static Result success() {
-        return new Result(ErrorCode.SUCCESS);
+        return new Result(ErrorEnum.SUCCESS);
     }
 
     public static Result success(Object data) {
-        return new Result(ErrorCode.SUCCESS, data);
+        return new Result(ErrorEnum.SUCCESS, data);
     }
 
-    /** failure */
+    /**
+     * failure
+     */
 
     public static Result failure() {
-        return new Result(ErrorCode.FAILURE);
+        return new Result(ErrorEnum.FAILURE);
     }
 
-    public static Result failure(ICode code) {
-        return new Result(code);
+    public static Result failure(IError iError) {
+        return new Result(iError);
     }
 
     public static Result failure(String msg) {
-        return new Result(ErrorCode.FAILURE, msg);
+        return new Result(ErrorEnum.FAILURE, msg);
     }
 
-    /** boo */
+    /**
+     * boo
+     */
 
     public static Result boo(boolean flag) {
         return flag ? success() : failure();
@@ -95,7 +101,7 @@ public final class Result extends LinkedHashMap<String, Object> implements Seria
     /**
      * 禁用put方法
      *
-     * @param key key
+     * @param key   key
      * @param value value
      * @return java.lang.Object
      */

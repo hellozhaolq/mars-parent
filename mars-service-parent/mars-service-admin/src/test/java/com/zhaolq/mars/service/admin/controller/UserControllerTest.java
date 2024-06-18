@@ -3,7 +3,12 @@ package com.zhaolq.mars.service.admin.controller;
 import com.alibaba.fastjson2.JSON;
 import com.zhaolq.mars.service.admin.entity.UserEntity;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,8 +29,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- *
- *
  * @Author zhaolq
  * @Date 2020/10/20 21:13
  */
@@ -35,18 +38,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class UserControllerTest {
 
+    HttpHeaders httpHeaders;
+    MockHttpSession session;
+    MockCookie cookie;
     @LocalServerPort
     private int port;
-
     @Autowired
     private MockMvc mockMvc;
-
-    HttpHeaders httpHeaders;
-
-    MockHttpSession session;
-
-    MockCookie cookie;
-
     private UserEntity userEntity;
 
     @BeforeEach

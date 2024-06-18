@@ -1,24 +1,11 @@
 package com.zhaolq.mars.service.admin.controller;
 
-import com.zhaolq.mars.common.core.result.R;
-import com.zhaolq.mars.common.core.result.ResultCode;
-import com.zhaolq.mars.common.valid.group.Add;
-import com.zhaolq.mars.common.valid.group.Edit;
-import com.zhaolq.mars.service.admin.entity.RoleEntity;
 import com.zhaolq.mars.service.admin.service.IRoleService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.enums.ParameterStyle;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.constraints.NotNull;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.util.Assert;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
@@ -76,10 +63,10 @@ public class RoleController {
     @Operation(summary = "单个查询", description = "单个查询")
     public R<RoleEntity> get(RoleEntity roleEntity) {
         // 这里永远断言成功，即使请求没有参数userEntity也不是null。
-        Assert.notNull(roleEntity, ResultCode.PARAM_NOT_COMPLETE.getDescCh());
+        Assert.notNull(roleEntity, iError.PARAM_NOT_COMPLETE.getDescCh());
         boolean condition = roleEntity == null || (StringUtils.isEmpty(roleEntity.getId()) && StringUtils.isEmpty(roleEntity.getCode()));
         if (condition) {
-            return R.failure(ResultCode.PARAM_NOT_COMPLETE);
+            return R.failure(iError.PARAM_NOT_COMPLETE);
         }
         roleEntity = roleService.getOne(WrapperBuilder.getQueryWrapper(roleEntity));
         if (roleEntity == null) {

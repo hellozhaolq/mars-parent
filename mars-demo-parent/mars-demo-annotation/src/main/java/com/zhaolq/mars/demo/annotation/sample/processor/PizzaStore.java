@@ -1,9 +1,5 @@
 package com.zhaolq.mars.demo.annotation.sample.processor;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
 /**
  * 披萨商店
  *

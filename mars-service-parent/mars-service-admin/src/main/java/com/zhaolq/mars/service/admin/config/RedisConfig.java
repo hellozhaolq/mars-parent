@@ -14,10 +14,10 @@ import java.io.Serializable;
 
 /**
  * Redis配置类
- *
+ * <p>
  * 官方文档：
- *      https://docs.spring.io/spring-data/redis/docs/
- *      https://docs.spring.io/spring-data/redis/docs/2.3.9.RELEASE/reference/html/#reference
+ * https://docs.spring.io/spring-data/redis/docs/
+ * https://docs.spring.io/spring-data/redis/docs/2.3.9.RELEASE/reference/html/#reference
  *
  * @Author zhaolq
  * @Date 2021/6/15 21:14
@@ -72,7 +72,6 @@ public class RedisConfig {
 
         return redisTemplate;
     }
-
 
 
 }

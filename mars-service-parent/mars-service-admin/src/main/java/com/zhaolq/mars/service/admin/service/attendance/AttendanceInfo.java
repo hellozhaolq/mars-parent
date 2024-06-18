@@ -1,8 +1,8 @@
 package com.zhaolq.mars.service.admin.service.attendance;
 
-import java.math.BigDecimal;
-
 import lombok.Data;
+
+import java.math.BigDecimal;
 
 /**
  * 考勤信息

@@ -31,19 +31,16 @@ import static org.springframework.boot.logging.LoggingSystem.ROOT_LOGGER_NAME;
 @Order(Ordered.LOWEST_PRECEDENCE)
 public class InitLoggerLevelRunner implements ApplicationRunner {
 
-    @Value("${logging.level.root}")
-    private String rootLogLevel;
-
-    @Value("${logging.level.com.zhaolq}")
-    private String marsLogLevel;
-
-    @Resource
-    private LoggingSystem loggingSystem;
-
     /**
      * 项目统一包名前缀，也是记录器名称
      */
     public static final String SCHEMA = "com.zhaolq";
+    @Value("${logging.level.root}")
+    private String rootLogLevel;
+    @Value("${logging.level.com.zhaolq}")
+    private String marsLogLevel;
+    @Resource
+    private LoggingSystem loggingSystem;
 
     @Override
     public void run(ApplicationArguments args) {

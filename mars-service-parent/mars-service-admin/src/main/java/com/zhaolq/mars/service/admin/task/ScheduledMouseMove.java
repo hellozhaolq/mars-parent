@@ -1,18 +1,13 @@
 package com.zhaolq.mars.service.admin.task;
 
-import java.awt.AWTException;
-import java.awt.MouseInfo;
-import java.awt.Point;
-import java.awt.Robot;
-import java.awt.event.InputEvent;
-import java.time.LocalDateTime;
-
+import cn.hutool.core.date.DatePattern;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.zhaolq.mars.common.core.date.DatePattern;
-
-import lombok.extern.slf4j.Slf4j;
+import java.awt.*;
+import java.awt.event.InputEvent;
+import java.time.LocalDateTime;
 
 /**
  * 光标移动计划

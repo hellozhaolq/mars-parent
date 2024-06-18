@@ -1,12 +1,13 @@
 package com.zhaolq.mars.service.admin.controller.other;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONObject;
+import com.zhaolq.mars.common.core.result.ErrorEnum;
+import com.zhaolq.mars.common.core.result.R;
+import com.zhaolq.mars.service.admin.service.attendance.AttendanceCalc;
+import com.zhaolq.mars.service.admin.service.attendance.AttendanceInfo;
+import com.zhaolq.mars.service.admin.service.attendance.AttendancePolicy;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
@@ -18,16 +19,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alibaba.fastjson2.JSON;
-import com.alibaba.fastjson2.JSONObject;
-
-import com.zhaolq.mars.common.core.result.R;
-import com.zhaolq.mars.common.core.result.ErrorCode;
-import com.zhaolq.mars.service.admin.service.attendance.AttendanceCalc;
-import com.zhaolq.mars.service.admin.service.attendance.AttendanceInfo;
-import com.zhaolq.mars.service.admin.service.attendance.AttendancePolicy;
-
-import lombok.extern.slf4j.Slf4j;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 考勤
@@ -91,7 +88,7 @@ public class AttendanceController {
             AttendanceCalc attendanceCalc = new AttendanceCalc(attendanceInfoList, policy);
             result = attendanceCalc.calc();
         } catch (Exception e) {
-            result = R.failure(ErrorCode.FAILURE);
+            result = R.failure(ErrorEnum.FAILURE);
         }
         return result;
     }

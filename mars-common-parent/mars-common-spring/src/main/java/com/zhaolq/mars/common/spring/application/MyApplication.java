@@ -1,12 +1,8 @@
 package com.zhaolq.mars.common.spring.application;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.LinkedHashSet;
-import java.util.Locale;
-import java.util.Properties;
-import java.util.Set;
-
+import com.zhaolq.mars.common.core.enums.OS;
+import com.zhaolq.mars.common.core.enums.Profile;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.ConfigurableEnvironment;
@@ -19,10 +15,12 @@ import org.springframework.core.env.StandardEnvironment;
 import org.springframework.core.env.SystemEnvironmentPropertySource;
 import org.springframework.util.Assert;
 
-import com.zhaolq.mars.common.core.enums.OS;
-import com.zhaolq.mars.common.core.enums.Profile;
-
-import lombok.extern.slf4j.Slf4j;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.Locale;
+import java.util.Properties;
+import java.util.Set;
 
 /**
  * @Author zhaolq
@@ -57,9 +55,9 @@ public class MyApplication {
     /**
      * 此方法不推荐使用，系统初始化工作尽量放到bean加载完成后执行。
      *
-     * @param serviceName serviceName
+     * @param serviceName   serviceName
      * @param primarySource primarySource
-     * @param args args
+     * @param args          args
      * @return org.springframework.boot.builder.SpringApplicationBuilder
      */
     public static SpringApplicationBuilder createSpringApplicationBuilder(

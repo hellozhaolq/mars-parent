@@ -16,17 +16,29 @@ import java.util.List;
  */
 public enum Profile {
 
-    /** 开发 */
+    /**
+     * 开发
+     */
     DEV("dev"),
-    /** 系统集成测试 */
+    /**
+     * 系统集成测试
+     */
     SIT("sit"),
-    /** 用户验收测试 */
+    /**
+     * 用户验收测试
+     */
     UAT("uat"),
-    /** 性能评估测试（压测） */
+    /**
+     * 性能评估测试（压测）
+     */
     PET("pet"),
-    /** 仿真 */
+    /**
+     * 仿真
+     */
     SIM("sim"),
-    /** 产品/正式/生产 */
+    /**
+     * 产品/正式/生产
+     */
     PROD("prod");
 
     // ---------------------------------------------------------------
@@ -35,10 +47,6 @@ public enum Profile {
 
     private Profile(String value) {
         this.value = value;
-    }
-
-    public String getValue() {
-        return this.value;
     }
 
     /**
@@ -54,5 +62,9 @@ public enum Profile {
                 PET.getValue(),
                 SIM.getValue(),
                 PROD.getValue());
+    }
+
+    public String getValue() {
+        return this.value;
     }
 }

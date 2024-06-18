@@ -6,7 +6,7 @@ package com.zhaolq.mars.common.core.result;
  * @Author zhaolq
  * @Date 2020/11/3 20:54
  */
-public interface ICode {
+public interface IError {
 
     /**
      * 获取状态码

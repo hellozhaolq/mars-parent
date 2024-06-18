@@ -21,11 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 
+import com.zhaolq.mars.common.core.result.R;
+import com.zhaolq.mars.common.core.result.ErrorCode;
 import com.zhaolq.mars.service.admin.service.attendance.AttendanceCalc;
 import com.zhaolq.mars.service.admin.service.attendance.AttendanceInfo;
 import com.zhaolq.mars.service.admin.service.attendance.AttendancePolicy;
-import com.zhaolq.mars.common.core.result.R;
-import com.zhaolq.mars.common.core.result.ResultCode;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -41,17 +41,15 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping(path = "/attendance", consumes = {MediaType.ALL_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
 public class AttendanceController {
 
+    @Autowired
+    ResourceLoader resourceLoader;
+    @Autowired
+    ApplicationContext applicationContext;
     /**
      * @Value还能支持其他的加载协议，比如file:或url:。
      */
     @Value("classpath:config/time.properties")
     private Resource timeProperties;
-
-    @Autowired
-    ResourceLoader resourceLoader;
-
-    @Autowired
-    ApplicationContext applicationContext;
 
     @RequestMapping(value = "/offWork", method = RequestMethod.POST)
     public R<Object> offWork(@RequestBody String jsonString) throws IOException {
@@ -93,7 +91,7 @@ public class AttendanceController {
             AttendanceCalc attendanceCalc = new AttendanceCalc(attendanceInfoList, policy);
             result = attendanceCalc.calc();
         } catch (Exception e) {
-            result = R.failure(ResultCode.FAILURE);
+            result = R.failure(ErrorCode.FAILURE);
         }
         return result;
     }

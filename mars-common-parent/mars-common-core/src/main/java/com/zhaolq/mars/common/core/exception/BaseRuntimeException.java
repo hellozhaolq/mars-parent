@@ -1,7 +1,7 @@
 package com.zhaolq.mars.common.core.exception;
 
-import com.zhaolq.mars.common.core.result.ErrorCode;
-import com.zhaolq.mars.common.core.result.ICode;
+import com.zhaolq.mars.common.core.result.ErrorEnum;
+import com.zhaolq.mars.common.core.result.IError;
 
 /**
  * 运行时异常，常用于对RuntimeException的包装。此类为JDK已定义异常的补集。
@@ -53,56 +53,61 @@ import com.zhaolq.mars.common.core.result.ICode;
 public class BaseRuntimeException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
-    private int code;
+    private IError iError;
 
     public BaseRuntimeException() {
         super();
-        this.code = ErrorCode.SYSTEM_ERROR.getCode();
+        this.iError = ErrorEnum.SYSTEM_ERROR;
     }
 
     public BaseRuntimeException(String message) {
         super(message);
-        this.code = ErrorCode.SYSTEM_ERROR.getCode();
+        this.iError = ErrorEnum.SYSTEM_ERROR;
     }
 
     public BaseRuntimeException(String message, Throwable cause) {
         super(message, cause);
-        this.code = ErrorCode.SYSTEM_ERROR.getCode();
+        this.iError = ErrorEnum.SYSTEM_ERROR;
     }
 
     public BaseRuntimeException(Throwable cause) {
         super();
-        this.code = ErrorCode.SYSTEM_ERROR.getCode();
+        this.iError = ErrorEnum.SYSTEM_ERROR;
     }
 
     public BaseRuntimeException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
-        this.code = ErrorCode.SYSTEM_ERROR.getCode();
+        this.iError = ErrorEnum.SYSTEM_ERROR;
     }
 
+    /********* 下面的构造方法带 IError *********/
 
-    public BaseRuntimeException(ICode code) {
-        super(code.getMsg());
-        this.code = code.getCode();
+    public BaseRuntimeException(IError error) {
+        super(error.getMsg());
+        this.iError = error;
     }
 
-    public BaseRuntimeException(String message, ICode code) {
+    public BaseRuntimeException(String message, IError error) {
         super(message);
-        this.code = code.getCode();
+        this.iError = error;
     }
 
-    public BaseRuntimeException(String message, Throwable cause, ICode code) {
+    public BaseRuntimeException(String message, Throwable cause, IError error) {
         super(message, cause);
-        this.code = code.getCode();
+        this.iError = error;
     }
 
-    public BaseRuntimeException(Throwable cause, ICode code) {
+    public BaseRuntimeException(Throwable cause, IError error) {
         super(cause);
-        this.code = code.getCode();
+        this.iError = error;
     }
 
-    public BaseRuntimeException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace, ICode code) {
+    public BaseRuntimeException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace, IError error) {
         super(message, cause, enableSuppression, writableStackTrace);
-        this.code = code.getCode();
+        this.iError = error;
+    }
+
+    public IError getiError() {
+        return iError;
     }
 }

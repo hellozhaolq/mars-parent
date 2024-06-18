@@ -19,42 +19,77 @@ import io.swagger.v3.oas.annotations.media.Schema;
  */
 @Schema(description = "返回信息")
 public final class Result extends LinkedHashMap<String, Object> implements Serializable {
-    private static final long serialVersionUID = 1L;    // 序列化版本号
-
     public static final String RESULT_KEY_CODE = "code";
     public static final String RESULT_KEY_DATA = "data";
-    public static final String RESULT_KEY_MSG_EN = "msgEn";
-    public static final String RESULT_KEY_MSG_CN = "msgCn";
+    public static final String RESULT_KEY_MSG = "msg";
     public static final String RESULT_KEY_SUCCESS = "success";
     public static final String RESULT_KEY_DATETIME = "datetime";
+    private static final long serialVersionUID = 1L;    // 序列化版本号
 
     private Result() {}
 
-    private Result(IResultCode resultCode) {
+    private Result(ICode resultCode) {
         setCode(resultCode.getCode());
         setData(null);
-        setMsgEn(resultCode.getDescEn());
-        setMsgCn(resultCode.getDescCh());
+        setMsg(resultCode.getMsg());
         setSuccess(resultCode.isSuccess());
         setDatetime();
     }
 
-    private Result(IResultCode resultCode, Object data) {
+    private Result(ICode resultCode, Object data) {
         setCode(resultCode.getCode());
         setData(data);
-        setMsgEn(resultCode.getDescEn());
-        setMsgCn(resultCode.getDescCh());
+        setMsg(resultCode.getMsg());
         setSuccess(resultCode.isSuccess());
         setDatetime();
     }
 
-    private Result(IResultCode resultCode, String msgEn, String msgCn) {
+    private Result(ICode resultCode, String msg) {
         setCode(resultCode.getCode());
         setData(null);
-        setMsgEn(msgEn);
-        setMsgCn(msgCn);
+        setMsg(msg);
         setSuccess(resultCode.isSuccess());
         setDatetime();
+    }
+
+    /** success */
+
+    public static Result success() {
+        return new Result(ErrorCode.SUCCESS);
+    }
+
+    public static Result success(Object data) {
+        return new Result(ErrorCode.SUCCESS, data);
+    }
+
+    /** failure */
+
+    public static Result failure() {
+        return new Result(ErrorCode.FAILURE);
+    }
+
+    public static Result failure(ICode code) {
+        return new Result(code);
+    }
+
+    public static Result failure(String msg) {
+        return new Result(ErrorCode.FAILURE, msg);
+    }
+
+    /** boo */
+
+    public static Result boo(boolean flag) {
+        return flag ? success() : failure();
+    }
+
+    /**
+     * 判断返回是否成功
+     *
+     * @param result
+     * @return boolean 是否成功
+     */
+    public static boolean isSuccess(@Nullable Result result) {
+        return Optional.ofNullable(result).map(Result::getSuccess).orElseGet(() -> Boolean.FALSE);
     }
 
     /**
@@ -87,21 +122,12 @@ public final class Result extends LinkedHashMap<String, Object> implements Seria
         return this;
     }
 
-    public String getMsgEn() {
-        return (String) this.get(RESULT_KEY_MSG_EN);
+    public String getMsg() {
+        return (String) this.get(RESULT_KEY_MSG);
     }
 
-    private Result setMsgEn(String msgEn) {
-        super.put(RESULT_KEY_MSG_EN, msgEn);
-        return this;
-    }
-
-    public String getMsgCn() {
-        return (String) this.get(RESULT_KEY_MSG_CN);
-    }
-
-    private Result setMsgCn(String msgCn) {
-        super.put(RESULT_KEY_MSG_CN, msgCn);
+    private Result setMsg(String msg) {
+        super.put(RESULT_KEY_MSG, msg);
         return this;
     }
 
@@ -121,53 +147,5 @@ public final class Result extends LinkedHashMap<String, Object> implements Seria
     private Result setDatetime() {
         super.put(RESULT_KEY_DATETIME, DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm:ss"));
         return this;
-    }
-
-    /** success */
-
-    public static Result success() {
-        return new Result(ResultCode.SUCCESS);
-    }
-
-    public static Result success(Object data) {
-        return new Result(ResultCode.SUCCESS, data);
-    }
-
-    /** failure */
-
-    public static Result failure() {
-        return new Result(ResultCode.FAILURE);
-    }
-
-    public static Result failure(IResultCode resultCode) {
-        return new Result(resultCode);
-    }
-
-    public static Result failure(String msgEn, String msgCN) {
-        return new Result(ResultCode.FAILURE, msgEn, msgCN);
-    }
-
-    public static Result failureEn(String msgEn) {
-        return new Result(ResultCode.FAILURE, msgEn, null);
-    }
-
-    public static Result failureCn(String msgCN) {
-        return new Result(ResultCode.FAILURE, null, msgCN);
-    }
-
-    /** boo */
-
-    public static Result boo(boolean flag) {
-        return flag ? success() : failure();
-    }
-
-    /**
-     * 判断返回是否成功
-     *
-     * @param result
-     * @return boolean 是否成功
-     */
-    public static boolean isSuccess(@Nullable Result result) {
-        return Optional.ofNullable(result).map(Result::getSuccess).orElseGet(() -> Boolean.FALSE);
     }
 }

@@ -46,6 +46,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BaseRuntimeException.class)
     public R<?> baseRuntimeExceptionHandler(BaseRuntimeException e) {
         log.error("请求地址'{}',请求体缺失'{}'", httpServletRequest.getRequestURI(), e.getMessage());
-        return R.failure(e.getErrorInfo());
+        return R.failure(e.getiError());
     }
 }

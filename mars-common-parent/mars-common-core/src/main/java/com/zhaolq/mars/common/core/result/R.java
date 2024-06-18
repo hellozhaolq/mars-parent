@@ -17,40 +17,77 @@ import io.swagger.v3.oas.annotations.media.Schema;
  */
 @Schema(description = "返回信息")
 public final class R<T> implements Serializable {
-    private static final long serialVersionUID = 1L;	// 序列化版本号
+    private static final long serialVersionUID = 1L;    // 序列化版本号
 
     @Schema(description = "状态码", example = "200")
     private int code;
     @Schema(description = "承载数据")
     private T data;
     @Schema(description = "返回消息")
-    private String msgEn;
-    @Schema(description = "返回消息")
-    private String msgCh;
+    private String msg;
     @Schema(description = "是否成功", example = "true")
     private Boolean success;
     @Schema(description = "返回时间")
     private String datetime;
 
-    private R(int code, T data, String msgEn, String msgCn, Boolean success) {
+    private R(int code, T data, String msg, Boolean success) {
         this.code = code;
         this.data = data;
-        this.msgEn = msgEn;
-        this.msgCh = msgCn;
+        this.msg = msg;
         this.success = success;
         this.datetime = DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm:ss");
     }
 
-    private R(IResultCode resultCode) {
-        this(resultCode.getCode(), null, resultCode.getDescEn(), resultCode.getDescCh(), resultCode.isSuccess());
+    private R(ICode resultCode) {
+        this(resultCode.getCode(), null, resultCode.getMsg(), resultCode.isSuccess());
     }
 
-    private R(IResultCode resultCode, T data) {
-        this(resultCode.getCode(), data, resultCode.getDescEn(), resultCode.getDescCh(), resultCode.isSuccess());
+    private R(ICode resultCode, T data) {
+        this(resultCode.getCode(), data, resultCode.getMsg(), resultCode.isSuccess());
     }
 
-    private R(IResultCode resultCode, String msgEn, String msgCh) {
-        this(resultCode.getCode(), null, msgEn, msgCh, resultCode.isSuccess());
+    private R(ICode resultCode, String msg) {
+        this(resultCode.getCode(), null, msg, resultCode.isSuccess());
+    }
+
+    /** success */
+
+    public static <T> R<T> success() {
+        return new R<>(ErrorCode.SUCCESS);
+    }
+
+    public static <T> R<T> success(T data) {
+        return new R<>(ErrorCode.SUCCESS, data);
+    }
+
+    /** failure */
+
+    public static <T> R<T> failure() {
+        return new R<>(ErrorCode.FAILURE);
+    }
+
+    public static <T> R<T> failure(ICode resultCode) {
+        return new R<>(resultCode);
+    }
+
+    public static <T> R<T> failure(String msg) {
+        return new R<>(ErrorCode.FAILURE, msg);
+    }
+
+    /** boo */
+
+    public static <T> R<T> boo(boolean flag) {
+        return flag ? success() : failure();
+    }
+
+    /**
+     * 判断返回是否成功
+     *
+     * @param r
+     * @return boolean 是否成功
+     */
+    public static boolean isSuccess(@Nullable R<?> r) {
+        return Optional.ofNullable(r).map(R::getSuccess).orElseGet(() -> Boolean.FALSE);
     }
 
     public int getCode() {
@@ -69,20 +106,12 @@ public final class R<T> implements Serializable {
         this.data = data;
     }
 
-    public String getMsgEn() {
-        return msgEn;
+    public String getMsg() {
+        return msg;
     }
 
-    private void setMsgEn(String msgEn) {
-        this.msgEn = msgEn;
-    }
-
-    public String getMsgCh() {
-        return msgCh;
-    }
-
-    private void setMsgCh(String msgCh) {
-        this.msgCh = msgCh;
+    private void setMsg(String msg) {
+        this.msg = msg;
     }
 
     public Boolean getSuccess() {
@@ -99,54 +128,6 @@ public final class R<T> implements Serializable {
 
     private void setDatetime(String datetime) {
         this.datetime = datetime;
-    }
-
-    /** success */
-
-    public static <T> R<T> success() {
-        return new R<>(ResultCode.SUCCESS);
-    }
-
-    public static <T> R<T> success(T data) {
-        return new R<>(ResultCode.SUCCESS, data);
-    }
-
-    /** failure */
-
-    public static <T> R<T> failure() {
-        return new R<>(ResultCode.FAILURE);
-    }
-
-    public static <T> R<T> failure(IResultCode resultCode) {
-        return new R<>(resultCode);
-    }
-
-    public static <T> R<T> failure(String msgEn, String msgCh) {
-        return new R<>(ResultCode.FAILURE, msgEn, msgCh);
-    }
-
-    public static <T> R<T> failureEn(String msgEn) {
-        return new R<>(ResultCode.FAILURE, msgEn, null);
-    }
-
-    public static <T> R<T> failureCh(String msgCh) {
-        return new R<>(ResultCode.FAILURE, null, msgCh);
-    }
-
-    /** boo */
-
-    public static <T> R<T> boo(boolean flag) {
-        return flag ? success() : failure();
-    }
-
-    /**
-     * 判断返回是否成功
-     *
-     * @param r
-     * @return boolean 是否成功
-     */
-    public static boolean isSuccess(@Nullable R<?> r) {
-        return Optional.ofNullable(r).map(R::getSuccess).orElseGet(() -> Boolean.FALSE);
     }
 
 }

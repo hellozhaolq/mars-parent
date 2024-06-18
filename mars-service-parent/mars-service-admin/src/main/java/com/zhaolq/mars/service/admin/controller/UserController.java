@@ -1,24 +1,29 @@
 package com.zhaolq.mars.service.admin.controller;
 
+import java.util.Optional;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Validate;
+import org.springframework.http.MediaType;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.zhaolq.mars.common.core.exception.BaseRuntimeException;
+import com.zhaolq.mars.common.core.result.ErrorCode;
 import com.zhaolq.mars.common.core.result.R;
-import com.zhaolq.mars.common.core.result.ResultCode;
 import com.zhaolq.mars.common.valid.group.Add;
 import com.zhaolq.mars.service.admin.dao.base.UserMapper;
 import com.zhaolq.mars.service.admin.entity.UserEntity;
 import com.zhaolq.mars.service.admin.service.IUserService;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.Validate;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 /**
  * <p>
@@ -50,41 +55,17 @@ public class UserController {
     @Operation(summary = "单个查询", description = "单个查询")
     public R<UserEntity> get(UserEntity userEntity) {
         // 这里永远断言成功，即使请求没有参数userEntity也不是null。
-        Validate.notNull(userEntity, ResultCode.PARAM_NOT_COMPLETE.getDescCh());
+        Validate.notNull(userEntity, ErrorCode.PARAM_NOT_COMPLETE.getMsg());
         boolean condition = userEntity == null || (StringUtils.isEmpty(userEntity.getId()) && StringUtils.isEmpty(userEntity.getAccount()));
         if (condition) {
-            return R.failure(ResultCode.PARAM_NOT_COMPLETE);
+            throw new BaseRuntimeException(ErrorCode.PARAM_ERROR);
         }
 
         Optional<UserEntity> optionalUserEntity = userMapper.selectOne(userEntity);
         if (optionalUserEntity.isEmpty()) {
-            return R.failure(ResultCode.USER_NOT_EXISTED);
+            throw new BaseRuntimeException(ErrorCode.USER_NOT_EXISTED);
         }
         return R.success(optionalUserEntity.get());
-    }
-
-    /**
-     * 单个查询
-     *
-     * @param userEntity
-     * @return com.zhaolq.mars.api.sys.entity.UserEntity
-     * @throws
-     */
-    @GetMapping("/get2")
-    @Operation(summary = "单个查询", description = "单个查询")
-    public ResponseEntity<UserEntity> get2(UserEntity userEntity) {
-        // 这里永远断言成功，即使请求没有参数userEntity也不是null。
-        Validate.notNull(userEntity, ResultCode.PARAM_NOT_COMPLETE.getDescCh());
-        boolean condition = userEntity == null || (StringUtils.isEmpty(userEntity.getId()) && StringUtils.isEmpty(userEntity.getAccount()));
-        if (condition) {
-            return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).build();
-        }
-        Optional<UserEntity> optionalUserEntity = userMapper.selectOne(userEntity);
-
-        if (optionalUserEntity.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.RESET_CONTENT).build();
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(optionalUserEntity.get());
     }
 
     /**
@@ -100,7 +81,7 @@ public class UserController {
         // 检查用户是否存在
         Optional<UserEntity> optionalUserEntity = userMapper.selectOne(userEntity);
         if (!optionalUserEntity.isEmpty()) {
-            return R.failure(ResultCode.USER_HAS_EXISTED);
+            return R.failure(ErrorCode.USER_HAS_EXISTED);
         }
         // 不存在，则新增
         int res = userMapper.insert(userEntity);

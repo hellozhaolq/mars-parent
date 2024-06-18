@@ -6,14 +6,16 @@ package com.zhaolq.mars.common.core.result;
  * @Author zhaolq
  * @Date 2020/11/3 19:56
  */
-public enum ResultCode implements IResultCode {
+public enum ErrorCode implements ICode {
 
     /* 成功 */
     SUCCESS(1, "success", "操作成功"),
     /* 失败 */
     FAILURE(2, "failure", "操作失败"),
     /* 未知错误 */
-    UNKNOWN_ERROR(999999999, "unknown error", "未知错误"),
+    UNKNOWN_ERROR(999999998, "unknown error", "未知错误"),
+    /* 系统错误 */
+    SYSTEM_ERROR(999999999, "unknown error", "系统错误"),
 
 
     /* 参数错误：10000-19999 */
@@ -33,9 +35,7 @@ public enum ResultCode implements IResultCode {
 
     /* 异常代码：1000000-1999999 */
     // 对应JDK异常
-    FILE_NOT_FOUND(1000000, "", "")
-
-    ;
+    FILE_NOT_FOUND(1000000, "", "");
 
     /**
      * 状态码
@@ -50,7 +50,7 @@ public enum ResultCode implements IResultCode {
      */
     private final String descCh;
 
-    private ResultCode(int code, String descEn, String descCh) {
+    private ErrorCode(int code, String descEn, String descCh) {
         this.code = code;
         this.descEn = descEn;
         this.descCh = descCh;
@@ -62,18 +62,14 @@ public enum ResultCode implements IResultCode {
     }
 
     @Override
-    public String getDescEn() {
-        return this.descEn;
-    }
-
-    @Override
-    public String getDescCh() {
+    public String getMsg() {
+        // 这里判断当语言为中文时返回descCh，否则返回descEn。
         return this.descCh;
     }
 
     @Override
     public Boolean isSuccess() {
-        return this.code == ResultCode.SUCCESS.getCode();
+        return this.code == ErrorCode.SUCCESS.getCode();
     }
 
 }

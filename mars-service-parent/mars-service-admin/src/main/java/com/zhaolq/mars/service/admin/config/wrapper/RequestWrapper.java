@@ -1,15 +1,21 @@
 package com.zhaolq.mars.service.admin.config.wrapper;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+
 import com.zhaolq.mars.common.core.exception.BaseRuntimeException;
+import com.zhaolq.mars.common.core.result.ErrorCode;
 import com.zhaolq.mars.common.core.util.CharsetUtil;
 import com.zhaolq.mars.common.core.util.ServletUtil;
+
 import jakarta.servlet.ReadListener;
 import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletRequestWrapper;
 import lombok.extern.slf4j.Slf4j;
-
-import java.io.*;
 
 /**
  * request.getInputStream()输入流只能读取一次问题: https://blog.csdn.net/qq_16159433/article/details/120922952
@@ -29,7 +35,7 @@ public class RequestWrapper extends HttpServletRequestWrapper {
             // 将body数据存起来，也是使用 CharsetUtil.defaultCharset()
             body = ServletUtil.getBody(request).getBytes(CharsetUtil.UTF_8);
         } catch (UnsupportedEncodingException e) {
-            throw new BaseRuntimeException(e);
+            throw new BaseRuntimeException(e, ErrorCode.FAILURE);
         }
     }
 

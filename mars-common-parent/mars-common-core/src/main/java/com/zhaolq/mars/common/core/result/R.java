@@ -1,11 +1,13 @@
 package com.zhaolq.mars.common.core.result;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import org.apache.commons.lang3.time.DateFormatUtils;
+import lombok.Data;
+import org.springframework.http.HttpStatus;
 import org.springframework.lang.Nullable;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
 /**
@@ -15,6 +17,7 @@ import java.util.Optional;
  * @Date 2020/10/16 11:30
  */
 @Schema(description = "返回信息")
+@Data
 public final class R<T> implements Serializable {
     private static final long serialVersionUID = 1L;    // 序列化版本号
 
@@ -34,7 +37,7 @@ public final class R<T> implements Serializable {
         this.data = data;
         this.msg = msg;
         this.success = success;
-        this.datetime = DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm:ss");
+        this.datetime = Instant.now().truncatedTo(ChronoUnit.SECONDS).toString();
     }
 
     private R(IError iError) {
@@ -86,53 +89,23 @@ public final class R<T> implements Serializable {
     }
 
     /**
+     * 返回Http状态码
+     *
+     * @param httpStatus httpStatus
+     * @param data       通常为详细的异常信息Exception.getMessage()，若不想暴露请设置null
+     * @return R<T>
+     */
+    public static <T> R<T> httpStatus(HttpStatus httpStatus, T data) {
+        return new R<>(httpStatus.value(), data, httpStatus.getReasonPhrase(), httpStatus.is2xxSuccessful());
+    }
+
+    /**
      * 判断返回是否成功
      *
      * @param r
      * @return boolean 是否成功
      */
     public static boolean isSuccess(@Nullable R<?> r) {
-        return Optional.ofNullable(r).map(R::getSuccess).orElseGet(() -> Boolean.FALSE);
+        return Optional.ofNullable(r).map(rr -> rr.getSuccess() || HttpStatus.valueOf(rr.getCode()).is2xxSuccessful()).orElseGet(() -> Boolean.FALSE);
     }
-
-    public int getCode() {
-        return code;
-    }
-
-    private void setCode(int code) {
-        this.code = code;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    private void setData(T data) {
-        this.data = data;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    private void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public Boolean getSuccess() {
-        return success;
-    }
-
-    private void setSuccess(Boolean success) {
-        this.success = success;
-    }
-
-    public String getDatetime() {
-        return datetime;
-    }
-
-    private void setDatetime(String datetime) {
-        this.datetime = datetime;
-    }
-
 }

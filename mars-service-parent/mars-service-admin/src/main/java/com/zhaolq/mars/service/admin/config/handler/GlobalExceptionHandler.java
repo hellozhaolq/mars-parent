@@ -1,7 +1,6 @@
 package com.zhaolq.mars.service.admin.config.handler;
 
 import com.zhaolq.mars.common.core.exception.BaseRuntimeException;
-import com.zhaolq.mars.common.core.result.ErrorEnum;
 import com.zhaolq.mars.common.core.result.R;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +33,7 @@ public class GlobalExceptionHandler {
     public R<?> exceptionHandler(Exception e) {
         log.error("请求地址'{}'，异常信息'{}'", httpServletRequest.getRequestURI(), e.getMessage());
         e.printStackTrace();
-        return R.failure(ErrorEnum.SYSTEM_ERROR);
+        return R.httpStatus(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -42,7 +41,7 @@ public class GlobalExceptionHandler {
     public R<?> runtimeExceptionHandler(RuntimeException e) {
         log.error("请求地址'{}'，异常信息'{}'", httpServletRequest.getRequestURI(), e.getMessage());
         e.printStackTrace();
-        return R.failure(ErrorEnum.SYSTEM_ERROR);
+        return R.httpStatus(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -50,7 +49,7 @@ public class GlobalExceptionHandler {
     public R<?> bindExceptionHandler(BindException e) {
         log.error("请求地址'{}'，异常信息'{}'", httpServletRequest.getRequestURI(), e.getMessage());
         e.printStackTrace();
-        return R.failure(ErrorEnum.SYSTEM_ERROR);
+        return R.httpStatus(HttpStatus.BAD_REQUEST, e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.OK)

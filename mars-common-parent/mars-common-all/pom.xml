@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>mars-common-all</artifactId>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
     <name>${project.artifactId}</name>
     <url>https://blog.zhaolq.com</url>

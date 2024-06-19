@@ -9,7 +9,10 @@
     <!--*********************************************************************************************-->
     <modelVersion>4.0.0</modelVersion>
 
-    <!-- 若在dependencyManagement中声明spring-boot-dependencies，Maven依赖深度传递时可能获取不到Maven插件版本，就会使用低版本插件，造成构建环境不稳定。 -->
+    <!--
+        若在dependencyManagement中声明spring-boot-dependencies，Maven依赖深度传递时可能获取不到Maven插件版本，就会使用低版本插件，造成构建环境不稳定。
+        实测 pluginManagement 中得声明只能向下传递一层，再下一层将获取不到插件版本。
+    -->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-dependencies</artifactId>

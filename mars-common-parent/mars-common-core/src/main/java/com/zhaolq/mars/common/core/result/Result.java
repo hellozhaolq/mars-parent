@@ -1,11 +1,12 @@
 package com.zhaolq.mars.common.core.result;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import org.apache.commons.lang3.time.DateFormatUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.lang.Nullable;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.LinkedHashMap;
 import java.util.Optional;
 
@@ -52,6 +53,14 @@ public final class Result extends LinkedHashMap<String, Object> implements Seria
         setDatetime();
     }
 
+    private Result(HttpStatus httpStatus, Object data) {
+        setCode(httpStatus.value());
+        setData(data);
+        setMsg(httpStatus.getReasonPhrase());
+        setSuccess(httpStatus.is2xxSuccessful());
+        setDatetime();
+    }
+
     /**
      * success
      */
@@ -89,13 +98,24 @@ public final class Result extends LinkedHashMap<String, Object> implements Seria
     }
 
     /**
+     * 返回Http状态码
+     *
+     * @param httpStatus httpStatus
+     * @param data       通常为详细的异常信息Exception.getMessage()，若不想暴露请设置null
+     * @return R<T>
+     */
+    public static Result httpStatus(HttpStatus httpStatus, Object data) {
+        return new Result(httpStatus, data);
+    }
+
+    /**
      * 判断返回是否成功
      *
      * @param result
      * @return boolean 是否成功
      */
     public static boolean isSuccess(@Nullable Result result) {
-        return Optional.ofNullable(result).map(Result::getSuccess).orElseGet(() -> Boolean.FALSE);
+        return Optional.ofNullable(result).map(rr -> rr.getSuccess() || HttpStatus.valueOf(rr.getCode()).is2xxSuccessful()).orElseGet(() -> Boolean.FALSE);
     }
 
     /**
@@ -151,7 +171,7 @@ public final class Result extends LinkedHashMap<String, Object> implements Seria
     }
 
     private Result setDatetime() {
-        super.put(RESULT_KEY_DATETIME, DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm:ss"));
+        super.put(RESULT_KEY_DATETIME, Instant.now().truncatedTo(ChronoUnit.SECONDS).toString());
         return this;
     }
 }

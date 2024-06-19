@@ -84,13 +84,30 @@ public class UserController {
     @Operation(summary = "单个新增", description = "单个新增")
     public R<UserEntity> post(@Validated({Add.class}) @RequestBody(required = true) UserEntity userEntity) {
         // 检查用户是否存在
-        UserEntity entity = userService.findOne(userEntity);
+        UserEntity entity = userService.findOne(new UserEntity().setAccount(userEntity.getAccount()));
         if (!ObjectUtils.isEmpty(entity)) {
             throw new BaseRuntimeException(ErrorEnum.USER_HAS_EXISTED);
         }
         // 不存在，则新增
         UserEntity savedEntity = userService.save(userEntity);
         return R.success(ObjectUtils.isNotEmpty(savedEntity) ? savedEntity : null);
+    }
+
+    /**
+     * 单个修改
+     *
+     * @param userEntity
+     * @return com.zhaolq.mars.api.sys.entity.UserEntity
+     * @throws
+     */
+    @PutMapping("/put")
+    @Operation(summary = "单个修改", description = "单个修改")
+    public R<UserEntity> put(@Validated({Edit.class}) @RequestBody UserEntity userEntity) {
+        UserEntity entity = userService.updateSelective(userEntity);
+        if (ObjectUtils.isEmpty(entity)) {
+            throw new BaseRuntimeException(ErrorEnum.USER_NOT_EXISTED);
+        }
+        return R.success(entity);
     }
 
     /**
@@ -109,23 +126,6 @@ public class UserController {
         }
         int result = userService.deleteById(id);
         return R.boo(result == 1 ? Boolean.TRUE : Boolean.FALSE);
-    }
-
-    /**
-     * 单个修改
-     *
-     * @param userEntity
-     * @return com.zhaolq.mars.api.sys.entity.UserEntity
-     * @throws
-     */
-    @PutMapping("/put")
-    @Operation(summary = "单个修改", description = "单个修改")
-    public R<UserEntity> put(@Validated({Edit.class}) @RequestBody UserEntity userEntity) {
-        UserEntity entity = userService.update(userEntity);
-        if (ObjectUtils.isEmpty(entity)) {
-            throw new BaseRuntimeException(ErrorEnum.USER_NOT_EXISTED);
-        }
-        return R.success(entity);
     }
 //
 //

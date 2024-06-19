@@ -28,6 +28,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * <p>
  * 用户管理 前端控制器
@@ -49,8 +51,7 @@ public class UserController {
      * 单个查询
      *
      * @param userEntity
-     * @return com.zhaolq.mars.api.sys.entity.UserEntity
-     * @throws
+     * @return
      */
     @GetMapping("/get")
     @Operation(summary = "单个查询", description = "单个查询")
@@ -71,12 +72,6 @@ public class UserController {
     /**
      * 单个新增
      *
-     * @param userEntity
-     * @return com.zhaolq.mars.api.sys.entity.UserEntity
-     * @throws
-     */
-
-    /**
      * @param userEntity
      * @return
      */
@@ -127,20 +122,21 @@ public class UserController {
         int result = userService.deleteById(id);
         return R.boo(result == 1 ? Boolean.TRUE : Boolean.FALSE);
     }
+
+    /**
+     * 列表查询
+     *
+     * @param userEntity
+     * @return
+     */
+    @GetMapping("/getList")
+    @Operation(summary = "列表查询", description = "列表查询")
+    public R<List<UserEntity>> getList(UserEntity userEntity) {
+        return R.success(userService.findList(userEntity));
+    }
 //
 //
-//    /**
-//     * 列表查询
-//     *
-//     * @param userEntity
-//     * @return com.zhaolq.mars.tool.core.result.R<java.util.List < com.zhaolq.mars.api.sys.entity.UserEntity>>
-//     */
-//    @GetMapping("/getList")
-//    @Operation(summary = "列表查询", description = "列表查询")
-//    public R<List<UserEntity>> getList(UserEntity userEntity) {
-//        QueryWrapper<UserEntity> wrapper = new QueryWrapper<>(userEntity);
-//        return R.success(userService.list(wrapper));
-//    }
+
 //
 //    /**
 //     * get分页查询

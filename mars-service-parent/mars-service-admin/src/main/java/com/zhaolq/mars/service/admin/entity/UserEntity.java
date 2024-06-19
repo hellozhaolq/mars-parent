@@ -6,6 +6,7 @@ import com.zhaolq.mars.common.mybatis.config.IdGenerate;
 import com.zhaolq.mars.common.valid.group.Add;
 import com.zhaolq.mars.common.valid.group.Edit;
 import com.zhaolq.mars.common.valid.group.Remove;
+import io.mybatis.activerecord.ActiveRecord;
 import io.mybatis.provider.Entity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;

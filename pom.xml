@@ -9,15 +9,12 @@
     <!--*********************************************************************************************-->
     <modelVersion>4.0.0</modelVersion>
 
-    <!--
-        为了避免环境不兼容导致莫名问题，建议不要手动更新maven插件版本，而是使用spring-boot-dependencies中的版本。
-        其他依赖版本可在properties中重新定义。
-     -->
-    <!--<parent>
+    <!-- 若在dependencyManagement中声明spring-boot-dependencies，Maven依赖深度传递时可能获取不到Maven插件版本，就会使用低版本插件，造成构建环境不稳定。 -->
+    <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-dependencies</artifactId>
-        <version>3.3.0</version> &lt;!&ndash; springboot版本 &ndash;&gt;
-    </parent>-->
+        <version>3.3.0</version> <!-- springboot版本 -->
+    </parent>
 
     <groupId>com.zhaolq.mars</groupId>
     <artifactId>mars-parent</artifactId>
@@ -48,12 +45,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> <!-- maven-resources-plugin将自动使用此编码 -->
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding> <!-- 配置所有Maven插件输出的报告编码 -->
 
-        <spring-boot-dependencies.version>3.3.0</spring-boot-dependencies.version>
         <spring-cloud-dependencies.version>2023.0.2</spring-cloud-dependencies.version>
 
         <!-- 需要切换至httpclient5 -->
         <httpclient.version>4.5.14</httpclient.version>
-        <httpclient5.version>5.3.1</httpclient5.version>
 
         <hutool-all.version>5.8.28</hutool-all.version>
         <fastjson2.version>2.0.51</fastjson2.version>
@@ -122,15 +117,6 @@
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-ui</artifactId>
                 <version>${springdoc-openapi-ui.version}</version>
-            </dependency>
-
-            <!-- 覆盖应写在上面 -->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring-boot-dependencies.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>

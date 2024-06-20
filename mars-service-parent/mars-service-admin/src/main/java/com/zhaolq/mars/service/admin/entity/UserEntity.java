@@ -12,7 +12,9 @@ import com.zhaolq.mars.common.mybatis.config.IdGenerate;
 import com.zhaolq.mars.common.valid.group.Add;
 import com.zhaolq.mars.common.valid.group.Edit;
 import com.zhaolq.mars.common.valid.group.Remove;
+import com.zhaolq.mars.service.admin.dao.base.UserMapper;
 
+import io.mybatis.activerecord.MapperRecord;
 import io.mybatis.provider.Entity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
@@ -35,7 +37,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @Schema(description = "用户管理")
 @Entity.Table("T_BASE_USER")
-public class UserEntity {
+public class UserEntity implements MapperRecord<UserEntity, String, UserMapper> {
     /**
      * 2、为了可以序列化，使用static，但这样的属性归类所有，不满足一个对象各一个，mybatisPlus不会认为是表字段
      * Lombok不会为static变量生成get、set方法，需手动

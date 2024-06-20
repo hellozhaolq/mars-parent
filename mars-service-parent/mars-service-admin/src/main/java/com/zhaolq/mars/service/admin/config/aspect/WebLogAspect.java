@@ -1,6 +1,5 @@
 package com.zhaolq.mars.service.admin.config.aspect;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -18,7 +17,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson2.JSON;
-import com.alibaba.fastjson2.JSONWriter;
+import com.alibaba.fastjson2.JSONObject;
 import com.zhaolq.mars.common.core.console.ConsoleKeyValue;
 import com.zhaolq.mars.common.core.util.ServletUtil;
 import com.zhaolq.mars.service.admin.entity.UserEntity;
@@ -101,10 +100,11 @@ public class WebLogAspect {
         });
         content.addTitle("Request Cookies");
         content.addKeyValues(treeMap);
-        // 请求体
+        // 请求体。
         content.addTitle("RequestBody");
-        content.addKeyValue("Body String", ServletUtil.getBody(request));
-        content.addKeyValue("Body Bytes", new String(ServletUtil.getBodyBytes(request), StandardCharsets.UTF_8));
+        // 先转为JSONObject，再转为String，可实现压缩json
+        content.addKeyValue("Body String", JSON.toJSONString(JSONObject.parseObject(ServletUtil.getBody(request))));
+        content.addKeyValue("Body Bytes", JSON.toJSONString(JSON.parseObject(ServletUtil.getBodyBytes(request))));
         // 请求参数
         content.addTitle("RequestParams");
         content.addKeyValues(ServletUtil.getParamMap(request));
@@ -116,7 +116,7 @@ public class WebLogAspect {
         content.addKeyValue("IP", request.getRemoteAddr());
         content.addKeyValue("Client IP", ServletUtil.getClientIP(request));
 
-        log.debug("\n" + content);
+        log.debug("{}{}", System.lineSeparator(), content);
     }
 
     /**
@@ -146,8 +146,7 @@ public class WebLogAspect {
         long endTime = System.currentTimeMillis();
 
         log.debug("接口耗时: {}ms", endTime - startTime);
-        log.debug("响应结果: \n{}", JSON.toJSONString(result, JSONWriter.Feature.PrettyFormat, JSONWriter.Feature.WriteMapNullValue));
-
+        log.debug("响应结果: {}", JSONObject.from(result));
         return result;
     }
 

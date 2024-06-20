@@ -33,7 +33,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     public R<?> exceptionHandler(Exception e) {
-        log.error("请求地址'{}'，异常信息'{}'", httpServletRequest.getRequestURI(), e.getMessage());
+        logError(httpServletRequest.getRequestURI(), e.getMessage());
         e.printStackTrace();
         return R.httpStatus(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
     }
@@ -41,7 +41,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(RuntimeException.class)
     public R<?> runtimeExceptionHandler(RuntimeException e) {
-        log.error("请求地址'{}'，异常信息'{}'", httpServletRequest.getRequestURI(), e.getMessage());
+        logError(httpServletRequest.getRequestURI(), e.getMessage());
         e.printStackTrace();
         return R.httpStatus(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
     }
@@ -49,7 +49,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(BindException.class)
     public R<?> bindExceptionHandler(BindException e) {
-        log.error("请求地址'{}'，异常信息'{}'", httpServletRequest.getRequestURI(), e.getMessage());
+        logError(httpServletRequest.getRequestURI(), e.getMessage());
         e.printStackTrace();
         return R.httpStatus(HttpStatus.BAD_REQUEST, e.getMessage());
     }
@@ -57,8 +57,11 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.OK)
     @ExceptionHandler(BaseRuntimeException.class)
     public R<?> baseRuntimeExceptionHandler(BaseRuntimeException e) {
-        log.error("请求地址'{}'，异常信息'{}'", httpServletRequest.getRequestURI(), e.getMessage());
-        e.printStackTrace();
+        logError(httpServletRequest.getRequestURI(), e.getMessage());
         return R.failure(e.getiError());
+    }
+
+    private void logError(String requestURI, String errorMessage) {
+        log.error("请求地址'{}'，异常信息'{}'", requestURI, errorMessage);
     }
 }

@@ -95,8 +95,7 @@ public class UserController {
      * 单个修改
      *
      * @param userEntity
-     * @return com.zhaolq.mars.api.sys.entity.UserEntity
-     * @throws
+     * @return
      */
     @PutMapping("/put")
     @Operation(summary = "单个修改", description = "单个修改")
@@ -137,8 +136,6 @@ public class UserController {
     public R<List<UserEntity>> getList(UserEntity userEntity) {
         return R.success(userService.findList(userEntity));
     }
-//
-//
 
 //
 //    /**

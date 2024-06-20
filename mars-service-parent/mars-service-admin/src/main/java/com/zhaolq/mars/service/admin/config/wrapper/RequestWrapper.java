@@ -1,20 +1,18 @@
 package com.zhaolq.mars.service.admin.config.wrapper;
 
-import com.zhaolq.mars.common.core.exception.BaseRuntimeException;
-import com.zhaolq.mars.common.core.result.ErrorEnum;
-import com.zhaolq.mars.common.core.util.ServletUtil;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+
+import org.springframework.util.StreamUtils;
+
 import jakarta.servlet.ReadListener;
 import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletRequestWrapper;
 import lombok.extern.slf4j.Slf4j;
-
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
 
 /**
  * request.getInputStream()输入流只能读取一次问题: https://blog.csdn.net/qq_16159433/article/details/120922952
@@ -25,26 +23,24 @@ import java.nio.charset.StandardCharsets;
  */
 @Slf4j
 public class RequestWrapper extends HttpServletRequestWrapper {
-    // 存储body数据的容器
-    private final byte[] body;
+    // 缓存流，存储body数据的容器
+    private byte[] body;
 
     public RequestWrapper(HttpServletRequest request) {
         super(request);
-        try {
-            // 将body数据存起来，也是使用 CharsetUtil.defaultCharset()
-            body = ServletUtil.getBody(request).getBytes(StandardCharsets.UTF_8.name());
-        } catch (UnsupportedEncodingException e) {
-            throw new BaseRuntimeException(e, ErrorEnum.FAILURE);
-        }
     }
 
     @Override
     public BufferedReader getReader() throws IOException {
-        return new BufferedReader(new InputStreamReader(getInputStream()));
+        return new BufferedReader(new InputStreamReader(getInputStream(), StandardCharsets.UTF_8));
     }
 
     @Override
     public ServletInputStream getInputStream() throws IOException {
+        if (body == null) {
+            body = StreamUtils.copyToByteArray(super.getInputStream());
+        }
+
         // 每次都从这个容器中读数据。这样request的输入流就可以重复读了。
         final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(body);
         return new ServletInputStream() {

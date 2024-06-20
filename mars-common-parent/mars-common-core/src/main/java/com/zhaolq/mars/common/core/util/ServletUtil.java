@@ -1,24 +1,5 @@
 package com.zhaolq.mars.common.core.util;
 
-import cn.hutool.core.exceptions.UtilException;
-import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.io.IoUtil;
-import cn.hutool.core.map.MapUtil;
-import cn.hutool.core.net.NetUtil;
-import cn.hutool.core.text.StrPool;
-import cn.hutool.core.util.ArrayUtil;
-import cn.hutool.core.util.CharsetUtil;
-import com.zhaolq.mars.common.core.exception.IORuntimeException;
-import jakarta.servlet.ServletOutputStream;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import org.apache.commons.collections4.map.CaseInsensitiveMap;
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.ObjectUtils;
-import org.apache.commons.lang3.StringUtils;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
@@ -35,6 +16,26 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.apache.commons.collections4.map.CaseInsensitiveMap;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
+
+import com.zhaolq.mars.common.core.exception.IORuntimeException;
+
+import cn.hutool.core.exceptions.UtilException;
+import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.io.IoUtil;
+import cn.hutool.core.net.NetUtil;
+import cn.hutool.core.text.StrPool;
+import cn.hutool.core.util.ArrayUtil;
+import cn.hutool.core.util.CharsetUtil;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * Servlet相关工具类封装
@@ -128,7 +129,7 @@ public class ServletUtil {
      * 需要注意的是，使用此方法获取的客户IP地址必须在Http服务器（例如Nginx）中配置头信息，否则容易造成IP伪造。
      * </p>
      *
-     * @param request          请求对象{@link HttpServletRequest}
+     * @param request 请求对象{@link HttpServletRequest}
      * @param otherHeaderNames 其他自定义头文件，通常在Http服务器（例如Nginx）中配置
      * @return IP地址
      */
@@ -149,7 +150,7 @@ public class ServletUtil {
      * 需要注意的是，使用此方法获取的客户IP地址必须在Http服务器（例如Nginx）中配置头信息，否则容易造成IP伪造。
      * </p>
      *
-     * @param request     请求对象{@link HttpServletRequest}
+     * @param request 请求对象{@link HttpServletRequest}
      * @param headerNames 自定义头，通常在Http服务器（例如Nginx）中配置
      * @return IP地址
      */
@@ -157,7 +158,7 @@ public class ServletUtil {
         String ip;
         for (String header : headerNames) {
             ip = request.getHeader(header);
-            if (false == NetUtil.isUnknown(ip)) {
+            if (false == StringUtils.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
                 return NetUtil.getMultistageReverseProxyIp(ip);
             }
         }
@@ -189,7 +190,7 @@ public class ServletUtil {
     /**
      * 忽略大小写获得请求header中的信息
      *
-     * @param request        请求对象{@link HttpServletRequest}
+     * @param request 请求对象{@link HttpServletRequest}
      * @param nameIgnoreCase 忽略大小写头信息的KEY
      * @return header值
      */
@@ -209,8 +210,8 @@ public class ServletUtil {
     /**
      * 获得请求header中的信息
      *
-     * @param request     请求对象{@link HttpServletRequest}
-     * @param name        头信息的KEY
+     * @param request 请求对象{@link HttpServletRequest}
+     * @param name 头信息的KEY
      * @param charsetName 字符集
      * @return header值
      */
@@ -222,7 +223,7 @@ public class ServletUtil {
      * 获得请求header中的信息
      *
      * @param request 请求对象{@link HttpServletRequest}
-     * @param name    头信息的KEY
+     * @param name 头信息的KEY
      * @param charset 字符集
      * @return header值
      */
@@ -296,7 +297,7 @@ public class ServletUtil {
      * 获得指定的Cookie
      *
      * @param httpServletRequest {@link HttpServletRequest}
-     * @param name               cookie名
+     * @param name cookie名
      * @return Cookie对象
      */
     public static Cookie getCookie(HttpServletRequest httpServletRequest, String name) {
@@ -312,7 +313,7 @@ public class ServletUtil {
     public static Map<String, Cookie> readCookieMap(HttpServletRequest httpServletRequest) {
         final Cookie[] cookies = httpServletRequest.getCookies();
         if (ArrayUtil.isEmpty(cookies)) {
-            return MapUtil.empty();
+            return Collections.emptyMap();
         }
         // 键不区分大小写的map
         Map<String, Cookie> cookieMap = new CaseInsensitiveMap<>();
@@ -326,7 +327,7 @@ public class ServletUtil {
      * 设定返回给客户端的Cookie
      *
      * @param response 响应对象{@link HttpServletResponse}
-     * @param cookie   Servlet Cookie对象
+     * @param cookie Servlet Cookie对象
      */
     public static void addCookie(HttpServletResponse response, Cookie cookie) {
         response.addCookie(cookie);
@@ -336,8 +337,8 @@ public class ServletUtil {
      * 设定返回给客户端的Cookie
      *
      * @param response 响应对象{@link HttpServletResponse}
-     * @param name     Cookie名
-     * @param value    Cookie值
+     * @param name Cookie名
+     * @param value Cookie值
      */
     public static void addCookie(HttpServletResponse response, String name, String value) {
         response.addCookie(new Cookie(name, value));
@@ -348,9 +349,9 @@ public class ServletUtil {
      * Path: "/"<br>
      * No Domain
      *
-     * @param response        响应对象{@link HttpServletResponse}
-     * @param name            cookie名
-     * @param value           cookie值
+     * @param response 响应对象{@link HttpServletResponse}
+     * @param name cookie名
+     * @param value cookie值
      * @param maxAgeInSeconds -1: 关闭浏览器清除Cookie. 0: 立即清除Cookie. &gt;0 : Cookie存在的秒数.
      */
     public static void addCookie(HttpServletResponse response, String name, String value, int maxAgeInSeconds) {
@@ -360,12 +361,12 @@ public class ServletUtil {
     /**
      * 设定返回给客户端的Cookie
      *
-     * @param response        响应对象{@link HttpServletResponse}
-     * @param name            cookie名
-     * @param value           cookie值
+     * @param response 响应对象{@link HttpServletResponse}
+     * @param name cookie名
+     * @param value cookie值
      * @param maxAgeInSeconds -1: 关闭浏览器清除Cookie. 0: 立即清除Cookie. >0 : Cookie存在的秒数.
-     * @param path            Cookie的有效路径
-     * @param domain          the domain name within which this cookie is visible; form is according to RFC 2109
+     * @param path Cookie的有效路径
+     * @param domain the domain name within which this cookie is visible; form is according to RFC 2109
      */
     public static void addCookie(HttpServletResponse response, String name, String value, int maxAgeInSeconds, String path, String domain) {
         Cookie cookie = new Cookie(name, value);
@@ -399,8 +400,8 @@ public class ServletUtil {
     /**
      * 返回数据给客户端
      *
-     * @param response    响应对象{@link HttpServletResponse}
-     * @param text        返回的内容
+     * @param response 响应对象{@link HttpServletResponse}
+     * @param text 返回的内容
      * @param contentType 返回的类型
      */
     public static void write(HttpServletResponse response, String text, String contentType) {
@@ -421,7 +422,7 @@ public class ServletUtil {
      * 返回文件给客户端
      *
      * @param response 响应对象{@link HttpServletResponse}
-     * @param file     写出的文件对象
+     * @param file 写出的文件对象
      */
     public static void write(HttpServletResponse response, File file) {
         final String contentType = ObjectUtils.defaultIfNull(FileUtil.getMimeType(file.getPath()), "application/octet-stream");
@@ -435,24 +436,24 @@ public class ServletUtil {
     /**
      * 返回数据给客户端
      *
-     * @param response    响应对象{@link HttpServletResponse}
-     * @param in          需要返回客户端的内容
+     * @param response 响应对象{@link HttpServletResponse}
+     * @param in 需要返回客户端的内容
      * @param contentType 返回的类型，可以使用{@link FileUtil#getMimeType(File)}获取对应扩展名的MIME信息
-     *                    <ul>
-     *                      <li>application/pdf</li>
-     *                      <li>application/vnd.ms-excel</li>
-     *                      <li>application/msword</li>
-     *                      <li>application/vnd.ms-powerpoint</li>
-     *                    </ul>
-     *                    docx、xlsx 这种 office 2007 格式 设置 MIME;网页里面docx 文件是没问题，但是下载下来了之后就变成doc格式了
-     *                    参考：<a href="https://my.oschina.net/shixiaobao17145/blog/32489">https://my.oschina.net/shixiaobao17145/blog/32489</a>
-     *                    <ul>
-     *                      <li>MIME_EXCELX_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";</li>
-     *                      <li>MIME_PPTX_TYPE = "application/vnd.openxmlformats-officedocument.presentationml.presentation";</li>
-     *                      <li>MIME_WORDX_TYPE = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";</li>
-     *                      <li>MIME_STREAM_TYPE = "application/octet-stream;charset=utf-8"; #原始字节流</li>
-     *                    </ul>
-     * @param fileName    文件名，自动添加双引号
+     * <ul>
+     *   <li>application/pdf</li>
+     *   <li>application/vnd.ms-excel</li>
+     *   <li>application/msword</li>
+     *   <li>application/vnd.ms-powerpoint</li>
+     * </ul>
+     * docx、xlsx 这种 office 2007 格式 设置 MIME;网页里面docx 文件是没问题，但是下载下来了之后就变成doc格式了
+     * 参考：<a href="https://my.oschina.net/shixiaobao17145/blog/32489">https://my.oschina.net/shixiaobao17145/blog/32489</a>
+     * <ul>
+     *   <li>MIME_EXCELX_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";</li>
+     *   <li>MIME_PPTX_TYPE = "application/vnd.openxmlformats-officedocument.presentationml.presentation";</li>
+     *   <li>MIME_WORDX_TYPE = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";</li>
+     *   <li>MIME_STREAM_TYPE = "application/octet-stream;charset=utf-8"; #原始字节流</li>
+     * </ul>
+     * @param fileName 文件名，自动添加双引号
      */
     public static void write(HttpServletResponse response, InputStream in, String contentType, String fileName) {
         final String charset = ObjectUtils.defaultIfNull(response.getCharacterEncoding(), StandardCharsets.UTF_8.name());
@@ -466,8 +467,8 @@ public class ServletUtil {
     /**
      * 返回数据给客户端
      *
-     * @param response    响应对象{@link HttpServletResponse}
-     * @param in          需要返回客户端的内容
+     * @param response 响应对象{@link HttpServletResponse}
+     * @param in 需要返回客户端的内容
      * @param contentType 返回的类型
      */
     public static void write(HttpServletResponse response, InputStream in, String contentType) {
@@ -479,7 +480,7 @@ public class ServletUtil {
      * 返回数据给客户端
      *
      * @param response 响应对象{@link HttpServletResponse}
-     * @param in       需要返回客户端的内容
+     * @param in 需要返回客户端的内容
      */
     public static void write(HttpServletResponse response, InputStream in) {
         write(response, in, IoUtil.DEFAULT_BUFFER_SIZE);
@@ -488,8 +489,8 @@ public class ServletUtil {
     /**
      * 返回数据给客户端
      *
-     * @param response   响应对象{@link HttpServletResponse}
-     * @param in         需要返回客户端的内容
+     * @param response 响应对象{@link HttpServletResponse}
+     * @param in 需要返回客户端的内容
      * @param bufferSize 缓存大小
      */
     public static void write(HttpServletResponse response, InputStream in, int bufferSize) {
@@ -512,8 +513,8 @@ public class ServletUtil {
      * 设置响应的Header
      *
      * @param response 响应对象{@link HttpServletResponse}
-     * @param name     名
-     * @param value    值，可以是String，Date， int
+     * @param name 名
+     * @param value 值，可以是String，Date， int
      */
     public static void setHeader(HttpServletResponse response, String name, Object value) {
         if (value instanceof String) {

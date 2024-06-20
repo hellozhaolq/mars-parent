@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.github.pagehelper.PageParam;
 import com.zhaolq.mars.common.core.exception.BaseRuntimeException;
 import com.zhaolq.mars.common.core.result.ErrorEnum;
 import com.zhaolq.mars.common.core.result.R;
@@ -47,6 +51,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping(path = "/user", consumes = {MediaType.ALL_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
 @AllArgsConstructor
 public class UserController {
+    private final SqlSessionTemplate sqlSessionTemplate;
     private IUserService userService;
 
     /**
@@ -137,20 +142,21 @@ public class UserController {
         return R.success(userService.findList(userEntity));
     }
 
-//
-//    /**
-//     * get分页查询
-//     *
-//     * @param pageConvert
-//     * @param userEntity
-//     * @return com.zhaolq.mars.tool.core.result.R<com.baomidou.mybatisplus.core.metadata.IPage < com.zhaolq.mars.api.sys.entity.UserEntity>>
-//     */
-//    @GetMapping("/getPage")
-//    @Operation(summary = "分页查询", description = "分页查询")
-//    public R<IPage<UserEntity>> getPage(PageConvert<UserEntity> pageConvert, UserEntity userEntity) {
-//        QueryWrapper<UserEntity> wrapper = new QueryWrapper<>(userEntity);
-//        return R.success(userService.page(pageConvert.getPagePlus(), wrapper));
-//    }
+    /**
+     * get分页查询
+     *
+     * @param userEntity
+     * @return
+     */
+    @GetMapping("/getPage")
+    @Operation(summary = "分页查询", description = "分页查询")
+    public R<PageInfo<UserEntity>> getPage(UserEntity userEntity, PageParam pageParam) {
+        PageHelper.startPage(pageParam.getPageNum(), pageParam.getPageSize());
+        List<UserEntity> list = userService.findList(userEntity);
+        PageInfo pageInfo = new PageInfo(list);
+        return R.success(pageInfo);
+    }
+
 //
 //    /**
 //     * post分页查询。post请求接受两个参数，只能有一个参数从RequestBody中获取。

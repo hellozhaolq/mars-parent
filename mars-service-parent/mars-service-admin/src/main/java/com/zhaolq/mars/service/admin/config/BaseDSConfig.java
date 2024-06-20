@@ -110,8 +110,8 @@ public class BaseDSConfig {
             baseProperties.setProperty("offsetAsPageNum", "true");
             baseProperties.setProperty("rowBoundsWithCount", "true");
             baseProperties.setProperty("reasonable", "true");
+            baseProperties.setProperty("params", "pageNum=pageNum;pageSize=pageSize;count=countSql;reasonable=reasonable;pageSizeZero=pageSizeZero");
             baseProperties.setProperty("supportMethodsArguments", "true");
-            baseProperties.setProperty("params", "pageNum=pageNumKey;pageSize=pageSizeKey;");
             // 分页插件
             Interceptor interceptor = new PageInterceptor();
             interceptor.setProperties(baseProperties);

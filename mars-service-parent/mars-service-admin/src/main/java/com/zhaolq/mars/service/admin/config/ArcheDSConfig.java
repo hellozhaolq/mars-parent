@@ -97,8 +97,8 @@ public class ArcheDSConfig {
             archeProperties.setProperty("offsetAsPageNum", "true");
             archeProperties.setProperty("rowBoundsWithCount", "true");
             archeProperties.setProperty("reasonable", "true");
+            archeProperties.setProperty("params", "pageNum=pageNum;pageSize=pageSize;count=countSql;reasonable=reasonable;pageSizeZero=pageSizeZero");
             archeProperties.setProperty("supportMethodsArguments", "true");
-            archeProperties.setProperty("params", "pageNum=pageNumKey;pageSize=pageSizeKey;");
             // 分页插件
             Interceptor interceptor = new PageInterceptor();
             interceptor.setProperties(archeProperties);

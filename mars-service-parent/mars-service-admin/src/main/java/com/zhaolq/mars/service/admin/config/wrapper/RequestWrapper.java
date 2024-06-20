@@ -15,8 +15,7 @@ import jakarta.servlet.http.HttpServletRequestWrapper;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * request.getInputStream()输入流只能读取一次问题: https://blog.csdn.net/qq_16159433/article/details/120922952
- * 使用HTTP提供的装饰器 HttpServletRequestWrapper 来包装原生 SerlvetRequest 对象
+ * 使用装饰器HttpServletRequestWrapper解决流只能读取一次的问题: https://blog.csdn.net/qq_43437874/article/details/122102362
  *
  * @Author zhaolq
  * @Date 2024/6/14 14:38:49

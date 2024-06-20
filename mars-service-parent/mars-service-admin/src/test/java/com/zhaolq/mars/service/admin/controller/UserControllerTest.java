@@ -1,8 +1,7 @@
 package com.zhaolq.mars.service.admin.controller;
 
-import com.alibaba.fastjson2.JSON;
-import com.zhaolq.mars.service.admin.entity.UserEntity;
-import lombok.extern.slf4j.Slf4j;
+import java.util.Properties;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
@@ -22,7 +21,10 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.util.Properties;
+import com.alibaba.fastjson2.JSON;
+import com.zhaolq.mars.service.admin.entity.UserEntity;
+
+import lombok.extern.slf4j.Slf4j;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;

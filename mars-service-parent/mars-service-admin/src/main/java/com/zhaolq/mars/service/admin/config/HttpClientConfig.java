@@ -1,6 +1,8 @@
 package com.zhaolq.mars.service.admin.config;
 
-import lombok.extern.slf4j.Slf4j;
+import java.util.Collections;
+import java.util.concurrent.TimeUnit;
+
 import org.apache.http.HeaderElement;
 import org.apache.http.HeaderElementIterator;
 import org.apache.http.HttpResponse;
@@ -24,8 +26,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.Collections;
-import java.util.concurrent.TimeUnit;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Apache Http 组件配置

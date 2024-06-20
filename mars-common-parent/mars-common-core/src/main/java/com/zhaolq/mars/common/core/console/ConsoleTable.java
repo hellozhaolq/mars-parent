@@ -1,11 +1,11 @@
 package com.zhaolq.mars.common.core.console;
 
-import org.apache.commons.lang3.RandomStringUtils;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import org.apache.commons.lang3.RandomStringUtils;
 
 /**
  * 控制台打印表格工具

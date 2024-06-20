@@ -1,10 +1,12 @@
 package com.zhaolq.mars.common.core.console;
 
-import cn.hutool.core.text.CharPool;
-import com.zhaolq.mars.common.core.util.ConvertUtil;
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.List;
+import com.zhaolq.mars.common.core.util.ConvertUtil;
+
+import cn.hutool.core.text.CharPool;
 
 /**
  * 填充内容

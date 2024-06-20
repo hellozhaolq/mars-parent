@@ -1,7 +1,5 @@
 package com.zhaolq.mars.common.mybatis.config;
 
-import cn.hutool.core.lang.Snowflake;
-import cn.hutool.core.lang.generator.SnowflakeGenerator;
 import cn.hutool.core.util.IdUtil;
 import io.mybatis.provider.EntityColumn;
 import io.mybatis.provider.EntityTable;

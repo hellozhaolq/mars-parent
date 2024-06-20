@@ -1,7 +1,10 @@
 package com.zhaolq.mars.demo.annotation.processor;
 
-import com.google.auto.service.AutoService;
-import com.zhaolq.mars.demo.annotation.annotation.Factory;
+import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Filer;
@@ -20,11 +23,9 @@ import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
-import java.io.IOException;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.Set;
+
+import com.google.auto.service.AutoService;
+import com.zhaolq.mars.demo.annotation.annotation.Factory;
 
 /**
  * 继承AbstractProcessor类实现自定义注解处理器 -- @Factory注解处理器

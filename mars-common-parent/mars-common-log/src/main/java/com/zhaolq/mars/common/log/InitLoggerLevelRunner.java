@@ -1,7 +1,10 @@
 package com.zhaolq.mars.common.log;
 
-import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+
 import org.apache.commons.lang3.EnumUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,10 +16,8 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 
 import static org.springframework.boot.logging.LoggingSystem.ROOT_LOGGER_NAME;
 

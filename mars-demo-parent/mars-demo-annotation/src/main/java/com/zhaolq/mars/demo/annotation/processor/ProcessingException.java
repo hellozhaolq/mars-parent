@@ -1,8 +1,8 @@
 package com.zhaolq.mars.demo.annotation.processor;
 
-import com.zhaolq.mars.demo.annotation.annotation.Factory;
-
 import javax.lang.model.element.Element;
+
+import com.zhaolq.mars.demo.annotation.annotation.Factory;
 
 /**
  * {@link Factory}注解处理器处理异常

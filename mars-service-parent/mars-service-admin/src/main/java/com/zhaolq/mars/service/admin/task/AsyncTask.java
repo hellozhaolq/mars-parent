@@ -1,11 +1,12 @@
 package com.zhaolq.mars.service.admin.task;
 
-import lombok.extern.slf4j.Slf4j;
+import java.util.concurrent.Future;
+
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Component;
 
-import java.util.concurrent.Future;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 异步任务

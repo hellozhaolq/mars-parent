@@ -1,19 +1,7 @@
 package com.zhaolq.mars.service.admin.controller;
 
-import com.zhaolq.mars.common.core.exception.BaseRuntimeException;
-import com.zhaolq.mars.common.core.result.ErrorEnum;
-import com.zhaolq.mars.common.core.result.R;
-import com.zhaolq.mars.common.valid.group.Add;
-import com.zhaolq.mars.common.valid.group.Edit;
-import com.zhaolq.mars.service.admin.entity.UserEntity;
-import com.zhaolq.mars.service.admin.service.IUserService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.enums.ParameterStyle;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.util.List;
+
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
@@ -28,7 +16,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import com.zhaolq.mars.common.core.exception.BaseRuntimeException;
+import com.zhaolq.mars.common.core.result.ErrorEnum;
+import com.zhaolq.mars.common.core.result.R;
+import com.zhaolq.mars.common.valid.group.Add;
+import com.zhaolq.mars.common.valid.group.Edit;
+import com.zhaolq.mars.service.admin.entity.UserEntity;
+import com.zhaolq.mars.service.admin.service.IUserService;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterStyle;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * <p>
@@ -58,7 +60,8 @@ public class UserController {
     public R<UserEntity> get(UserEntity userEntity) {
         // 这里永远断言成功，即使请求没有参数userEntity也不是null。
         Validate.notNull(userEntity, ErrorEnum.PARAM_NOT_COMPLETE.getMsg());
-        boolean condition = userEntity == null || (StringUtils.isEmpty(userEntity.getId()) && StringUtils.isEmpty(userEntity.getAccount()));
+        boolean condition = userEntity == null || (StringUtils.isEmpty(userEntity.getId())
+                && StringUtils.isEmpty(userEntity.getAccount()));
         if (condition) {
             throw new BaseRuntimeException(ErrorEnum.PARAM_ERROR);
         }

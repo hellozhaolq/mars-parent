@@ -1,13 +1,14 @@
 package com.zhaolq.mars.common.property.test;
 
-import lombok.Data;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.support.DefaultPropertySourceFactory;
 
-import java.util.List;
-import java.util.Map;
+import lombok.Data;
 
 /**
  * 获取自定义配置方式二：可以读取父模块配置文件

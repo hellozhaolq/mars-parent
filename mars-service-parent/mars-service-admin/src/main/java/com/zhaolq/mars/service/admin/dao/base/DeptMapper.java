@@ -1,6 +1,7 @@
 package com.zhaolq.mars.service.admin.dao.base;
 
 import com.zhaolq.mars.service.admin.entity.DeptEntity;
+
 import io.mybatis.mapper.BaseMapper;
 
 /**

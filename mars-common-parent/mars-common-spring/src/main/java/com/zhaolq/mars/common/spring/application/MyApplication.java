@@ -1,8 +1,12 @@
 package com.zhaolq.mars.common.spring.application;
 
-import com.zhaolq.mars.common.core.enums.OS;
-import com.zhaolq.mars.common.core.enums.Profile;
-import lombok.extern.slf4j.Slf4j;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.Locale;
+import java.util.Properties;
+import java.util.Set;
+
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.ConfigurableEnvironment;
@@ -15,12 +19,10 @@ import org.springframework.core.env.StandardEnvironment;
 import org.springframework.core.env.SystemEnvironmentPropertySource;
 import org.springframework.util.Assert;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.LinkedHashSet;
-import java.util.Locale;
-import java.util.Properties;
-import java.util.Set;
+import com.zhaolq.mars.common.core.enums.OS;
+import com.zhaolq.mars.common.core.enums.Profile;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @Author zhaolq

@@ -1,9 +1,10 @@
 package com.zhaolq.mars.common.redis.config;
 
-import lombok.Data;
+import java.time.Duration;
+
 import org.springframework.context.annotation.Configuration;
 
-import java.time.Duration;
+import lombok.Data;
 
 /**
  * Redis缓存有效期配置属性

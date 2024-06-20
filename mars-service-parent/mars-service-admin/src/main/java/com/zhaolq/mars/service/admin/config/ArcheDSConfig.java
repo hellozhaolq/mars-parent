@@ -1,7 +1,10 @@
 package com.zhaolq.mars.service.admin.config;
 
-import com.github.pagehelper.PageInterceptor;
-import lombok.extern.slf4j.Slf4j;
+import java.io.IOException;
+import java.util.Properties;
+
+import javax.sql.DataSource;
+
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -17,9 +20,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
-import javax.sql.DataSource;
-import java.io.IOException;
-import java.util.Properties;
+import com.github.pagehelper.PageInterceptor;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Arche是希腊文，英文是principle，字面意义是开始、太初、起源。

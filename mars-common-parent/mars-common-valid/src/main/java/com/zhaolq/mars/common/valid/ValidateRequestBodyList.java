@@ -3,9 +3,9 @@
  */
 package com.zhaolq.mars.common.valid;
 
-import jakarta.validation.Valid;
-
 import java.util.List;
+
+import jakarta.validation.Valid;
 
 /**
  * 集合参数的校验

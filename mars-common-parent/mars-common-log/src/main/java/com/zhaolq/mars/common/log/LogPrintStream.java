@@ -16,10 +16,10 @@
  */
 package com.zhaolq.mars.common.log;
 
-import lombok.extern.slf4j.Slf4j;
-
 import java.io.PrintStream;
 import java.util.Locale;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 将 System.err 和 System.out 替换为打印log，未完待续...

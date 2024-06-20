@@ -1,12 +1,14 @@
 package com.zhaolq.mars.service.admin.dao.base;
 
-import com.zhaolq.mars.service.admin.entity.RoleEntity;
-import com.zhaolq.mars.service.admin.entity.UserEntity;
-import io.mybatis.mapper.BaseMapper;
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import com.zhaolq.mars.service.admin.entity.RoleEntity;
+import com.zhaolq.mars.service.admin.entity.UserEntity;
+
+import io.mybatis.mapper.BaseMapper;
 
 /**
  * <p>

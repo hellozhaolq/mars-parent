@@ -1,18 +1,20 @@
 package com.zhaolq.mars.service.admin.controller.test;
 
-import com.zhaolq.mars.common.core.result.R;
-import com.zhaolq.mars.service.admin.task.AsyncTask;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
+import com.zhaolq.mars.common.core.result.R;
+import com.zhaolq.mars.service.admin.task.AsyncTask;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 测试控制器

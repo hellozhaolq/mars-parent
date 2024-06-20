@@ -1,6 +1,8 @@
 package com.zhaolq.mars.service.admin.config;
 
-import lombok.extern.slf4j.Slf4j;
+import java.time.Duration;
+import java.util.concurrent.ThreadPoolExecutor;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,8 +11,7 @@ import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 
-import java.time.Duration;
-import java.util.concurrent.ThreadPoolExecutor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 自定义任务调度线程池

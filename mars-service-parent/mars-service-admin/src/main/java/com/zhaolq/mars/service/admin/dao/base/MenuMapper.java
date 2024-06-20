@@ -2,6 +2,7 @@ package com.zhaolq.mars.service.admin.dao.base;
 
 
 import com.zhaolq.mars.service.admin.entity.MenuEntity;
+
 import io.mybatis.mapper.BaseMapper;
 
 /**

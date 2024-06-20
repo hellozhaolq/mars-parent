@@ -1,11 +1,11 @@
 package com.zhaolq.mars.common.core.console;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * 控制台打印键值对工具

@@ -1,14 +1,14 @@
 package com.zhaolq.mars.demo.annotation.sample.a;
 
-import com.zhaolq.mars.demo.annotation.annotation.Constraints;
-import com.zhaolq.mars.demo.annotation.annotation.DBTable;
-import com.zhaolq.mars.demo.annotation.annotation.SQLInteger;
-import com.zhaolq.mars.demo.annotation.annotation.SQLString;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.zhaolq.mars.demo.annotation.annotation.Constraints;
+import com.zhaolq.mars.demo.annotation.annotation.DBTable;
+import com.zhaolq.mars.demo.annotation.annotation.SQLInteger;
+import com.zhaolq.mars.demo.annotation.annotation.SQLString;
 
 /**
  * 表生成器

@@ -36,11 +36,12 @@ public class RequestWrapper extends HttpServletRequestWrapper {
 
     @Override
     public ServletInputStream getInputStream() throws IOException {
+        // 初始化缓存
         if (body == null) {
             body = StreamUtils.copyToByteArray(super.getInputStream());
         }
 
-        // 每次都从这个容器中读数据。这样request的输入流就可以重复读了。
+        // 从缓存中返回流
         final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(body);
         return new ServletInputStream() {
             @Override

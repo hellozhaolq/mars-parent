@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.github.pagehelper.PageParam;
 import com.zhaolq.mars.common.core.exception.BaseRuntimeException;
@@ -28,6 +28,9 @@ import com.zhaolq.mars.common.valid.group.Edit;
 import com.zhaolq.mars.service.admin.entity.UserEntity;
 import com.zhaolq.mars.service.admin.service.IUserService;
 
+import io.mybatis.mapper.example.Example;
+import io.mybatis.mapper.example.ExampleProvider;
+import io.mybatis.mapper.fn.Fn;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterStyle;
@@ -66,7 +69,7 @@ public class UserController {
         // 这里永远断言成功，即使请求没有参数userEntity也不是null。
         Validate.notNull(userEntity, ErrorEnum.PARAM_NOT_COMPLETE.getMsg());
         boolean condition = userEntity == null || (StringUtils.isEmpty(userEntity.getId())
-                && StringUtils.isEmpty(userEntity.getAccount()));
+                                                   && StringUtils.isEmpty(userEntity.getAccount()));
         if (condition) {
             throw new BaseRuntimeException(ErrorEnum.PARAM_ERROR);
         }
@@ -151,8 +154,15 @@ public class UserController {
     @GetMapping("/getPage")
     @Operation(summary = "分页查询", description = "分页查询")
     public R<PageInfo<UserEntity>> getPage(UserEntity userEntity, PageParam pageParam) {
-        PageHelper.startPage(pageParam.getPageNum(), pageParam.getPageSize());
-        List<UserEntity> list = userService.findList(userEntity);
+        // 分页方式一，推荐
+        // PageHelper.startPage(pageParam.getPageNum(), pageParam.getPageSize());
+        // List<UserEntity> list = userService.findList(userEntity);
+
+        // 分页方式二，实测RowBounds也是物理分页
+        Example<UserEntity> example = new Example<>();
+        example.createCriteria().andEqualTo(Fn.field(UserEntity.class, "sex"), "1");
+        List<UserEntity> list = userEntity.baseMapper().selectByExample(example, new RowBounds(10, 3));
+
         PageInfo pageInfo = new PageInfo(list);
         return R.success(pageInfo);
     }

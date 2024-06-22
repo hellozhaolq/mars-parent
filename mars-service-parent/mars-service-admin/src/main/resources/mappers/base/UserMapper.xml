@@ -37,19 +37,19 @@
         <result column="FLAG" property="flag"/>
     </resultMap>
 
-    <!-- 官方结果映射文档：https://mybatis.org/mybatis-3/zh/sqlmap-xml.html#Result_Maps -->
+    <!-- 官方结果映射文档：https://mybatis.org/mybatis-3/zh_CN/sqlmap-xml.html#Result_Maps -->
 
     <!-- ******************************** 关联的嵌套结果映射 ******************************** -->
     <!-- hasOne，一对一关联。因为user和role实际是多对多关系，应该使用一对多关联，否则关联查询的多条数据只会显示一条，解决办法：指定一个不会重复的列充当唯一标识，如：rownum id； -->
     <resultMap id="NestedResultMap_OneToOne" type="com.zhaolq.mars.service.admin.entity.UserEntity" extends="BaseResultMap">
         <association property="role" resultMap="com.zhaolq.mars.service.admin.dao.base.RoleMapper.BaseResultMap"
-                     columnPrefix="r#" notNullColumn="id,code">
+                     columnPrefix="r_" notNullColumn="id,code">
         </association>
     </resultMap>
     <!-- hasMany，一对多关联 -->
     <resultMap id="NestedResultMap_OneToMany" type="com.zhaolq.mars.service.admin.entity.UserEntity" extends="BaseResultMap">
         <collection property="roleList" resultMap="com.zhaolq.mars.service.admin.dao.base.RoleMapper.BaseResultMap"
-                    columnPrefix="r#" notNullColumn="id,code">
+                    columnPrefix="r_" notNullColumn="id,code">
         </collection>
     </resultMap>
     <!-- hasMany，一对多关联，更简洁 -->
@@ -69,7 +69,7 @@
 
     <!-- ******************************** 关联的嵌套Select查询(N+1查询问题) ******************************** -->
     <!-- hasMany，一对多关联。 -->
-    <resultMap id="NestedSelect_OneToMany" type="com.zhaolq.mars.service.admin.entity.UserEntity" extends="BaseResultMap">
+    <resultMap id="NestedResultMap_OneToMany_MultipleQueries" type="com.zhaolq.mars.service.admin.entity.UserEntity" extends="BaseResultMap">
         <collection property="roleList" javaType="ArrayList" column="{prop1=id,prop2=id}" ofType="com.zhaolq.mars.service.admin.entity.RoleEntity"
                     select="selectRole">
         </collection>
@@ -215,24 +215,14 @@
         </if>
     </sql>
 
-    <select id="selectByWrapperCustom" resultType="com.zhaolq.mars.service.admin.entity.UserEntity">
-        <!-- 注意：这里没有加where -->
-        select * from t_base_user ${ew.customSqlSegment}
-    </select>
-
-    <select id="selectPageByWrapperCustom" resultType="com.zhaolq.mars.service.admin.entity.UserEntity">
-        <!-- 注意：这里没有加where -->
-        select * from t_base_user ${ew.customSqlSegment}
-    </select>
-
-    <select id="selectWithRole" resultMap="NestedResultMap_OneToMany">
+    <select id="selectWithRole" resultMap="NestedResultMap_OneToMany" resultType="map">
         select
         <include refid="Base_Column_Alias"></include>,
         <include refid="com.zhaolq.mars.service.admin.dao.base.RoleMapper.Base_Column_Alias_Nested"></include>
         from t_base_user u
-        inner join t_base_user_role ur
+        left join t_base_user_role ur
         on u.id = ur.user_id
-        inner join t_base_role r
+        left join t_base_role r
         on ur.role_id = r.id
         <where>
             <include refid="Base_Where"></include>
@@ -240,23 +230,14 @@
         </where>
     </select>
 
-    <select id="selectWithRoleNestedSelectTest" resultMap="NestedSelect_OneToMany">
-        select
-        <include refid="Base_Column_Alias"></include>
-        from t_base_user u
-        <where>
-            <include refid="Base_Where"></include>
-        </where>
-    </select>
-
-    <select id="selectListWithRole" resultMap="NestedResultMap_OneToMany">
+    <select id="selectPageWithRole" resultMap="NestedResultMap_OneToMany" resultType="list">
         select
         <include refid="Base_Column_Alias"></include>,
         <include refid="com.zhaolq.mars.service.admin.dao.base.RoleMapper.Base_Column_Alias_Nested"></include>
         from t_base_user u
-        inner join t_base_user_role ur
+        left join t_base_user_role ur
         on u.id = ur.user_id
-        inner join t_base_role r
+        left join t_base_role r
         on ur.role_id = r.id
         <where>
             <include refid="Base_Where"></include>
@@ -264,22 +245,7 @@
         </where>
     </select>
 
-    <select id="selectPageWithRole" resultMap="NestedResultMap_OneToMany">
-        select
-        <include refid="Base_Column_Alias"></include>,
-        <include refid="com.zhaolq.mars.service.admin.dao.base.RoleMapper.Base_Column_Alias_Nested"></include>
-        from t_base_user u
-        inner join t_base_user_role ur
-        on u.id = ur.user_id
-        inner join t_base_role r
-        on ur.role_id = r.id
-        <where>
-            <include refid="Base_Where"></include>
-            <include refid="com.zhaolq.mars.service.admin.dao.base.RoleMapper.Base_Where"></include>
-        </where>
-    </select>
-
-    <select id="selectPageWithRoleNestedSelectTest" resultMap="NestedSelect_OneToMany">
+    <select id="getPageWithRole_multipleQueries" resultMap="NestedResultMap_OneToMany_MultipleQueries" resultType="list">
         select
         <include refid="Base_Column_Alias"></include>
         from t_base_user u

@@ -9,6 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.zhaolq.mars.common.mybatis.config.IdGenerate;
+import com.zhaolq.mars.common.mybatis.pagination.PageParam;
 import com.zhaolq.mars.common.valid.group.Add;
 import com.zhaolq.mars.common.valid.group.Edit;
 import com.zhaolq.mars.common.valid.group.Remove;
@@ -37,7 +38,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @Schema(description = "用户管理")
 @Entity.Table("T_BASE_USER")
-public class UserEntity implements MapperRecord<UserEntity, String, UserMapper> {
+public class UserEntity extends PageParam implements MapperRecord<UserEntity, String, UserMapper> {
     /**
      * 2、为了可以序列化，使用static，但这样的属性归类所有，不满足一个对象各一个，mybatisPlus不会认为是表字段
      * Lombok不会为static变量生成get、set方法，需手动

@@ -31,8 +31,8 @@
 
     <!-- 通用查询结果列，加表别名、列别名 -->
     <sql id="Base_Column_Alias_Nested">
-        r.ID r#ID, r.NAME r#NAME, r.CODE r#CODE, r.REMARK r#REMARK, r.CREATE_BY r#CREATE_BY, r.CREATE_TIME r#CREATE_TIME,
-        r.LAST_UPDATE_BY r#LAST_UPDATE_BY, r.LAST_UPDATE_TIME r#LAST_UPDATE_TIME, r.STATUS r#STATUS, r.DEL_FLAG r#DEL_FLAG
+        r.ID r_ID, r.NAME r_NAME, r.CODE r_CODE, r.REMARK r_REMARK, r.CREATE_BY r_CREATE_BY, r.CREATE_TIME r_CREATE_TIME,
+        r.LAST_UPDATE_BY r_LAST_UPDATE_BY, r.LAST_UPDATE_TIME r_LAST_UPDATE_TIME, r.STATUS r_STATUS, r.DEL_FLAG r_DEL_FLAG
     </sql>
 
     <!-- 基本查询条件 -->

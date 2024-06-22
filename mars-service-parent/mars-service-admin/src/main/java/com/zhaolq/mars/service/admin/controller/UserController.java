@@ -1,11 +1,17 @@
 package com.zhaolq.mars.service.admin.controller;
 
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
-import org.apache.ibatis.session.RowBounds;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
@@ -18,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.github.pagehelper.PageParam;
 import com.zhaolq.mars.common.core.exception.BaseRuntimeException;
@@ -25,16 +33,16 @@ import com.zhaolq.mars.common.core.result.ErrorEnum;
 import com.zhaolq.mars.common.core.result.R;
 import com.zhaolq.mars.common.valid.group.Add;
 import com.zhaolq.mars.common.valid.group.Edit;
+import com.zhaolq.mars.service.admin.entity.MenuEntity;
 import com.zhaolq.mars.service.admin.entity.UserEntity;
 import com.zhaolq.mars.service.admin.service.IUserService;
 
-import io.mybatis.mapper.example.Example;
-import io.mybatis.mapper.example.ExampleProvider;
-import io.mybatis.mapper.fn.Fn;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterStyle;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -68,10 +76,8 @@ public class UserController {
     public R<UserEntity> get(UserEntity userEntity) {
         // 这里永远断言成功，即使请求没有参数userEntity也不是null。
         Validate.notNull(userEntity, ErrorEnum.PARAM_NOT_COMPLETE.getMsg());
-        boolean condition = userEntity == null || (StringUtils.isEmpty(userEntity.getId())
-                                                   && StringUtils.isEmpty(userEntity.getAccount()));
-        if (condition) {
-            throw new BaseRuntimeException(ErrorEnum.PARAM_ERROR);
+        if (ObjectUtils.isEmpty(userEntity) || (StringUtils.isAllEmpty(userEntity.getId(), userEntity.getAccount()))) {
+            throw new BaseRuntimeException(ErrorEnum.PARAM_NOT_COMPLETE);
         }
         UserEntity entity = userService.findOne(userEntity);
         if (ObjectUtils.isEmpty(entity)) {
@@ -134,18 +140,6 @@ public class UserController {
     }
 
     /**
-     * 列表查询
-     *
-     * @param userEntity
-     * @return
-     */
-    @GetMapping("/getList")
-    @Operation(summary = "列表查询", description = "列表查询")
-    public R<List<UserEntity>> getList(UserEntity userEntity) {
-        return R.success(userService.findList(userEntity));
-    }
-
-    /**
      * get分页查询
      *
      * @param userEntity
@@ -154,198 +148,163 @@ public class UserController {
     @GetMapping("/getPage")
     @Operation(summary = "分页查询", description = "分页查询")
     public R<PageInfo<UserEntity>> getPage(UserEntity userEntity, PageParam pageParam) {
-        // 分页方式一，推荐
-        // PageHelper.startPage(pageParam.getPageNum(), pageParam.getPageSize());
-        // List<UserEntity> list = userService.findList(userEntity);
+        // 分页方式一，实测RowBounds也是物理分页
+        // Example<UserEntity> example = new Example<>();
+        // example.createCriteria().andEqualTo(Fn.field(UserEntity.class, "sex"), "1");
+        // List<UserEntity> list = userEntity.baseMapper().selectByExample(example, new RowBounds(10, 3));
 
-        // 分页方式二，实测RowBounds也是物理分页
-        Example<UserEntity> example = new Example<>();
-        example.createCriteria().andEqualTo(Fn.field(UserEntity.class, "sex"), "1");
-        List<UserEntity> list = userEntity.baseMapper().selectByExample(example, new RowBounds(10, 3));
+        // 分页方式二，推荐
+        PageHelper.startPage(pageParam.getPageNum(), pageParam.getPageSize());
+        List<UserEntity> list = userService.findList(userEntity);
+        return R.success(new PageInfo(list));
+    }
 
+    /**
+     * 单个查询，携带角色列表
+     *
+     * @param userEntity
+     * @return
+     */
+    @GetMapping("/getWithRole")
+    @Operation(summary = "单个查询，携带角色列表", description = "单个查询，携带角色列表")
+    public R<UserEntity> getWithRole(UserEntity userEntity) {
+        if (ObjectUtils.isEmpty(userEntity) || (StringUtils.isAllEmpty(userEntity.getId(), userEntity.getAccount()))) {
+            throw new BaseRuntimeException(ErrorEnum.PARAM_NOT_COMPLETE);
+        }
+        userEntity = userService.getWithRole(userEntity, null);
+        if (userEntity == null) {
+            throw new BaseRuntimeException(ErrorEnum.USER_NOT_EXISTED);
+        }
+        // 角色根据ID降序
+        Collections.sort(userEntity.getRoleList(), (r1, r2) -> -Integer.valueOf(r1.getId()).compareTo(Integer.valueOf(r2.getId())));
+        return R.success(userEntity);
+    }
+
+    /**
+     * 分页查询，携带角色列表，连表查询，多个参数
+     * 仅供参考，使用关联的嵌套结果映射进行一对多分页查询时，其实是根据多方分页，会导致多方数据缺失。例如：
+     * 1个user对应3个role，当分页pageSize=2、pageNum=1时，结果会少1个role。
+     * 解决办法：
+     * 1、避免一对多分页查询场景设计。
+     * 2、使用关联的嵌套Select分页，但存在N+1查询问题。参考 getPageWithRole_multipleQueries 接口
+     *
+     * @param userEntity
+     * @param roleEntity
+     * @return
+     */
+    @Deprecated
+    @PostMapping("/getPageWithRole")
+    @Operation(summary = "分页查询，携带角色列表", description = "分页查询，携带角色列表")
+    public R<PageInfo<UserEntity>> getPageWithRole(@RequestBody(required = false) UserEntity userEntity) {
+        PageHelper.startPage(userEntity.getPageNum(), userEntity.getPageSize());
+        Page<UserEntity> list = userService.getPageWithRole(userEntity);
+        if (list != null) {
+            for (UserEntity u : list) {
+                // 角色根据ID降序
+                Collections.sort(u.getRoleList(), (r1, r2) -> -Integer.valueOf(r1.getId()).compareTo(Integer.valueOf(r2.getId())));
+            }
+        }
         PageInfo pageInfo = new PageInfo(list);
         return R.success(pageInfo);
     }
 
-//
-//    /**
-//     * post分页查询。post请求接受两个参数，只能有一个参数从RequestBody中获取。
-//     *
-//     * @param pageConvert
-//     * @param userEntity
-//     * @return com.zhaolq.mars.tool.core.result.R<com.baomidou.mybatisplus.core.metadata.IPage < com.zhaolq.mars.api.sys.entity.UserEntity>>
-//     */
-//    @PostMapping("/getPage2")
-//    @Operation(summary = "分页查询post请求", description = "分页查询post请求")
-//    public R<IPage<UserEntity>> getPage2(
-//            PageConvert<UserEntity> pageConvert,
-//            @RequestBody(required = false) UserEntity userEntity) {
-//        QueryWrapper<UserEntity> wrapper = new QueryWrapper<>(userEntity);
-//        return R.success(userService.page(pageConvert.getPagePlus(), wrapper));
-//    }
-//
-//    /**
-//     * 单个查询，携带角色列表
-//     *
-//     * @param userEntity
-//     * @return com.zhaolq.mars.tool.core.result.R<com.zhaolq.mars.api.sys.entity.UserEntity>
-//     */
-//    @GetMapping("/getWithRole")
-//    @Operation(summary = "单个查询，携带角色列表", description = "单个查询，携带角色列表")
-//    public R<UserEntity> getWithRole(UserEntity userEntity) {
-//        boolean condition =
-//                userEntity == null || (StringUtils.isEmpty(userEntity.getId()) && StringUtils.isEmpty(userEntity.getAccount()));
-//        if (condition) {
-//            return R.failure(iError.PARAM_NOT_COMPLETE);
-//        }
-//        userEntity = userService.getWithRole(userEntity, null);
-//        if (userEntity == null) {
-//            return R.failure(iError.USER_NOT_EXISTED);
-//        }
-//        // 角色根据ID排序
-//        Collections.sort(userEntity.getRoleList(),
-//                (r1, r2) -> Integer.valueOf(r1.getId()).compareTo(Integer.valueOf(r2.getId())));
-//        return R.success(userEntity);
-//    }
-//
-//    /**
-//     * 列表查询，携带角色列表，关联的嵌套Select查询(N+1查询问题)
-//     *
-//     * @param userEntity
-//     * @return com.zhaolq.mars.tool.core.result.R<com.zhaolq.mars.api.sys.entity.UserEntity>
-//     */
-//    @GetMapping("/getWithRoleNestedSelectTest")
-//    @Operation(summary = "列表查询，携带角色列表", description = "列表查询，携带角色列表")
-//    public R<UserEntity> getWithRoleNestedSelectTest(UserEntity userEntity) {
-//        boolean condition =
-//                userEntity == null || (StringUtils.isEmpty(userEntity.getId()) && StringUtils.isEmpty(userEntity.getAccount()));
-//        if (condition) {
-//            return R.failure(iError.PARAM_NOT_COMPLETE);
-//        }
-//        userEntity = userService.getWithRoleNestedSelectTest(userEntity);
-//        if (userEntity == null) {
-//            return R.failure(iError.USER_NOT_EXISTED);
-//        }
-//        // 角色根据ID排序
-//        Collections.sort(userEntity.getRoleList(),
-//                (r1, r2) -> Integer.valueOf(r1.getId()).compareTo(Integer.valueOf(r2.getId())));
-//        return R.success(userEntity);
-//    }
-//
-//    /**
-//     * 列表查询，携带角色列表
-//     *
-//     * @param userEntity
-//     * @return com.zhaolq.mars.tool.core.result.R<java.util.List < com.zhaolq.mars.api.sys.entity.UserEntity>>
-//     */
-//    @GetMapping("/getListWithRole")
-//    @Operation(summary = "列表查询，携带角色列表", description = "列表查询，携带角色列表")
-//    public R<List<UserEntity>> getListWithRole(UserEntity userEntity) {
-//        List<UserEntity> list = userService.listWithRole(userEntity, null);
-//        if (list != null) {
-//            for (UserEntity u : list) {
-//                // 角色根据ID排序(roleId转integer排序)
-//                Collections.sort(u.getRoleList(),
-//                        (r1, r2) -> Integer.valueOf(r1.getId()).compareTo(Integer.valueOf(r2.getId())));
-//            }
-//        }
-//        return R.success(list);
-//    }
-//
-//    /**
-//     * 分页查询，携带角色列表，连表查询，多个参数
-//     * 仅供参考，使用关联的嵌套结果映射进行一对多分页查询时，其实是根据多方分页，会导致多方数据缺失。例如：
-//     * 1个user对应3个role，当分页size=2、current=1时，结果会少1个role。
-//     * 解决办法：
-//     * 1、避免一对多分页查询场景设计。
-//     * 2、使用关联的嵌套Select分页，但存在N+1查询问题。参考
-//     *
-//     * @param pageConvert
-//     * @param userEntity
-//     * @param roleEntity
-//     * @return com.zhaolq.mars.tool.core.result.R<com.baomidou.mybatisplus.core.metadata.IPage < com.zhaolq.mars.api.sys.entity.UserEntity>>
-//     */
-//    @Deprecated
-//    @GetMapping("/getPageWithRole")
-//    @Operation(summary = "分页查询，携带角色列表", description = "分页查询，携带角色列表")
-//    public R<IPage<UserEntity>> getPageWithRole(
-//            PageConvert<UserEntity> pageConvert, UserEntity userEntity,
-//            RoleEntity roleEntity) {
-//        return R.success(userService.pageWithRole(pageConvert.getPagePlus(), userEntity, roleEntity));
-//    }
-//
-//    /**
-//     * 分页查询，携带角色列表，关联的嵌套Select查询(N+1查询问题)
-//     *
-//     * @param pageConvert
-//     * @param userEntity
-//     * @return com.zhaolq.mars.tool.core.result.R<com.baomidou.mybatisplus.core.metadata.IPage < com.zhaolq.mars.api.sys.entity.UserEntity>>
-//     */
-//    @GetMapping("/getPageWithRoleNestedSelectTest")
-//    @Operation(summary = "分页查询，携带角色列表", description = "分页查询，携带角色列表")
-//    public R<IPage<UserEntity>> getPageWithRoleNestedSelectTest(
-//            PageConvert<UserEntity> pageConvert,
-//            UserEntity userEntity) {
-//        return R.success(userService.pageWithRoleNestedSelectTest(pageConvert.getPagePlus(), userEntity));
-//    }
-//
-//
-//    /**
-//     * 导出
-//     *
-//     * @param userEntity
-//     * @param response
-//     */
-//    @GetMapping("/getExportExcel")
-//    @Operation(summary = "导出", description = "导出")
-//    public void getExportExcel(Page<UserEntity> pageConvert, UserEntity userEntity, HttpServletResponse response) {
-//        QueryWrapper<UserEntity> wrapper = new QueryWrapper<>(userEntity);
-//        IPage<UserEntity> iPage = userService.page(pageConvert, wrapper);
-//        List<UserEntity> list = iPage.getRecords();
-//        System.out.println(list.get(0));
-//        System.out.println(list.size());
-//
-//        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");
-//        response.setHeader("Content-Disposition", "attachment;filename=" + "test.xlsx");
-//
-//        ServletOutputStream out = null;
-//        try {
-//            out = response.getOutputStream();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        // out.write();
-//
-//        //此处记得关闭输出Servlet流
-//        IoUtil.close(out);
-//    }
-//
-//    @PostMapping("/postImportExcel")
-//    @Operation(summary = "导入", description = "导入")
-//    public R<Boolean> postImportExcel() {
-//        return R.boo(true);
-//    }
-//
-//    /**
-//     * 获取权限下菜单树
-//     *
-//     * @param userEntity
-//     * @return com.zhaolq.mars.tool.core.result.R<java.util.List < com.zhaolq.mars.api.sys.entity.MenuEntity>>
-//     */
-//    @GetMapping("/getAuthorityMenuTree")
-//    @Operation(summary = "获取权限下菜单树", description = "获取权限下菜单树")
-//    public R<List<MenuEntity>> getAuthorityMenuTree(UserEntity userEntity) {
-//        List<MenuEntity> menuTreeList = userService.getAuthorityMenuTree(userEntity);
-//        return R.success(menuTreeList);
-//    }
-//
-//    @GetMapping("/testPagehelper")
-//    @Operation(summary = "测试PageHelper", description = "测试PageHelper")
-//    public R<String> testPagehelper() {
-//
-//        return R.success("");
-//    }
+    /**
+     * 分页查询，携带角色列表，关联的嵌套Select查询(N+1查询问题)
+     *
+     * @param pageConvert
+     * @param userEntity
+     * @return
+     */
+    @PostMapping("/getPageWithRole_multipleQueries")
+    @Operation(summary = "分页查询，携带角色列表", description = "分页查询，携带角色列表")
+    public R<PageInfo<UserEntity>> getPageWithRoleNestedSelectTest(@RequestBody(required = false) UserEntity userEntity) {
+        PageHelper.startPage(userEntity.getPageNum(), userEntity.getPageSize());
+        Page<UserEntity> list = userService.getPageWithRole_multipleQueries(userEntity);
+        if (ObjectUtils.isNotEmpty(list)) {
+            list.forEach(u -> {
+                // 角色根据ID降序
+                Collections.sort(u.getRoleList(), (r1, r2) -> -Integer.valueOf(r1.getId()).compareTo(Integer.valueOf(r2.getId())));
+            });
+        }
+        return R.success(new PageInfo(list));
+    }
 
+
+    /**
+     * 文件下载。
+     * https://pdai.tech/md/spring/springboot/springboot-x-file-excel-poi.html
+     *
+     * @param userEntity
+     * @param response
+     */
+    @PostMapping("/excelDownload")
+    @Operation(summary = "导出", description = "导出")
+    public void excelDownload(@RequestBody(required = false) UserEntity userEntity, HttpServletResponse response) {
+        int rows = 0;
+        int cols = 0;
+
+        response.reset();
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"); // 2007版
+        response.setHeader("Content-disposition", "attachment;filename=user_excel_" + System.currentTimeMillis() + ".xlsx");
+
+        try (ServletOutputStream outputStream = response.getOutputStream();) {
+            // 写入一个空的excel，只有表头
+            SXSSFWorkbook workbook = new SXSSFWorkbook();
+            Sheet sheet = workbook.createSheet("第一页");
+            // 表头
+            List<String> fieldList = Arrays.stream(userEntity.getClass().getDeclaredFields()).map(field -> field.getName()).collect(Collectors.toList());
+            String[] columns = fieldList.toArray(new String[fieldList.size()]);
+            Row head = sheet.createRow(rows++);
+            for (int i = 0; i < columns.length; ++i) {
+                head.createCell(cols++).setCellValue(columns[i]);
+            }
+
+            // 计算循环查询的次数，即总页数
+            long totalCount = userService.count(userEntity);
+            int pageSize = 20000; // 每次查询的行数
+            int totalPage = Math.toIntExact(totalCount % pageSize == 0 ? (totalCount / pageSize) : (totalCount / pageSize + 1)); //循环查询次数
+            int currentPage = 0;
+
+            while (true) {
+                if (++currentPage > totalPage) {
+                    workbook.write(outputStream);
+                    workbook.dispose();
+                    break;
+                }
+                PageHelper.startPage(currentPage, pageSize);
+                List<UserEntity> list = userService.findList(userEntity);
+
+                // 表内容
+                for (UserEntity user : list) {
+                    cols = 0;
+                    Row row = sheet.createRow(rows++);
+                    row.createCell(cols++).setCellValue(user.getId());
+                    row.createCell(cols++).setCellValue(user.getAccount());
+                    row.createCell(cols++).setCellValue(user.getName());
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @PostMapping("/excelUpload")
+    @Operation(summary = "导入", description = "导入")
+    public R<Boolean> postImportExcel() {
+        return R.boo(true);
+    }
+
+    /**
+     * 获取权限下菜单树
+     *
+     * @param userEntity
+     * @return com.zhaolq.mars.tool.core.result.R<java.util.List < com.zhaolq.mars.api.sys.entity.MenuEntity>>
+     */
+    @GetMapping("/getAuthorityMenuTree")
+    @Operation(summary = "获取权限下菜单树", description = "获取权限下菜单树")
+    public R<List<MenuEntity>> getAuthorityMenuTree(UserEntity userEntity) {
+        List<MenuEntity> menuTreeList = userService.getAuthorityMenuTree(userEntity);
+        return R.success(menuTreeList);
+    }
 }
 

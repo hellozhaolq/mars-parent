@@ -1,26 +1,21 @@
 package com.zhaolq.mars.service.admin.config;
 
 import java.util.Collections;
-import java.util.concurrent.TimeUnit;
 
-import org.apache.http.HeaderElement;
-import org.apache.http.HeaderElementIterator;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.config.ConnectionConfig;
-import org.apache.http.config.SocketConfig;
-import org.apache.http.conn.ConnectionKeepAliveStrategy;
-import org.apache.http.conn.HttpClientConnectionManager;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.DefaultClientConnectionReuseStrategy;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.impl.client.StandardHttpRequestRetryHandler;
-import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
-import org.apache.http.message.BasicHeaderElementIterator;
-import org.apache.http.protocol.HTTP;
-import org.apache.http.protocol.HttpContext;
-import org.apache.http.util.Args;
+import org.apache.hc.client5.http.ConnectionKeepAliveStrategy;
+import org.apache.hc.client5.http.config.ConnectionConfig;
+import org.apache.hc.client5.http.config.RequestConfig;
+import org.apache.hc.client5.http.impl.DefaultClientConnectionReuseStrategy;
+import org.apache.hc.client5.http.impl.DefaultConnectionKeepAliveStrategy;
+import org.apache.hc.client5.http.impl.DefaultHttpRequestRetryStrategy;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
+import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager;
+import org.apache.hc.client5.http.io.HttpClientConnectionManager;
+import org.apache.hc.core5.http.io.SocketConfig;
+import org.apache.hc.core5.util.TimeValue;
+import org.apache.hc.core5.util.Timeout;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -74,25 +69,22 @@ public class HttpClientConfig {
      * 更好的方式是，使用后台线程主动从连接池中驱逐空闲连接。httpClientBuilder.evictIdleConnections(3, TimeUnit.SECONDS);
      */
     @Value("${http.validateAfterInactivity:2000}")
-    private int validateAfterInactivity;
+    private long validateAfterInactivity;
 
     /**
      * 从HttpClient连接池（HttpClient连接管理器）中获取连接的超时时间（以毫秒为单位）。
-     * <p>
-     * 并发请求的连接数超过了DefaultMaxPerRoute设置。并且在ConnectionRequestTimeout时间内依旧没有获取到可用连接，则会抛出
-     * {@link org.apache.http.conn.ConnectionPoolTimeoutException}，解决方法就是适当调大一些DefaultMaxPerRoute和MaxTotal的大小。
      */
-    @Value("${http.connectionRequestTimeout:500}")
-    private int connectionRequestTimeout;
+    @Value("${http.connectionRequestTimeout:3000}")
+    private long connectionRequestTimeout;
 
     /**
      * 网络连接(与服务器连接)超时时间，发起请求前创建socket连接的超时时间（以毫秒为单位）。
      * <p>
      * 测试的时候，将url改为一个不存在的url：http://test.com，超时时间过后，则会抛出
-     * {@link org.apache.http.conn.ConnectTimeoutException}。
+     * {@link org.apache.hc.client5.http.ConnectTimeoutException}。
      */
     @Value("${http.connectTimeout:2000}")
-    private int connectTimeout;
+    private long connectTimeout;
 
     /**
      * 数据传输的超时时间，socket等待数据的超时时间，响应超时时间。
@@ -100,8 +92,8 @@ public class HttpClientConfig {
      * <p>
      * 测试本地一个url，让线程sleep一段时间，来模拟返回response超时。
      */
-    @Value("${http.socketTimeout:2000}")
-    private int socketTimeout;
+    @Value("${http.socketTimeout:60000}")
+    private long socketTimeout;
 
     /**
      * 池化HttpClient连接管理器，并设置最大连接数、并发连接数
@@ -114,13 +106,18 @@ public class HttpClientConfig {
          * timeToLive为连接存活的最大时间，每次获取的连接只要存活超时，即使服务器仍保持连接，客户端也会断开重新获取连接。客户端指的是httpclient
          * 推荐timeToLive保持默认值-1就好，这样优先使用服务器返回的KeepAlive，只要在KeepAlive时间范围内，client就不会主动关闭。
          */
-        PoolingHttpClientConnectionManager poolingHttpClientConnectionManager = new PoolingHttpClientConnectionManager(-1, TimeUnit.MILLISECONDS);
-        poolingHttpClientConnectionManager.setMaxTotal(maxTotal);
-        poolingHttpClientConnectionManager.setDefaultMaxPerRoute(defaultMaxPerRoute);
-        poolingHttpClientConnectionManager.setDefaultSocketConfig(SocketConfig.custom().setSoLinger(-1).setTcpNoDelay(true).setSoTimeout(socketTimeout).build());
-        poolingHttpClientConnectionManager.setDefaultConnectionConfig(ConnectionConfig.custom().setFragmentSizeHint(-1).build());
-        poolingHttpClientConnectionManager.setValidateAfterInactivity(validateAfterInactivity);
-        return poolingHttpClientConnectionManager;
+        PoolingHttpClientConnectionManager connPoolManager = new PoolingHttpClientConnectionManager();
+        connPoolManager.setMaxTotal(maxTotal);
+        connPoolManager.setDefaultMaxPerRoute(defaultMaxPerRoute);
+        connPoolManager.setDefaultSocketConfig(
+                SocketConfig.custom()
+                        .setTcpNoDelay(true)
+                        .setSoLinger(TimeValue.NEG_ONE_MILLISECOND)
+                        .setSoTimeout(Timeout.ofMilliseconds(socketTimeout)).build());
+
+        connPoolManager.setDefaultConnectionConfig(ConnectionConfig.custom().build());
+//        connPoolManager.setConnectionConfigResolver(); // 根据每个路由设置ConnectionConfig的Resolver 。
+        return connPoolManager;
     }
 
     /**
@@ -133,11 +130,11 @@ public class HttpClientConfig {
      */
     @Bean(name = "requestConfig")
     public RequestConfig requestConfig() {
-        // Builder是RequestConfig的一个内部类，通过RequestConfig的custom方法来获取到一个Builder对象，设置builder的连接信息，也可以设置proxy，cookieSpec等属性
+        // Builder是RequestConfig的一个内部类，通过RequestConfig.custom()获取RequestConfig.Builder对象，进而设置请求配置项
         return RequestConfig.custom()
-                .setConnectionRequestTimeout(connectionRequestTimeout)
-                .setConnectTimeout(connectTimeout)
-                .setSocketTimeout(socketTimeout)
+                .setConnectionKeepAlive(TimeValue.ofMinutes(1))
+                .setConnectionRequestTimeout(Timeout.ofMilliseconds(connectionRequestTimeout))
+                .setConnectTimeout(Timeout.ofMilliseconds(connectTimeout))
                 .build();
     }
 
@@ -170,39 +167,21 @@ public class HttpClientConfig {
         // 默认连接重用策略
         httpClientBuilder.setConnectionReuseStrategy(new DefaultClientConnectionReuseStrategy());
         /**
-         * Keep-Alive策略，默认实现 {@link org.apache.http.impl.client.DefaultConnectionKeepAliveStrategy}，
-         * 读取response中的keep-alive的timeout参数，若是没有读到，那么设置为-1，代表永不过期。
+         * Keep-Alive策略，默认实现 {@link org.apache.hc.client5.http.impl.DefaultConnectionKeepAliveStrategy}，
+         * 读取response中的keep-alive的timeout参数，若是没有读到，则为 requestConfig.getConnectionKeepAlive()。
          */
-        ConnectionKeepAliveStrategy myStrategy = new ConnectionKeepAliveStrategy() {
-            @Override
-            public long getKeepAliveDuration(HttpResponse response, HttpContext context) {
-                Args.notNull(response, "HTTP response");
-                final HeaderElementIterator it = new BasicHeaderElementIterator(response.headerIterator(HTTP.CONN_KEEP_ALIVE));
-                while (it.hasNext()) {
-                    final HeaderElement he = it.nextElement();
-                    final String param = he.getName();
-                    final String value = he.getValue();
-                    if (value != null && param.equalsIgnoreCase("timeout")) {
-                        try {
-                            return Long.parseLong(value) * 1000;
-                        } catch (final NumberFormatException ignore) {
-                        }
-                    }
-                }
-                // 读取response中的keep-alive的timeout参数，若没读到默认设置为60秒
-                return 60 * 1000;
-            }
-        };
+        ConnectionKeepAliveStrategy myStrategy = new DefaultConnectionKeepAliveStrategy();
         httpClientBuilder.setKeepAliveStrategy(myStrategy);
 
         // http幂等请求 https://developer.mozilla.org/zh-CN/docs/Glossary/Idempotent
-        httpClientBuilder.setRetryHandler(new StandardHttpRequestRetryHandler(3, false));
+        httpClientBuilder.setRetryStrategy(new DefaultHttpRequestRetryStrategy());
         // 禁止重试策略。在高并发场景下建议关闭。
         httpClientBuilder.disableAutomaticRetries();
 
         // 为当前HttpClient实例配置定时任务，使用后台线程（ThreadName见源码），定时从连接池中逐出过期、空闲连接。默认不开启
         httpClientBuilder.evictExpiredConnections();
-        httpClientBuilder.evictIdleConnections(3, TimeUnit.SECONDS);
+
+        httpClientBuilder.evictIdleConnections(TimeValue.ofSeconds(3));
 
         return httpClientBuilder;
     }

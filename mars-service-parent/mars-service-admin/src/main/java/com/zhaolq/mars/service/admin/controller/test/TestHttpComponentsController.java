@@ -48,7 +48,7 @@ public class TestHttpComponentsController {
     @Resource
     private RequestConfig config;
 
-    @RequestMapping("test")
+    @RequestMapping("/test")
     public R<Object> test() throws IOException {
         return R.success(doGet("http://www.baidu.com"));
     }

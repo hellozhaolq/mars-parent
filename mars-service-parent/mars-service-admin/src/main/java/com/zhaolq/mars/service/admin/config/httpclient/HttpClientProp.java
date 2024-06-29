@@ -64,17 +64,4 @@ public class HttpClientProp {
 
     @Value("${http.default-conn-keep-alive:180}")
     private long defaultConnKeepAlive;
-
-    private HttpClientProp() {
-    }
-
-    public static HttpClientProp.Builder custom() {
-        return new HttpClientProp.Builder();
-    }
-
-    public static class Builder {
-        public HttpClientProp build() {
-            return new HttpClientProp();
-        }
-    }
 }

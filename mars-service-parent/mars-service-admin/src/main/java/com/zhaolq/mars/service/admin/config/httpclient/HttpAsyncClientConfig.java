@@ -21,7 +21,6 @@ import org.apache.hc.client5.http.impl.nio.PoolingAsyncClientConnectionManagerBu
 import org.apache.hc.client5.http.nio.AsyncClientConnectionManager;
 import org.apache.hc.client5.http.ssl.ClientTlsStrategyBuilder;
 import org.apache.hc.core5.http.HttpHost;
-import org.apache.hc.core5.http.ssl.TLS;
 import org.apache.hc.core5.pool.PoolConcurrencyPolicy;
 import org.apache.hc.core5.pool.PoolReusePolicy;
 import org.apache.hc.core5.reactor.IOReactorConfig;
@@ -58,7 +57,6 @@ public class HttpAsyncClientConfig {
                 .useSystemProperties()
                 .setTlsStrategy(ClientTlsStrategyBuilder.create()
                         .setSslContext(SSLContexts.createSystemDefault())
-                        .setTlsVersions(TLS.V_1_3)
                         .build())
                 .setMaxConnTotal(httpClientProp.getDefaultMaxTotalConnections())
                 .setMaxConnPerRoute(httpClientProp.getDefaultMaxConnectionsPerRoute())
@@ -97,7 +95,7 @@ public class HttpAsyncClientConfig {
                 .setDefaultCookieStore(new BasicCookieStore())
                 .setDefaultCredentialsProvider(null)
                 .setDefaultHeaders(Collections.emptyList())
-                .setProxy(new HttpHost("SOCKS5", "127.0.0.1", 1080))
+                .setProxy(new HttpHost("http", "127.0.0.1", 1081)) // 不支持socks5协议
                 .setConnectionReuseStrategy(DefaultClientConnectionReuseStrategy.INSTANCE) // 默认连接重用策略
                 // 设置Keep-Alive策略为DefaultConnectionKeepAliveStrategy，读取response中keep-alive的timeout参数，若是没有则为 requestConfig.getConnectionKeepAlive()。
                 .setKeepAliveStrategy(DefaultConnectionKeepAliveStrategy.INSTANCE)

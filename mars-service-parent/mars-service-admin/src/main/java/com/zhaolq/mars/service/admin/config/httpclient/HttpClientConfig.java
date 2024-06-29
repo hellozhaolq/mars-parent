@@ -72,7 +72,6 @@ public class HttpClientConfig {
                 .setMaxConnPerRoute(httpClientProp.getDefaultMaxConnectionsPerRoute())
                 .setSSLSocketFactory(SSLConnectionSocketFactoryBuilder.create()
                         .setSslContext(SSLContexts.createSystemDefault())
-                        .setTlsVersions(TLS.V_1_3)
                         .build())
                 .setPoolConcurrencyPolicy(PoolConcurrencyPolicy.STRICT)
                 .setConnPoolPolicy(PoolReusePolicy.LIFO)
@@ -108,7 +107,7 @@ public class HttpClientConfig {
                 .setDefaultCookieStore(new BasicCookieStore())
                 .setDefaultCredentialsProvider(null)
                 .setDefaultHeaders(Collections.emptyList())
-                .setProxy(new HttpHost("SOCKS5", "127.0.0.1", 1080))
+                .setProxy(new HttpHost("http", "127.0.0.1", 1081))
                 .setConnectionReuseStrategy(DefaultClientConnectionReuseStrategy.INSTANCE) // 默认连接重用策略
                 // 设置Keep-Alive策略为DefaultConnectionKeepAliveStrategy，读取response中keep-alive的timeout参数，若是没有则为 requestConfig.getConnectionKeepAlive()。
                 .setKeepAliveStrategy(DefaultConnectionKeepAliveStrategy.INSTANCE)

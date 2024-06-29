@@ -1,7 +1,7 @@
 package com.zhaolq.mars.service.admin.config.httpclient;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import lombok.Data;
 
@@ -12,7 +12,7 @@ import lombok.Data;
  * @Date 2024/6/29 16:04
  */
 @Data
-@Configuration
+@Component
 public class HttpClientProp {
     /**
      * 连接池大小，最大连接数

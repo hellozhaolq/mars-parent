@@ -50,7 +50,7 @@ public class HttpClientCommonConfig {
     @Bean(name = "tlsConfig")
     public TlsConfig tlsConfig() {
         return TlsConfig.custom()
-                .setVersionPolicy(HttpVersionPolicy.NEGOTIATE)
+                .setVersionPolicy(HttpVersionPolicy.NEGOTIATE) // HTTP协议版本策略
                 .setHandshakeTimeout(Timeout.ofMinutes(1))
                 .build();
     }

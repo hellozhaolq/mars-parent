@@ -3,6 +3,7 @@ package com.zhaolq.mars.service.admin.config.httpclient;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
@@ -10,7 +11,6 @@ import java.util.Map.Entry;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
-import org.apache.hc.client5.http.config.RequestConfig;
 import org.apache.hc.client5.http.entity.UrlEncodedFormEntity;
 import org.apache.hc.client5.http.impl.async.CloseableHttpAsyncClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
@@ -23,9 +23,10 @@ import org.apache.hc.core5.http.ParseException;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.io.entity.StringEntity;
 import org.apache.hc.core5.net.URIBuilder;
+import org.springframework.stereotype.Component;
 
-import com.zhaolq.mars.common.spring.utils.SpringContext;
-
+import jakarta.annotation.Resource;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -35,10 +36,14 @@ import lombok.extern.slf4j.Slf4j;
  * @Date 2023/6/2 16:15:41
  */
 @Slf4j
+@Component
+@Data
 public class HttpClientUtil {
-    private final CloseableHttpClient httpClient = SpringContext.getInstance().getBean("closeableHttpClient");
-    private final CloseableHttpAsyncClient httpAsyncClient = SpringContext.getInstance().getBean("closeableHttpAsyncClient");
-    private final RequestConfig requestConfig = SpringContext.getInstance().getBean("requestConfig");
+    @Resource
+    private CloseableHttpClient httpClient;
+
+    @Resource
+    private CloseableHttpAsyncClient httpAsyncClient;
 
     public String get(String url, List<NameValuePair> params, HashMap<String, Object> headers) {
         String resultContent = null;
@@ -46,7 +51,7 @@ public class HttpClientUtil {
 
         try {
             // 添加请求参数
-            URI uri = new URIBuilder(new URI(url)).addParameters(params).build();
+            URI uri = new URIBuilder(new URI(url), StandardCharsets.UTF_8).addParameters(params).build();
             httpGet.setUri(uri);
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
@@ -62,13 +67,12 @@ public class HttpClientUtil {
         // 执行request请求
         try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
             if (response.getCode() == HttpStatus.SC_OK) {
-                response.getVersion(); // HTTP/1.1
-                response.getReasonPhrase(); // OK
-                resultContent = EntityUtils.toString(response.getEntity());
+                response.getVersion(); // 例：HTTP/1.1
+                response.getReasonPhrase(); // 例：OK
+                resultContent = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
             } else {
                 new RuntimeException(response.getReasonPhrase());
             }
-        } catch (NullPointerException e) {
         } catch (IOException | ParseException e) {
             throw new RuntimeException(e);
         }
@@ -79,7 +83,7 @@ public class HttpClientUtil {
     public String post(String url, List<NameValuePair> params, HashMap<String, Object> headers) {
         String result = null;
         HttpPost httpPost = new HttpPost(url);
-        httpPost.setEntity(new UrlEncodedFormEntity(params));
+        httpPost.setEntity(new UrlEncodedFormEntity(params, StandardCharsets.UTF_8));
 
         // 添加header
         if (ObjectUtils.isNotEmpty(headers)) {
@@ -100,7 +104,6 @@ public class HttpClientUtil {
             } else {
                 new RuntimeException(response.getReasonPhrase());
             }
-        } catch (NullPointerException e) {
         } catch (IOException | ParseException e) {
             throw new RuntimeException(e);
         }

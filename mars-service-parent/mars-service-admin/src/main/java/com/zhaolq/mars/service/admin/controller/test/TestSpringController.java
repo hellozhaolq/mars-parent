@@ -4,15 +4,18 @@ import java.util.Comparator;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeansException;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.logging.LoggingSystem;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.zhaolq.mars.common.core.exception.BaseRuntimeException;
+import com.zhaolq.mars.common.core.result.ErrorEnum;
 import com.zhaolq.mars.common.core.result.R;
 import com.zhaolq.mars.common.spring.utils.SpringContext;
 
@@ -39,6 +42,9 @@ public class TestSpringController {
     private DataSourceProperties dataSourceProperties;
 
     @Resource
+    private SpringContext springContext;
+
+    @Resource
     private LoggingSystem loggingSystem;
 
     @GetMapping("/getDataSourceProperties")
@@ -61,20 +67,17 @@ public class TestSpringController {
     @GetMapping("/getBean")
     @Parameter(name = "beanName", description = "Bean名称", style = ParameterStyle.SIMPLE)
     @Operation(summary = "获取Bean", description = "获取Bean")
-    public R<Object> getBean(String beanName) {
+    public R<Object> getBean(@RequestParam("beanName") String beanName) {
         if (StringUtils.isEmpty(beanName)) {
-            beanName = "userServiceImpl";
-            /*
-            IUserService bean = SpringContext.getInstance().getBean(beanName);
-            UserEntity user = bean.getById(1);
-            return R.success(user);
-            */
+            throw new BaseRuntimeException(ErrorEnum.PARAM_NOT_COMPLETE);
         }
-        Object bean = SpringContext.getInstance().getBean(beanName);
-        if (ObjectUtils.isEmpty(bean)) {
-            return R.failure("没有可用的名为 '" + beanName + "' 的bean");
+        Object bean = null;
+        try {
+            bean = springContext.getBean(beanName);
+        } catch (BeansException e) {
+            return R.success(e.getMessage());
         }
-        return R.success("Simple name of the bean: " + bean.getClass().getSimpleName());
+        return R.success("The simple name of the bean: " + bean.getClass().getSimpleName());
     }
 
 }

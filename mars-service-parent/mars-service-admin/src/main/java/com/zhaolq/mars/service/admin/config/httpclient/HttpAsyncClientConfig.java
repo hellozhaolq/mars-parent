@@ -16,7 +16,6 @@ import org.apache.hc.client5.http.impl.async.HttpAsyncClientBuilder;
 import org.apache.hc.client5.http.impl.async.HttpAsyncClients;
 import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
-import org.apache.hc.client5.http.impl.nio.PoolingAsyncClientConnectionManager;
 import org.apache.hc.client5.http.impl.nio.PoolingAsyncClientConnectionManagerBuilder;
 import org.apache.hc.client5.http.nio.AsyncClientConnectionManager;
 import org.apache.hc.client5.http.ssl.ClientTlsStrategyBuilder;
@@ -53,7 +52,7 @@ public class HttpAsyncClientConfig {
     public AsyncClientConnectionManager asyncClientConnectionManager(
             @Qualifier("connectionConfig") ConnectionConfig connectionConfig,
             @Qualifier("tlsConfig") TlsConfig tlsConfig) {
-        PoolingAsyncClientConnectionManager connectionManager = PoolingAsyncClientConnectionManagerBuilder.create()
+        return PoolingAsyncClientConnectionManagerBuilder.create()
                 .useSystemProperties()
                 .setTlsStrategy(ClientTlsStrategyBuilder.create()
                         .setSslContext(SSLContexts.createSystemDefault())
@@ -67,25 +66,20 @@ public class HttpAsyncClientConfig {
                 .setSchemePortResolver(DefaultSchemePortResolver.INSTANCE) // 默认协议端口解析器
                 .setDnsResolver(SystemDefaultDnsResolver.INSTANCE) // 系统默认dns解析器
                 .build(); // setTlsConfigResolver 可以为每个路由设置TLS配置解析器
-        return connectionManager;
     }
 
     /**
      * http客户端生成器对象
      * <p>
-     * {@link HttpClients} 使用了工厂模式；
-     * {@link HttpClientBuilder} 使用了建造者模式
-     *
-     * @param httpClientConnectionManager httpClientConnectionManager
-     * @param requestConfig               requestConfig
-     * @return org.apache.http.impl.client.HttpClientBuilder
+     * {@link HttpClients} 建造者模式；
+     * {@link HttpClientBuilder} 建造者模式
      */
     @Bean(name = "httpAsyncClientBuilder")
     public HttpAsyncClientBuilder httpAsyncClientBuilder(
             @Qualifier("asyncClientConnectionManager") AsyncClientConnectionManager asyncClientConnectionManager,
             @Qualifier("requestConfig") RequestConfig requestConfig) {
         // 建造者模式，HttpClientBuilder中的构造方法被protected修饰
-        HttpAsyncClientBuilder httpAsyncClientBuilder = HttpAsyncClients.custom()
+        return HttpAsyncClients.custom()
                 .useSystemProperties()
                 .setConnectionManager(asyncClientConnectionManager) // 设置连接池
                 .setIOReactorConfig(IOReactorConfig.custom()
@@ -107,13 +101,10 @@ public class HttpAsyncClientConfig {
                 .evictExpiredConnections()
                 // 使该 HttpClient 实例使用后台线程（ThreadName见源码）主动从连接池中驱逐空闲连接。默认不开启。如果 HttpClient 实例配置为使用共享连接管理器，则此方法无效。
                 .evictIdleConnections(TimeValue.ofSeconds(180));
-        return httpAsyncClientBuilder;
     }
 
     /**
      * 获取httpClient
-     *
-     * @param httpClientBuilder httpClientBuilder
      */
     @Bean(name = "closeableHttpAsyncClient")
     public CloseableHttpAsyncClient closeableHttpAsyncClient(@Qualifier("httpAsyncClientBuilder") HttpAsyncClientBuilder httpAsyncClientBuilder) {

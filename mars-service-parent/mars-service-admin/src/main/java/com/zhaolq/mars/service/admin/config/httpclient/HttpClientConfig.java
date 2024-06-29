@@ -15,13 +15,11 @@ import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.client5.http.impl.io.ManagedHttpClientConnectionFactory;
-import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager;
 import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManagerBuilder;
 import org.apache.hc.client5.http.io.HttpClientConnectionManager;
 import org.apache.hc.client5.http.ssl.SSLConnectionSocketFactoryBuilder;
 import org.apache.hc.core5.http.HttpHost;
 import org.apache.hc.core5.http.io.SocketConfig;
-import org.apache.hc.core5.http.ssl.TLS;
 import org.apache.hc.core5.pool.PoolConcurrencyPolicy;
 import org.apache.hc.core5.pool.PoolReusePolicy;
 import org.apache.hc.core5.ssl.SSLContexts;
@@ -66,7 +64,7 @@ public class HttpClientConfig {
             @Qualifier("socketConfig") SocketConfig socketConfig,
             @Qualifier("connectionConfig") ConnectionConfig connectionConfig,
             @Qualifier("tlsConfig") TlsConfig tlsConfig) {
-        PoolingHttpClientConnectionManager connectionManager = PoolingHttpClientConnectionManagerBuilder.create()
+        return PoolingHttpClientConnectionManagerBuilder.create()
                 .useSystemProperties()
                 .setMaxConnTotal(httpClientProp.getDefaultMaxTotalConnections())
                 .setMaxConnPerRoute(httpClientProp.getDefaultMaxConnectionsPerRoute())
@@ -82,25 +80,20 @@ public class HttpClientConfig {
                 .setDnsResolver(SystemDefaultDnsResolver.INSTANCE) // 系统默认dns解析器
                 .setConnectionFactory(ManagedHttpClientConnectionFactory.INSTANCE) // 托管http客户端连接工厂
                 .build(); // setTlsConfigResolver 可以为每个路由设置TLS配置解析器
-        return connectionManager;
     }
 
     /**
      * http客户端生成器对象
      * <p>
-     * {@link HttpClients} 使用了工厂模式；
-     * {@link HttpClientBuilder} 使用了建造者模式
-     *
-     * @param httpClientConnectionManager httpClientConnectionManager
-     * @param requestConfig               requestConfig
-     * @return org.apache.http.impl.client.HttpClientBuilder
+     * {@link HttpClients} 建造者模式
+     * {@link HttpClientBuilder} 建造者模式
      */
     @Bean(name = "httpClientBuilder")
     public HttpClientBuilder httpClientBuilder(
             @Qualifier("httpClientConnectionManager") HttpClientConnectionManager httpClientConnectionManager,
             @Qualifier("requestConfig") RequestConfig requestConfig) {
         // 建造者模式，HttpClientBuilder中的构造方法被protected修饰
-        HttpClientBuilder httpClientBuilder = HttpClients.custom()
+        return HttpClients.custom()
                 .useSystemProperties()
                 .setConnectionManager(httpClientConnectionManager) // 设置连接池
                 .setDefaultRequestConfig(requestConfig) // 请求配置
@@ -119,13 +112,10 @@ public class HttpClientConfig {
                 .evictExpiredConnections()
                 // 使该 HttpClient 实例使用后台线程（ThreadName见源码）主动从连接池中驱逐空闲连接。默认不开启。如果 HttpClient 实例配置为使用共享连接管理器，则此方法无效。
                 .evictIdleConnections(TimeValue.ofSeconds(180));
-        return httpClientBuilder;
     }
 
     /**
      * 获取httpClient
-     *
-     * @param httpClientBuilder httpClientBuilder
      */
     @Bean(name = "closeableHttpClient")
     public CloseableHttpClient closeableHttpClient(@Qualifier("httpClientBuilder") HttpClientBuilder httpClientBuilder) {

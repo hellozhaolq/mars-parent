@@ -5,7 +5,6 @@ package com.zhaolq.mars.demo.jar;
  *
  * @Author zhaolq
  * @Date 2022/12/13 21:30
- * @Since 1.0.0
  */
 public class Main {
     public static void main(String[] args) {

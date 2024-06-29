@@ -1,4 +1,4 @@
-package com.zhaolq.mars.service.admin.config;
+package com.zhaolq.mars.service.admin.config.httpclient;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -33,10 +33,9 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * @Author zhaolq
  * @Date 2023/6/2 16:15:41
- * @Since 1.0.0
  */
 @Slf4j
-public class HttpClientHelper {
+public class HttpClientUtil {
     private final CloseableHttpClient httpClient = SpringContext.getInstance().getBean("closeableHttpClient");
     private final RequestConfig requestConfig = SpringContext.getInstance().getBean("requestConfig");
 

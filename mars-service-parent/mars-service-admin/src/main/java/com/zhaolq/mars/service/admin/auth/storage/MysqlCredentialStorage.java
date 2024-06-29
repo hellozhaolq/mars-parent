@@ -5,7 +5,6 @@ package com.zhaolq.mars.service.admin.auth.storage;
  *
  * @Author zhaolq
  * @Date 2023/4/14 9:07:46
- * @Since 1.0.0
  */
 public class MysqlCredentialStorage implements CredentialStorage {
     @Override

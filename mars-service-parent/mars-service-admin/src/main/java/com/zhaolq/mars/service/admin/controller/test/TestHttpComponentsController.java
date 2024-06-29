@@ -34,7 +34,6 @@ import lombok.extern.slf4j.Slf4j;
  *
  * @Author zhaolq
  * @Date 2023/5/31 10:09:05
- * @Since 1.0.0
  */
 @Slf4j
 @RestController

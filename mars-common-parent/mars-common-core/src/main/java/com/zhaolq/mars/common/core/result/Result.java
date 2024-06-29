@@ -16,7 +16,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
  *
  * @Author zhaolq
  * @Date 2023/5/11 14:20:26
- * @Since 1.0.0
  */
 @Schema(description = "返回信息")
 public final class Result extends LinkedHashMap<String, Object> implements Serializable {

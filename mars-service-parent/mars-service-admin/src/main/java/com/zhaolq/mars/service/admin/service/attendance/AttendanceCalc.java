@@ -36,7 +36,6 @@ import lombok.extern.slf4j.Slf4j;
  *
  * @Author zhaolq
  * @Date 2023/4/7 9:33
- * @Since 1.0.0
  */
 @Slf4j
 public class AttendanceCalc {

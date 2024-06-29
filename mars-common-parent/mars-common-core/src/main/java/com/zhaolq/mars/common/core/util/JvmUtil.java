@@ -7,7 +7,6 @@ import java.lang.management.ManagementFactory;
  *
  * @Author zhaolq
  * @Date 2023/5/11 16:14:31
- * @Since 1.0.0
  */
 public class JvmUtil {
     /**

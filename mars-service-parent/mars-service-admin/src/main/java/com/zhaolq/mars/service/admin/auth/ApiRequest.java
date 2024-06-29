@@ -5,7 +5,6 @@ package com.zhaolq.mars.service.admin.auth;
  *
  * @Author zhaolq
  * @Date 2023/4/13 17:38:59
- * @Since 1.0.0
  */
 public class ApiRequest {
     private String originalUrl;

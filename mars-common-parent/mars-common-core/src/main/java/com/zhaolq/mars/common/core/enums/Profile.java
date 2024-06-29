@@ -12,7 +12,6 @@ import java.util.List;
  *
  * @Author zhaolq
  * @Date 2022/8/22 19:27
- * @Since 1.0.0
  */
 public enum Profile {
 

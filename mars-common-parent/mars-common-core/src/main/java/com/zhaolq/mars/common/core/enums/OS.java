@@ -9,7 +9,6 @@ package com.zhaolq.mars.common.core.enums;
  *
  * @Author zhaolq
  * @Date 2022/8/22 20:52
- * @Since 1.0.0
  */
 public enum OS {
 

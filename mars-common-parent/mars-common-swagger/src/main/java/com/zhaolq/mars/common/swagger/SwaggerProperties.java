@@ -14,7 +14,6 @@ import lombok.Data;
  *
  * @Author zhaolq
  * @Date 2022/2/28 20:27
- * @Since 1.0.0
  */
 @Component
 @ConfigurationProperties(prefix = SwaggerProperties.PREFIX, ignoreInvalidFields = true)

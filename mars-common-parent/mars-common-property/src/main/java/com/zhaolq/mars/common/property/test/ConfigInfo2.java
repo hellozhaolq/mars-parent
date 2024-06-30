@@ -12,22 +12,20 @@ import lombok.Data;
 
 /**
  * 获取自定义配置方式二：可以读取父模块配置文件
- *
- * @ConfigurationProperties注解： 可以根据一个前缀将配置文件的属性映射成一个POJO实体类。配合spring-boot-configuration-processor依赖，可以生成元数据，这样在输入时就会给出可用的属性提示，
- * 属性提示仅在 application.yml 和 application.properties 出现，自定义的文件不会有属性提示，如：test.properties。
  * <p>
- * 区别                  @ConfigurationProperties                @Value
- * 功能	                批量注入配置文件的属性	                    一个个指定
- * 松散绑定(松散语法)      支持                                    不支持
- * spEl表达式	        不支持	                                支持
- * JSR303数据校验	    支持	                                    不支持
- * 复杂类型封装           各种复杂类型属性(Map、List、内部类)         支持简单属性(Map、List)
+ * 推荐阅读：https://www.baeldung.com/configuration-properties-in-spring-boot
+ * <p>
+ * 注解@ConfigurationProperties： 可以根据一个前缀将配置文件的属性映射成一个POJO实体类。配合spring-boot-configuration-processor依赖，可以生成元数据，这样在输入时就会给出可用的属性提示，
+ * <p>
+ *
  * @Author zhaolq
  * @Date 2021/6/10 13:53
  */
 @Data
 @Configuration
-@PropertySource(value = {"classpath:/test.properties", "classpath:/test.properties"}, encoding = "UTF-8", ignoreResourceNotFound = true,
+@PropertySource(value = {"classpath:/test.properties", "classpath:/test.properties"},
+        encoding = "UTF-8",
+        ignoreResourceNotFound = true,
         factory = DefaultPropertySourceFactory.class)
 @ConfigurationProperties(prefix = ConfigInfo2.PREFIX, ignoreInvalidFields = true)
 public class ConfigInfo2 {

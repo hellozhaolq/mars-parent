@@ -23,17 +23,16 @@ public class CorsConfig {
     /**
      * 和CorsWebFilter有什么区别
      *
-     * @return org.springframework.web.cors.reactive.CorsWebFilter
      * @see org.springframework.web.filter.CorsFilter
      * @see org.springframework.web.cors.reactive.CorsWebFilter
      */
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.setAllowCredentials(true);
         // 当allowCredentials设置为true时，CORS 规范不允许使用"*" ，并且从 5.3 开始，该组合被拒绝，转而使用allowedOriginPatterns 。
         // corsConfiguration.addAllowedOrigin("*");
         corsConfiguration.setAllowedOriginPatterns(Collections.singletonList("*"));
-        corsConfiguration.setAllowCredentials(true);
         corsConfiguration.addAllowedHeader("*");
         corsConfiguration.addAllowedMethod("*");
         corsConfiguration.setExposedHeaders(Collections.singletonList(""));

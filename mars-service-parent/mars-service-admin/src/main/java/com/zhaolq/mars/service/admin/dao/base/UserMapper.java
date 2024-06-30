@@ -20,13 +20,11 @@ import io.mybatis.mapper.BaseMapper;
  * @Author zhaolq
  * @Date 2020-10-29
  */
-@Transactional(rollbackFor = Exception.class)
 public interface UserMapper extends BaseMapper<UserEntity, String> {
     /**
      * 单个查询，携带角色列表
      *
      * @param userEntity
-     * @return
      */
     UserEntity selectWithRole(@Param("u") UserEntity userEntity, @Param("r") RoleEntity roleEntity);
 
@@ -34,16 +32,13 @@ public interface UserMapper extends BaseMapper<UserEntity, String> {
      * 列表查询，携带角色列表
      *
      * @param userEntity
-     * @return
      */
     Page<UserEntity> selectPageWithRole(@Param("u") UserEntity userEntity, @Param("r") RoleEntity roleEntity);
 
     /**
      * 分页查询，携带角色列表，关联的嵌套Select查询(N+1查询问题)
      *
-     * @param page
      * @param userEntity
-     * @return
      */
     Page<UserEntity> getPageWithRole_multipleQueries(@Param("u") UserEntity userEntity);
 
@@ -51,7 +46,6 @@ public interface UserMapper extends BaseMapper<UserEntity, String> {
      * 获取权限下菜单
      *
      * @param userEntity
-     * @return
      */
     List<MenuEntity> selectAuthorityMenu(@Param("u") UserEntity userEntity);
 }

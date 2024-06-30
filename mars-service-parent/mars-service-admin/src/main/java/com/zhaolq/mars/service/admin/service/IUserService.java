@@ -23,7 +23,6 @@ public interface IUserService extends BaseService<UserEntity, String> {
      * 单个查询，携带角色列表
      *
      * @param userEntity
-     * @return
      */
     UserEntity getWithRole(UserEntity userEntity, RoleEntity roleEntity);
 
@@ -31,16 +30,13 @@ public interface IUserService extends BaseService<UserEntity, String> {
      * 单个查询，携带角色列表
      *
      * @param userEntity
-     * @return
      */
     Page<UserEntity> getPageWithRole(UserEntity userEntity);
 
     /**
      * 分页查询，携带角色列表，关联的嵌套Select查询(N+1查询问题)
      *
-     * @param page
      * @param userEntity
-     * @return
      */
     Page<UserEntity> getPageWithRole_multipleQueries(UserEntity userEntity);
 
@@ -48,7 +44,6 @@ public interface IUserService extends BaseService<UserEntity, String> {
      * 获取权限下菜单树
      *
      * @param userEntity
-     * @return
      */
     List<MenuEntity> getAuthorityMenuTree(UserEntity userEntity);
 }

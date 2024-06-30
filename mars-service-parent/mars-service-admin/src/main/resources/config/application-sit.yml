@@ -1,17 +1,41 @@
 # SIT（system integration test）：系统集成测试
 
 # DataSource Config。整合多数据源时如果使用springboot默认的数据库连接池Hikari，指定连接数据使用的是jdbc-url而不是url属性
-jdbc:
-  basedb:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://10.235.88.126:3306/basedb?useUnicode=true&characterEncoding=utf8&useSSL=true&autoReconnect=true&failOverReadOnly=false&allowMultiQueries=true&noAccessToProcedureBodies=true
-    username: base
-    password: 123456789
-  archedb:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://10.235.88.126:3306/archedb?useUnicode=true&characterEncoding=utf8&useSSL=true&autoReconnect=true&failOverReadOnly=false&allowMultiQueries=true&noAccessToProcedureBodies=true
-    username: arche
-    password: 123456789
+mars:
+  datasource:
+    basedb:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://10.235.88.126:3306/basedb?useUnicode=true&characterEncoding=utf8&useSSL=true&autoReconnect=true&failOverReadOnly=false&allowMultiQueries=true&noAccessToProcedureBodies=true
+      username: base
+      password: 123456789
+      type: com.zaxxer.hikari.HikariDataSource
+      hikari:
+        pool-name: HikariPool-base # 默认HikariPool-作为前缀。设置连接池的名称。这主要用于日志记录和JMX管理控制台中识别池和池配置
+        maximum-pool-size: 5 # 默认10。池允许达到的最大大小，包括空闲和正在使用的连接。基本上，此值将决定与数据库后端的最大实际连接数。
+        minimum-idle: 5 # 默认10。HikariCP尝试在池中维护的最小空闲连接数，包括空闲连接和正在使用的连接。如果空闲连接数低于此值，HikariCP 将尽最大努力快速高效地恢复它们。为了性能考虑，和maximum-pool-size相同大小
+        idle-timeout: 600000 # 默认600000，即10分钟。允许连接在池中闲置的最大时间（以毫秒为单位）
+        connection-timeout: 30000 # 默认为30000，即30秒。设置客户端等待池中连接的最大毫秒数。
+        max-lifetime: 1800000 # 默认1800000，即30分钟。池中连接的最大生命周期，当连接达到此超时时间时，即使最近使用过，也会从池中退出。正在使用的连接永远不会退出，只有当它处于空闲状态时才会被移除。
+        validation-timeout: 5000 # 默认5000，即5秒。设置池等待连接被验证为活动的最大毫秒数。超过5秒未验证视为空闲连接？
+        auto-commit: true # 默认true。设置池中连接的默认自动提交行为。
+        read-only: false # 默认false。将要添加到池中的连接配置为只读连接。连接只读数据库时配置为true，保证安全。
+    archedb:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://10.235.88.126:3306/archedb?useUnicode=true&characterEncoding=utf8&useSSL=true&autoReconnect=true&failOverReadOnly=false&allowMultiQueries=true&noAccessToProcedureBodies=true
+      username: arche
+      password: 123456789
+      type: com.zaxxer.hikari.HikariDataSource
+      hikari:
+        pool-name: HikariPool-arche
+        maximum-pool-size: 5
+        minimum-idle: 5
+        idle-timeout: 600000
+        connection-timeout: 30000
+        max-lifetime: 1800000
+        validation-timeout: 5000
+        auto-commit: true
+        read-only: false
+
 logging:
   config: classpath:log4j2.xml
   level:

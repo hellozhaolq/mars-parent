@@ -3,10 +3,10 @@ package com.zhaolq.mars.service.admin.controller.test;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeansException;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.logging.LoggingSystem;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.zaxxer.hikari.HikariDataSource;
 import com.zhaolq.mars.common.core.exception.BaseRuntimeException;
 import com.zhaolq.mars.common.core.result.ErrorEnum;
 import com.zhaolq.mars.common.core.result.R;
@@ -38,8 +39,11 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping(path = "/testSpring", consumes = {MediaType.ALL_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
 public class TestSpringController {
 
-    @Resource
-    private DataSourceProperties dataSourceProperties;
+    @Resource(name = "baseDataSource")
+    private HikariDataSource baseDataSource;
+
+    @Resource(name = "archeDataSource")
+    private HikariDataSource archeDataSource;
 
     @Resource
     private SpringContext springContext;
@@ -47,9 +51,9 @@ public class TestSpringController {
     @Resource
     private LoggingSystem loggingSystem;
 
-    @GetMapping("/getDataSourceProperties")
-    @Operation(summary = "获取数据源配置", description = "获取数据源配置")
-    public R<Object> getDataSourceProperties() {
+    @GetMapping("/getBaseDataSource")
+    @Operation(summary = "获取数据源", description = "获取数据源")
+    public R<Object> getBaseDataSource() {
         Map<String, String> map = new TreeMap<>(new Comparator<String>() {
             @Override
             public int compare(String o1, String o2) {
@@ -57,10 +61,32 @@ public class TestSpringController {
                 return 1;
             }
         });
-        map.put("DriverClassName", dataSourceProperties.getDriverClassName());
-        map.put("Url", dataSourceProperties.getUrl());
-        map.put("Username", dataSourceProperties.getUsername());
-        map.put("Password", dataSourceProperties.getPassword());
+        map.put("DriverClassName", baseDataSource.getDriverClassName());
+        map.put("Url", baseDataSource.getJdbcUrl());
+        map.put("Username", baseDataSource.getUsername());
+        map.put("Password", baseDataSource.getPassword());
+        map.put("MaximumPoolSize", String.valueOf(baseDataSource.getMaximumPoolSize()));
+        map.put("PoolName", String.valueOf(baseDataSource.getPoolName()));
+        AtomicInteger a = new AtomicInteger();
+        return R.success(map);
+    }
+
+    @GetMapping("/getArcheDataSource")
+    @Operation(summary = "获取数据源", description = "获取数据源")
+    public R<Object> getArcheDataSource() {
+        Map<String, String> map = new TreeMap<>(new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                // 可使treeMap保存元素加入的顺序
+                return 1;
+            }
+        });
+        map.put("DriverClassName", archeDataSource.getDriverClassName());
+        map.put("Url", archeDataSource.getJdbcUrl());
+        map.put("Username", archeDataSource.getUsername());
+        map.put("Password", archeDataSource.getPassword());
+        map.put("MaximumPoolSize", String.valueOf(archeDataSource.getMaximumPoolSize()));
+        map.put("PoolName", String.valueOf(archeDataSource.getPoolName()));
         return R.success(map);
     }
 

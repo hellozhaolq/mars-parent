@@ -12,15 +12,20 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Scope;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import com.github.pagehelper.PageInterceptor;
+import com.zaxxer.hikari.HikariDataSource;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -31,53 +36,37 @@ import lombok.extern.slf4j.Slf4j;
  * @Author zhaolq
  * @Date 2023/4/25 23:35
  */
+@Slf4j
+@Lazy(false)
+@Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
 @Configuration
 @MapperScan(basePackages = {"com.zhaolq.**.dao.arche"}, sqlSessionTemplateRef = "archeSqlSessionTemplate")
-@Slf4j
 public class ArcheDSConfig {
     private String mapperLocation = "classpath*:**/mappers/arche/**/*.xml";
     private String typeAliasesPackage = "com.zhaolq.*.entity";
 
-    @Value("${jdbc.archedb.driver-class-name}")
+    @Value("${mars.datasource.archedb.driver-class-name}")
     private String driver;
 
-    @Value("${jdbc.archedb.url}")
+    @Value("${mars.datasource.archedb.url}")
     private String url;
 
-    @Value("${jdbc.archedb.username}")
+    @Value("${mars.datasource.archedb.username}")
     private String username;
 
-    @Value("${jdbc.archedb.password}")
+    @Value("${mars.datasource.archedb.password}")
     private String password;
 
-    /**
-     * 数据源属性
-     * 注解连用：@ConfigurationProperties 和 @Bean
-     *
-     * @return org.springframework.boot.autoconfigure.jdbc.DataSourceProperties
-     */
     @Bean(name = "archeDataSourceProperties")
-    @ConfigurationProperties(prefix = "jdbc.archedb")
+    @ConfigurationProperties(prefix = "mars.datasource.archedb")
     public DataSourceProperties setDataSourceProperties() {
         return new DataSourceProperties();
     }
 
-    /**
-     * 设置数据源
-     *
-     * @return javax.sql.DataSource
-     */
     @Bean(name = "archeDataSource")
-    public DataSource setDataSource(@Qualifier("archeDataSourceProperties") DataSourceProperties dataSourceProperties) {
-        DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create()
-                .driverClassName(dataSourceProperties.getDriverClassName())
-                .url(dataSourceProperties.getUrl())
-                .username(dataSourceProperties.getUsername())
-                .password(dataSourceProperties.getPassword());
-        if (dataSourceProperties.getType() != null) {
-            dataSourceBuilder.type(dataSourceProperties.getType());
-        }
-        return dataSourceBuilder.build();
+    @ConfigurationProperties(prefix = "mars.datasource.archedb.hikari")
+    public HikariDataSource setDataSource(@Qualifier("archeDataSourceProperties") DataSourceProperties dataSourceProperties) {
+        return dataSourceProperties.initializeDataSourceBuilder().type(HikariDataSource.class).build();
     }
 
     @Bean(name = "archeSqlSessionFactory")
@@ -87,7 +76,7 @@ public class ArcheDSConfig {
             // 使用mybatis-plus时不能使用自带的 SqlSessionFactoryBean，要使用 MybatisSqlSessionFactoryBean
             SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
             factoryBean.setDataSource(dataSource);
-            // factoryBean.setConfigLocation(new ClassPathResource("mybatisConfigFilePath"));
+            // factoryBean.setConfigLocation(new ClassPathResource("mybatis-config.xml")); // 设置MyBatis配置文件路径
             factoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(mapperLocation));
             factoryBean.setTypeAliasesPackage(typeAliasesPackage);
 
@@ -113,12 +102,17 @@ public class ArcheDSConfig {
     }
 
     @Bean(name = "archeTransactionManager")
-    public DataSourceTransactionManager setTransactionManager(@Qualifier("archeDataSource") DataSource dataSource) {
+    public PlatformTransactionManager setTransactionManager(@Qualifier("archeDataSource") DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
 
     @Bean(name = "archeSqlSessionTemplate")
     public SqlSessionTemplate setSqlSessionTemplate(@Qualifier("archeSqlSessionFactory") SqlSessionFactory sqlSessionFactory) {
         return new SqlSessionTemplate(sqlSessionFactory);
+    }
+
+    @Bean(name = "archeJdbcTemplate")
+    public JdbcTemplate setJdbcTemplate2(@Qualifier("archeDataSource") DataSource dataSource) {
+        return new JdbcTemplate(dataSource, false);
     }
 }

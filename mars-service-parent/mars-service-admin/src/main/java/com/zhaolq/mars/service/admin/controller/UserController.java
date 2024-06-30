@@ -12,7 +12,6 @@ import org.apache.commons.lang3.Validate;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
-import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -62,14 +61,12 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping(path = "/user", consumes = {MediaType.ALL_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
 @AllArgsConstructor
 public class UserController {
-    private final SqlSessionTemplate sqlSessionTemplate;
     private IUserService userService;
 
     /**
      * 单个查询
      *
      * @param userEntity
-     * @return
      */
     @GetMapping("/get")
     @Operation(summary = "单个查询", description = "单个查询")
@@ -90,7 +87,6 @@ public class UserController {
      * 单个新增
      *
      * @param userEntity
-     * @return
      */
     @PostMapping("/post")
     @Operation(summary = "单个新增", description = "单个新增")
@@ -109,7 +105,6 @@ public class UserController {
      * 单个修改
      *
      * @param userEntity
-     * @return
      */
     @PutMapping("/put")
     @Operation(summary = "单个修改", description = "单个修改")
@@ -125,7 +120,6 @@ public class UserController {
      * 单个删除
      *
      * @param id
-     * @return
      */
     @DeleteMapping("/delete/{id}")
     @Parameter(name = "id", description = "用户id", required = true, style = ParameterStyle.SIMPLE)
@@ -143,7 +137,6 @@ public class UserController {
      * get分页查询
      *
      * @param userEntity
-     * @return
      */
     @GetMapping("/getPage")
     @Operation(summary = "分页查询", description = "分页查询")
@@ -163,7 +156,6 @@ public class UserController {
      * 单个查询，携带角色列表
      *
      * @param userEntity
-     * @return
      */
     @GetMapping("/getWithRole")
     @Operation(summary = "单个查询，携带角色列表", description = "单个查询，携带角色列表")
@@ -189,8 +181,6 @@ public class UserController {
      * 2、使用关联的嵌套Select分页，但存在N+1查询问题。参考 getPageWithRole_multipleQueries 接口
      *
      * @param userEntity
-     * @param roleEntity
-     * @return
      */
     @Deprecated
     @PostMapping("/getPageWithRole")
@@ -211,9 +201,7 @@ public class UserController {
     /**
      * 分页查询，携带角色列表，关联的嵌套Select查询(N+1查询问题)
      *
-     * @param pageConvert
      * @param userEntity
-     * @return
      */
     @PostMapping("/getPageWithRole_multipleQueries")
     @Operation(summary = "分页查询，携带角色列表", description = "分页查询，携带角色列表")
@@ -298,7 +286,6 @@ public class UserController {
      * 获取权限下菜单树
      *
      * @param userEntity
-     * @return com.zhaolq.mars.tool.core.result.R<java.util.List < com.zhaolq.mars.api.sys.entity.MenuEntity>>
      */
     @GetMapping("/getAuthorityMenuTree")
     @Operation(summary = "获取权限下菜单树", description = "获取权限下菜单树")

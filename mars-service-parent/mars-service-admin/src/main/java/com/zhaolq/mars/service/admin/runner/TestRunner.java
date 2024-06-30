@@ -12,14 +12,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 
-import javax.sql.DataSource;
-
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+
+import com.zaxxer.hikari.HikariDataSource;
 
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -35,9 +35,9 @@ import lombok.extern.slf4j.Slf4j;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class TestRunner implements ApplicationRunner {
     @Resource(name = "baseDataSource")
-    private DataSource dataSource;
-    @Resource
-    private DataSourceProperties dataSourceProperties;
+    private HikariDataSource baseDataSource;
+    @Resource(name = "baseDataSourceProperties")
+    private DataSourceProperties baseDataSourceProperties;
 
     @Override
     public void run(ApplicationArguments args) {
@@ -85,10 +85,10 @@ public class TestRunner implements ApplicationRunner {
      * @throws SQLException
      */
     private Connection getConnection() throws ClassNotFoundException, SQLException {
-        Class.forName(dataSourceProperties.getDriverClassName());
-        String url = dataSourceProperties.getUrl();
-        String username = dataSourceProperties.getUsername();
-        String password = dataSourceProperties.getPassword();
+        Class.forName(baseDataSourceProperties.getDriverClassName());
+        String url = baseDataSourceProperties.getUrl();
+        String username = baseDataSourceProperties.getUsername();
+        String password = baseDataSourceProperties.getPassword();
         Connection conn = DriverManager.getConnection(url, username, password);
         return conn;
     }

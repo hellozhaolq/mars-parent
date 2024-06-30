@@ -32,7 +32,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 @AllArgsConstructor
-@Transactional(rollbackFor = Exception.class)
+// 推荐将@Transactional加在类或方法上，加在接口上某些情况下会被绕过。dao层接口不需要加，因为具体业务实现时在service层。
+@Transactional(value = "baseTransactionManager", rollbackFor = Exception.class)
 public class UserServiceImpl extends AbstractService<UserEntity, String, UserMapper> implements IUserService {
     private UserMapper userMapper;
 

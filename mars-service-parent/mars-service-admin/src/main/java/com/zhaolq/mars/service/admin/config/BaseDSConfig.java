@@ -12,96 +12,83 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Scope;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import com.github.pagehelper.PageInterceptor;
+import com.zaxxer.hikari.HikariDataSource;
 
 import lombok.extern.slf4j.Slf4j;
 
 /**
  * MySQL DataSource Configuration
  * <pre>
- * 注解@Configuration和@Component的区别？
- * 调用@Configuration类中的@Bean注解的方法，返回的是同一个实例，此方法会被动态代理。
- * 调用@Component类中的Bean注解的方法，返回的是一个新的实例
+ * 注解@Configuration和@Component的区别
+ *      一句话概括，@Configuration中所有@Bean注解的方法都会被动态代理，因此调用该方法返回的是同一个实例。
+ *      而调用@Component中所有@Bean注解的方法，每次一个新的实例。
+ * </pre>
+ * <pre>
+ * 多数据源配置。为了更清晰，建议二选一。
+ *  1、配置@Primary类型的bean，作为自动装配的值
+ *  2、在@SpringBootApplication中排除springboot的自动配置，排除后不会创建某些默认的bean，如jdbcTemplate等。
+ *      DataSourceAutoConfiguration.class
+ *      DataSourceTransactionManagerAutoConfiguration.class
+ *      JdbcTemplateAutoConfiguration.class
  * </pre>
  *
  * @Author zhaolq
  * @Date 2023/4/25 14:59:20
  */
-@Scope("singleton")
-@Lazy(true)
+@Slf4j
+@Lazy(false)
+@Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
 @Configuration
 @MapperScan(basePackages = {"com.zhaolq.**.dao.base"}, sqlSessionTemplateRef = "baseSqlSessionTemplate")
-@Slf4j
 public class BaseDSConfig {
     private String mapperLocation = "classpath*:**/mappers/base/**/*.xml";
     private String typeAliasesPackage = "com.zhaolq.*.entity";
 
-    @Value("${jdbc.basedb.driver-class-name}")
+    @Value("${mars.datasource.basedb.driver-class-name}")
     private String driver;
 
-    @Value("${jdbc.basedb.url}")
+    @Value("${mars.datasource.basedb.url}")
     private String url;
 
-    @Value("${jdbc.basedb.username}")
+    @Value("${mars.datasource.basedb.username}")
     private String username;
 
-    @Value("${jdbc.basedb.password}")
+    @Value("${mars.datasource.basedb.password}")
     private String password;
 
-    /**
-     * 数据源属性
-     * 注解连用：@ConfigurationProperties 和 @Bean
-     *
-     * @return org.springframework.boot.autoconfigure.jdbc.DataSourceProperties
-     */
     @Bean(name = "baseDataSourceProperties")
-    @ConfigurationProperties(prefix = "jdbc.basedb")
-    @Primary
+    @ConfigurationProperties(prefix = "mars.datasource.basedb")
     public DataSourceProperties setDataSourceProperties() {
         return new DataSourceProperties();
     }
 
-    /**
-     * 设置数据源
-     *
-     * @return javax.sql.DataSource
-     */
     @Bean(name = "baseDataSource")
-    @Primary // 主数据源，若不添加启动时可能报错
-    public DataSource setDataSource(@Qualifier("baseDataSourceProperties") DataSourceProperties dataSourceProperties) {
-        // ComboPooledDataSource dataSource = new ComboPooledDataSource();
-        // DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
-        DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create()
-                .driverClassName(dataSourceProperties.getDriverClassName())
-                .url(dataSourceProperties.getUrl())
-                .username(dataSourceProperties.getUsername())
-                .password(dataSourceProperties.getPassword());
-        if (dataSourceProperties.getType() != null) {
-            dataSourceBuilder.type(dataSourceProperties.getType());
-        }
-        return dataSourceBuilder.build();
+    @ConfigurationProperties(prefix = "mars.datasource.basedb.hikari")
+    public HikariDataSource setDataSource(@Qualifier("baseDataSourceProperties") DataSourceProperties dataSourceProperties) {
+        return dataSourceProperties.initializeDataSourceBuilder().type(HikariDataSource.class).build();
     }
 
     @Bean(name = "baseSqlSessionFactory")
-    @Primary
     public SqlSessionFactory setSqlSessionFactory(@Qualifier("baseDataSource") DataSource dataSource) throws Exception {
         SqlSessionFactory sqlSessionFactory = null;
         try {
             // 使用mybatis-plus时不能使用自带的 SqlSessionFactoryBean，要使用 MybatisSqlSessionFactoryBean
             SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
             factoryBean.setDataSource(dataSource);
-            // factoryBean.setConfigLocation(new ClassPathResource("mybatisConfigFilePath"));
+            // factoryBean.setConfigLocation(new ClassPathResource("mybatis-config.xml")); // 设置MyBatis配置文件路径
             factoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(mapperLocation));
             factoryBean.setTypeAliasesPackage(typeAliasesPackage);
 
@@ -127,14 +114,26 @@ public class BaseDSConfig {
     }
 
     @Bean(name = "baseTransactionManager")
-    @Primary
-    public DataSourceTransactionManager setTransactionManager(@Qualifier("baseDataSource") DataSource dataSource) {
+    public PlatformTransactionManager setTransactionManager(@Qualifier("baseDataSource") DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
 
+    /**
+     * jdbcTemplate和SessionFactory的区别
+     * <pre>
+     *  1、jdbcTemplate是spring对jdbc的封装，SQL得自己写，一旦要写SQL，则会增加灵活和复杂性，当然也不利于跨数据库（毕竟每个数据库的SQL也不竟相同）；
+     *  2、SqlSessionTemplate不用关心底层的数据库是哪个数据库，在编程方面更加对象化，比如save(Object obj)，操作的都是对象，也利用了缓存实现与数据库的读取操作，提高了性能。
+     * </pre>
+     */
     @Bean(name = "baseSqlSessionTemplate")
-    @Primary
     public SqlSessionTemplate setSqlSessionTemplate(@Qualifier("baseSqlSessionFactory") SqlSessionFactory sqlSessionFactory) {
         return new SqlSessionTemplate(sqlSessionFactory);
     }
+
+    @Bean(name = "baseJdbcTemplate")
+    public JdbcTemplate setJdbcTemplate(@Qualifier("baseDataSource") DataSource dataSource) {
+        return new JdbcTemplate(dataSource, false);
+    }
+
+
 }
